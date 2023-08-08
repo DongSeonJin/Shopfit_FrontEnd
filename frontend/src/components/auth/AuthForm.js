@@ -54,7 +54,7 @@ const AuthForm = ({type, form, onChange, onSubmit}) => {
                 <StyledInput 
                     autoComplete='username' 
                     name='username' 
-                    placeholder='아이디' 
+                    placeholder='이메일' 
                     onChange={onChange}
                     value={form.username}
                 />
@@ -84,9 +84,9 @@ const AuthForm = ({type, form, onChange, onSubmit}) => {
                 {type === 'login' ? (
                     <>
                         <Link to="/register">회원가입 / </Link>
-                        <Link to="/resetpass">비밀번호 찾기</Link>
+                        <Link to="/password/new">비밀번호 재설정</Link>
                     </>
-                ) : (
+                ) : (   
                     <Link to="/login">로그인</Link>
                 )}
             </Footer>

@@ -13,7 +13,7 @@ function TestPage() {
     console.log('입력한 비밀번호:', password);
     
     try {
-      const response = await axios.post('http://localhost:8080/login', {
+      const response = await axios.post('http://localhost:8080/', {
         email: email,
         password: password
       });
