@@ -1,26 +1,28 @@
 import React, {useState} from "react";
 
 import HeaderMain from "../components/HeaderMain";
+import NewsList from "../components/NewsList";
+import Footer from "../components/Footer";
 import HeaderSubComm from "../components/HeaderSubComm";
 import HeaderSubShop from "../components/HeaderSubShop";
-import Contents from "../components/Contents";
-import Footer from "../components/Footer";
 
-import styles from "../styles/Home.module.css";
+import styles from "../styles/News.module.css";
 
-const Home = () => {
+const News = () => {
+
   const [isCommunityHovered, setIsCommunityHovered] = useState(false);
   const [isShoppingHovered, setIsShoppingHovered] = useState(false);
 
   return (
-    <div className={styles.Home}>
+    <div className={styles.div}>
       <HeaderMain isCommunityHovered={setIsCommunityHovered} isShoppingHovered={setIsShoppingHovered} />
       {isCommunityHovered && <HeaderSubComm />}
       {isShoppingHovered && <HeaderSubShop />}
-      <Contents />
+      <NewsList />
+
       <Footer />
     </div>
   );
 };
 
-export default Home;
+export default News;

@@ -1,0 +1,67 @@
+.div {
+    position: relative;
+    font-weight: 300;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 325px;
+    flex-shrink: 0;
+  }
+  .divsrchInputArea,
+  .input {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: flex-start;
+  }
+  .input {
+    background-color: var(--color-white);
+    padding: var(--padding-6xs-5) var(--padding-11xs) var(--padding-6xs-5)
+      var(--padding-xs);
+  }
+  .divsrchInputArea {
+    width: 299px;
+    padding: var(--padding-12xs) var(--padding-51xl) var(--padding-0)
+      var(--padding-0);
+    box-sizing: border-box;
+    z-index: 1;
+  }
+  .div1 {
+    position: absolute;
+    top: 0;
+    left: calc(50% - 10px);
+    line-height: 29px;
+  }
+  .button,
+  .divsrchBox {
+    position: absolute;
+    box-sizing: border-box;
+  }
+  .button {
+    margin: 0 !important;
+    top: 0.23px;
+    right: 3px;
+    border-left: 1px solid var(--color-dimgray);
+    width: 54px;
+    height: 28px;
+    overflow: hidden;
+    flex-shrink: 0;
+    z-index: 0;
+  }
+  .divsrchBox {
+    top: 61px;
+    left: calc(50% - 205px);
+    border: 1px solid var(--color-dimgray);
+    width: 410px;
+    display: flex;
+    flex-direction: row;
+    padding: var(--padding-12xs) var(--padding-8xs) var(--padding-12xs)
+      var(--padding-12xs);
+    align-items: flex-start;
+    justify-content: flex-start;
+    text-align: center;
+    font-size: var(--font-size-2xs);
+    color: var(--color-dimgray);
+    font-family: var(--font-inter);
+  }
+  

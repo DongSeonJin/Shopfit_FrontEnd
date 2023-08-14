@@ -1,4 +1,5 @@
-import styles from "./UpperBanner.module.css";
+import styles from "../styles/UpperBanner.module.css";
+
 const UpperBanner = () => {
   return (
     <div className={styles.divcss1mvkryr}>

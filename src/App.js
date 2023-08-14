@@ -1,44 +1,10 @@
-// import { Routes, Route } from 'react-router-dom';
-// import OhouseByHtmltodesignF from './testcomponents/OhouseByHtmltodesignF';
-// // import Home from './pages/Home';
-// // import LoginPage from './pages/LoginPage';
-// // import RegisterPage from './pages/RegisterPage';
-// // import TestPage from './TestPage';
+import {Routes, Route, useNavigationType, useLocation} from "react-router-dom";
+import { useEffect } from "react";
 
-// const App = () => {
-//   return (
-
-//     <Routes>
-//       <Route path = '/' element={<OhouseByHtmltodesignF />} />
-//     </Routes>
-
-//     // <Routes>
-//     //   <Route path="/" element={<Home />} />
-//     //   <Route path="/login" element={<LoginPage />} />
-//     //   <Route path="/register" element={<RegisterPage />} />
-//     // </Routes>
-
-//     // <Routes>
-//     //   <Route path="/" element={<Home />} />
-//     //   <Route path="/login" element={<TestPage />} />
-//     //   <Route path="/register" element={<RegisterPage />} />
-//     // </Routes>
-
-//   );
-// };
-
-// export default App;
-
-import {
-  Routes,
-  Route,
-  useNavigationType,
-  useLocation,
-} from "react-router-dom";
-import OhouseByHtmltodesignF from "./testcomponents/OhouseByHtmltodesignF";
+import Home from "./pages/Home";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
-import { useEffect } from "react";
+import News from "./pages/News"
 
 function App() {
   const action = useNavigationType();
@@ -79,9 +45,10 @@ function App() {
 
   return (
     <Routes>
-      <Route path="/" element={<OhouseByHtmltodesignF />} />
-      <Route path="/login" element={<><OhouseByHtmltodesignF /><LoginPage /></>} />
+      <Route path="/" element={<Home />} />
+      <Route path="/login" element={<><Home /><LoginPage /></>} />
       <Route path="/register" element={<RegisterPage />} />
+      <Route path="/news" element={<News />} />
     </Routes>
   );
 }

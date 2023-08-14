@@ -1,0 +1,21 @@
+.news_main_title {
+  font-size: 20px;
+  color: black; /* 검은색으로 설정 */
+}
+
+/* InfoList.module.css */
+.tableContainer {
+  display: flex;
+  justify-content: center;
+}
+
+table {
+  text-align: center;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+th, td {
+  border: 1px solid black;
+  padding: 8px;
+}

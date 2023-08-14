@@ -1,8 +1,9 @@
 import { Link } from "react-router-dom";
-import styles from "./HeaderMain.module.css";
 import { useState } from "react";
 
-const HeaderMain = () => {
+import styles from "../styles/HeaderMain.module.css";
+
+const HeaderMain = ({ isCommunityHovered, isShoppingHovered }) => {
 
     const [isHoveredCommunity, setIsHoveredCommunity] = useState(false);
     const [isHoveredShopping, setIsHoveredShopping] = useState(false);
@@ -10,23 +11,37 @@ const HeaderMain = () => {
 
     return (
         <div className={styles.divcssI7a8i3}>
-        <div className={styles.divcss1pttzzz}>
-        <div style={{fontSize: '24px', fontFamily: 'Arial, sans-serif', fontWeight: 'bold', color: 'deepskyblue'}}>오늘의 운동</div>
+            <div className={styles.divcss1pttzzz}>
+                <div style={{fontSize: '24px', fontFamily: 'Arial, sans-serif', fontWeight: 'bold', color: 'deepskyblue'}}>
+                    <Link to="/" style={{ textDecoration: 'none', color: 'inherit' }}>
+                        오늘의 운동
+                    </Link>
+            </div>
             <div className={styles.divcss1h0hlgo}>
-
             <b
                 className={isHoveredCommunity ? `${styles.link} ${styles.linkHover}` : styles.link}
-                onMouseEnter={() => setIsHoveredCommunity(true)}
-                onMouseLeave={() => setIsHoveredCommunity(false)}
+                onMouseEnter={() => {
+                    setIsHoveredCommunity(true);
+                    isCommunityHovered(true);
+                    isShoppingHovered(false);
+                }}
+                onMouseLeave={() => {
+                    setIsHoveredCommunity(false);  
+                }}
             >
                 <Link to="/community" style={{ textDecoration: 'none', color: 'inherit' }}>
                     커뮤니티
                 </Link>
-            </b>
-            <b
+            </b>            <b
                 className={isHoveredShopping ? `${styles.link1} ${styles.linkHover}` : styles.link1}
-                onMouseEnter={() => setIsHoveredShopping(true)}
-                onMouseLeave={() => setIsHoveredShopping(false)}
+                onMouseEnter={() => {
+                    setIsHoveredShopping(true);
+                    isCommunityHovered(false);
+                    isShoppingHovered(true);
+                }}
+                onMouseLeave={() => {
+                    setIsHoveredShopping(false);  
+                }}
             >
                 <Link to="/shopping" style={{ textDecoration: 'none', color: 'inherit' }}>
                     쇼핑
@@ -34,7 +49,11 @@ const HeaderMain = () => {
             </b>
             <b
                 className={isHoveredServices ? `${styles.link2} ${styles.linkHover}` : styles.link2}
-                onMouseEnter={() => setIsHoveredServices(true)}
+                onMouseEnter={() => {
+                    setIsHoveredServices(true);
+                    isCommunityHovered(false);
+                    isShoppingHovered(false);
+                }}
                 onMouseLeave={() => setIsHoveredServices(false)}
             >
                 <Link to="/news" style={{ textDecoration: 'none', color: 'inherit' }}>
