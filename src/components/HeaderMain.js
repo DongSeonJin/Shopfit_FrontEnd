@@ -56,7 +56,7 @@ const HeaderMain = ({ isCommunityHovered, isShoppingHovered }) => {
                 }}
                 onMouseLeave={() => setIsHoveredServices(false)}
             >
-                <Link to="/news" style={{ textDecoration: 'none', color: 'inherit' }}>
+                <Link to="/news/list" style={{ textDecoration: 'none', color: 'inherit' }}>
                     뉴스
                 </Link>
             </b>
