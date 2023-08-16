@@ -1,26 +1,26 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 
+import Article from "../components/Article";
+
 import styles from "../styles/NewsList.module.css";
 
 const NewsList = () => {
   const [dataList, setDataList] = useState([]);
 
   useEffect(() => {
-    axios.get("/news/list")                    // 백엔드 API 엔드포인트에 요청
+    axios.get("/news/list")
       .then((response) => {
         const contentArray = response.data.content;
-
         const extractedData = contentArray.map((item) => ({
           newsId: item.newsId,
           title: item.title,
           content: item.content,
           imageUrl: item.imageUrl,
-          createdAt: item.createdAt,
+          newsUrl: item.newsUrl,
+          createdAt: formatDate(item.createdAt),
         }));
-
         setDataList(extractedData);
-
       })
       .catch((error) => {
         console.error("Error fetching data:", error);
@@ -28,39 +28,34 @@ const NewsList = () => {
   }, []);
 
   return (
-    <div>
-      <h1 style={{ color: 'black' }}>뉴스리스트</h1>
+    <div className={styles.base}>
+      <div className={styles.page_title}>뉴스리스트</div>
       <table>
-        <colgroup>
-          <col width="200px" />
-          <col width="200px" />
-          <col width="200px" />
-          <col width="200px" />
-          <col width="100px" />
-        </colgroup>
         <thead>
-          <tr style={{ color: 'black'}}>
-            <th>번호</th>
-            <th>제목</th>
-            <th>내용</th>
+          <tr>
             <th>사진</th>
+            <th>제목</th>
             <th>날짜</th>
           </tr>
         </thead>
         <tbody>
           {dataList.map((data) => (
-            <tr key={data.newsId}>
-              <td>{data.newsId}</td>
-              <td>{data.title}</td>
-              <td>{data.content}</td>
-              <td className={styles.img_item} style={{ backgroundImage: `url(${data.imageUrl})` }}></td>
-              <td>{data.createdAt}</td>
-            </tr>
+            <Article key={data.newsId} data={data} />
           ))}
         </tbody>
       </table>
     </div>
   );
+};
+
+
+// 날짜 yyyy-mm-dd로 변경
+const formatDate = (date) => {
+  const d = new Date(date);
+  const year = d.getFullYear();
+  const month = String(d.getMonth() + 1).padStart(2, "0");
+  const day = String(d.getDate()).padStart(2, "0");
+  return `${year}-${month}-${day}`;
 };
 
 export default NewsList;

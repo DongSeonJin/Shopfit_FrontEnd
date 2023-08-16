@@ -17,11 +17,6 @@ const HeaderSubShop = () => {
             </div>
           </div>
         </div>
-        <div className={styles.divcssYfr560}>
-          <div className={styles.button}>
-            <img className={styles.vectorIcon} alt="" src="/vector3.svg" />
-          </div>
-        </div>
       </div>
     </div>
   );
