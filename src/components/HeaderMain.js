@@ -14,7 +14,7 @@ const HeaderMain = ({ isCommunityHovered, isShoppingHovered }) => {
             <div className={styles.divcss1pttzzz}>
                 <div style={{fontSize: '24px', fontFamily: 'Arial, sans-serif', fontWeight: 'bold', color: 'deepskyblue'}}>
                     <Link to="/" style={{ textDecoration: 'none', color: 'inherit' }}>
-                        오늘의 운동
+                        오늘의운동
                     </Link>
             </div>
             <div className={styles.divcss1h0hlgo}>
@@ -77,33 +77,6 @@ const HeaderMain = ({ isCommunityHovered, isShoppingHovered }) => {
                 <div className={styles.link4}>
                     <div className={styles.div}>고객센터</div>
                 </div>
-                </div>
-                <div className={styles.button}>
-                <div className={styles.spancssCdruys}>
-                    <div className={styles.div3}>글쓰기</div>
-                </div>
-                <div className={styles.pseudo}>
-                    <div className={styles.icon}>
-                    <img className={styles.vectorIcon} alt="" src="/vector.svg" />
-                    </div>
-                </div>
-                </div>
-            </div>
-            <div className={styles.combobox}>
-                <div className={styles.spanSearch24}>
-                <div className={styles.icon1}>
-                    <img className={styles.vectorIcon1} alt="" src="/vector1.svg" />
-                </div>
-                </div>
-                <div className={styles.input}>
-                <div className={styles.divplaceholder}>
-                    <div className={styles.div4}>통합검색</div>
-                </div>
-                </div>
-            </div>
-            <div className={styles.link6}>
-                <div className={styles.icon2}>
-                <img className={styles.vectorIcon2} alt="" src="/vector2.svg" />
                 </div>
             </div>
             </div>

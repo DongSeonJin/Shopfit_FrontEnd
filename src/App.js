@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import Home from "./pages/Home";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
-import News from "./pages/News"
+import News from "./pages/News";
 
 function App() {
   const action = useNavigationType();
