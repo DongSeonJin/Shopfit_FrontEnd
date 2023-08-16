@@ -540,7 +540,7 @@
     max-width: 1256px;
   }
   .footer {
-    position: absolute;
+    /* position: absolute; */
     width: 100%;
     right: 0;
     left: 0;

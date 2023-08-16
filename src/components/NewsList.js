@@ -3,6 +3,7 @@ import axios from "axios";
 
 import Article from "../components/Article";
 import Search from "../components/Search";
+import Footer from "../components/Footer";
 
 import styles from "../styles/NewsList.module.css";
 
@@ -20,13 +21,15 @@ const formatDate = (date) => {
 const NewsList = () => {
   const [dataList, setDataList] = useState([]);
   const [searchResults, setSearchResults] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
 
   useEffect(() => {
     fetchData();
   }, []);
 
   const fetchData = () => {
-    axios.get('/news/list/1')
+    axios.get(`/news/list/${currentPage}`)
       .then((response) => {
         const contentArray = response.data.content;
         const extractedData = contentArray.map((item) => ({
@@ -45,17 +48,28 @@ const NewsList = () => {
   };
 
   const handleSearch = (searchTerm) => {
-    axios.get(`/news/search/${searchTerm}`)
-      .then((response) => {
-        const searchResultsData = response.data.content;
-        const filteredNews = searchResultsData.filter((result) =>
-          result.title.includes(searchTerm)
-        );
-        setSearchResults(filteredNews);
-      })
-      .catch((error) => {
-        console.error('Error fetching search results:', error);
-      });
+    setSearchTerm(searchTerm); // 검색어 설정
+
+    if (searchTerm.trim() === "") {
+      // 검색어가 없을 때 전체 데이터로 초기화
+      setSearchResults([]);
+    } else {
+      axios.get(`/news/search/${searchTerm}`)
+        .then((response) => {
+          const searchResultsData = response.data.content;
+          const filteredNews = searchResultsData.filter((result) =>
+            result.title.includes(searchTerm)
+          );
+          setSearchResults(filteredNews);
+        })
+        .catch((error) => {
+          console.error('Error fetching search results:', error);
+        });
+    }
+  };
+
+  const handlePageChange = (newPage) => {
+    setCurrentPage(newPage);
   };
 
   return (
@@ -75,7 +89,13 @@ const NewsList = () => {
           ))}
         </tbody>
       </table>
+      <div className={styles.pagination}>
+        <button onClick={() => handlePageChange(currentPage - 1)}>&lt; 이전</button>
+        <span>{currentPage}</span>
+        <button onClick={() => handlePageChange(currentPage + 1)}>다음 &gt;</button>
+      </div>
       <Search onSearch={handleSearch} />
+      <Footer />
     </div>
   );
 };

@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 
+import styles from "../styles/Search.module.css"
+
 const Search = ({ onSearch }) => {
   const [searchTerm, setSearchTerm] = useState('');
 
@@ -13,7 +15,7 @@ const Search = ({ onSearch }) => {
   };
 
   return (
-    <form onSubmit={handleSearchSubmit}>
+    <form className={styles.searchbox} onSubmit={handleSearchSubmit}>
       <input
         type="text"
         placeholder="검색어를 입력하세요..."
