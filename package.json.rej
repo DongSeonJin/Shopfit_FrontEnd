@@ -1,0 +1,10 @@
+diff a/package.json b/package.json	(rejected hunks)
+@@ -3,6 +3,8 @@
+   "version": "0.1.0",
+   "private": true,
+   "dependencies": {
++    "@mui/material": "^5.14.5",
++    "@mui/styled-engine-sc": "^5.12.0",
+     "@redux-devtools/extension": "^3.2.5",
+     "@testing-library/jest-dom": "^5.17.0",
+     "@testing-library/react": "^13.4.0",
