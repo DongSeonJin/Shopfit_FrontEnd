@@ -1,42 +1,40 @@
+import React from "react";
 import styles from "../styles/Page.module.css";
 
-const Page = () => {
+const Page = ({ currentPage, onPageChange, totalPages }) => {
+
+  const renderPageButtons = () => {
+    const pageButtons = [];
+    const maxButtons = 5;
+
+    let startPage = currentPage - Math.floor(maxButtons / 2);
+    if (startPage <= 0) {
+      startPage = 1;
+    }
+
+    let endPage = startPage + maxButtons - 1;
+    if (endPage > totalPages) {
+      endPage = totalPages;
+      startPage = Math.max(endPage - maxButtons + 1, 1); // 현재 페이지 주변에서 최대 5개의 버튼이 보이도록 조절
+    }
+
+    for (let page = startPage; page <= endPage; page++) {
+      pageButtons.push(
+        <button key={page} onClick={() => onPageChange(page)} disabled={currentPage === page}>{page}</button>
+      );
+    }
+    return pageButtons;
+  };
+
   return (
-    <div className={styles.divfloatCenter}>
-      <div className={styles.list}>
-        <div className={styles.itemLink}>
-          <div className={styles.div}>1</div>
-        </div>
-        <div className={styles.item}>
-          <div className={styles.link2}>2</div>
-        </div>
-        <div className={styles.item}>
-          <div className={styles.link2}>3</div>
-        </div>
-        <div className={styles.item}>
-          <div className={styles.link2}>4</div>
-        </div>
-        <div className={styles.item}>
-          <div className={styles.link2}>5</div>
-        </div>
-        <div className={styles.item}>
-          <div className={styles.link2}>6</div>
-        </div>
-        <div className={styles.item}>
-          <div className={styles.link2}>7</div>
-        </div>
-        <div className={styles.item}>
-          <div className={styles.link2}>8</div>
-        </div>
-        <div className={styles.item}>
-          <div className={styles.link2}>9</div>
-        </div>
-      </div>
-      <div className={styles.link} />
+    <div className={styles.pagination}>
+      <button onClick={() => onPageChange(1)} disabled={currentPage === 1}>{"<<"}</button>
+      <button onClick={() => onPageChange(currentPage - 1)} disabled={currentPage === 1}>{"<"}</button>
+      {renderPageButtons()}
+      <button onClick={() => onPageChange(currentPage + 1)} disabled={currentPage === totalPages}>{">"}</button>
+      <button onClick={() => onPageChange(totalPages)} disabled={currentPage === totalPages}>{">>"}</button>
     </div>
   );
 };
 
 export default Page;
-
-// 하단 페이지 표시; 이름 생각 중

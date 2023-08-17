@@ -4,8 +4,3 @@
   align-items: center;
   min-height: 100vh;
 }
-
-.newsListContainer {
-  flex: 1;
-  margin-top: 300px;
-}

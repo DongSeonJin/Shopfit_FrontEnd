@@ -4,6 +4,8 @@ import { useParams } from "react-router-dom";
 
 import Article from "../components/Article";
 import Search from "../components/Search";
+import Footer from "../components/Footer";
+import Page from "../components/Page";
 
 import styles from "../styles/NewsList.module.css";
 
@@ -21,14 +23,16 @@ const formatDate = (date) => {
 const NewsList = () => {
   const [dataList, setDataList] = useState([]);
   const [searchResults, setSearchResults] = useState([]);
-  const { page } = useParams();
-  const currentPage = page || 1;
   
+  // eslint-disable-next-line
+  const [searchTerm, setSearchTerm] = useState("");       // 에러 무시
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
   
-
   useEffect(() => {
     fetchData();
-  }, []);
+    // eslint-disable-next-line
+  }, [currentPage]);    // currentPage 변경 시에만 데이터를 가져옴, 에러 무시
 
   const fetchData = () => {
     axios.get(`/news/list/${currentPage}`)
@@ -41,26 +45,39 @@ const NewsList = () => {
           imageUrl: item.imageUrl,
           newsUrl: item.newsUrl,
           createdAt: formatDate(item.createdAt),
+          totalPages: item.totalPages,
         }));
         setDataList(extractedData);
+
+        const calculatedTotalPages = response.data.totalPages;
+        setTotalPages(calculatedTotalPages);                       // 총 페이지 수 상태 업데이트
       })
       .catch((error) => {
-        console.error('Error fetching data:', error);
+        console.error('데이터를 불러오는 중 에러 발생:', error);
       });
   };
 
   const handleSearch = (searchTerm) => {
-    axios.get(`/news/search/${searchTerm}`)
-      .then((response) => {
-        const searchResultsData = response.data.content;
-        const filteredNews = searchResultsData.filter((result) =>
-          result.title.includes(searchTerm)
-        );
-        setSearchResults(filteredNews);
-      })
-      .catch((error) => {
-        console.error('Error fetching search results:', error);
-      });
+    setSearchTerm(searchTerm);              // 검색어 설정
+    if (searchTerm.trim() === "") {
+      setSearchResults([]);                 // 검색어가 없을 때 전체 데이터로 초기화
+    } else {
+      axios.get(`/news/search/${searchTerm}`)
+        .then((response) => {
+          const searchResultsData = response.data.content;
+          const filteredNews = searchResultsData.filter((result) =>
+            result.title.includes(searchTerm)
+          );
+          setSearchResults(filteredNews);
+        })
+        .catch((error) => {
+          console.error('검색 결과를 불러오는 중 에러 발생:', error);
+        });
+    }
+  };
+
+  const handlePageChange = (newPage) => {
+    setCurrentPage(newPage);
   };
 
   return (
@@ -80,7 +97,9 @@ const NewsList = () => {
           ))}
         </tbody>
       </table>
+      <Page currentPage={currentPage} onPageChange={handlePageChange} totalPages={totalPages} />
       <Search onSearch={handleSearch} />
+      <Footer />
     </div>
   );
 };

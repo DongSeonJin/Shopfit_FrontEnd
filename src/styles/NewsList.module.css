@@ -1,8 +1,7 @@
 .base {
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  height: 100vh; /* Adjust as needed */
+  justify-content: flex-start;
 }
 
 .page_title {
