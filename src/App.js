@@ -1,4 +1,9 @@
-import {Routes, Route, useNavigationType, useLocation} from "react-router-dom";
+import {
+  Routes,
+  Route,
+  useNavigationType,
+  useLocation,
+} from "react-router-dom";
 import { useEffect } from "react";
 
 import Home from "./pages/Home";
@@ -46,9 +51,18 @@ function App() {
   return (
     <Routes>
       <Route path="/" element={<Home />} />
-      <Route path="/login" element={<><Home /><LoginPage /></>} />
+      <Route
+        path="/login"
+        element={
+          <>
+            <Home />
+            <LoginPage />
+          </>
+        }
+      />
       <Route path="/register" element={<RegisterPage />} />
-        <Route path="/news/list/" element={<News />} />
+      <Route path="/news/list" element={<News />} />
+      <Route path="/news/list/:page" element={<News />} />
     </Routes>
   );
 }

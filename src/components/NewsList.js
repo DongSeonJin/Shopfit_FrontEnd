@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { useParams } from "react-router-dom";
 
 import Article from "../components/Article";
 import Search from "../components/Search";
@@ -22,11 +23,12 @@ const formatDate = (date) => {
 const NewsList = () => {
   const [dataList, setDataList] = useState([]);
   const [searchResults, setSearchResults] = useState([]);
+  
   // eslint-disable-next-line
   const [searchTerm, setSearchTerm] = useState("");       // 에러 무시
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
-
+  
   useEffect(() => {
     fetchData();
     // eslint-disable-next-line
@@ -103,3 +105,4 @@ const NewsList = () => {
 };
 
 export default NewsList;
+

@@ -1,10 +1,10 @@
 import React from "react";
 import PropTypes from "prop-types";
+import DeleteNews from "./news/DeleteNews";
 
 import styles from "../styles/Article.module.css";
 
 const Article = ({ data }) => {
-
   const handleClick = () => {
     window.open(data.newsUrl, "_blank");
   };
@@ -17,18 +17,22 @@ const Article = ({ data }) => {
   };
 
   return (
-    <tr
-    key={data.newsId}
-    onClick={handleClick}
-    className={`${styles.articleRow}`}
-    >
-      <td className={`${styles.img_item} ${styles.backgroundImage}`} style={imageStyle}></td>
-      <td className={styles.table_content}>
-        <td className="content_title">{data.title}</td>
-        <br />
-        <td className="content_detail">{data.content}</td>
+    <tr key={data.newsId}>
+      <div onClick={handleClick} className={`${styles.articleRow}`}>
+        <td
+          className={`${styles.img_item} ${styles.backgroundImage}`}
+          style={imageStyle}
+        ></td>
+        <td className={styles.table_content}>
+          <td className="content_title">{data.title}</td>
+          <br />
+          <td className="content_detail">{data.content}</td>
+        </td>
+        <td className={styles.when_post}>{data.createdAt}</td>
+      </div>
+      <td>
+        <DeleteNews newsId={data.newsId} />
       </td>
-      <td className={styles.when_post}>{data.createdAt}</td>
     </tr>
   );
 };
