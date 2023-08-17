@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { useParams } from "react-router-dom";
 
 import Article from "../components/Article";
 import Search from "../components/Search";
@@ -20,13 +21,17 @@ const formatDate = (date) => {
 const NewsList = () => {
   const [dataList, setDataList] = useState([]);
   const [searchResults, setSearchResults] = useState([]);
+  const { page } = useParams();
+  const currentPage = page || 1;
+  
+  
 
   useEffect(() => {
     fetchData();
   }, []);
 
   const fetchData = () => {
-    axios.get('/news/list/1')
+    axios.get(`/news/list/${currentPage}`)
       .then((response) => {
         const contentArray = response.data.content;
         const extractedData = contentArray.map((item) => ({
@@ -81,3 +86,4 @@ const NewsList = () => {
 };
 
 export default NewsList;
+
