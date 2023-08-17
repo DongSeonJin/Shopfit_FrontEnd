@@ -2,6 +2,8 @@ import React, { useCallback } from "react";
 import { Button, Dialog, DialogActions, DialogTitle } from "@mui/material";
 import axios from "axios";
 
+// import styles from "../../styles/news/DeleteNews.module.css";
+
 // 부모 컴포넌트로부터 newsId 값을 전달받기
 // 부모 컴포넌트의 리턴문에 <DeleteNews newsId={newsId} /> 형식으로 작성하기
 const DeleteNews = (props) => {

@@ -1,10 +1,10 @@
 import React, {useState} from "react";
 
-import HeaderMain from "../components/HeaderMain";
-import HeaderSubComm from "../components/HeaderSubComm";
-import HeaderSubShop from "../components/HeaderSubShop";
+import HeaderMain from "./HeaderMain";
+import HeaderSubComm from "./HeaderSubComm";
+import HeaderSubShop from "./HeaderSubShop";
 
-import styles from "../styles/Header.module.css"
+import styles from "../../styles/common/Header.module.css"
 
 const Header = () => {
   const [isCommunityHovered, setIsCommunityHovered] = useState(false);

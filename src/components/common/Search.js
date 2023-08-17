@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import styles from "../styles/Search.module.css"
+import styles from "../../styles/common/Search.module.css"
 
 const Search = ({ onSearch }) => {
   const [searchTerm, setSearchTerm] = useState('');

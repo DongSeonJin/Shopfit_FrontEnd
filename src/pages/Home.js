@@ -1,16 +1,13 @@
 import React from "react";
 
-import Header from "../components/Header";
-import Contents from "../components/Contents";
-// import Footer from "../components/Footer";
+import Contents from "../components/mainhome/Contents";
 
-import styles from "../styles/Home.module.css";
+import styles from "../styles/pages/Home.module.css";
 
 const Home = () => {
 
   return (
     <div className={styles.Home}>
-      <Header />
       <Contents />
     </div>
   );

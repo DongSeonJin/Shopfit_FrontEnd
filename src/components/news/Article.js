@@ -1,8 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
-import DeleteNews from "./news/DeleteNews";
+import DeleteNews from "../news/DeleteNews";
 
-import styles from "../styles/Article.module.css";
+import styles from "../../styles/news/Article.module.css";
 
 const Article = ({ data }) => {
   const handleClick = () => {
@@ -31,7 +31,7 @@ const Article = ({ data }) => {
         <td className={styles.when_post}>{data.createdAt}</td>
       </div>
       <td>
-        <DeleteNews newsId={data.newsId} />
+          <DeleteNews newsId={data.newsId} />
       </td>
     </tr>
   );

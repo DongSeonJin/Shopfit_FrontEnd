@@ -15,3 +15,7 @@
 .pagination button:hover {
     background-color: #adc9ff;
 }
+
+.currentPageButton{
+    background-color: #adc9ff;
+}

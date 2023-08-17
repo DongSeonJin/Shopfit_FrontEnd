@@ -1,7 +1,8 @@
 import React from "react";
-import styles from "../styles/Page.module.css";
 
-const Page = ({ currentPage, onPageChange, totalPages }) => {
+import styles from "../../styles/common/Page.module.css";
+
+const Page = ({ currentPage, onPageChange, totalPages, onSearch }) => {
 
   const renderPageButtons = () => {
     const pageButtons = [];
@@ -19,8 +20,9 @@ const Page = ({ currentPage, onPageChange, totalPages }) => {
     }
 
     for (let page = startPage; page <= endPage; page++) {
+      const buttonStyles = currentPage === page ? styles.currentPageButton : styles.pageButton;
       pageButtons.push(
-        <button key={page} onClick={() => onPageChange(page)} disabled={currentPage === page}>{page}</button>
+        <button key={page} onClick={() => onPageChange(page)} className={buttonStyles}  disabled={currentPage === page}>{page}</button>
       );
     }
     return pageButtons;
@@ -28,7 +30,7 @@ const Page = ({ currentPage, onPageChange, totalPages }) => {
 
   return (
     <div className={styles.pagination}>
-      <button onClick={() => onPageChange(1)} disabled={currentPage === 1}>{"<<"}</button>
+      <button onClick={() => onPageChange(1)} disabled={currentPage === 1} >{"<<"}</button>
       <button onClick={() => onPageChange(currentPage - 1)} disabled={currentPage === 1}>{"<"}</button>
       {renderPageButtons()}
       <button onClick={() => onPageChange(currentPage + 1)} disabled={currentPage === totalPages}>{">"}</button>
