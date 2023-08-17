@@ -1,20 +1,28 @@
-import styles from "../styles/Search.module.css";
+import React, { useState } from 'react';
 
-const Search = () => {
+const Search = ({ onSearch }) => {
+  const [searchTerm, setSearchTerm] = useState('');
+
+  const handleSearchChange = (event) => {
+    setSearchTerm(event.target.value);
+  };
+
+  const handleSearchSubmit = (event) => {
+    event.preventDefault();
+    onSearch(searchTerm);
+  };
+
   return (
-    <div className={styles.divsrchBox}>
-      <div className={styles.divsrchInputArea}>
-        <div className={styles.input}>
-          <div className={styles.div}>검색어를 입력하세요.</div>
-        </div>
-      </div>
-      <div className={styles.button}>
-        <div className={styles.div1}>검 색</div>
-      </div>
-    </div>
+    <form onSubmit={handleSearchSubmit}>
+      <input
+        type="text"
+        placeholder="검색어를 입력하세요..."
+        value={searchTerm}
+        onChange={handleSearchChange}
+      />
+      <button type="submit">검색</button>
+    </form>
   );
 };
 
 export default Search;
-
-// 카데고리 내 검색 창; 생각 중
