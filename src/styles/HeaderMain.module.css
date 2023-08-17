@@ -6,7 +6,7 @@
     flex-shrink: 0;
 }
 .linkHover {
-    color: var(--color-deepskyblue-100);
+    color: rgb(53, 197, 240);
 }
 .link,
 .link1,

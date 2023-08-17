@@ -2,7 +2,7 @@ import styles from "../styles/Footer.module.css";
 
 const Footer = () => {
   return (
-    <div className={styles.footer}>
+    <div className={styles.footerBox}>
       <div className={styles.dive1l1p3425}>
         <div className={styles.divcss17otnxb}>
           <div className={styles.divcssJ2at52}>
@@ -10,9 +10,6 @@ const Footer = () => {
               <b className={styles.b}>고객센터</b>
             </div>
             <div className={styles.pseudo}>
-              <div className={styles.icon}>
-                <img className={styles.vectorIcon} alt="" src="/vector17.svg" />
-              </div>
             </div>
           </div>
           <div className={styles.divcss12s9gc6}>
@@ -110,11 +107,6 @@ const Footer = () => {
           </div>
           <div className={styles.divcssA3rlk8}>
             <div className={styles.divcssZqatfe}>
-              <img
-                className={styles.f5b2c2e98ea1196pngIcon}
-                alt=""
-                src="/8f5b2c2e98ea1196png@2x.png"
-              />
               <div className={styles.divcssLkbpts}>
                 <div className={styles.copyright2014Bucketplace}>
                   <p className={styles.p}>오늘의집 서비스 운영</p>
@@ -123,11 +115,6 @@ const Footer = () => {
               </div>
             </div>
             <div className={styles.divcssZqatfe1}>
-              <img
-                className={styles.f5b2c2e98ea1196pngIcon}
-                alt=""
-                src="/d5fb816a58bb6a06png@2x.png"
-              />
               <div className={styles.divcssLkbpts1}>
                 <div className={styles.div25}>
                   <p className={styles.p}>
@@ -158,31 +145,6 @@ const Footer = () => {
             </div>
           </div>
           <div className={styles.div28}>
-            <img
-              className={styles.linkYoutubeSv}
-              alt=""
-              src="/link---youtube----svg.svg"
-            />
-            <img
-              className={styles.linkYoutubeSv}
-              alt=""
-              src="/link---instagram----svg.svg"
-            />
-            <img
-              className={styles.linkYoutubeSv}
-              alt=""
-              src="/link---facebook----svg.svg"
-            />
-            <img
-              className={styles.linkYoutubeSv}
-              alt=""
-              src="/link---kakaostory----svg.svg"
-            />
-            <img
-              className={styles.linkYoutubeSv}
-              alt=""
-              src="/link---naverpost----svg.svg"
-            />
           </div>
           <div className={styles.p9}>
             <div className={styles.copyright2014Bucketplace}>
