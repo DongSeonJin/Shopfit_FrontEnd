@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom"; // 추가
 
-import Article from "../components/Article";
-import Search from "../components/Search";
-import Footer from "../components/Footer";
-import Page from "../components/Page";
+import Article from "../news/Article";
+import Search from "../common/Search";
+import Page from "../common/Page";
 
-import styles from "../styles/NewsList.module.css";
+import styles from "../../styles/news/NewsList.module.css";
 
 
 // 날짜 yyyy-mm-dd로 변경
@@ -21,21 +20,24 @@ const formatDate = (date) => {
 
 
 const NewsList = () => {
+  const navigate = useNavigate();
   const [dataList, setDataList] = useState([]);
-  const [searchResults, setSearchResults] = useState([]);
-  
-  // eslint-disable-next-line
-  const [searchTerm, setSearchTerm] = useState("");       // 에러 무시
+  const [searchResults, setSearchResults] = useState([]);  
+  const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   
   useEffect(() => {
-    fetchData();
-    // eslint-disable-next-line
-  }, [currentPage]);    // currentPage 변경 시에만 데이터를 가져옴, 에러 무시
+    if (searchTerm.trim() === "") {
+      fetchData(`/news/list/${currentPage}`);
+    } else {
+      fetchData(`/news/search/${searchTerm}/${currentPage}`);
+    }
+  // eslint-disable-next-line
+  }, [currentPage, searchTerm]);
 
-  const fetchData = () => {
-    axios.get(`/news/list/${currentPage}`)
+  const fetchData = (url) => {
+    axios.get(url)
       .then((response) => {
         const contentArray = response.data.content;
         const extractedData = contentArray.map((item) => ({
@@ -47,10 +49,14 @@ const NewsList = () => {
           createdAt: formatDate(item.createdAt),
           totalPages: item.totalPages,
         }));
-        setDataList(extractedData);
+        if (searchTerm.trim() === "") {
+          setDataList(extractedData);
+        } else {
+          setSearchResults(extractedData);
+        }
 
         const calculatedTotalPages = response.data.totalPages;
-        setTotalPages(calculatedTotalPages);                       // 총 페이지 수 상태 업데이트
+        setTotalPages(calculatedTotalPages);
       })
       .catch((error) => {
         console.error('데이터를 불러오는 중 에러 발생:', error);
@@ -58,39 +64,31 @@ const NewsList = () => {
   };
 
   const handleSearch = (searchTerm) => {
-    setSearchTerm(searchTerm);              // 검색어 설정
+    setSearchTerm(searchTerm);
+    setCurrentPage(1);
+
     if (searchTerm.trim() === "") {
-      setSearchResults([]);                 // 검색어가 없을 때 전체 데이터로 초기화
+      setSearchResults([]);
+      navigate(`/news/list/1`);
     } else {
-      axios.get(`/news/search/${searchTerm}`)
-        .then((response) => {
-          const searchResultsData = response.data.content;
-          const filteredNews = searchResultsData.filter((result) =>
-            result.title.includes(searchTerm)
-          );
-          setSearchResults(filteredNews);
-        })
-        .catch((error) => {
-          console.error('검색 결과를 불러오는 중 에러 발생:', error);
-        });
+      navigate(`/news/search/${searchTerm}/1`);
     }
   };
 
   const handlePageChange = (newPage) => {
     setCurrentPage(newPage);
+
+    if (searchTerm.trim() === "") {
+      navigate(`/news/list/${newPage}`);
+    } else {
+      navigate(`/news/search/${searchTerm}/${newPage}`);
+    }
   };
 
   return (
     <div className={styles.base}>
       <div className={styles.page_title}>뉴스리스트</div>
       <table>
-        <thead>
-          <tr>
-            <th>사진</th>
-            <th>제목</th>
-            <th>날짜</th>
-          </tr>
-        </thead>
         <tbody>
           {(searchResults.length > 0 ? searchResults : dataList).map((data) => (
             <Article key={data.newsId} data={data} />
@@ -99,10 +97,8 @@ const NewsList = () => {
       </table>
       <Page currentPage={currentPage} onPageChange={handlePageChange} totalPages={totalPages} />
       <Search onSearch={handleSearch} />
-      <Footer />
     </div>
   );
 };
 
 export default NewsList;
-

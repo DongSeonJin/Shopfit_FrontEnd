@@ -1,4 +1,4 @@
-import styles from "../styles/HeaderSub.module.css";
+import styles from "../../styles/common/HeaderSub.module.css";
 
 const HeaderSubShop = () => {
   return (
