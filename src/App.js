@@ -7,6 +7,7 @@ import RegisterPage from "./pages/RegisterPage";
 import News from "./pages/News";
 import Header from "./components/common/Header";
 import Footer from "./components/common/Footer";
+import Community from "./pages/Community";
 
 function App() {
   const action = useNavigationType();
@@ -49,6 +50,7 @@ function App() {
     <div>
       <Header />
       <Routes>
+        <Route path="/community" element={<Community />} />
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<><Home /><LoginPage /></>} />
         <Route path="/register" element={<RegisterPage />} />
