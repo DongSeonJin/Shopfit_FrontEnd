@@ -1,0 +1,43 @@
+/* HomeNews.module.css */
+
+.container {
+    text-align: center;
+  }
+  
+  .newsList {
+    display: flex;
+    justify-content: center;
+    list-style: none;
+    padding: 0;
+  }
+  
+  .newsItem {
+    margin-right: 10px;
+    display: flex;
+    flex-direction: column;
+    max-width: 180px;
+  }
+  
+  .newsImage {
+    width: 180px;
+    height: 120px;
+  }
+  
+  .newsTitle {
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    height: 4em;
+    overflow: hidden;
+    font-size: 0.5em;
+    margin-bottom: 0;
+    text-align: left;
+  }
+  
+  .newsContent {
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    font-size: 0.5em;
+    margin-top: 0;
+    text-align: left;
+  }
+  

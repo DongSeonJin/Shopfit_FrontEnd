@@ -1,0 +1,12 @@
+/* Product.module.css */
+.productWrapper {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr); /* 5열로 정렬 */
+    grid-gap: 10px; /* 사진들 간의 간격 설정 */
+  }
+
+.gridContainer {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  grid-gap: 20px;
+}
