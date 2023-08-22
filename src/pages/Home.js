@@ -12,7 +12,7 @@ const Home = () => {
       <Routes>
         <Route path="/" element={<HomeContent />} />
         
-        <Route path="/community" element={<Community />} />
+        <Route path="/community/:categoryId" element={<Community />} />
 
         <Route path="/shopping" element={<Shopping />} />
         <Route path="/shopping/:pageNum" element={<Shopping />} />
