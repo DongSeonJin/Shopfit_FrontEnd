@@ -1,0 +1,36 @@
+.productContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .productImage {
+    width: 240px;
+    height: 240px;
+    margin-bottom: 10px;
+  }
+  
+  .productInfo {
+    text-align: left;
+    width: 240px;
+  }
+  
+  .category {
+    font-size: 0.6em;
+    margin-bottom: 0.5em;
+  }
+  
+  .productName {
+    font-size: 0.8em;
+    line-height: 1.2em;
+    max-height: 2.4em;
+    overflow: hidden;
+    margin: 0;
+  }
+  
+  .price {
+    font-size: 0.6em;
+    text-align: right;
+    margin: 0;
+  }
+  

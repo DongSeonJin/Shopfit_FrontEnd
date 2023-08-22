@@ -1,0 +1,12 @@
+.productImage {
+    width: 100px; /* 이미지 너비 조정 */
+    height: 100px; /* 이미지 높이 조정 */
+    object-fit: cover; /* 이미지 비율 유지하며 채우기 */
+}
+
+/* ProductList.module.css */
+.gridContainer {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-gap: 20px;
+}
