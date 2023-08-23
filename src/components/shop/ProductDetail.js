@@ -33,6 +33,17 @@ const ProductDetail = () => {
       });
   }, [productNum]);
 
+  const [count, setCount] = useState(1);
+
+  const countUp = () => setCount((prevCount) => prevCount + 1);
+  const countDown = () => setCount((prevCount) => prevCount - 1);
+  const value = (e) => setCount(Number(e.target.value));
+
+  if (data === null) {
+    return <div>Loading...</div>; // 로딩 메시지 표시
+  }
+
+  //formattedReviews 생성을 data가 로드된 이후에 수행
   const formattedReviews = data.reviews.map((item) => ({
     reviewId: item.reviewId,
     userId: item.userId,
@@ -42,10 +53,6 @@ const ProductDetail = () => {
     createdAt: formatDate(item.createdAt),
     updatedAt: formatDate(item.updatedAt),
   }));
-
-  if (data === null) {
-    return <div>Loading...</div>; // 로딩 메시지 표시
-  }
 
   return (
     <div className={styles.contentWrap}>
@@ -74,13 +81,40 @@ const ProductDetail = () => {
           <h2 className={styles.prodName}>{data.productName}</h2>
           <div className={styles.priceName}>{data.price}원</div>
 
-          {/* 수량 선택 */}
-
-          {/* 장바구니 */}
-          <Button></Button>
-          {/* 바로구매 */}
-          <Button></Button>
-
+          {/* 수량 선택 & 총 가격 */}
+          <div className={styles.quantity}>
+            <button
+              className={`${styles.quantityBtn} ${styles.sameSizeElements}`}
+              onClick={countUp}
+            >
+              +
+            </button>
+            <input
+              className={`${styles.quantityNum} ${styles.sameSizeElements}`}
+              onChange={value}
+              value={count}
+              min="1" // 최소값 설정
+              max={data.stockQuantity} // 최대값 설정 - 재고수량
+            ></input>
+            <button
+              className={`${styles.quantityBtn} ${styles.sameSizeElements}`}
+              onClick={countDown}
+              disabled={count < 2}
+            >
+              -
+            </button>
+            <span className={styles.totalPrice}>{data.price * count}원</span>
+          </div>
+          <div className={styles.cartBuy}>
+            {/* 장바구니 */}
+            <button className={styles.cartBtn} size="large" variant="outlined">
+              장바구니
+            </button>
+            {/* 바로구매 */}
+            <button className={styles.buyBtn} size="large" variant="contained">
+              바로구매
+            </button>
+          </div>
           {/* <p>Stock Quantity: {data.stockQuantity}</p>  재고수량*/}
         </div>
       </div>
