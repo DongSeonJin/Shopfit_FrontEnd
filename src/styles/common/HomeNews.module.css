@@ -1,5 +1,3 @@
-/* HomeNews.module.css */
-
 .container {
     text-align: center;
   }
@@ -26,11 +24,15 @@
   .newsTitle {
     word-wrap: break-word;
     overflow-wrap: break-word;
-    height: 4em;
+    display: -webkit-box;
+    -webkit-line-clamp: 2; /* 노출할 최대 줄 수 */
+    -webkit-box-orient: vertical;
+    height: 4em; /* 한 줄 높이 */
     overflow: hidden;
     font-size: 0.5em;
-    margin-bottom: 0;
+    margin: 0;
     text-align: left;
+    line-height: 2em; /* 줄 간격 조절 */
   }
   
   .newsContent {
@@ -39,5 +41,8 @@
     font-size: 0.5em;
     margin-top: 0;
     text-align: left;
+    -webkit-line-clamp: 2; /* 노출할 최대 줄 수 */
+    height: 1em; /* 한 줄 높이 */
+    line-height: 1.5em; /* 줄 간격 조절 */
   }
   

@@ -7,8 +7,11 @@ import Community1 from '../components/community/PostList1';
 import Community2 from '../components/community/PostList2';
 import Community3 from '../components/community/PostList3';
 import Shopping from '../pages/Shopping';
+import ProductListCategory from '../components/shop/ProductListCategory';
 import News from '../pages/News';
+
 import Communityhan from './Communityhan';
+
 
 const Home = () => {
   return (
@@ -27,6 +30,7 @@ const Home = () => {
         <Route path="/shopping/:pageNum" element={<Shopping />} />
         <Route path="/shopping/search/:keyword" element={<Shopping />} />
         <Route path="/shopping/search/:keyword/:pageNum" element={<Shopping />} />
+        <Route path="/shopping/category/:categoryNum" element={<ProductListCategory />} />
 
         <Route path="/news/list" element={<News />} />
         <Route path="/news/list/:pageNum" element={<News />} />

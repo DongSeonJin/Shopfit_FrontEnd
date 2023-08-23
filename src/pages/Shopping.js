@@ -1,14 +1,14 @@
 import React from "react";
 
-import ProductList from "../components/shop/ProductList";
-// import ProductDetail from "../components/shop/ProductDetail";
+// import styles from "../styles/pages/Shopping.module.css";
 
-import styles from "../styles/pages/Shopping.module.css";
+import ProductList from '../components/shop/ProductList';
+
 
 const Shopping = () => {
 
   return (
-    <div className={styles.shoppingBody}>
+    <div>
       <ProductList />
     </div>
   );

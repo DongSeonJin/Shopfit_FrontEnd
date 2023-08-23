@@ -9,22 +9,16 @@ const Product = ({ data }) => {
     window.open("/shopping/products/"+data.productId, "_blank");
   };
 
-  const imageStyle = {
-    width: "180px",
-    height: "120px",
-    backgroundImage: `url(${data.thumbnailUrl})`,
-    backgroundSize: "cover",
-  };
-
   return (
-    <div onClick={handleClick} className={`${styles.articleRow} ${styles.productWrapper} ${styles.gridContainer}`}>
-        <div className={styles.img_item} style={imageStyle}></div>
-        <div className={styles.table_content}>
-            <div>{data.productName}</div>
-            <div>{data.price} 원</div>
+    <div onClick={handleClick} className={styles.productContainer}>
+      <div className={styles.productInfo}>
+        <img src={data.thumbnailUrl} alt={data.productName} className={styles.productImage} />
+        <div className={styles.productText}>
+          <div className={styles.productName}>{data.productName}</div>
+          <div className={styles.productPrice}>{data.price} 원</div>
         </div>
+      </div>
     </div>
-
   );
 };
 

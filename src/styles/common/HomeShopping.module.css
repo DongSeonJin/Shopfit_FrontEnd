@@ -1,37 +1,63 @@
-/* HomeShopping.css
+.container {
+  display: flex;
+  justify-content: center;
+}
 
-.productContainer {
+.title {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.productList {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.productItem {
+  margin-bottom: 1rem;
+  flex: 0 0 240px;
+  margin-right: 1rem;
+}
+
+.productInfo {
   display: flex;
   flex-direction: column;
+}
+
+.imageContainer {
+  display: flex;
   align-items: center;
+  margin-bottom: 0.5rem;
 }
 
 .productImage {
   width: 240px;
   height: 240px;
-  margin-bottom: 10px;
+  object-fit: cover;
 }
 
-.productInfo {
-  text-align: left;
-  width: 240px;
-}
-
-.category {
-  font-size: 0.6em;
-  margin-bottom: 0.5em;
+.infoContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch; /* 요소 넓이를 꽉 차게 늘립니다 */
 }
 
 .productName {
-  font-size: 0.8em;
-  line-height: 1.2em;
-  max-height: 2.4em;
-  overflow: hidden;
   margin: 0;
+  font-size: 0.9rem;
+  color: #000;
+  text-align: left;
+  flex: 1;
 }
 
-.price {
-  font-size: 0.6em;
-  text-align: right;
+.productPrice {
   margin: 0;
-} */
+  font-size: 0.9rem;
+  color: #333;
+  text-align: right;
+  flex: 1;
+}

@@ -87,17 +87,21 @@ const ProductList = () => {
   };
 
   return (
-    <div className={styles.base}>
-      <div className={styles.page_title}>쇼핑리스트</div>
-      <div className={styles.gridContainer}> {/* 그리드 컨테이너 추가 */}
+    <div className={styles.container}>
+      <div className={styles.pageTitle}>쇼핑리스트</div>
+      <div className={styles.gridContainer}>
         {(searchResults.length > 0 ? searchResults : dataList).map((data) => (
-          <Product key={data.productId} data={data} /> // newsId를 productId로 변경
+          <div key={data.productId} className={styles.productItem}>
+            <Product data={data} />
+          </div>
         ))}
       </div>
       <Page currentPage={currentPage} onPageChange={handlePageChange} totalPages={totalPages} />
       <Search onSearch={handleSearch} />
     </div>
   );
+  
 };
 
 export default ProductList;
+
