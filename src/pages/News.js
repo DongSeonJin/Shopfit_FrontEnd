@@ -1,17 +1,18 @@
 import React from "react";
 
+import { Route, Routes } from 'react-router-dom';
+
 import NewsList from "../components/news/NewsList";
 
-import styles from "../styles/pages/News.module.css";
 
 const News = () => {
-
   return (
-    <div className={styles.newsContainer}>
-      <div className={styles.newsListContainer}>
-        <NewsList />
-      </div> 
-    </div>
+    <Routes>
+      <Route path="/news/list" element={<NewsList />} />
+      <Route path="/news/list/:pageNum" element={<NewsList />} />
+      <Route path="/news/list/search/:keyword" element={<NewsList />} />
+      <Route path="/news/list/search/:keyword/:pageNum" element={<NewsList />} />
+    </Routes>
   );
 };
 
