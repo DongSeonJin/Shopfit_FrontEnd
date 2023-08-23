@@ -1,36 +1,18 @@
-import axios from 'axios';
-import React, { useEffect, useState } from 'react';
+import React from 'react';
+import { Link } from 'react-router-dom';
+import PostCreate from '../components/community/PostCreate';
 
+const Community = () => {
+    return (
+        <div>
+          <p>커뮤니티 메인 페이지 (자유게시판 글 출력)</p>
 
-const Community = ({ categoryId }) => {
-    const [posts, setPosts] = useState([]);
-  
-    useEffect(() => {
-      const fetchPosts = async () => {
-        const response = await axios.get(`/post/list/${categoryId}`);
-        setPosts(response.data);
-      };
-  
-      fetchPosts();
-    }, [categoryId]);
-  
-
-
-  return (
-    <div>
-      <h1>Posts in Category: {categoryId}</h1>
-      <ul>
-        {posts.map((post) => (
-          <li key={post.id}>
-            <h2>{post.title}</h2>
-            <p>{post.content}</p>
-          </li>
-        ))}
-      </ul>
-    </div>
-  );
-
-
-};
+          <Link to="/post/create">
+            <button>글 작성</button>
+          </Link>
+          
+        </div>
+    );
+}
 
 export default Community;
