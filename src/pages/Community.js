@@ -1,36 +1,29 @@
-import axios from 'axios';
-import React, { useEffect, useState } from 'react';
+import React from 'react';
+import { Link, Route, Routes } from 'react-router-dom';
+import PostCreate from '../components/community/PostCreate';
+import PostList1 from '../components/community/PostList1';
+import PostList2 from '../components/community/PostList2';
+import PostList3 from '../components/community/PostList3';
+import PostDetail from '../components/community/PostDetail';
 
+const Community = () => {
+    return (
+        <div>
+          <p>커뮤니티 메인 페이지 (자유게시판 글 출력)</p>
 
-const Community = ({ categoryId }) => {
-    const [posts, setPosts] = useState([]);
-  
-    useEffect(() => {
-      const fetchPosts = async () => {
-        const response = await axios.get(`/post/list/${categoryId}`);
-        setPosts(response.data);
-      };
-  
-      fetchPosts();
-    }, [categoryId]);
-  
-
-
-  return (
-    <div>
-      <h1>Posts in Category: {categoryId}</h1>
-      <ul>
-        {posts.map((post) => (
-          <li key={post.id}>
-            <h2>{post.title}</h2>
-            <p>{post.content}</p>
-          </li>
-        ))}
-      </ul>
-    </div>
-  );
-
-
-};
+          <Link to="/post/create">
+            <button>글 작성</button>
+          </Link>
+          
+          <Routes>
+                <Route path="/post/list/1" element={<PostList1 />} />
+                <Route path="/post/list/2" element={<PostList2 />} />
+                <Route path="/post/list/3" element={<PostList3 />} />
+                <Route path='/post/{postId}' element={<PostDetail />} />
+            </Routes>
+          
+        </div>
+    );
+}
 
 export default Community;

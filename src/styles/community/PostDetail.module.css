@@ -1,0 +1,39 @@
+
+.post-view-wrapper {
+    width: 60%;
+    margin: 0 auto;
+  }
+  
+  .post-view-go-list-btn {
+    border: 0;
+    padding: 10px;
+    background-color: #ffd9d9;
+  }
+  
+  .post-view-row {
+    margin: 10px 0;
+    display: flex;
+  }
+  
+  .post-view-row > label:first-child {
+    margin: 10px 0;
+    width: 30%;
+    font-weight: bold;
+  }
+  
+  .post-view-row > *:nth-child(2) {
+    margin: 10px 0;
+    width: 70%;
+  }
+  /* PostCreate.module.css */
+
+.post-create-container {  /* "글 작성 페이지" */
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  text-align: center; /* 가운데 정렬을 위한 추가 */
+}
+
