@@ -2,7 +2,6 @@ import React from "react";
 import { Route, Routes } from "react-router-dom";
 
 
-import ProductDetail from "../components/shop/ProductDetail";
 import HomeContent from '../components/common/HomeContent';
 import Communityhan from './Communityhan'
 import Shopping from '../pages/Shopping';
