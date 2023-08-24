@@ -6,6 +6,8 @@ import HomeContent from '../components/common/HomeContent';
 import PostList from '../components/community/PostList';
 import Shopping from '../pages/Shopping';
 import News from '../pages/News';
+import PostDetail from "../components/community/PostDetail";
+import Community from "./Community";
 
 const Home = () => {
   return (
@@ -28,7 +30,7 @@ const Home = () => {
         <Route path="/news/list/search/:keyword/:pageNum" element={<News />} />
 
       </Routes>
-      <Communityhan />
+      <Community />
       <Shopping />
       <News />
     </div>
