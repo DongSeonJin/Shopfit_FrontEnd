@@ -2,10 +2,9 @@ import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 
 import HomeContent from '../components/common/HomeContent';
-import Community from '../pages/Community';
 import PostList from '../components/community/PostList';
-import Community2 from '../components/community/PostList2';
-import Community3 from '../components/community/PostList3';
+
+
 import Shopping from '../pages/Shopping';
 import News from '../pages/News';
 
