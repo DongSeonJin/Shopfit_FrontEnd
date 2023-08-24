@@ -13,6 +13,13 @@ const Product = ({ data }) => {
     navigate(url); // 해당 URL로 페이지 이동
   };
 
+  const imageStyle = {
+    width: "180px",
+    height: "120px",
+    backgroundImage: `url(${data.thumbnailUrl})`,
+    backgroundSize: "cover",
+  };
+
   return (
     <div
       onClick={handleClick}
