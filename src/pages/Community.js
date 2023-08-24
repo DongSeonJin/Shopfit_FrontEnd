@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Link, Route, Routes, useLocation } from 'react-router-dom';
 import PostCreate from '../components/community/PostCreate';
 import PostDetail from '../components/community/PostDetail';
@@ -9,13 +9,13 @@ const Community = () => {
   const showWriteButton = location.pathname !== "/post/create"; // useLocation 훅을 사용하여 /post/create 가 아닐 때에만 '글 작성' 버튼 보이도록 하기 
     return (
         <div>
-          <p>커뮤니티 메인 페이지 (자유게시판 글 출력)</p>
+          {/* <p>커뮤니티 메인 페이지 (자유게시판 글 출력)</p>
 
           { showWriteButton &&
             <Link to="/post/create">
               <button>글 작성</button>
             </Link>
-          }     
+          }      */}
           
           <Routes>
               

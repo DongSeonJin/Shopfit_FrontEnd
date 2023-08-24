@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios'; // axios 추가
-import { useParams, useHistory, useNavigate } from 'react-router-dom'; // useParams와 useHistory 추가
+import { useParams, useNavigate } from 'react-router-dom'; // useParams와 useHistory 추가
 import styles from '../../styles/community/PostDetail.module.css';
 
 const PostDetail = () => {
