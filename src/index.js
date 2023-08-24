@@ -6,6 +6,7 @@ import { createStore, applyMiddleware } from 'redux';
 import { composeWithDevTools } from '@redux-devtools/extension';
 import rootReducer, {rootSaga} from './modules';
 import createSagaMiddleware from 'redux-saga';
+import 'bootstrap/dist/css/bootstrap.min.css'
 
 import App from './App';
 

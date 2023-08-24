@@ -10,6 +10,7 @@ import Shopping from '../pages/Shopping';
 import News from '../pages/News';
 import Communityhan from './Communityhan';
 import PostCreate from '../components/community/PostCreate';
+import PostDetail from '../components/community/PostDetail';
 
 const Home = () => {
   return (
@@ -24,6 +25,7 @@ const Home = () => {
         <Route path="/post/list/2" element={<PostList2 />} />
         <Route path="/post/list/3" element={<PostList3 />} />
         <Route path='/post/create' element={<PostCreate />} />
+        <Route path='/post/{postId}' element={<PostDetail />} />
 
         <Route path="/shopping" element={<Shopping />} />
         <Route path="/shopping/:pageNum" element={<Shopping />} />
