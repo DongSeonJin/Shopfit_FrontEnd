@@ -8,7 +8,6 @@ import axios from "axios";
 // 부모 컴포넌트의 리턴문에 <DeleteNews newsId={newsId} /> 형식으로 작성하기
 const DeleteNews = (props) => {
   const [open, setOpen] = React.useState(false);
-
   const handleClose = () => {
     setOpen(false);
   };

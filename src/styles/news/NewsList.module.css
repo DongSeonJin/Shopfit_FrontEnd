@@ -12,3 +12,14 @@
   font-weight: bold;
   text-align: left;
 }
+
+.articleTable {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.newsListContainer {
+  margin: 0 30%; /* 좌우 20%의 마진 */
+}

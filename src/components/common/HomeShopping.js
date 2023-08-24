@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
+import styles from "../../styles/common/HomeShopping.module.css"
+
 const HomeShopping = () => {
     const [topProducts, setTopProducts] = useState([]);
 
@@ -18,26 +20,32 @@ const HomeShopping = () => {
     };
 
     return (
-        <div>
-            <h2>인기 상품</h2>
-            <ul className="productContainer">
-                {topProducts.map(product => (
-                    <li key={product.productId}>
-                        <div className="productInfo">
-                            <h3 className="productName">상품 ID: {product.productId}</h3>
-                            <img
-                                className="productImage"
-                                src={product.thumbnailUrl}
-                                alt={`상품 ${product.productId}`}
-                                style={{ width: '180px', height: '160px', objectFit: 'cover' }}
-                            />
-                        </div>
-                    </li>
-                ))}
-            </ul>
+        <div className={styles.container}>
+            <div>
+                <h2 className={styles.title}>인기 상품</h2>
+                <ul className={styles.productList}>
+                    {topProducts.map(product => (
+                        <li key={product.productId} className={styles.productItem}>
+                            <div className={styles.productInfo}>
+                                <div className={styles.imageContainer}>
+                                    <img
+                                        className={styles.productImage}
+                                        src={product.thumbnailUrl}
+                                        alt={`상품 ${product.productId}`}
+                                    />
+                                </div>
+                                <div className={styles.infoContainer}>
+                                    <p className={styles.productName}>{product.productName}</p>
+                                    <p className={styles.productPrice}>{product.price}원</p>
+                                </div>
+                            </div>
+                        </li>
+                    ))}
+                </ul>
+            </div>
         </div>
-
     );
+    
 };
 
 export default HomeShopping;

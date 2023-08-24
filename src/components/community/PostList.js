@@ -1,103 +1,36 @@
-import React, { useState } from 'react';
+
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { useParams } from 'react-router-dom';
 
-const InputField = ({ label, value, name, onChange }) => (
-    <label>
-        {label}:
-        <input type="text" value={value} name={name} onChange={onChange} />
-    </label>
-);
+const PostList = () => {
+    const [posts, setPosts] = useState([]);
+    const { categoryId } = useParams(); // 현재 URL에서 categoryId 파라미터 값을 가져옵니다.
 
-const TextAreaField = ({ label, value, name, onChange }) => (
-    <label>
-        {label}:
-        <textarea value={value} name={name} onChange={onChange} />
-    </label>
-);
+    useEffect(() => {
+        // 컴포넌트가 마운트되면 HTTP 요청을 보내서 데이터를 가져옴
+        axios.get(`/post/list/${categoryId}`)
+            .then(response => {
+                // 서버에서 받은 데이터를 상태에 저장
+                setPosts(response.data);
+            })
+            .catch(error => {
+                console.error('Error fetching data:', error);
+            });
+    },  [categoryId]); // 의존성 배열에 categoryId를 추가하여 해당 값이 변경될 때마다 useEffect 내부의 코드가 실행되도록 만들기.
 
-const PostCreate = () => {
-    const [formState, setFormState] = useState({
-        title: '',
-        content: '',
-        category: '',
-    });
 
-    const categories = [
-        { id: 1, name: '자유게시판' },
-        { id: 2, name: '오운완' },
-    ];
-
-    const handleInputChange = (e) => {
-      setFormState({
-          ...formState,
-          [e.target.name]: e.target.value,
-      });
-  };
-
-  const handleSubmit = async (e) => {
-      e.preventDefault();
-
-      // 서버로 보낼 데이터 구성
-      const postData = {
-          userId: 1,
-          nickname: '사용자 닉네임',
-          categoryId: parseInt(formState.category),
-          title: formState.title,
-          content: formState.content,
-          imageUrl1:'',
-          imageUrl2:'',
-          imageUrl3:''
-      };
-
-      try {
-            await axios.post('/post/create', postData);
-            alert('게시글이 저장되었습니다.');
-            setFormState({title:'', content:'', category:''});
-            
-       } catch (error) {
-           console.error('게시글 저장에 실패했습니다.', error);
-           alert('게시글 저장에 실패했습니다.');
-       }
-   };
-
-   return (
-       <div>
-           <h2>글 작성 페이지</h2>
-           <form onSubmit={handleSubmit}>
-               <select 
-                   value={formState.category}
-                   name="category"
-                   onChange={handleInputChange}
-               >
-                  {categories.map((category) => (
-                      <option key={category.id} value={category.id}>
-                          {category.name}
-                      </option>
-                  ))}
-               </select>
-
-               {/* 입력 필드 컴포넌트 사용 */}
-               <InputField
-                   label="제목"
-                   value={formState.title}
-                   name="title"
-                   onChange={handleInputChange}
-                />
-
-                {/* 텍스트 영역 필드 컴포넌트 사용 */}
-                <TextAreaField
-                    label="내용"
-                    value={formState.title}
-                    name="content"
-                    onchange={handleInputChange}
-                 />
-
-                 {/* ... */}
-
-                 <input type="submit" value="제출" />
-             </form>
-         </div>
-     );
+    return (
+        <div>
+            <h1>Post List</h1>
+            <ul>
+                {posts.map(post => (
+                    <li key={post.id}>{post.title}</li>
+                ))}
+            </ul>
+        </div>
+    );
 };
 
-export default PostCreate;
+export default PostList;
+
