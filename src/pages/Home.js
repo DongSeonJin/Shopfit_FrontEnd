@@ -1,6 +1,8 @@
-import React from 'react';
-import { Route, Routes } from 'react-router-dom';
+import React from "react";
+import { Route, Routes } from "react-router-dom";
 
+
+import ProductDetail from "../components/shop/ProductDetail";
 import HomeContent from '../components/common/HomeContent';
 import Community from '../pages/Community';
 import Community1 from '../components/community/PostList1';
@@ -15,6 +17,7 @@ const Home = () => {
     <div>
       <Routes>
         <Route path="/" element={<HomeContent />} />
+
         
         {/* <Route path="/community/:categoryId" element={<Community />} /> */}
 
@@ -23,10 +26,19 @@ const Home = () => {
         <Route path="/post/list/2" element={<Community2 />} />
         <Route path="/post/list/3" element={<Community3 />} />
 
+
         <Route path="/shopping" element={<Shopping />} />
         <Route path="/shopping/:pageNum" element={<Shopping />} />
         <Route path="/shopping/search/:keyword" element={<Shopping />} />
-        <Route path="/shopping/search/:keyword/:pageNum" element={<Shopping />} />
+        <Route
+          path="/shopping/search/:keyword/:pageNum"
+          element={<Shopping />}
+        />
+
+        <Route
+          path="/shopping/products/:productNum"
+          element={<ProductDetail />}
+        />
 
         <Route path="/news/list" element={<News />} />
         <Route path="/news/list/:pageNum" element={<News />} />

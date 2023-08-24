@@ -6,7 +6,6 @@ import ProductList from "../components/shop/ProductList";
 import styles from "../styles/pages/Shopping.module.css";
 
 const Shopping = () => {
-
   return (
     <div className={styles.shoppingBody}>
       <ProductList />
