@@ -1,6 +1,5 @@
 import axios from "axios";
 import React from "react";
-import { useState } from "react";
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
@@ -80,6 +79,7 @@ const ProductDetail = () => {
     } else if (newValue > data.stockQuantity) {
       setCount(data.stockQuantity);
     }
+  }
 
   const handleBuyNow = () => {
     dispatch({

@@ -8,6 +8,11 @@ const PostCreate = () => {
     const [content, setContent] = useState('');
     const [category, setCategory] = useState('');
     const [nickname, setNickname] = useState('');
+    const userId = 1;
+    const imageUrl1 = 'a';
+    const imageUrl2 = 'b';
+    const imageUrl3 = 'c;'
+    // const categoryId = 1;
 
     const categories = [
         { id: 1, name: '자유게시판' },
@@ -40,7 +45,13 @@ const PostCreate = () => {
         const postData = {
             title: title,
             content: content,
-            categoryName: category,
+            categoryId: category,
+            nickname: nickname,
+            userId: userId,
+            imageUrl1: imageUrl1,
+            imageUrl2: imageUrl2,
+            imageUrl3: imageUrl3
+
         };
 
         try {
@@ -122,6 +133,9 @@ const PostCreate = () => {
                         value="등록"
                         className={styles['submit-button']} // 클래스 이름을 가져옴
                     />
+                    <input
+                    type="hidden"
+                    value={userId}></input>
                 </form>
             </div>
         </div>
