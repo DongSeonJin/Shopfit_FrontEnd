@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom"; // 추가
+import { useNavigate } from "react-router-dom";
 
 import Article from "../news/Article";
 import Search from "../common/Search";
@@ -8,16 +8,14 @@ import Page from "../common/Page";
 
 import styles from "../../styles/news/NewsList.module.css";
 
-
-// 날짜 yyyy-mm-dd로 변경
 const formatDate = (date) => {
   const d = new Date(date);
   const year = d.getFullYear();
   const month = String(d.getMonth() + 1).padStart(2, "0");
   const day = String(d.getDate()).padStart(2, "0");
+
   return `${year}-${month}-${day}`;
 };
-
 
 const NewsList = () => {
   const navigate = useNavigate();
@@ -54,7 +52,6 @@ const NewsList = () => {
         } else {
           setSearchResults(extractedData);
         }
-
         const calculatedTotalPages = response.data.totalPages;
         setTotalPages(calculatedTotalPages);
       })
@@ -66,7 +63,6 @@ const NewsList = () => {
   const handleSearch = (searchTerm) => {
     setSearchTerm(searchTerm);
     setCurrentPage(1);
-
     if (searchTerm.trim() === "") {
       setSearchResults([]);
       navigate(`/news/list/1`);
@@ -77,21 +73,22 @@ const NewsList = () => {
 
   const handlePageChange = (newPage) => {
     setCurrentPage(newPage);
-
     if (searchTerm.trim() === "") {
       navigate(`/news/list/${newPage}`);
     } else {
       navigate(`/news/search/${searchTerm}/${newPage}`);
     }
   };
-
+  
   return (
-    <div className={styles.base}>
+    <div className={`${styles.base} ${styles.newsListContainer}`}>
       <div className={styles.page_title}>뉴스리스트</div>
       <table>
         <tbody>
           {(searchResults.length > 0 ? searchResults : dataList).map((data) => (
-            <Article key={data.newsId} data={data} />
+            <div key={data.newsId} className={styles.articleWrapper}>
+              <Article data={data} />
+            </div>
           ))}
         </tbody>
       </table>
@@ -99,6 +96,8 @@ const NewsList = () => {
       <Search onSearch={handleSearch} />
     </div>
   );
+  
+
 };
 
 export default NewsList;
