@@ -26,6 +26,13 @@ const Product = ({ data }) => {
     table_content: "display-flex flex-direction-column align-items-center",
   };
 
+  const imageStyle = {
+    width: "180px",
+    height: "120px",
+    backgroundImage: `url(${data.thumbnailUrl})`,
+    backgroundSize: "cover",
+  };
+
   return (
     <div
       onClick={handleClick}
