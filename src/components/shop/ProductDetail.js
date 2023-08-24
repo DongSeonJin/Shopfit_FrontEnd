@@ -1,14 +1,21 @@
 import axios from "axios";
 import React from "react";
-import { useEffect } from "react";
 import { useState } from "react";
-import { useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useParams, useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
 import { Rating } from "@mui/material";
 
 import styles from "../../styles/shop/ProductDetail.module.css";
 
+
 const ProductDetail = () => {
   const { productNum } = useParams(); // productNum을 useParams로 추출
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+
   const [data, setData] = useState(null);
 
   const userId = 1; // 임시로 설정한 userId 변수 -> 추후 수정해야 함
@@ -63,6 +70,7 @@ const ProductDetail = () => {
     updatedAt: formatDate(item.updatedAt),
   }));
 
+
   const handleInputChange = (e) => {
     const newValue = parseInt(e.target.value);
     if (newValue >= 1 && newValue <= data.stockQuantity) {
@@ -72,6 +80,23 @@ const ProductDetail = () => {
     } else if (newValue > data.stockQuantity) {
       setCount(data.stockQuantity);
     }
+
+  const handleBuyNow = () => {
+    dispatch({
+      type: 'SET_ORDER',
+      payload: {
+        userId: '',
+        totalPrice: data.price * count,
+        deliveryDate: '',
+        address: '',
+        phoneNumber: '',
+        orderDate: '',
+        orderStatus: '',
+        quantity: count // 선택한 수량 설정
+      }
+    });
+    navigate(`/shopping/${productNum}/order`);
+
   };
 
   return (
@@ -141,7 +166,15 @@ const ProductDetail = () => {
               장바구니
             </button>
             {/* 바로구매 */}
-            <button className={styles.buyBtn}>바로구매</button>
+
+            <button
+              className={styles.buyBtn}
+              size="large"
+              variant="contained"
+              onClick={handleBuyNow} // 바로구매 버튼 클릭 시 이벤트 핸들러 연결
+            >
+              바로구매
+            </button>
           </div>
           {/* <p>Stock Quantity: {data.stockQuantity}</p>  재고수량*/}
         </div>
