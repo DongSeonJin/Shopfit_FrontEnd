@@ -1,14 +1,17 @@
 import axios from "axios";
 import React from "react";
-import { useEffect } from "react";
-import { useState } from "react";
-import { useParams } from "react-router-dom";
-import { Button, Rating } from "@mui/material";
+import { useEffect, useState } from "react";
+import { useParams, useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { Rating } from "@mui/material";
 
 import styles from "../../styles/shop/ProductDetail.module.css";
 
+
 const ProductDetail = () => {
   const { productNum } = useParams(); // productNum을 useParams로 추출
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const [data, setData] = useState(null);
 
@@ -53,6 +56,23 @@ const ProductDetail = () => {
     createdAt: formatDate(item.createdAt),
     updatedAt: formatDate(item.updatedAt),
   }));
+
+  const handleBuyNow = () => {
+    dispatch({
+      type: 'SET_ORDER',
+      payload: {
+        userId: '',
+        totalPrice: data.price * count,
+        deliveryDate: '',
+        address: '',
+        phoneNumber: '',
+        orderDate: '',
+        orderStatus: '',
+        quantity: count // 선택한 수량 설정
+      }
+    });
+    navigate(`/shopping/${productNum}/order`);
+  };
 
   return (
     <div className={styles.contentWrap}>
@@ -111,7 +131,12 @@ const ProductDetail = () => {
               장바구니
             </button>
             {/* 바로구매 */}
-            <button className={styles.buyBtn} size="large" variant="contained">
+            <button
+              className={styles.buyBtn}
+              size="large"
+              variant="contained"
+              onClick={handleBuyNow} // 바로구매 버튼 클릭 시 이벤트 핸들러 연결
+            >
               바로구매
             </button>
           </div>

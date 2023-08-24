@@ -20,13 +20,13 @@ const ProductListCategory = () => {
   const { categoryId, pageNum } = useParams();
   const navigate = useNavigate();
   const [dataList, setDataList] = useState([]);
-  const [searchResults, setSearchResults] = useState([]);  
+  const [searchResults, setSearchResults] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   
   useEffect(() => {
-    if(pageNum != currentPage){
+    if(pageNum !== currentPage){
       setCurrentPage(1);
     }
     if (searchTerm.trim() === "") {
