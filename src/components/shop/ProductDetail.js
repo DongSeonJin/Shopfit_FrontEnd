@@ -123,12 +123,15 @@ const ProductDetail = () => {
       <h3>상세정보</h3>
       <div className={styles.detailContainer}>
         {data.productImageUrls.map((imageUrl, index) => (
-          <img
-            className={styles.detailImg}
-            key={index}
-            src={imageUrl}
-            alt={`Product ${index}`}
-          />
+          <>
+            <img
+              className={styles.detailImg}
+              key={index}
+              src={imageUrl}
+              alt={`Product ${index}`}
+            />
+            <br />
+          </>
         ))}
       </div>
 
