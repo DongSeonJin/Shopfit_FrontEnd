@@ -5,7 +5,6 @@ import ProductList from '../components/shop/ProductList';
 import ProductListCategory from "../components/shop/ProductListCategory";
 
 const Shopping = () => {
-
   return (
     <div>
       <Routes>
