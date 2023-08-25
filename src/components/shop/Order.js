@@ -1,67 +1,76 @@
 import React, { useState } from 'react';
-import { useParams } from 'react-router-dom';
+import axios from 'axios';
+import addDays from 'date-fns/addDays';
+import { useParams } from 'react-router';
+import { useProductDetail } from '../../context/ProductDetailContext';
 
 const Order = () => {
-    const { productNum } = useParams();
+  const { productNum } = useParams();
+  const now = new Date(Date.now());
+  const { totalPrice } = useProductDetail();
+  const { quantity } = useProductDetail();
 
-    const [formData, setFormData] = useState({
-        userId: '',
-        totalPrice: '',
-        deliveryDate: '',
-        address: '',
-        phoneNumber: '',
-        orderDate: '',
-        orderStatus: ''
+  const initialOrderData = {
+    userId: 100,
+    totalPrice: totalPrice,
+    deliveryDate: addDays(now, 3),
+    address: '',
+    phoneNumber: '',
+    orderDate: now,
+    orderStatus: '1',       
+    orderProducts: [
+      {
+        productId: productNum,
+        quantity: quantity
+      }
+    ]
+  };
+
+  const [orderData, setOrderData] = useState(initialOrderData);
+
+  const handleInputChange = (event) => {
+    const { name, value } = event.target;
+    setOrderData({
+      ...orderData,
+      [name]: value
     });
+  };
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        try {
-            // 주문 생성 API 호출
-            const response = await fetch('http://localhost:8080/orders/create', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(formData)
-            });
+  const handleCreateOrder = async () => {
+    try {
+      const response = await axios.post('/orders/create', orderData);
+      console.log('Order created:', response.data);
+    } catch (error) {
+      console.error('Error creating order:', error);
+    }
+  };
 
-            if (response.ok) {
-                // 주문 생성 성공 시 처리
-                console.log('주문이 성공적으로 생성되었습니다.');
-            } else {
-                // 주문 생성 실패 시 처리
-                console.error('주문 생성 실패');
-            }
-        } catch (error) {
-            console.error('오류 발생:', error);
-        }
-    };
-
-    const handleChange = (e) => {
-        const { name, value } = e.target;
-        setFormData({
-            ...formData,
-            [name]: value
-        });
-    };
-
-    return (
-        <div>
-            <h1>주문 생성 페이지</h1>
-            <p>상품 번호: {productNum}</p>
-            <form onSubmit={handleSubmit}>
-                <input type="text" name="userId" placeholder="사용자 ID" onChange={handleChange} />
-                <input type="number" name="totalPrice" placeholder="총 가격" onChange={handleChange} />
-                <input type="datetime-local" name="deliveryDate" onChange={handleChange} />
-                <input type="text" name="address" placeholder="배송 주소" onChange={handleChange} />
-                <input type="text" name="phoneNumber" placeholder="전화번호" onChange={handleChange} />
-                <input type="datetime-local" name="orderDate" onChange={handleChange} />
-                <input type="text" name="orderStatus" placeholder="주문 상태" onChange={handleChange} />
-                <button type="submit">주문 생성</button>
-            </form>
-        </div>
-    );
+  return (
+    <div>
+      <h2>Create Order</h2>
+      <div>
+        <label>Address:</label>
+        <input type="text" name="address" value={orderData.address} onChange={handleInputChange} />
+      </div>
+      <div>
+        <label>Phone Number:</label>
+        <input type="text" name="phoneNumber" value={orderData.phoneNumber} onChange={handleInputChange} />
+      </div>
+      <div>
+        <label>totalPrice : </label>
+        <span>{orderData.totalPrice}</span>
+      </div>
+      <div>
+        <label>productId : </label>
+        <span>{orderData.orderProducts[0].productId}</span>
+      </div>
+      <div>
+        <label>quantity : </label>
+        <span>{orderData.orderProducts[0].quantity}</span>
+      </div>
+      <button onClick={handleCreateOrder}>Create Order</button>
+    </div>
+  );
 };
 
 export default Order;
