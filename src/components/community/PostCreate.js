@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router';
+// import { useForm, Controller } from 'react-hook-form'
 import styles from '../../styles/community/PostCreate.module.css';
 
 const PostCreate = () => {
@@ -8,12 +9,12 @@ const PostCreate = () => {
     const [content, setContent] = useState('');
     const [category, setCategory] = useState('');
     const [nickname, setNickname] = useState('');
+    const [file, setFile] = useState(null);
     const userId = 1;
-    const imageUrl1 = 'a';
-    const imageUrl2 = 'b';
-    const imageUrl3 = 'c;'
-    // const categoryId = 1;
-
+    const [imageUrl1, setImageUrl1] = useState('');
+    const [imageUrl2, setImageUrl2] = useState('');
+    const [imageUrl3, setImageUrl3] = useState('');
+    
     const categories = [
         { id: 1, name: '자유게시판' },
         { id: 2, name: '오운완' },
@@ -37,40 +38,56 @@ const PostCreate = () => {
         setNickname(e.target.value);
     }
 
+    const handleFileChange = (e) => {
+        setFile(e.target.files[0]);
+    }
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+    
 
         // 서버로 보낼 데이터 구성
-        const postData = {
-            title: title,
-            content: content,
-            categoryId: category,
-            nickname: nickname,
-            userId: userId,
-            imageUrl1: imageUrl1,
-            imageUrl2: imageUrl2,
-            imageUrl3: imageUrl3
+        const postData = new FormData();
+        postData.append ('title', title);
+        postData.append ('content', content);
+        postData.append ('category', category);
+        postData.append ('nickname', nickname);
+        postData.append ('file', file);
+        postData.append ('imageUrl1', imageUrl1);
+        postData.append ('imageUrl2', imageUrl2);        
+        postData.append ('imageUrl3', imageUrl3);
 
-        };
+        if (!title && !content) {
+            alert("제목, 내용을 입력해주세요.");
+        } else if (!title) {
+            alert ("제목을 입력해주세요.");
+        } else if (!content) {
+            alert ("내용을 입력해주세요.");
+        } else {
 
-        try {
-            // '/post/create' 경로에 post 요청 보내기
-            await axios.post('/post/create', postData);
+            try {
+                // '/post/create' 경로에 post 요청 보내기
+                await axios.post('/post/create', postData, {
+                    headers: {
+                        'Content-Type': 'multipart/form-data' // 파일 업로드 시 Content-Type 설정
+                    }
+                });
 
-            alert('게시글이 등록되었습니다.');
+                alert('게시글이 등록되었습니다.');
 
-            // 입력 필드 초기화
-            setTitle('');
-            setContent('');
-            setCategory('');
+                // 입력 필드 초기화
+                setTitle('');
+                setContent('');
+                setFile(null);
 
-            navigate('/post/list');
-        } catch (error) {
-            console.error('There was an error!', error);
-            alert('게시글 등록에 실패했습니다.');
+                navigate('/post/list');
+            } catch (error) {
+                console.error('There was an error!', error);
+                alert('게시글 등록에 실패했습니다.');
+            }
         }
-    };
+
+    }; 
 
     return (
         <div>
@@ -78,7 +95,7 @@ const PostCreate = () => {
             <div className={styles['post-create-container']}> {/* 클래스 이름을 가져옴 */}
                 <form onSubmit={handleSubmit} className={styles['post-form']}> {/* 클래스 이름을 가져옴 */}
                     <div className={styles['form-row']}>
-                    <label className={styles['form-label']}>
+                    <   label className={styles['form-label']}>
                             작성자:
                             <input
                                 type="text"
@@ -128,6 +145,21 @@ const PostCreate = () => {
                     </label>
                     <br />
 
+                    <div>
+                        첨부 : 
+                        <input type="file" onChange={handleFileChange} />
+                    </div>
+
+                    <div>
+                        첨부 :  
+                        <input type="file" onChange={handleFileChange} />
+                    </div>
+
+                    <div>
+                        첨부 :  
+                        <input type="file" onChange={handleFileChange} />
+                    </div>
+
                     <input
                         type="submit"
                         value="등록"
@@ -141,6 +173,7 @@ const PostCreate = () => {
         </div>
         
     );
+
 };
 
 export default PostCreate;
