@@ -13,7 +13,7 @@ const Community = () => {
           
           <Routes>
               
-                <Route path="/post/list/:categoryId/:pageNumb" element={<PostList />} />
+                <Route path="/post/list/:categoryId" element={<PostList />} />
                 <Route path="/post/:postId" element={<PostDetail />} />
                 <Route path='/post/create' element={<PostCreate />} />
                 

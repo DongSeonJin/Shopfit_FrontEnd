@@ -27,6 +27,7 @@ const PostList = () => {
   useEffect(() => {
     // categoryId가 변경될 때마다 pageNumb를 1로 초기화
     setPageNumb(1);
+    setPosts([]); // 게시글 목록도 초기화합니다.
   }, [categoryId]);
 
   useEffect(() => {
@@ -35,13 +36,12 @@ const PostList = () => {
       .then(response => {
         // 서버에서 받은 데이터를 상태에 저장
         setPosts(prevPosts => [...prevPosts, ...response.data.content]); 
-        setPageNumb(prevPageNumber => prevPageNumber + 1); // 페이지 번호 증가
       })
       .catch(error => {
         console.error('Error fetching data:', error);
       });
     
-   }, [categoryId]);
+   }, [categoryId,pageNumb]);
 
    // loader(ref) 가 화면에 나타났다 사라졌다 할 때 호출되는 함수입니다.
    const handleObserver = (entities) => {
