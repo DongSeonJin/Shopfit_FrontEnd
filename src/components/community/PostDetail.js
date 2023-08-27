@@ -1,7 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios'; // axios 추가
-import { useParams, useHistory, useNavigate } from 'react-router-dom'; // useParams와 useHistory 추가
+import { useParams, useNavigate, Link } from 'react-router-dom'; // useParams와 useHistory 추가
 import styles from '../../styles/community/PostDetail.module.css';
+import { Table, TableBody, TableCell, TableRow } from '@material-ui/core';
+import { Button } from '@material-ui/core'
+import LikeIcon from '@material-ui/icons/Favorite';
+import UpdateIcon from '@material-ui/icons/Edit';
+
+
 
 const PostDetail = () => {
   const [data, setData] = useState({});
@@ -15,7 +21,7 @@ const PostDetail = () => {
         const response = await axios.get(`/post/${postId}`);
         setData(response.data);
       } catch (error) {
-        console.error('게시글 조회 실패:', error);
+        console.error('게시글 조회 실패 :', error);
       }
     };
     fetchData();
@@ -40,36 +46,76 @@ const PostDetail = () => {
       <div className="post-view-wrapper">
         {data.title ? (
           <>
-            <div className="post-view-row">
-              <label>게시글 번호:  </label>
-              <label>{data.postId}</label>
-            </div>
-            <div className="post-view-row">
-              <label>제목:  </label>
-              <label>{data.title}</label>
-            </div>
-            <div className="post-view-row">
-              <label>작성일:  </label>
-              <label>{data.createDate}</label>
-            </div>
-            <div className="post-view-row">
-              <label>조회수:  </label>
-              <label>{data.viewCount}</label>
-            </div>
-            <div className="post-view-row">
-              <label>내용:  </label>
-              <div>{data.content}</div>
-            </div>
-            <button className="post-view-like-btn" onClick={handleLike}>
-              좋아요
-            </button>
+            <Table>
+              <TableBody>
+                <TableRow>
+                  <TableCell>게시글 번호</TableCell>
+                  <TableCell>{data.postId}</TableCell>
+                </TableRow>
+              </TableBody>
+
+              <TableBody>
+                <TableRow>
+                  <TableCell>작성일</TableCell>
+                  <TableCell>{data.createDate}</TableCell>
+                </TableRow>
+              </TableBody>
+
+              <TableBody>
+                <TableRow>
+                  <TableCell>조회수</TableCell>
+                  <TableCell>{data.viewCount}</TableCell>
+                </TableRow>
+              </TableBody>
+
+              <TableBody>
+                <TableRow>
+                  <TableCell>내용</TableCell>
+                  <TableCell>{data.content}</TableCell>
+                </TableRow>
+              </TableBody>
+              
+            </Table>
+
+            {data.imageUrl1 && (
+              <img src={data.imageUrl1} alt="첨부이미지1" />
+            )}
+            {data.imageUrl2 && (
+              <img src={data.imageUrl2} alt="첨부이미지2" />
+            )}
+            {data.imageUrl3 && (
+              <img src={data.imageUrl3} alt="첨부이미지3" />
+            )}
+            <br /><br /><br />
+            
+            <LikeIcon onClick={handleLike} style={{color:'red', cursor: 'pointer'}} />
+            <UpdateIcon
+              component={Link}
+              to={`/post/${postId}`}
+              style={{ color: 'blue', cursor: 'pointer', marginLeft: '10px' }}
+            />
           </>
         ) : (
           '해당 게시글을 찾을 수 없습니다.'
         )}
-        <button className="post-view-go-list-btn" onClick={() => navigate.goBack()}>
-          목록으로 돌아가기
-        </button>
+
+      
+        <Button
+              variant="contained"
+              color="primary"
+              onClick={() => navigate(-1)}
+              style={{ marginTop: '10px' }}
+        > 목록으로 돌아가기 </Button>
+
+        <Button
+              variant="contained"
+              color="primary"
+              component={Link}
+              to={`/post/${postId}`} // 수정 페이지 경로로 이동
+              style={{ marginTop: '10px', marginLeft: '10px' }}
+        > 수정하기 </Button>
+
+
       </div>
     </>
   );
