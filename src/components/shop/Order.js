@@ -1,30 +1,33 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import addDays from 'date-fns/addDays';
-import { useParams } from 'react-router';
+import { useParams } from 'react-router-dom';
 import { useProductDetail } from '../../context/ProductDetailContext';
+
+import PurchasedProduct from './PurchasedProduct';
+import { colors } from '@mui/material';
 
 const Order = () => {
   const { productNum } = useParams();
-  const now = new Date(Date.now());
-  const { totalPrice } = useProductDetail();
-  const { quantity } = useProductDetail();
+  const now = new Date();
+  const productDetail = useProductDetail();
 
   const initialOrderData = {
-    userId: 100,
-    totalPrice: totalPrice,
+    userId: 100, // You might want to replace this with the actual user ID
+    totalPrice: productDetail.totalPrice,
     deliveryDate: addDays(now, 3),
     address: '',
     phoneNumber: '',
     orderDate: now,
-    orderStatus: '1',       
+    orderStatus: '1',
     orderProducts: [
       {
         productId: productNum,
-        quantity: quantity
-      }
-    ]
+        quantity: productDetail.quantity,
+      },
+    ],
   };
+
 
   const [orderData, setOrderData] = useState(initialOrderData);
 
@@ -32,7 +35,7 @@ const Order = () => {
     const { name, value } = event.target;
     setOrderData({
       ...orderData,
-      [name]: value
+      [name]: value,
     });
   };
 
@@ -46,29 +49,80 @@ const Order = () => {
   };
 
   return (
-    <div>
-      <h2>Create Order</h2>
-      <div>
-        <label>Address:</label>
-        <input type="text" name="address" value={orderData.address} onChange={handleInputChange} />
+    <div style={{margin: '0 20%'}}>
+      <h2>주문/결제</h2>
+      <h4 style={{marginTop: '50px'}}>배송정보</h4>
+      <div style={{ display: 'flex' }}>
+        <div style={{ flex: 1 }}>
+          <div>
+            <label style={{ width: '80px' }}>이름:</label>
+            <input
+              type="text"
+              name="name"
+              value={orderData.userId}
+              readOnly  // 수정 불가능하게 설정
+            />
+          </div>
+          <div>
+            <label style={{ width: '80px' }}>이메일:</label>
+            <input
+              type="email"
+              name="email"
+              value={orderData.userId}
+              readOnly  // 수정 불가능하게 설정
+            />
+          </div>
+          <div>
+            <label style={{ width: '80px' }}>연락처:</label>
+            <input
+              type="tel"
+              name="phoneNumber"
+              value={orderData.phoneNumber}
+              onChange={handleInputChange}
+            />
+          </div>
+          <div>
+            <label style={{ width: '80px' }}>주소:</label>
+            <input
+              type="text"
+              name="address"
+              value={orderData.address}
+              onChange={handleInputChange}
+            />
+            <button>주소 검색</button>
+          </div>
+          <div style={{ marginTop: '50px' }}>
+            <h4>주문상품</h4>
+            <div>
+              <PurchasedProduct products={orderData.orderProducts} />
+            </div>
+          </div>
+          <div style={{marginTop: '50px'}}>
+            <h4>결제방식</h4>
+          </div>
+        </div>
+        <div style={{ flex: 1, margin: '0 10%'}}>
+          <div>
+            <div>
+              <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                <div>총 상품 금액:</div>
+                <div>{orderData.totalPrice.toLocaleString()}원</div>
+              </div>
+              <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                <div>배송비:</div>
+                <div>3,000원</div>
+              </div>
+              <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                <div>최종 결제 금액:</div>
+                <div>{(orderData.totalPrice + 3000).toLocaleString()}원</div>
+              </div>
+            </div>
+            <div style={{ display: 'flex', justifyContent: 'center', marginTop: '50px' }}>
+              <button onClick={handleCreateOrder}>결제하기</button>
+            </div>
+          </div>
+        </div>
       </div>
-      <div>
-        <label>Phone Number:</label>
-        <input type="text" name="phoneNumber" value={orderData.phoneNumber} onChange={handleInputChange} />
-      </div>
-      <div>
-        <label>totalPrice : </label>
-        <span>{orderData.totalPrice}</span>
-      </div>
-      <div>
-        <label>productId : </label>
-        <span>{orderData.orderProducts[0].productId}</span>
-      </div>
-      <div>
-        <label>quantity : </label>
-        <span>{orderData.orderProducts[0].quantity}</span>
-      </div>
-      <button onClick={handleCreateOrder}>Create Order</button>
     </div>
   );
 };

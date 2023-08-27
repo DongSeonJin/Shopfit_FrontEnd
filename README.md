@@ -70,5 +70,8 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
 
 
-### 2023-08-25 추가
+### 2023-08-25 추가 / 날짜
 yarn add date-fns
+
+### 2023-08-27 추가 / 우편검색
+yarn add react-daum-postcode
