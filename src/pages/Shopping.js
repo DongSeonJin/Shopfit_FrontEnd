@@ -5,7 +5,7 @@ import ProductList from "../components/shop/ProductList";
 import ProductListCategory from "../components/shop/ProductListCategory";
 import ProductDetail from "../components/shop/ProductDetail";
 import Order from "../components/shop/Order";
-
+import CartList from "../components/shop/CartList";
 
 const Shopping = () => {
   return (
@@ -19,16 +19,31 @@ const Shopping = () => {
           element={<ProductList />}
         />
 
+        <Route
+          path="/shopping/category/:categoryId"
+          element={<ProductListCategory />}
+        />
+        <Route
+          path="/shopping/category/:categoryId/:pageNum"
+          element={<ProductListCategory />}
+        />
+        <Route
+          path="/shopping/category/:categoryId/search/:keyword"
+          element={<ProductListCategory />}
+        />
+        <Route
+          path="/shopping/category/:categoryId/search/:keyword/:pageNum"
+          element={<ProductListCategory />}
+        />
 
-        <Route path="/shopping/category/:categoryId" element={<ProductListCategory />} />
-        <Route path="/shopping/category/:categoryId/:pageNum" element={<ProductListCategory />} />
-        <Route path="/shopping/category/:categoryId/search/:keyword" element={<ProductListCategory />} />
-        <Route path="/shopping/category/:categoryId/search/:keyword/:pageNum" element={<ProductListCategory />} />
-
-        <Route path="/shopping/products/:productNum" element={<ProductDetail />} />
+        <Route
+          path="/shopping/products/:productNum"
+          element={<ProductDetail />}
+        />
 
         <Route path="/shopping/:productNum/order" element={<Order />} />
 
+        <Route path="/shopping/cart/:userId" element={<CartList />} />
       </Routes>
     </div>
   );

@@ -7,17 +7,15 @@ import { Rating } from "@mui/material";
 
 import styles from "../../styles/shop/ProductDetail.module.css";
 
-
 const ProductDetail = () => {
   const { productNum } = useParams(); // productNum을 useParams로 추출
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-
   const [data, setData] = useState(null);
 
-  const userId = 1; // 임시로 설정한 userId 변수 -> 추후 수정해야 함
+  const userId = 3; // 임시로 설정한 userId 변수 -> 추후 수정해야 함
 
   // 날짜 yyyy-mm-dd로 변경
   const formatDate = (date) => {
@@ -46,12 +44,39 @@ const ProductDetail = () => {
   const countDown = () => setCount((prevCount) => prevCount - 1);
   // const value = (e) => setCount(Number(e.target.value));
   const addCart = (userId, productNum, count) => {
-    axios.post("/cart/add", {
-      userId: userId,
-      productId: productNum,
-      quantity: count,
-    });
-    alert("장바구니에 담았습니다");
+    axios
+      .get("/cart/checkCart", {
+        // 해당 유저의 장바구니에 이미 상품이 있는지 확인하기
+        params: {
+          userId: userId,
+          productId: productNum,
+        },
+      })
+      .then((response) => {
+        console.log(response.data);
+        if (response.data === false) {
+          // 상품이 없으면
+          axios
+            .post("/cart/add", {
+              // 장바구니에 추가
+              userId: userId,
+              productId: productNum,
+              quantity: count,
+            })
+            .then(() => {
+              alert("장바구니에 담았습니다");
+            })
+            .catch((error) => {
+              console.error("Error adding to cart:", error);
+            });
+        } else {
+          // 상품이 이미 장바구니에 있으면 alert
+          alert("이미 장바구니에 담긴 상품입니다");
+        }
+      })
+      .catch((error) => {
+        console.error("Error checking cart:", error);
+      });
   };
 
   if (data === null) {
@@ -60,15 +85,10 @@ const ProductDetail = () => {
 
   //formattedReviews 생성을 data가 로드된 이후에 수행
   const formattedReviews = data.reviews.map((item) => ({
-    reviewId: item.reviewId,
-    userId: item.userId,
-    nickname: item.nickname,
-    rating: item.rating,
-    comment: item.comment,
+    ...item,
     createdAt: formatDate(item.createdAt),
     updatedAt: formatDate(item.updatedAt),
   }));
-
 
   const handleInputChange = (e) => {
     const newValue = parseInt(e.target.value);
@@ -79,24 +99,23 @@ const ProductDetail = () => {
     } else if (newValue > data.stockQuantity) {
       setCount(data.stockQuantity);
     }
-  }
+  };
 
   const handleBuyNow = () => {
     dispatch({
-      type: 'SET_ORDER',
+      type: "SET_ORDER",
       payload: {
-        userId: '',
+        userId: "",
         totalPrice: data.price * count,
-        deliveryDate: '',
-        address: '',
-        phoneNumber: '',
-        orderDate: '',
-        orderStatus: '',
-        quantity: count // 선택한 수량 설정
-      }
+        deliveryDate: "",
+        address: "",
+        phoneNumber: "",
+        orderDate: "",
+        orderStatus: "",
+        quantity: count, // 선택한 수량 설정
+      },
     });
     navigate(`/shopping/${productNum}/order`);
-
   };
 
   return (

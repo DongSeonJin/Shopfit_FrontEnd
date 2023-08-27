@@ -1,0 +1,71 @@
+.contentWrap {
+    margin-left: 250px;
+    margin-right: 250px;
+}
+
+.cartOption {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+
+  .cartItems {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    position: relative;
+  }
+  
+  .imageContainer {
+    margin-right: 10px;
+  }
+
+  .repImg {
+    height: 80px;
+    width: 80px;
+  }
+
+  .infoContainer {
+    display: flex;
+    position: absolute;
+    right: 0;
+  }
+  
+  .productName {
+    font-weight: bold;
+    display: block;
+    flex: 1;
+  }
+  
+  .price {
+    color: #888;
+    flex: 1;
+  }
+  
+  .itemTotalPrice {
+    color: #888;
+    flex: 1;
+    padding-left: 40px;
+    
+  }
+  .deleteBtn {
+   margin-left: 40px;
+  }
+  
+.quantity {
+    height: 30px;
+    width: 50px;
+  }
+  
+  
+  .checkBox {
+    margin:10px;
+  }
+
+  .bottomWrap {
+    display: flex;
+    justify-content: space-between; /* 좌우 정렬 간격을 최대한 확보 */
+    align-items: center; /* 세로 가운데 정렬 */
+  }
+  
