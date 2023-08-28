@@ -5,6 +5,8 @@ import { useParams } from 'react-router-dom';
 import { useProductDetail } from '../../context/ProductDetailContext';
 
 import PurchasedProduct from './PurchasedProduct';
+import SearchAddress from './SearchAddress';
+
 import { colors } from '@mui/material';
 
 const Order = () => {
@@ -28,7 +30,6 @@ const Order = () => {
     ],
   };
 
-
   const [orderData, setOrderData] = useState(initialOrderData);
 
   const handleInputChange = (event) => {
@@ -46,6 +47,13 @@ const Order = () => {
     } catch (error) {
       console.error('Error creating order:', error);
     }
+  };
+
+  const handleAddressSelected = (selectedAddress) => {
+    setOrderData({
+      ...orderData,
+      address: selectedAddress.jibunAddress,
+    });
   };
 
   return (
@@ -89,7 +97,7 @@ const Order = () => {
               value={orderData.address}
               onChange={handleInputChange}
             />
-            <button>주소 검색</button>
+            <SearchAddress onAddressSelected={handleAddressSelected} />
           </div>
           <div style={{ marginTop: '50px' }}>
             <h4>주문상품</h4>
