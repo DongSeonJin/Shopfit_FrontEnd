@@ -7,19 +7,20 @@ import { Rating } from "@mui/material";
 import { useProductDetail } from "../../context/ProductDetailContext";
 
 import styles from "../../styles/shop/ProductDetail.module.css";
+import { useDispatch } from "react-redux";
 
 
 const ProductDetail = () => {
   const { productNum } = useParams(); // productNum을 useParams로 추출
 
   const navigate = useNavigate();
-
+  const dispatch = useDispatch();
 
   const [count, setCount] = useState(1);
-
   const [data, setData] = useState(null);
-  const { totalPrice, setTotalPrice } = useProductDetail();
-  const { quantity, setQuantity } = useProductDetail();
+  
+  const { setTotalPrice } = useProductDetail();
+  const { setQuantity } = useProductDetail();
 
   const userId = 3; // 임시로 설정한 userId 변수 -> 추후 수정해야 함
 

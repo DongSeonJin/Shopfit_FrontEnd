@@ -7,8 +7,6 @@ import { useProductDetail } from '../../context/ProductDetailContext';
 import PurchasedProduct from './PurchasedProduct';
 import SearchAddress from './SearchAddress';
 
-import { colors } from '@mui/material';
-
 const Order = () => {
   const { productNum } = useParams();
   const now = new Date();
@@ -52,7 +50,7 @@ const Order = () => {
   const handleAddressSelected = (selectedAddress) => {
     setOrderData({
       ...orderData,
-      address: selectedAddress.jibunAddress,
+      address: selectedAddress,
     });
   };
 
@@ -68,7 +66,7 @@ const Order = () => {
               type="text"
               name="name"
               value={orderData.userId}
-              readOnly  // 수정 불가능하게 설정
+              readOnly
             />
           </div>
           <div>
@@ -77,7 +75,7 @@ const Order = () => {
               type="email"
               name="email"
               value={orderData.userId}
-              readOnly  // 수정 불가능하게 설정
+              readOnly
             />
           </div>
           <div>
