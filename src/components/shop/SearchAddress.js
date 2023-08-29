@@ -13,8 +13,8 @@ const SearchAddress = ({ onAddressSelected }) => {
         {
           headers: {
             'Accept': 'application/json',
-            'X-NCP-APIGW-API-KEY-ID': 'gr9wuv8ffa',
-            'X-NCP-APIGW-API-KEY': '0BUwHQuqCCVOMkFS5lOFdNLJVuAkURRQzR85Q8UV',
+            'X-NCP-APIGW-API-KEY-ID': '',
+            'X-NCP-APIGW-API-KEY': '',
           },
         }
       );
