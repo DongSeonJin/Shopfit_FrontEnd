@@ -40,13 +40,23 @@ const PostDetail = () => {
     }
   };
 
+  const handleDelete = async () => {
+    try {
+      await axios.delete(`/post/delete/${postId}`);
+      alert('게시글이 삭제되었습니다.');
+      navigate('/post/list'); // 삭제 후 목록으로 돌아가기
+    } catch (error) {
+      console.error('게시글 삭제 실패:', error);
+      alert('게시글 삭제에 실패했습니다.');
+    }
+  };
+
   return (
     <>
       <h2 align="center">게시글 상세정보</h2>
 
-
       <div className="post-view-wrapper">
-        {data.title ? (
+        {data.postId ? (
           <>
             <Table>
               <TableBody>
@@ -105,6 +115,33 @@ const PostDetail = () => {
             <br /><br /><br /> */}
             
             <LikeIcon onClick={handleLike} style={{color:'red', cursor: 'pointer'}} />
+
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={() => navigate('/post/list')}
+              style={{ marginTop: '10px' }}
+            > 목록으로 돌아가기 </Button>
+
+            {data.postId && (  // postId 가 존재할 때만 버튼 보이기
+              <>
+              <Button
+                  variant="contained"
+                  color="primary"
+                  component={Link}
+                  to={`/post/update/${postId}`} // 수정 페이지 경로로 이동
+                  style={{ marginTop: '10px', marginLeft: '10px' }}
+              > 수정하기 </Button>
+
+              <Button
+                    variant="contained"
+                    color="primary"
+                    component={Link}
+                    onClick={handleDelete}
+                    style={{ marginTop: '10px', marginLeft: '10px' }}
+              > 삭제하기 </Button>
+              </>
+            )}
           
           </>
         ) : (
@@ -112,21 +149,11 @@ const PostDetail = () => {
         )}
 
       
-        <Button
-              variant="contained"
-              color="primary"
-              onClick={() => navigate('/post/list')}
-              style={{ marginTop: '10px' }}
-        > 목록으로 돌아가기 </Button>
+        
 
-        <Button
-              variant="contained"
-              color="primary"
-              component={Link}
-              to={`/post/update/${postId}`} // 수정 페이지 경로로 이동
-              style={{ marginTop: '10px', marginLeft: '10px' }}
-        > 수정하기 </Button>
+        
 
+    
 
       </div>
     </>
