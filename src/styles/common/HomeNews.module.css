@@ -36,13 +36,14 @@
   }
   
   .newsContent {
-    word-wrap: break-word;
-    overflow-wrap: break-word;
     font-size: 0.5em;
     margin-top: 0;
     text-align: left;
-    -webkit-line-clamp: 2; /* 노출할 최대 줄 수 */
-    height: 1em; /* 한 줄 높이 */
-    line-height: 1.5em; /* 줄 간격 조절 */
+    -webkit-line-clamp: 2; /* Display up to 2 lines */
+    height: 3em; /* Two lines of height */
+    line-height: 1.5em; /* Line height adjusted to 1em */
+    white-space: normal; /* Allow text to wrap to new lines */
+    overflow: hidden; /* Hide overflowed content */
+    text-overflow: ellipsis;
   }
   

@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios'; // axios 추가
+
 import { useParams, useNavigate, Link } from 'react-router-dom'; // useParams와 useHistory 추가
+
 import styles from '../../styles/community/PostDetail.module.css';
 import { Table, TableBody, TableCell, TableRow } from '@material-ui/core';
 import { Button } from '@material-ui/core'
@@ -51,6 +53,13 @@ const PostDetail = () => {
                 <TableRow>
                   <TableCell>게시글 번호</TableCell>
                   <TableCell>{data.postId}</TableCell>
+                </TableRow>
+              </TableBody>
+
+              <TableBody>
+                <TableRow>
+                  <TableCell>작성자</TableCell>
+                  <TableCell>{data.nickname}</TableCell>
                 </TableRow>
               </TableBody>
 
@@ -111,7 +120,7 @@ const PostDetail = () => {
               variant="contained"
               color="primary"
               component={Link}
-              to={`/post/${postId}`} // 수정 페이지 경로로 이동
+              to={`/post/update/${postId}`} // 수정 페이지 경로로 이동
               style={{ marginTop: '10px', marginLeft: '10px' }}
         > 수정하기 </Button>
 
