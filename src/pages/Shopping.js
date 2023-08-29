@@ -10,6 +10,9 @@ import CartList from "../components/shop/CartList";
 
 import { ProductDetailProvider } from "../context/ProductDetailContext";
 
+import CartList from "../components/shop/CartList";
+import ProductCreate from "../components/shop/ProductCreate";
+
 
 const Shopping = () => {
   return (
@@ -24,12 +27,14 @@ const Shopping = () => {
         <Route path="/shopping/category/:categoryId/:pageNum" element={<ProductListCategory />} />
         <Route path="/shopping/category/:categoryId/search/:keyword" element={<ProductListCategory />} />
         <Route path="/shopping/category/:categoryId/search/:keyword/:pageNum" element={<ProductListCategory />} />
+ 
+        <Route path="/shopping/create" element={<ProductCreate />} />
 
         <Route path="/shopping/products/:productNum" element={<ProductDetail />} />
-
+          
         <Route path="/shopping/order" element={<Order />} />
         <Route path="/shopping/order/detail" element={<OrderDetail />} />
-
+          
         <Route path="/shopping/cart" element={<CartList />} />  
       </Routes>
     </ProductDetailProvider>
