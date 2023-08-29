@@ -8,6 +8,7 @@ import Order from "../components/shop/Order";
 
 import { ProductDetailProvider } from "../context/ProductDetailContext";
 import CartList from "../components/shop/CartList";
+import ProductCreate from "../components/shop/ProductCreate";
 
 
 const Shopping = () => {
@@ -17,28 +18,7 @@ const Shopping = () => {
           <Route path="/shopping" element={<ProductList />} />
           <Route path="/shopping/:pageNum" element={<ProductList />} />
           <Route path="/shopping/search/:keyword" element={<ProductList />} />
-          <Route
-            path="/shopping/search/:keyword/:pageNum"
-            element={<ProductList />}
-          />
-
-        <Route
-          path="/shopping/category/:categoryId"
-          element={<ProductListCategory />}
-        />
-        <Route
-          path="/shopping/category/:categoryId/:pageNum"
-          element={<ProductListCategory />}
-        />
-        <Route
-          path="/shopping/category/:categoryId/search/:keyword"
-          element={<ProductListCategory />}
-        />
-        <Route
-          path="/shopping/category/:categoryId/search/:keyword/:pageNum"
-          element={<ProductListCategory />}
-        />
-
+          <Route path="/shopping/search/:keyword/:pageNum" element={<ProductList />} />
 
           <Route path="/shopping/category/:categoryId" element={<ProductListCategory />} />
           <Route path="/shopping/category/:categoryId/:pageNum" element={<ProductListCategory />} />
@@ -46,17 +26,13 @@ const Shopping = () => {
           <Route path="/shopping/category/:categoryId/search/:keyword/:pageNum" element={<ProductListCategory />} />
 
           <Route path="/shopping/products/:productNum" element={<ProductDetail />} />
+      
+          <Route path="/shopping/create" element={<ProductCreate />} />
 
-        <Route
-          path="/shopping/products/:productNum"
-          element={<ProductDetail />}
-        />
-
+          <Route path="/shopping/cart/:userId" element={<CartList />} />
 
           <Route path="/shopping/:productNum/order" element={<Order />} />
 
-
-        <Route path="/shopping/cart/:userId" element={<CartList />} />  
       </Routes>
     </ProductDetailProvider>
   );
