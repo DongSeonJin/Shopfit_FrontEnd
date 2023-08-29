@@ -12,7 +12,7 @@ import { useDispatch } from 'react-redux';
 
 const ProductDetail = () => {
   const { productNum } = useParams(); // productNum을 useParams로 추출
-  const { dispatch } = useDispatch();
+  const dispatch = useDispatch();
 
   const navigate = useNavigate();
 
