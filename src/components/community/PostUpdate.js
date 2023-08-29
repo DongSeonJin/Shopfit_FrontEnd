@@ -72,7 +72,7 @@ const PostUpdate = () => {
            
            alert("게시글이 수정되었습니다.");
            
-           navigate('/post/list/${categoryId}');
+           navigate(`/post/${postId}`);
            
        }catch(error){
            console.error("게시글 수정 실패:",error)
