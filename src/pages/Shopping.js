@@ -7,6 +7,7 @@ import ProductDetail from "../components/shop/ProductDetail";
 import Order from "../components/shop/Order";
 
 import { ProductDetailProvider } from "../context/ProductDetailContext";
+import CartList from "../components/shop/CartList";
 
 
 const Shopping = () => {
@@ -21,6 +22,23 @@ const Shopping = () => {
             element={<ProductList />}
           />
 
+        <Route
+          path="/shopping/category/:categoryId"
+          element={<ProductListCategory />}
+        />
+        <Route
+          path="/shopping/category/:categoryId/:pageNum"
+          element={<ProductListCategory />}
+        />
+        <Route
+          path="/shopping/category/:categoryId/search/:keyword"
+          element={<ProductListCategory />}
+        />
+        <Route
+          path="/shopping/category/:categoryId/search/:keyword/:pageNum"
+          element={<ProductListCategory />}
+        />
+
 
           <Route path="/shopping/category/:categoryId" element={<ProductListCategory />} />
           <Route path="/shopping/category/:categoryId/:pageNum" element={<ProductListCategory />} />
@@ -29,9 +47,17 @@ const Shopping = () => {
 
           <Route path="/shopping/products/:productNum" element={<ProductDetail />} />
 
+        <Route
+          path="/shopping/products/:productNum"
+          element={<ProductDetail />}
+        />
+
+
           <Route path="/shopping/:productNum/order" element={<Order />} />
 
-        </Routes>
+
+        <Route path="/shopping/cart/:userId" element={<CartList />} />  
+      </Routes>
     </ProductDetailProvider>
   );
 };

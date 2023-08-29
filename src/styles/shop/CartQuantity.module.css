@@ -1,0 +1,15 @@
+  .squareContainer {
+    display: flex;
+    align-items: center;
+  }
+  
+  .squareElement {
+    width: 40px; /* 원하는 크기 설정 */
+    height: 40px; /* 원하는 크기 설정 */
+    border: 1px solid gray;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    font-size: 16px;
+  }
