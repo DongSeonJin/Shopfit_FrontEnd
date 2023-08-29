@@ -64,7 +64,7 @@ const PostDetail = () => {
               <TableBody>
                 <TableRow>
                   <TableCell>작성일</TableCell>
-                  <TableCell>{data.createDate}</TableCell>
+                  <TableCell>{data.createdAt}</TableCell>
                 </TableRow>
               </TableBody>
 
@@ -77,6 +77,13 @@ const PostDetail = () => {
 
               <TableBody>
                 <TableRow>
+                  <TableCell>제목</TableCell>
+                  <TableCell>{data.title}</TableCell>
+                </TableRow>
+              </TableBody>
+
+              <TableBody>
+                <TableRow>
                   <TableCell>내용</TableCell>
                   <TableCell>{data.content}</TableCell>
                 </TableRow>
@@ -84,7 +91,7 @@ const PostDetail = () => {
               
             </Table>
 
-            {data.imageUrl1 && (
+            {/* {data.imageUrl1 && (
               <img src={data.imageUrl1} alt="첨부이미지1" />
             )}
             {data.imageUrl2 && (
@@ -93,14 +100,10 @@ const PostDetail = () => {
             {data.imageUrl3 && (
               <img src={data.imageUrl3} alt="첨부이미지3" />
             )}
-            <br /><br /><br />
+            <br /><br /><br /> */}
             
             <LikeIcon onClick={handleLike} style={{color:'red', cursor: 'pointer'}} />
-            <UpdateIcon
-              component={Link}
-              to={`/post/${postId}`}
-              style={{ color: 'blue', cursor: 'pointer', marginLeft: '10px' }}
-            />
+          
           </>
         ) : (
           '해당 게시글을 찾을 수 없습니다.'
@@ -110,7 +113,7 @@ const PostDetail = () => {
         <Button
               variant="contained"
               color="primary"
-              onClick={() => navigate(-1)}
+              onClick={() => navigate('/post/list')}
               style={{ marginTop: '10px' }}
         > 목록으로 돌아가기 </Button>
 
