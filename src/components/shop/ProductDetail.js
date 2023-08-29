@@ -7,10 +7,12 @@ import { Rating } from "@mui/material";
 import { useProductDetail } from "../../context/ProductDetailContext";
 
 import styles from "../../styles/shop/ProductDetail.module.css";
+import { useDispatch } from 'react-redux';
 
 
 const ProductDetail = () => {
   const { productNum } = useParams(); // productNum을 useParams로 추출
+  const { dispatch } = useDispatch();
 
   const navigate = useNavigate();
 
