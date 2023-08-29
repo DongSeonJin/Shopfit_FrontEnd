@@ -6,6 +6,7 @@ import ProductListCategory from "../components/shop/ProductListCategory";
 import ProductDetail from "../components/shop/ProductDetail";
 import Order from "../components/shop/Order";
 import CartList from "../components/shop/CartList";
+import ProductCreate from "../components/shop/ProductCreate";
 
 const Shopping = () => {
   return (
@@ -42,6 +43,8 @@ const Shopping = () => {
         />
 
         <Route path="/shopping/:productNum/order" element={<Order />} />
+
+        <Route path="/shopping/create" element={<ProductCreate />} />
 
         <Route path="/shopping/cart/:userId" element={<CartList />} />
       </Routes>
