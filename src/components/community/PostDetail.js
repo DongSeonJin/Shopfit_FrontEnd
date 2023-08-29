@@ -56,6 +56,13 @@ const PostDetail = () => {
 
               <TableBody>
                 <TableRow>
+                  <TableCell>작성자</TableCell>
+                  <TableCell>{data.nickname}</TableCell>
+                </TableRow>
+              </TableBody>
+
+              <TableBody>
+                <TableRow>
                   <TableCell>작성일</TableCell>
                   <TableCell>{data.createDate}</TableCell>
                 </TableRow>
@@ -111,7 +118,7 @@ const PostDetail = () => {
               variant="contained"
               color="primary"
               component={Link}
-              to={`/post/${postId}`} // 수정 페이지 경로로 이동
+              to={`/post/update/${postId}`} // 수정 페이지 경로로 이동
               style={{ marginTop: '10px', marginLeft: '10px' }}
         > 수정하기 </Button>
 
