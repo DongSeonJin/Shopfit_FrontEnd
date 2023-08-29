@@ -1,67 +1,138 @@
 import React, { useState } from 'react';
+import axios from 'axios';
+import addDays from 'date-fns/addDays';
 import { useParams } from 'react-router-dom';
+import { useProductDetail } from '../../context/ProductDetailContext';
+
+import PurchasedProduct from './PurchasedProduct';
+import SearchAddress from './SearchAddress';
+
+import { colors } from '@mui/material';
 
 const Order = () => {
-    const { productNum } = useParams();
+  const { productNum } = useParams();
+  const now = new Date();
+  const productDetail = useProductDetail();
 
-    const [formData, setFormData] = useState({
-        userId: '',
-        totalPrice: '',
-        deliveryDate: '',
-        address: '',
-        phoneNumber: '',
-        orderDate: '',
-        orderStatus: ''
+  const initialOrderData = {
+    userId: 100, // You might want to replace this with the actual user ID
+    totalPrice: productDetail.totalPrice,
+    deliveryDate: addDays(now, 3),
+    address: '',
+    phoneNumber: '',
+    orderDate: now,
+    orderStatus: '1',
+    orderProducts: [
+      {
+        productId: productNum,
+        quantity: productDetail.quantity,
+      },
+    ],
+  };
+
+  const [orderData, setOrderData] = useState(initialOrderData);
+
+  const handleInputChange = (event) => {
+    const { name, value } = event.target;
+    setOrderData({
+      ...orderData,
+      [name]: value,
     });
+  };
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        try {
-            // 주문 생성 API 호출
-            const response = await fetch('http://localhost:8080/orders/create', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(formData)
-            });
+  const handleCreateOrder = async () => {
+    try {
+      const response = await axios.post('/orders/create', orderData);
+      console.log('Order created:', response.data);
+    } catch (error) {
+      console.error('Error creating order:', error);
+    }
+  };
 
-            if (response.ok) {
-                // 주문 생성 성공 시 처리
-                console.log('주문이 성공적으로 생성되었습니다.');
-            } else {
-                // 주문 생성 실패 시 처리
-                console.error('주문 생성 실패');
-            }
-        } catch (error) {
-            console.error('오류 발생:', error);
-        }
-    };
+  const handleAddressSelected = (selectedAddress) => {
+    setOrderData({
+      ...orderData,
+      address: selectedAddress.jibunAddress,
+    });
+  };
 
-    const handleChange = (e) => {
-        const { name, value } = e.target;
-        setFormData({
-            ...formData,
-            [name]: value
-        });
-    };
-
-    return (
-        <div>
-            <h1>주문 생성 페이지</h1>
-            <p>상품 번호: {productNum}</p>
-            <form onSubmit={handleSubmit}>
-                <input type="text" name="userId" placeholder="사용자 ID" onChange={handleChange} />
-                <input type="number" name="totalPrice" placeholder="총 가격" onChange={handleChange} />
-                <input type="datetime-local" name="deliveryDate" onChange={handleChange} />
-                <input type="text" name="address" placeholder="배송 주소" onChange={handleChange} />
-                <input type="text" name="phoneNumber" placeholder="전화번호" onChange={handleChange} />
-                <input type="datetime-local" name="orderDate" onChange={handleChange} />
-                <input type="text" name="orderStatus" placeholder="주문 상태" onChange={handleChange} />
-                <button type="submit">주문 생성</button>
-            </form>
+  return (
+    <div style={{margin: '0 20%'}}>
+      <h2>주문/결제</h2>
+      <h4 style={{marginTop: '50px'}}>배송정보</h4>
+      <div style={{ display: 'flex' }}>
+        <div style={{ flex: 1 }}>
+          <div>
+            <label style={{ width: '80px' }}>이름:</label>
+            <input
+              type="text"
+              name="name"
+              value={orderData.userId}
+              readOnly  // 수정 불가능하게 설정
+            />
+          </div>
+          <div>
+            <label style={{ width: '80px' }}>이메일:</label>
+            <input
+              type="email"
+              name="email"
+              value={orderData.userId}
+              readOnly  // 수정 불가능하게 설정
+            />
+          </div>
+          <div>
+            <label style={{ width: '80px' }}>연락처:</label>
+            <input
+              type="tel"
+              name="phoneNumber"
+              value={orderData.phoneNumber}
+              onChange={handleInputChange}
+            />
+          </div>
+          <div>
+            <label style={{ width: '80px' }}>주소:</label>
+            <input
+              type="text"
+              name="address"
+              value={orderData.address}
+              onChange={handleInputChange}
+            />
+            <SearchAddress onAddressSelected={handleAddressSelected} />
+          </div>
+          <div style={{ marginTop: '50px' }}>
+            <h4>주문상품</h4>
+            <div>
+              <PurchasedProduct products={orderData.orderProducts} />
+            </div>
+          </div>
+          <div style={{marginTop: '50px'}}>
+            <h4>결제방식</h4>
+          </div>
         </div>
-    );
+        <div style={{ flex: 1, margin: '0 10%'}}>
+          <div>
+            <div>
+              <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                <div>총 상품 금액:</div>
+                <div>{orderData.totalPrice.toLocaleString()}원</div>
+              </div>
+              <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                <div>배송비:</div>
+                <div>3,000원</div>
+              </div>
+              <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                <div>최종 결제 금액:</div>
+                <div>{(orderData.totalPrice + 3000).toLocaleString()}원</div>
+              </div>
+            </div>
+            <div style={{ display: 'flex', justifyContent: 'center', marginTop: '50px' }}>
+              <button onClick={handleCreateOrder}>결제하기</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
 };
 
 export default Order;

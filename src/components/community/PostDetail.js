@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios'; // axios 추가
+
 import { useParams, useNavigate, Link } from 'react-router-dom'; // useParams와 useHistory 추가
+
 import styles from '../../styles/community/PostDetail.module.css';
 import { Table, TableBody, TableCell, TableRow } from '@material-ui/core';
 import { Button } from '@material-ui/core'

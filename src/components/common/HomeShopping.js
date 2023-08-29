@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
 import styles from "../../styles/common/HomeShopping.module.css"
+import { Link } from 'react-router-dom';
 
 const HomeShopping = () => {
     const [topProducts, setTopProducts] = useState([]);
@@ -28,11 +29,13 @@ const HomeShopping = () => {
                         <li key={product.productId} className={styles.productItem}>
                             <div className={styles.productInfo}>
                                 <div className={styles.imageContainer}>
-                                    <img
+                                    <Link to={`/shopping/products/${product.productId}`}>
+                                        <img
                                         className={styles.productImage}
                                         src={product.thumbnailUrl}
                                         alt={`상품 ${product.productId}`}
-                                    />
+                                        />
+                                    </Link>
                                 </div>
                                 <div className={styles.infoContainer}>
                                     <p className={styles.productName}>{product.productName}</p>
