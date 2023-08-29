@@ -9,7 +9,6 @@ import HomeShopping from './HomeShopping';
 const HomeContent = () => {
     return (
         <div>
-            HomeContent 자리
             <HomeMain />
             <HomeCommunity />
             <HomeNews />

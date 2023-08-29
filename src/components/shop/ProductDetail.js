@@ -11,18 +11,19 @@ import { useDispatch } from "react-redux";
 
 
 const ProductDetail = () => {
-  const { productNum } = useParams(); // productNum을 useParams로 추출
+  const userId = 1; // 임시로 설정한 userId 변수 -> 추후 수정해야 함
 
-  const navigate = useNavigate();
+  const { productNum } = useParams(); // productNum을 useParams로 추출
   const dispatch = useDispatch();
 
+  const navigate = useNavigate();
+
+
   const [count, setCount] = useState(1);
+
   const [data, setData] = useState(null);
-  
   const { setTotalPrice } = useProductDetail();
   const { setQuantity } = useProductDetail();
-
-  const userId = 3; // 임시로 설정한 userId 변수 -> 추후 수정해야 함
 
   // 날짜 yyyy-mm-dd로 변경
   const formatDate = (date) => {
@@ -108,25 +109,33 @@ const ProductDetail = () => {
   };
 
   const handleBuyNow = () => {
-
+    const selectedItems = [
+      {
+        userId: userId,
+        productId: productNum,
+        quantity: count,
+        price: data.price,
+      },
+    ];
+  
     setQuantity(count);
     setTotalPrice(data.price * count);
-
+  
     dispatch({
       type: "SET_ORDER",
       payload: {
-        userId: "",
+        userId: userId,
         totalPrice: data.price * count,
         deliveryDate: "",
         address: "",
         phoneNumber: "",
         orderDate: "",
         orderStatus: "",
-        quantity: count, // 선택한 수량 설정
+        quantity: count,
       },
     });
-
-    navigate(`/shopping/${productNum}/order`);
+  
+    navigate(`/shopping/order`, { state: { selectedItems } });
   };
 
   return (

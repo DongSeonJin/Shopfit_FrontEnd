@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { useParams } from "react-router";
+import { useNavigate } from "react-router";
 
 import styles from "../../styles/shop/CartList.module.css";
 import { Button } from "@mui/material";
@@ -8,8 +8,11 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import CartQuantity from "./CartQuantity";
 
 const CartList = () => {
+  const userId = 1; // 임시로 설정한 userId 변수 -> 추후 수정해야 함
+  
   const [cartItems, setCartItems] = useState([]); // 장바구니 아이템 상태 관리
-  const { userId } = useParams(); // userId를 useParams로 추출
+  // const { userId } = useParams(); // userId를 useParams로 추출 -> 제거
+  const navigate = useNavigate();
 
   const [isCheckedAll, setIsCheckedAll] = useState(true); // 전체 선택 여부 상태관리
   // 전체 선택/해제 이벤트 핸들러
@@ -133,6 +136,12 @@ const CartList = () => {
       });
   }, [userId]);
 
+  // 컴포넌트 내부에 handleOrderClick 함수 추가
+  const handleOrderClick = () => {
+    const selectedItems = cartItems.filter((item) => item.isChecked);
+    navigate(`/shopping/order`, { state: { selectedItems } });
+  };
+
   return (
     <div className={styles.contentWrap}>
       <h2>장바구니</h2>
@@ -214,7 +223,7 @@ const CartList = () => {
             총 금액: {calculateTotal()} 원
           </div>
           <div className={styles.orderButtonContainer}>
-            <Button variant="contained" color="primary">
+            <Button variant="contained" color="primary" onClick={handleOrderClick}>
               주문하기
             </Button>
             {/* 주문하기 버튼 -> 주문하기 페이지와 연결해야 함 */}
