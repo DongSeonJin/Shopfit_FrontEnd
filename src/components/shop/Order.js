@@ -9,6 +9,7 @@ const Order = () => {
   const now = new Date();
   const navigate = useNavigate();
   const [cart, setCart] = useState([]);
+  const [detailedAddress, setDetailedAddress] = useState('');
 
   const location = useLocation();
   const selectedItems = location.state.selectedItems;
@@ -60,10 +61,15 @@ const Order = () => {
     if (!isPaymentAllowed) {
       alert('주소와 연락처를 입력해주세요.');
       return;
-    }  
+    }
+
+    // Create orderData with detailed address
+    const finalAddress = `${orderData.address} ${detailedAddress}`;
+    const updatedOrderData = { ...orderData, address: finalAddress };
+
     try {
       // 주문 생성 요청 보내고 주문 성공 시
-      const response = await axios.post('/orders/create', orderData);
+      const response = await axios.post('/orders/create', updatedOrderData);
       console.log('Order created:', response.data);
 
       // 주문한 제품의 productId에 해당하는 row만 선택
@@ -90,6 +96,10 @@ const Order = () => {
     }
   };
 
+  const handleDetailedAddressChange = (event) => {
+    setDetailedAddress(event.target.value);
+  };
+
   const handleAddressSelected = (selectedAddress) => {
     setOrderData({
       ...orderData,
@@ -104,8 +114,9 @@ const Order = () => {
       <div style={{ display: 'flex' }}>
         <div style={{ flex: 1 }}>
           <div>
-            <label style={{ width: '80px' }}>이름:</label>
+            <label style={{ width: '80px' }}>이름</label>
             <input
+              style={{ width: '240px' }}
               type="text"
               name="name"
               value={orderData.userId}
@@ -113,8 +124,9 @@ const Order = () => {
             />
           </div>
           <div>
-            <label style={{ width: '80px' }}>이메일:</label>
+            <label style={{ width: '80px' }}>이메일</label>
             <input
+              style={{ width: '240px' }}
               type="email"
               name="email"
               value={orderData.userId}
@@ -122,8 +134,9 @@ const Order = () => {
             />
           </div>
           <div>
-            <label style={{ width: '80px' }}>연락처:</label>
+            <label style={{ width: '80px' }}>연락처</label>
             <input
+              style={{ width: '240px' }}
               type="tel"
               name="phoneNumber"
               value={orderData.phoneNumber}
@@ -131,15 +144,25 @@ const Order = () => {
             />
           </div>
           <div style={{ display: 'flex', alignItems: 'center' }}>
-            <label style={{ width: '80px' }}>주소:</label>
+            <label style={{ width: '80px' }}>주소</label>
             <input
-              style={{marginRight: '10px'}}
+              style={{ width: '240px' }}
               type="text"
               name="address"
               value={orderData.address}
               onChange={handleInputChange}
             />
-            <SearchAddress />
+            <SearchAddress onSelect={handleAddressSelected} />
+          </div>
+          <div style={{ display: 'flex', alignItems: 'center' }}>
+            <label style={{ width: '80px' }}>상세주소</label>
+            <input
+              style={{ width: '240px' }}
+              type="text"
+              name="detailedAddress"
+              value={detailedAddress}
+              onChange={handleDetailedAddressChange}
+            />
           </div>
           <div style={{ marginTop: '50px' }}>
             <h4>주문상품</h4>
