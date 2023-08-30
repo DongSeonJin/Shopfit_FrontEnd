@@ -25,7 +25,7 @@ const PurchasedProduct = ({ products }) => {
 
     return (
         <div>
-            <ul style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                 {productData.map((product, index) => (
                     <li key={product.productId} style={{ display: 'flex', alignItems: 'center', margin: '10px 0' }}>
                         <img src={product.thumbnailUrl} alt={product.productName} style={{ width: '100px', height: '100px'}} />
@@ -40,7 +40,7 @@ const PurchasedProduct = ({ products }) => {
 
                     </li>
                 ))}
-            </ul>
+            </div>
         </div>
     );
 };
