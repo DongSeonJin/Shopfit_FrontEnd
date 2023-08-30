@@ -113,10 +113,13 @@ const PostDetail = () => {
               
             </Table>
 
-            {data.imageUrls.map((imageUrl, index) => {
-              <img key={index} src={imageUrl} alt={`첨부이미지 ${index + 1}`} />
-            })}
-            <br /><br /><br />
+            <img
+              key={index}
+              src={imageUrl}
+              alt={`첨부이미지 ${index + 1}`}
+              style={{ maxWidth: '100%', marginBottom: '10px' }}
+            />
+
             
             <LikeIcon onClick={handleLike} style={{color:'red', cursor: 'pointer'}} />
 
