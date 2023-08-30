@@ -15,10 +15,7 @@ import ProductUpdate from "../components/shop/ProductUpdate";
 
 const Shopping = () => {
   return (
-
-
-    <ProductDetailProvider>  
-
+    <ProductDetailProvider>
       <Routes>
         <Route path="/shopping" element={<ProductList />} />
         <Route path="/shopping/:pageNum" element={<ProductList />} />
@@ -35,12 +32,12 @@ const Shopping = () => {
         <Route path="/shopping/update/:productNum" element={<ProductUpdate />} />
 
         <Route path="/shopping/:productNum/order" element={<Order />} />
-  
+        {/* 확인하기! */}
+
         <Route path="/shopping/order" element={<Order />} />
         <Route path="/shopping/order/detail" element={<OrderDetail />} />
-          
-        <Route path="/shopping/cart" element={<CartList />} />  
 
+        <Route path="/shopping/cart" element={<CartList />} />
       </Routes>
     </ProductDetailProvider>
   );
