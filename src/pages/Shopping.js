@@ -10,7 +10,6 @@ import CartList from "../components/shop/CartList";
 
 import { ProductDetailProvider } from "../context/ProductDetailContext";
 
-import CartList from "../components/shop/CartList";
 import ProductCreate from "../components/shop/ProductCreate";
 
 
