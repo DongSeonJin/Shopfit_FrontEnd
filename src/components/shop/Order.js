@@ -4,6 +4,7 @@ import addDays from 'date-fns/addDays';
 import { useLocation, useNavigate } from 'react-router-dom';
 import PurchasedProduct from './PurchasedProduct';
 import SearchAddress from './SearchAddress';
+import { IAMPORT_API_KEY, KAKAOPAY_PG } from '../../config';
 
 const Order = () => {
   const now = new Date();
@@ -76,12 +77,60 @@ const Order = () => {
   const isAddressValid = orderData.address.trim() !== '';
   const isPhoneNumberValid = orderData.phoneNumber.trim() !== '';
   const isPaymentAllowed = isAddressValid && isPhoneNumberValid;
+
+// 아임포트 결제창 열기
+const openPaymentWindow = async () => {
+  if (!isPaymentAllowed) {
+    alert('주소와 연락처를 입력해주세요.');
+    return;
+  }
+
+  const productId = selectedItems[0].productId; // 선택한 첫 번째 상품의 productId
+  try {
+    const productResponse = await axios.get(`/shopping/products/${productId}`); // 제품 정보 요청
+    const IMP = window.IMP;
+    IMP.init("IAMPORT_API_KEY");
+
+    // 주문 상품 수에 따라 이름 설정
+    let productName = productResponse.data.productName; // 기본 상품 이름
+    if (orderData.orderProducts.length > 1) {
+      productName += ` 외 ${orderData.orderProducts.length - 1}건`;
+    }
+
+    IMP.request_pay(
+      {
+        pg: KAKAOPAY_PG,
+        pay_method: "card",
+        merchant_uid: orderData.orderId,
+        amount: orderData.totalPrice,
+        name: productName,                  // productName을 아임포트의 name 필드에 사용
+        buyer_email: orderData.userId,
+        buyer_name: orderData.userId,
+        buyer_tel: orderData.phoneNumber,
+        buyer_addr: orderData.address,
+      },
+      async function (rsp) {
+        if (rsp.success) {
+          // 결제 성공
+          console.log("결제가 성공적으로 완료되었습니다.");
+
+          // handleCreateOrder 함수 호출
+          await handleCreateOrder();
+
+        } else {
+          // 결제 실패
+          console.log(rsp);
+          alert(`결제에 실패하였습니다. 에러 내용: ${rsp.error_msg}`);
+        }
+      }
+    );
+  } catch (error) {
+    console.error('Error fetching product information:', error);
+  }
+};
+
   
   const handleCreateOrder = async () => {
-    if (!isPaymentAllowed) {
-      alert('주소와 연락처를 입력해주세요.');
-      return;
-    }
 
     // Create orderData with detailed address
     const finalAddress = `${orderData.address} ${detailedAddress}`;
@@ -142,9 +191,6 @@ const Order = () => {
 
   return (
     <div style={{ margin: '0 20%' }}>
-      <div>주문량: {selectedItems[0].quantity}</div>
-      <div>제품번호: {selectedItems[0].productId}</div>
-      <div>총재고: {productStocks[1]}</div>
       <h2>주문/결제</h2>
       <h4 style={{ marginTop: '50px' }}>배송정보</h4>
       <div style={{ display: 'flex' }}>
@@ -227,7 +273,7 @@ const Order = () => {
               </div>
             </div>
             <div style={{ display: 'flex', justifyContent: 'center', marginTop: '50px' }}>
-              <button onClick={handleCreateOrder}>결제하기</button>
+              <button onClick={openPaymentWindow}>결제하기</button>
             </div>
           </div>
         </div>
