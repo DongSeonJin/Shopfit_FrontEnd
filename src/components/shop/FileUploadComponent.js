@@ -44,7 +44,7 @@ function FileUploadComponent({ onUploadSuccess }) {
           axios
             .post("/api/upload", formData)
             .then((response) => {
-              console.log("파일 업로드 성공", response.data);
+              // console.log("파일 업로드 성공", response.data);
               onUploadSuccess(response.data);
             })
             .catch((error) => {

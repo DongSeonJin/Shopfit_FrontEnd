@@ -2,13 +2,11 @@ import axios from "axios";
 import React from "react";
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { Rating } from "@mui/material";
-
+import { Button, Rating } from "@mui/material";
+import { useDispatch } from "react-redux";
 import { useProductDetail } from "../../context/ProductDetailContext";
-
 import styles from "../../styles/shop/ProductDetail.module.css";
 
-import { useDispatch } from "react-redux";
 
 
 
@@ -19,7 +17,7 @@ const ProductDetail = () => {
   const dispatch = useDispatch();
 
   const navigate = useNavigate();
-
+  const dispatch = useDispatch();
 
   const [count, setCount] = useState(1);
 
@@ -47,7 +45,6 @@ const ProductDetail = () => {
         setData(null); // 에러 발생 시 data를 null로 설정
       });
   }, [productNum]);
-  
 
   const countUp = () => setCount((prevCount) => prevCount + 1);
   const countDown = () => setCount((prevCount) => prevCount - 1);
@@ -111,6 +108,7 @@ const ProductDetail = () => {
   };
 
   const handleBuyNow = () => {
+
     const selectedItems = [
       {
         userId: userId,
@@ -120,6 +118,7 @@ const ProductDetail = () => {
       },
     ];
   
+
     setQuantity(count);
     setTotalPrice(data.price * count);
   
@@ -140,133 +139,173 @@ const ProductDetail = () => {
     navigate(`/shopping/order`, { state: { selectedItems } });
   };
 
+  const handleDeleteProduct = (productId, thumbnailUrl, productImageUrls) => {
+    // thumbnailUrl과 productImageUrls를 사용해서 S3 객체 키들을 생성
+    const thumbnailObjectKey = thumbnailUrl.split("/").pop(); // 마지막 부분을 추출하여 S3 객체 키로 사용
+    const imageObjectKeys = productImageUrls.map((url) => url.split("/").pop());
+    // 모든 이미지 URL의 마지막 부분을 추출하여 S3 객체 키들로 사용
+
+    axios
+      .delete(`/shopping/delete/${productId}`)
+      .then(() => {
+        // DELETE 요청 성공 처리
+        console.log("상품 삭제 성공");
+
+        // 여기서 S3 thumbnailUrl 삭제 요청 보내기
+        axios
+          .delete(`/api/delete/${thumbnailObjectKey}`)
+          .then(() => {
+            console.log("S3 썸네일 삭제 성공");
+          })
+          .catch((error) => {
+            console.log("S3 썸네일 객체 삭제 실패".error);
+          });
+
+        // productImageUrls 삭제 요청
+        imageObjectKeys.forEach((imageObjectKey) => {
+          axios
+            .delete(`/api/delete/${imageObjectKey}`)
+            .then(() => {
+              console.log("S3 상품 상세 이미지 삭제 성공");
+            })
+            .catch((error) => {
+              console.log("S3 상품 상세 이미지 삭제 실패", error);
+            });
+        });
+
+        // 리스트로 돌아가기
+        navigate("/shopping");
+      })
+      .catch((error) => {
+        // DELETE 요청 실패 처리
+        console.log("상품 삭제 실패", error);
+      });
+  };
+
+  const handleProductUpdate = () => {
+    // "상품 수정" 버튼을 클릭할 때 ProductUpdate 페이지로 이동하면서 productId를 전달
+    navigate(`/shopping/update/${productNum}`);
+  };
+
   return (
-      <div className={styles.contentWrap}>
-        {/* 카테고리 시작 */}
-        {/* <div className={styles.cateName}>
-          <a
-            className={styles.categoryLink}
-            href={`/shopping/category/${data.categoryId}`}
-          >
-            {data.categoryName}
-          </a>
-        </div> */}
-        {/* 카테고리 끝 */}
-        {/* 썸네일, 제품명, 가격 시작 */}
-        <div className={styles.productContainer}>
-          <div className={styles.imgContainer}>
-            <div className={styles.item}>
-              <img
-                className={styles.repImg}
-                src={data.thumbnailUrl}
-                alt={data.productName}
-              />
-            </div>
-          </div>
+    <div className={styles.contentWrap}>
+      {/* 카테고리 시작 */}
+      <div className={styles.cateName}>
+        <a className={styles.categoryLink} href={`/shopping/category/${data.categoryId}`}>
+          {data.categoryName}
+        </a>
+      </div>
+      {/* 카테고리 끝 */}
+      <div style={{ display: "flex", justifyContent: "flex-end" }}>
+        <Button variant="contained" onClick={handleProductUpdate}>
+          상품 수정
+        </Button>
+        <br />
+        <Button
+          variant="outlined"
+          color="error"
+          onClick={() => handleDeleteProduct(data.productId, data.thumbnailUrl, data.productImageUrls)}
+        >
+          상품 삭제
+        </Button>
+      </div>
+      {/* 썸네일, 제품명, 가격 시작 */}
+      <div className={styles.productContainer}>
+        <div className={styles.imgContainer}>
           <div className={styles.item}>
-            <h2 className={styles.prodName}>{data.productName}</h2>
-            <div className={styles.priceName}>{data.price}원</div>
-
-            {/* 수량 선택 & 총 가격 */}
-            <div className={styles.quantity}>
-              <button
-                className={`${styles.quantityBtn} ${styles.sameSizeElements}`}
-                onClick={countDown}
-                disabled={count < 2}
-              >
-                -
-              </button>
-              <input
-                className={`${styles.quantityNum} ${styles.sameSizeElements}`}
-                // onChange={value}
-                onChange={(e) => handleInputChange(e)}
-                value={count}
-                min="1" // 최소값 설정
-                max={data.stockQuantity} // 최대값 설정 - 재고수량
-              ></input>
-              <button
-                className={`${styles.quantityBtn} ${styles.sameSizeElements}`}
-                onClick={countUp}
-                disabled={count >= data.stockQuantity}
-              >
-                +
-              </button>
-              <span className={styles.totalPrice}>{data.price * count}원</span>
-            </div>
-            <div>남은 수량 : {data.stockQuantity} 개</div>
-            <div className={styles.cartBuy}>
-              {/* 장바구니 - userId가 없으면 로그인 후 이용 알림창 */}
-              <button
-                className={styles.cartBtn}
-                onClick={() =>
-                  userId
-                    ? addCart(userId, productNum, count)
-                    : alert("로그인 후 이용해주세요")
-                }
-              >
-                장바구니
-              </button>
-              {/* 바로구매 */}
-
-              <button
-                className={styles.buyBtn}
-                size="large"
-                variant="contained"
-                onClick={handleBuyNow} // 바로구매 버튼 클릭 시 이벤트 핸들러 연결
-              >
-                바로구매
-              </button>
-            </div>
-            {/* <p>Stock Quantity: {data.stockQuantity}</p>  재고수량*/}
+            <img className={styles.repImg} src={data.thumbnailUrl} alt={data.productName} />
           </div>
         </div>
-        {/* 썸네일, 제품명, 가격 끝 */}
-        {/* 상세이미지 시작 */}
-        <h3>상세정보</h3>
-        <div className={styles.detailContainer}>
-          {data.productImageUrls.map((imageUrl, index) => (
-            <>
-              <img
-                className={styles.detailImg}
-                key={index}
-                src={imageUrl}
-                alt={`Product ${index}`}
-              />
-              <br />
-            </>
+        <div className={styles.item}>
+          <h2 className={styles.prodName}>{data.productName}</h2>
+          <div className={styles.priceName}>{data.price}원</div>
+
+          {/* 수량 선택 & 총 가격 */}
+          <div className={styles.quantity}>
+            <button
+              className={`${styles.quantityBtn} ${styles.sameSizeElements}`}
+              onClick={countDown}
+              disabled={count < 2}
+            >
+              -
+            </button>
+            <input
+              className={`${styles.quantityNum} ${styles.sameSizeElements}`}
+              // onChange={value}
+              onChange={(e) => handleInputChange(e)}
+              value={count}
+              min="1" // 최소값 설정
+              max={data.stockQuantity} // 최대값 설정 - 재고수량
+            ></input>
+            <button
+              className={`${styles.quantityBtn} ${styles.sameSizeElements}`}
+              onClick={countUp}
+              disabled={count >= data.stockQuantity}
+            >
+              +
+            </button>
+            <span className={styles.totalPrice}>{data.price * count}원</span>
+          </div>
+          <div>남은 수량 : {data.stockQuantity} 개</div>
+          <div className={styles.cartBuy}>
+            {/* 장바구니 - userId가 없으면 로그인 후 이용 알림창 */}
+            <button
+              className={styles.cartBtn}
+              onClick={() => (userId ? addCart(userId, productNum, count) : alert("로그인 후 이용해주세요"))}
+            >
+              장바구니
+            </button>
+            {/* 바로구매 */}
+
+            <button
+              className={styles.buyBtn}
+              size="large"
+              variant="contained"
+              onClick={handleBuyNow} // 바로구매 버튼 클릭 시 이벤트 핸들러 연결
+            >
+              바로구매
+            </button>
+          </div>
+          {/* <p>Stock Quantity: {data.stockQuantity}</p>  재고수량*/}
+        </div>
+      </div>
+      {/* 썸네일, 제품명, 가격 끝 */}
+      {/* 상세이미지 시작 */}
+      <h3>상세정보</h3>
+      <div className={styles.detailContainer}>
+        {data.productImageUrls.map((imageUrl, index) => (
+          <>
+            <img className={styles.detailImg} key={index} src={imageUrl} alt={`Product ${index}`} />
+            <br />
+          </>
+        ))}
+      </div>
+
+      {/* 상세이미지 끝 */}
+      {/* 리뷰 시작 */}
+      <h3>구매후기</h3>
+      <div className={styles.reviewContainer}>
+        <div>
+          {formattedReviews.map((review) => (
+            <div key={review.reviewId}>
+              <span>
+                <Rating name="read-only" value={review.rating} readOnly size="small" />{" "}
+              </span>
+              <div>
+                <div>
+                  <span className={styles.name}>{review.nickname}</span>
+                </div>
+                <div className={styles.date}>{review.createdAt}</div>
+              </div>
+
+              <p>{review.comment}</p>
+              <hr />
+            </div>
           ))}
         </div>
-
-        {/* 상세이미지 끝 */}
-        {/* 리뷰 시작 */}
-        <h3>구매후기</h3>
-        <div className={styles.reviewContainer}>
-          <div>
-            {formattedReviews.map((review) => (
-              <div key={review.reviewId}>
-                <span>
-                  <Rating
-                    name="read-only"
-                    value={review.rating}
-                    readOnly
-                    size="small"
-                  />{" "}
-                </span>
-                <div>
-                  <div>
-                    <span className={styles.name}>{review.nickname}</span>
-                  </div>
-                  <div className={styles.date}>{review.createdAt}</div>
-                </div>
-
-                <p>{review.comment}</p>
-                <hr />
-              </div>
-            ))}
-          </div>
-        </div>
-        {/* 리뷰 끝 */}
       </div>
+      {/* 리뷰 끝 */}
+    </div>
   );
 };
 
