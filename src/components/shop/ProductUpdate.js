@@ -5,6 +5,8 @@ import FileUploadComponent from "./FileUploadComponent";
 import FilesUploadComponent from "./FilesUploadComponent";
 import { Button } from "@mui/material";
 
+import styles from "../../styles/shop/ProductUpdate.module.css";
+
 const ProductUpdate = () => {
   const [ProductCategory, setProductCategory] = useState("");
   const [productName, setProductName] = useState("");
@@ -154,55 +156,46 @@ const ProductUpdate = () => {
   };
 
   return (
-    <div>
+    <div style={{ margin: "0 20%" }}>
       <h2>상품 수정</h2>
       <form onSubmit={handleSubmit}>
-        <div>
-          <label>
-            상품 카테고리:
-            <select value={ProductCategory} onChange={handleProductCategoryChange}>
-              <option value="">카테고리를 선택하세요</option>
-              {productCategories.map((category) => (
-                <option key={category.id} value={category.id}>
-                  {category.name}
-                </option>
-              ))}
-            </select>
-          </label>
+        <div style={{ marginTop: "50px" }}>
+          <label className={styles.label}>상품 카테고리: </label>
+          <select value={ProductCategory} onChange={handleProductCategoryChange}>
+            <option value="">카테고리를 선택하세요</option>
+            {productCategories.map((category) => (
+              <option key={category.id} value={category.id}>
+                {category.name}
+              </option>
+            ))}
+          </select>
         </div>
 
         <div>
-          <label>
-            상품명:
-            <input type="text" value={productName} onChange={handleProductNameChange} />
-          </label>
+          <label className={styles.label}>상품명:</label>
+          <input type="text" value={productName} onChange={handleProductNameChange} />
         </div>
 
         <div>
-          <label>
-            썸네일: <img src={thumbnailUrl} alt="" style={{ maxWidth: "150px", maxHeight: "150px" }}></img>
-            <Button variant="outlined" color="error" onClick={() => handleDeleteThumbnail(thumbnailUrl)}>
-              삭제
-            </Button>
-            <FileUploadComponent onUploadSuccess={handleUploadSuccess} />
-          </label>
+          <label className={styles.label}>썸네일: </label>
+          <img src={thumbnailUrl} alt="" style={{ maxWidth: "150px", maxHeight: "150px" }}></img>
+          <Button variant="outlined" color="error" onClick={() => handleDeleteThumbnail(thumbnailUrl)}>
+            삭제
+          </Button>
+          <FileUploadComponent onUploadSuccess={handleUploadSuccess} />
         </div>
 
         <div>
-          <label>
-            가격:
-            <input type="number" value={price} onChange={handlePriceChange} />
-          </label>
+          <label className={styles.label}>가격:</label>
+          <input type="number" value={price} onChange={handlePriceChange} />
         </div>
         <div>
-          <label>
-            재고 수량:
-            <input type="number" value={stockQuantity} onChange={handleStockQuantityChange} />
-          </label>
+          <label className={styles.label}>재고 수량:</label>
+          <input type="number" value={stockQuantity} onChange={handleStockQuantityChange} />
         </div>
 
         <div>
-          상세 이미지 :
+          <label className={styles.label}>상세 이미지 :</label>
           <FilesUploadComponent onUploadSuccess={handleAddImage} />
           <ul>
             {productImageUrls.map((imageUrl, index) => (
@@ -221,7 +214,9 @@ const ProductUpdate = () => {
         </div>
 
         <div>
-          <button type="submit">등록</button>
+          <Button variant="outlined" type="submit">
+            등록
+          </Button>
         </div>
       </form>
     </div>
