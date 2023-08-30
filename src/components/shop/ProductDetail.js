@@ -8,7 +8,7 @@ import { useProductDetail } from "../../context/ProductDetailContext";
 
 import styles from "../../styles/shop/ProductDetail.module.css";
 
-import useDispatch from "react-redux";
+import { useDispatch } from "react-redux";
 
 
 
