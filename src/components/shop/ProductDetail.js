@@ -193,7 +193,11 @@ const ProductDetail = () => {
               </button>
               <span className={styles.totalPrice}>{(data.price * count).toLocaleString()}원</span>
             </div>
-            <div>남은 수량 : {(data.stockQuantity).toLocaleString()} 개</div>
+            {data.stockQuantity === 0 ? (
+              <div className={styles.stockMessage}>품절</div>
+            ) : (
+              <div>남은 수량 : {data.stockQuantity.toLocaleString()} 개</div>
+            )}
             <div className={styles.cartBuy}>
               {/* 장바구니 - userId가 없으면 로그인 후 이용 알림창 */}
               <button
@@ -203,6 +207,7 @@ const ProductDetail = () => {
                     ? addCart(userId, productNum, count)
                     : alert("로그인 후 이용해주세요")
                 }
+                disabled={data.stockQuantity === 0} // 품절 상태일 때 버튼 비활성화
               >
                 장바구니
               </button>
@@ -213,6 +218,7 @@ const ProductDetail = () => {
                 size="large"
                 variant="contained"
                 onClick={handleBuyNow} // 바로구매 버튼 클릭 시 이벤트 핸들러 연결
+                disabled={data.stockQuantity === 0} // 품절 상태일 때 버튼 비활성화
               >
                 바로구매
               </button>
