@@ -7,9 +7,6 @@ import { useDispatch } from "react-redux";
 import { useProductDetail } from "../../context/ProductDetailContext";
 import styles from "../../styles/shop/ProductDetail.module.css";
 
-
-
-
 const ProductDetail = () => {
   const userId = 1; // 임시로 설정한 userId 변수 -> 추후 수정해야 함
 
@@ -17,7 +14,6 @@ const ProductDetail = () => {
   const dispatch = useDispatch();
 
   const navigate = useNavigate();
-  const dispatch = useDispatch();
 
   const [count, setCount] = useState(1);
 
@@ -108,7 +104,6 @@ const ProductDetail = () => {
   };
 
   const handleBuyNow = () => {
-
     const selectedItems = [
       {
         userId: userId,
@@ -117,11 +112,10 @@ const ProductDetail = () => {
         price: data.price,
       },
     ];
-  
 
     setQuantity(count);
     setTotalPrice(data.price * count);
-  
+
     dispatch({
       type: "SET_ORDER",
       payload: {
@@ -135,7 +129,7 @@ const ProductDetail = () => {
         quantity: count,
       },
     });
-  
+
     navigate(`/shopping/order`, { state: { selectedItems } });
   };
 
