@@ -11,6 +11,7 @@ import CartList from "../components/shop/CartList";
 import { ProductDetailProvider } from "../context/ProductDetailContext";
 
 import ProductCreate from "../components/shop/ProductCreate";
+import WishList from "../components/shop/WishList";
 
 
 const Shopping = () => {
@@ -35,6 +36,8 @@ const Shopping = () => {
         <Route path="/shopping/order/detail" element={<OrderDetail />} />
           
         <Route path="/shopping/cart" element={<CartList />} />  
+
+        <Route path="/shopping/wishlist" element={<WishList />} />
       </Routes>
     </ProductDetailProvider>
   );

@@ -28,6 +28,26 @@ const Order = () => {
     })),
   };
 
+  const [productStocks, setProductStocks] = useState({});
+
+  useEffect(() => {
+    // 선택한 상품들의 재고 정보를 가져오는 함수
+    const fetchProductStocks = async () => {
+      try {
+        const stockInfo = {};
+        for (const selected of selectedItems) {
+          const response = await axios.get(`/shopping/products/${selected.productId}`);
+          stockInfo[selected.productId] = response.data.stockQuantity;
+        }
+        setProductStocks(stockInfo);
+      } catch (error) {
+        console.error('Error fetching product stocks:', error);
+      }
+    };
+
+    fetchProductStocks();
+  }, [selectedItems]);
+
   const [orderData, setOrderData] = useState(initialOrderData);
 
   useEffect(() => {
@@ -83,7 +103,7 @@ const Order = () => {
       // 주문이 성공적으로 생성되었으므로 주문 상세 페이지로 이동
       navigate(`/shopping/order/detail`, { state: { purchasedProducts: selectedItems } });
 
-      // 주문한 상품들의 productId를 이용하여 장바구니에서 해당 상품들을 삭제
+      // 장바구니에서 구매 이용 시 해당 상품들을 삭제
       selectedItems.forEach(async (selected) => {
         try {
           await axios.delete(`/cart/remove/${selected.cartId}`);
@@ -91,6 +111,19 @@ const Order = () => {
           console.error('Error removing item from cart:', error);
         }
       });
+
+      // 주문한 제품의 재고량 업데이트
+      for (const selected of selectedItems) {
+        const updatedStockQuantity = productStocks[selected.productId] - selected.quantity;
+        try {
+          await axios.post(`/shopping/update/stock/${selected.productId}`, {
+            stockQuantity: updatedStockQuantity,
+          });
+          console.log(`Stock quantity for product ${selected.productId} updated.`);
+        } catch (error) {
+          console.error(`Error updating stock quantity for product ${selected.productId}:`, error);
+        }
+      }
     } catch (error) {
       console.error('Error creating order:', error);
     }
@@ -109,6 +142,9 @@ const Order = () => {
 
   return (
     <div style={{ margin: '0 20%' }}>
+      <div>주문량: {selectedItems[0].quantity}</div>
+      <div>제품번호: {selectedItems[0].productId}</div>
+      <div>총재고: {productStocks[1]}</div>
       <h2>주문/결제</h2>
       <h4 style={{ marginTop: '50px' }}>배송정보</h4>
       <div style={{ display: 'flex' }}>

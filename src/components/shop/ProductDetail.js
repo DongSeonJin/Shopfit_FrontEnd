@@ -38,7 +38,7 @@ const ProductDetail = () => {
 
   useEffect(() => {
     axios
-      .get("/shopping/products/" + productNum)
+      .get(`/shopping/products/${productNum}`)
       .then((response) => {
         setData(response.data);
       })
@@ -191,9 +191,9 @@ const ProductDetail = () => {
               >
                 +
               </button>
-              <span className={styles.totalPrice}>{data.price * count}원</span>
+              <span className={styles.totalPrice}>{(data.price * count).toLocaleString()}원</span>
             </div>
-            <div>남은 수량 : {data.stockQuantity} 개</div>
+            <div>남은 수량 : {(data.stockQuantity).toLocaleString()} 개</div>
             <div className={styles.cartBuy}>
               {/* 장바구니 - userId가 없으면 로그인 후 이용 알림창 */}
               <button
