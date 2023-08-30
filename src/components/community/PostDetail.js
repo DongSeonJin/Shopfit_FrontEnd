@@ -12,9 +12,7 @@ import UpdateIcon from '@material-ui/icons/Edit';
 
 
 const PostDetail = () => {
-  const [data, setData] = useState({
-    imageUrls: [],
-  });
+  const [data, setData] = useState({});
   const { postId } = useParams(); // postId를 URL 파라미터로 가져옴
   const navigate = useNavigate(); // useNavigate 이용하여 뒤로 가기 기능을 사용할 수 있음
 
@@ -25,7 +23,10 @@ const PostDetail = () => {
         const response = await axios.get(`/post/${postId}`);
         setData({
           ...response.data,
-          imageUrls: [response.data.imageUrl1, response.data.imageUrl2, response.data.imageUrl3]});
+          imageUrls: [
+            response.data.imageUrl1, 
+            response.data.imageUrl2, 
+            response.data.imageUrl3]});
       } catch (error) {
         console.error('게시글 조회 실패 :', error);
       }
@@ -54,7 +55,7 @@ const PostDetail = () => {
     try {
       await axios.delete(`/post/delete/${postId}`);
       alert('게시글이 삭제되었습니다.');
-      navigate('/post/list'); // 삭제 후 목록으로 돌아가기
+      navigate('/community/post/list'); // 삭제 후 목록으로 돌아가기
     } catch (error) {
       console.error('게시글 삭제 실패:', error);
       alert('게시글 삭제에 실패했습니다.');
@@ -113,12 +114,28 @@ const PostDetail = () => {
               
             </Table>
 
-            <img
-              key={index}
-              src={imageUrl}
-              alt={`첨부이미지 ${index + 1}`}
-              style={{ maxWidth: '100%', marginBottom: '10px' }}
-            />
+            {data.imageUrls.map((imageUrl, index) =>
+              imageUrl && (
+                <img
+                  key={index}
+                  src={imageUrl}
+                  alt={`첨부이미지${index + 1}`}
+                  style={{ width: '500px', height: '500px' }}
+                />
+              )
+            )}
+
+            {/* {data.imageUrl1 && (
+              <img src={data.imageUrl1} alt="첨부이미지1" style={{width: '500px', height: '500px'}} />
+            )}
+            {data.imageUrl2 && (
+              <img src={data.imageUrl2} alt="첨부이미지2" style={{width: '500px', height: '500px'}} />
+            )}
+            {data.imageUrl3 && (
+              <img src={data.imageUrl3} alt="첨부이미지3" style={{width: '500px', height: '500px'}} />
+            )} */}
+
+            <br /><br /><br />
 
             
             <LikeIcon onClick={handleLike} style={{color:'red', cursor: 'pointer'}} />
@@ -126,7 +143,7 @@ const PostDetail = () => {
             <Button
               variant="contained"
               color="primary"
-              onClick={() => navigate('/post/list')}
+              onClick={() => navigate('/community/post/list')}
               style={{ marginTop: '10px' }}
             > 목록으로 돌아가기 </Button>
 
@@ -136,7 +153,7 @@ const PostDetail = () => {
                   variant="contained"
                   color="primary"
                   component={Link}
-                  to={`/post/update/${postId}`} // 수정 페이지 경로로 이동
+                  to={`/community/post/update/${postId}`} // 수정 페이지 경로로 이동
                   style={{ marginTop: '10px', marginLeft: '10px' }}
               > 수정하기 </Button>
 
@@ -152,7 +169,7 @@ const PostDetail = () => {
           
           </>
         ) : (
-          '해당 게시글을 찾을 수 없습니다.'
+          '' // 해당 게시글을 찾을 수 없습니다.
         )}
 
       
