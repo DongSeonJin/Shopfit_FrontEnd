@@ -32,7 +32,7 @@ const ProductDetail = () => {
 
   useEffect(() => {
     axios
-      .get("/shopping/products/" + productNum)
+      .get(`/shopping/products/${productNum}`)
       .then((response) => {
         setData(response.data);
       })
@@ -214,51 +214,61 @@ const ProductDetail = () => {
           <h2 className={styles.prodName}>{data.productName}</h2>
           <div className={styles.priceName}>{data.price}원</div>
 
-          {/* 수량 선택 & 총 가격 */}
-          <div className={styles.quantity}>
-            <button
-              className={`${styles.quantityBtn} ${styles.sameSizeElements}`}
-              onClick={countDown}
-              disabled={count < 2}
-            >
-              -
-            </button>
-            <input
-              className={`${styles.quantityNum} ${styles.sameSizeElements}`}
-              // onChange={value}
-              onChange={(e) => handleInputChange(e)}
-              value={count}
-              min="1" // 최소값 설정
-              max={data.stockQuantity} // 최대값 설정 - 재고수량
-            ></input>
-            <button
-              className={`${styles.quantityBtn} ${styles.sameSizeElements}`}
-              onClick={countUp}
-              disabled={count >= data.stockQuantity}
-            >
-              +
-            </button>
-            <span className={styles.totalPrice}>{data.price * count}원</span>
-          </div>
-          <div>남은 수량 : {data.stockQuantity} 개</div>
-          <div className={styles.cartBuy}>
-            {/* 장바구니 - userId가 없으면 로그인 후 이용 알림창 */}
-            <button
-              className={styles.cartBtn}
-              onClick={() => (userId ? addCart(userId, productNum, count) : alert("로그인 후 이용해주세요"))}
-            >
-              장바구니
-            </button>
-            {/* 바로구매 */}
+            {/* 수량 선택 & 총 가격 */}
+            <div className={styles.quantity}>
+              <button
+                className={`${styles.quantityBtn} ${styles.sameSizeElements}`}
+                onClick={countDown}
+                disabled={count < 2}
+              >
+                -
+              </button>
+              <input
+                className={`${styles.quantityNum} ${styles.sameSizeElements}`}
+                // onChange={value}
+                onChange={(e) => handleInputChange(e)}
+                value={count}
+                min="1" // 최소값 설정
+                max={data.stockQuantity} // 최대값 설정 - 재고수량
+              ></input>
+              <button
+                className={`${styles.quantityBtn} ${styles.sameSizeElements}`}
+                onClick={countUp}
+                disabled={count >= data.stockQuantity}
+              >
+                +
+              </button>
+              <span className={styles.totalPrice}>{(data.price * count).toLocaleString()}원</span>
+            </div>
+            {data.stockQuantity === 0 ? (
+              <div className={styles.stockMessage}>품절</div>
+            ) : (
+              <div>남은 수량 : {data.stockQuantity.toLocaleString()} 개</div>
+            )}
+            <div className={styles.cartBuy}>
+              {/* 장바구니 - userId가 없으면 로그인 후 이용 알림창 */}
+              <button
+                className={styles.cartBtn}
+                onClick={() =>
+                  userId
+                    ? addCart(userId, productNum, count)
+                    : alert("로그인 후 이용해주세요")
+                }
+                disabled={data.stockQuantity === 0} // 품절 상태일 때 버튼 비활성화
+              >
+                장바구니
+              </button>
+              {/* 바로구매 */}
 
-            <button
-              className={styles.buyBtn}
-              size="large"
-              variant="contained"
-              onClick={handleBuyNow} // 바로구매 버튼 클릭 시 이벤트 핸들러 연결
-            >
-              바로구매
-            </button>
+              <button
+                className={styles.buyBtn}
+                size="large"
+                variant="contained"
+                onClick={handleBuyNow} // 바로구매 버튼 클릭 시 이벤트 핸들러 연결
+                disabled={data.stockQuantity === 0} // 품절 상태일 때 버튼 비활성화
+              >
+                바로구매
+              </button>
           </div>
           {/* <p>Stock Quantity: {data.stockQuantity}</p>  재고수량*/}
         </div>

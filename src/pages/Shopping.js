@@ -7,11 +7,13 @@ import ProductDetail from "../components/shop/ProductDetail";
 import Order from "../components/shop/Order";
 import OrderDetail from "../components/shop/OrderDetail";
 import CartList from "../components/shop/CartList";
+import WishList from "../components/shop/WishList";
 
 import { ProductDetailProvider } from "../context/ProductDetailContext";
 
 import ProductCreate from "../components/shop/ProductCreate";
 import ProductUpdate from "../components/shop/ProductUpdate";
+
 
 const Shopping = () => {
   return (
@@ -31,13 +33,13 @@ const Shopping = () => {
         <Route path="/shopping/create" element={<ProductCreate />} />
         <Route path="/shopping/update/:productNum" element={<ProductUpdate />} />
 
-        <Route path="/shopping/:productNum/order" element={<Order />} />
-        {/* 확인하기! */}
-
         <Route path="/shopping/order" element={<Order />} />
         <Route path="/shopping/order/detail" element={<OrderDetail />} />
+          
+        <Route path="/shopping/cart" element={<CartList />} />  
 
-        <Route path="/shopping/cart" element={<CartList />} />
+        <Route path="/shopping/wishlist" element={<WishList />} />
+
       </Routes>
     </ProductDetailProvider>
   );

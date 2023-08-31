@@ -6,8 +6,6 @@ import Article from "../news/Article";
 import Search from "../common/Search";
 import Page from "../common/Page";
 
-import styles from "../../styles/news/NewsList.module.css";
-
 const formatDate = (date) => {
   const d = new Date(date);
   const year = d.getFullYear();
@@ -81,23 +79,17 @@ const NewsList = () => {
   };
   
   return (
-    <div className={`${styles.base} ${styles.newsListContainer}`}>
-      <div className={styles.page_title}>뉴스리스트</div>
-      <table>
-        <tbody>
-          {(searchResults.length > 0 ? searchResults : dataList).map((data) => (
-            <div key={data.newsId} className={styles.articleWrapper}>
-              <Article data={data} />
-            </div>
-          ))}
-        </tbody>
-      </table>
+    <div>
+      <p style={{ margin: '0 20%', fontSize: '20px', fontWeight: 'bold' }}>뉴스 리스트</p>
+      {(searchResults.length > 0 ? searchResults : dataList).map((data) => (
+        <div key={data.newsId}>
+          <Article data={data} />
+        </div>
+      ))}
       <Page currentPage={currentPage} onPageChange={handlePageChange} totalPages={totalPages} />
       <Search onSearch={handleSearch} />
     </div>
   );
-  
-
 };
 
 export default NewsList;
