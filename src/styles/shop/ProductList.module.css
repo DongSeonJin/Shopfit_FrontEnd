@@ -24,3 +24,15 @@
     margin-bottom: 20px;
   }
   
+  .sort {
+    display: flex;
+    justify-content: flex-end;
+
+  }
+
+  .sortButton {
+    padding: 5px 5px;
+    color: #949494;
+    cursor: pointer;
+    margin-bottom: 10px;
+  }
