@@ -8,31 +8,53 @@ import { Table, TableBody, TableCell, TableRow } from '@material-ui/core';
 import { Button } from '@material-ui/core'
 import LikeIcon from '@material-ui/icons/Favorite';
 import UpdateIcon from '@material-ui/icons/Edit';
+import ReplyCreate from './ReplyCreate';
+import ReplyList from './ReplyList';
+import { LineAxisSharp } from '@mui/icons-material';
 
 
 
 const PostDetail = () => {
+  const navigate = useNavigate(); 
   const [data, setData] = useState({});
   const { postId } = useParams(); // postId를 URL 파라미터로 가져옴
-  const navigate = useNavigate(); // useNavigate 이용하여 뒤로 가기 기능을 사용할 수 있음
+  const [replies, setReplies] = useState([]);
+  
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         // 서버에서 게시글 정보를 가져오는 요청 보내기
-        const response = await axios.get(`/post/${postId}`);
+        const [postResponse, repliesResponse] = await Promise.all ([
+          axios.get(`/post/${postId}`),
+          axios.get(`/reply/${postId}/all`)
+        ]);
+        
         setData({
-          ...response.data,
+          ...postResponse.data,
           imageUrls: [
-            response.data.imageUrl1, 
-            response.data.imageUrl2, 
-            response.data.imageUrl3]});
+            postResponse.data.imageUrl1, 
+            postResponse.data.imageUrl2, 
+            postResponse.data.imageUrl3
+          ]});
+
+          setReplies(repliesResponse.data);
       } catch (error) {
         console.error('게시글 조회 실패 :', error);
       }
     };
     fetchData();
   }, [postId]);
+
+  // const handleReplySubmit = newReply => {
+  //   setReplies(prevReplies => [...prevReplies, newReply]);
+  // };
+
+  const handleNewReply = async () => {
+    // 새로운 댓글이 등록될 때 호출되는 함수
+    const responseReplies = await axios.get(`/reply/${postId}/all`);
+    setReplies(responseReplies.data);
+  }
 
   const handleLike = async () => {
     try {
@@ -61,6 +83,14 @@ const PostDetail = () => {
       alert('게시글 삭제에 실패했습니다.');
     }
   };
+
+  const handleDeleteReply = (replyId) => {
+    // 댓글 삭제 로직을 구현하고, 삭제 후 업데이트된 댓글 목록을 설정
+    axios.delete(`/reply/${replyId}`);
+    const updatedReplies = replies.filter(reply => reply.replyId !== replyId);
+    setReplies(updatedReplies);
+  };  
+
 
   return (
     <>
@@ -163,7 +193,12 @@ const PostDetail = () => {
                     component={Link}
                     onClick={handleDelete}
                     style={{ marginTop: '10px', marginLeft: '10px' }}
-              > 삭제하기 </Button>
+              > 삭제하기 </Button> <br /> <br />
+
+              <ReplyList replies={replies} onDeleteReply={handleDeleteReply}/>
+              <ReplyCreate postId={postId} onReplySubmit={handleNewReply} />
+
+
               </>
             )}
           
