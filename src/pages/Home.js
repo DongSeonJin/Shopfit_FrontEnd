@@ -5,6 +5,7 @@ import HomeContent from '../components/common/HomeContent';
 import Shopping from '../pages/Shopping';
 import News from '../pages/News';
 import Community from "./Community";
+import Mypage from "./Mypage";
 
 const Home = () => {
   return (
@@ -12,6 +13,7 @@ const Home = () => {
       <Routes>
         <Route path="/" element={<HomeContent />} />
       </Routes>
+      <Mypage />
       <Community />
       <Shopping />
       <News />

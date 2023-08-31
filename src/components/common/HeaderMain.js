@@ -58,25 +58,9 @@ const HeaderMain = ({ isCommunityHovered, isShoppingHovered }) => {
                         <Link to="/news/list" style={{ textDecoration: 'none', color: 'inherit' }} onClick={() => {navigate("/news/list"); window.location.reload();}}>뉴스</Link>
                     </b>
                 </div>
-                <div className={styles.divcss10vibjk}>
-                    <div className={styles.divcss1f624s9}>
-                        <div className={styles.divcss1kpxvh4}>
-                            <div className={styles.link3}>
-                                <div className={styles.div}>
-                                    <Link to="/login" style={{ textDecoration: 'none', color: 'inherit' }} onClick={() => {navigate("/login"); window.location.reload();}}>로그인</Link>
-                                </div>
-                            </div>
-                            <div className={styles.link4}>
-                                <div className={styles.div}>
-                                    <Link to="/register" style={{ textDecoration: 'none', color: 'inherit' }} onClick={() => {navigate("/register"); window.location.reload();}}>회원가입</Link>
-                                </div>
-                            </div>
-                            <div className={styles.link4}>
-                                <div className={styles.div}>고객센터</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <Link to="/login" style={{ textDecoration: 'none', color: 'inherit', margin: '0 10px', width: '80px' }} onClick={() => {navigate("/login"); window.location.reload();}}>로그인</Link>
+                <Link to="/register" style={{ textDecoration: 'none', color: 'inherit', margin: '0 10px', width: '80px' }} onClick={() => {navigate("/register"); window.location.reload();}}>회원가입</Link>
+                <Link to="/custom" style={{ textDecoration: 'none', color: 'inherit', margin: '0 10px', width: '80px' }} onClick={() => {navigate("/register"); window.location.reload();}}>고객센터</Link>
             </div>
         </div>
     );
