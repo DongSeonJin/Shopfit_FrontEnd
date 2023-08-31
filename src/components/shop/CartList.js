@@ -186,7 +186,7 @@ const CartList = () => {
 
             <div>
               <div className={styles.productName}>{item.productName}</div>
-              <div className={styles.price}>{item.price}원</div>
+              <div className={styles.price}>{item.price.toLocaleString()}원</div>
             </div>
             <div className={styles.infoContainer}>
               {/* <input
@@ -204,7 +204,7 @@ const CartList = () => {
                 }
               />
               <div className={styles.itemTotalPrice}>
-                {item.quantity * item.price} 원
+                {(item.quantity * item.price).toLocaleString()} 원
               </div>
               <div className={styles.deleteBtn}>
                 <Button
@@ -220,7 +220,7 @@ const CartList = () => {
         ))}
         <div className={styles.bottomWrap}>
           <div className={styles.totalPrice}>
-            총 금액: {calculateTotal()} 원
+            총 금액: {calculateTotal().toLocaleString()} 원
           </div>
           <div className={styles.orderButtonContainer}>
             <Button variant="contained" color="primary" onClick={handleOrderClick}>

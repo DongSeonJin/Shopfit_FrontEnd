@@ -39,7 +39,7 @@ const HomeShopping = () => {
                                 </div>
                                 <div className={styles.infoContainer}>
                                     <p className={styles.productName}>{product.productName}</p>
-                                    <p className={styles.productPrice}>{product.price}원</p>
+                                    <p className={styles.productPrice}>{product.price.toLocaleString()}원</p>
                                 </div>
                             </div>
                         </li>

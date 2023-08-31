@@ -5,7 +5,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import styles from "../../styles/shop/ProductListCategory.module.css";
 import Page from "../common/Page";
 import Search from "../common/Search";
-import Product from "../shop/Product";
+import Product from "./Product";
 
 
 const formatDate = (date) => {
