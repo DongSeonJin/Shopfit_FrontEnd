@@ -2,24 +2,28 @@ import axios from "axios";
 import React from "react";
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { Button, Rating } from "@mui/material";
 import { useDispatch } from "react-redux";
 import { useProductDetail } from "../../context/ProductDetailContext";
+
+import { Button, Rating } from "@mui/material";
+import BookmarkIcon from '@mui/icons-material/Bookmark';
+
 import styles from "../../styles/shop/ProductDetail.module.css";
 
 const ProductDetail = () => {
   const userId = 1; // 임시로 설정한 userId 변수 -> 추후 수정해야 함
 
   const { productNum } = useParams(); // productNum을 useParams로 추출
-  const dispatch = useDispatch();
 
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const [count, setCount] = useState(1);
-
   const [data, setData] = useState(null);
   const { setTotalPrice } = useProductDetail();
   const { setQuantity } = useProductDetail();
+
+  const [isFavorite, setIsFavorite] = useState();
 
   // 날짜 yyyy-mm-dd로 변경
   const formatDate = (date) => {
@@ -28,6 +32,64 @@ const ProductDetail = () => {
     const month = String(d.getMonth() + 1).padStart(2, "0");
     const day = String(d.getDate()).padStart(2, "0");
     return `${year}.${month}.${day}`;
+  };
+
+  useEffect(() => {
+    async function fetchUserWishlist() {
+      try {
+        const response = await fetch(`/api/wishlist/${userId}`);
+        if (response.ok) {
+          const wishlistItems = await response.json();
+          // eslint-disable-next-line eqeqeq
+          const isItemInWishlist = wishlistItems.some(item => item.productId == productNum);
+          setIsFavorite(isItemInWishlist);
+        }
+      } catch (error) {
+        console.error("오류 발생", error);
+      }
+    }
+    fetchUserWishlist();
+}, [userId, productNum]);
+
+  const toggleFavorite = () => {
+    if (isFavorite) {
+      removeFromWishlist();
+    } else {
+      addToWishlist();
+    }
+    setIsFavorite(prevState => !prevState); // 찜 상태 변경
+  };
+  
+  const addToWishlist = async () => {
+    try {
+      const response = await fetch(`/api/wishlist/add?userId=${userId}&productId=${productNum}`, {
+        method: "POST",
+      });
+  
+      if (response.ok) {
+        console.log("상품이 위시리스트에 추가되었습니다.");
+      } else {
+        console.error("상품 추가 실패");
+      }
+    } catch (error) {
+      console.error("오류 발생", error);
+    }
+  };
+
+  const removeFromWishlist = async () => {
+    try {
+      const response = await fetch(`/api/wishlist/remove?userId=${userId}&productId=${productNum}`, {
+        method: "DELETE",
+      });
+
+      if (response.ok) {
+        console.log("상품이 위시리스트에서 삭제되었습니다.");
+      } else {
+        console.error("상품 삭제 실패");
+      }
+    } catch (error) {
+      console.error("오류 발생", error);
+    }
   };
 
   useEffect(() => {
@@ -206,13 +268,24 @@ const ProductDetail = () => {
       {/* 썸네일, 제품명, 가격 시작 */}
       <div className={styles.productContainer}>
         <div className={styles.imgContainer}>
-          <div className={styles.item}>
-            <img className={styles.repImg} src={data.thumbnailUrl} alt={data.productName} />
+          <div>
+            <div style={{filter: data.stockQuantity === 0 ? "grayscale(100%)" : "none"}}>
+              <img className={styles.repImg} src={data.thumbnailUrl} alt={data.productName} />
+            </div>
+            <div 
+              onClick={toggleFavorite} 
+              style={{
+                textAlign: 'right',
+                cursor: 'pointer',
+                color: isFavorite ? "yellow" : "lightgray"
+            }}>
+              <BookmarkIcon style={{width: '40px', height: '40px'}} />
+            </div>
           </div>
         </div>
-        <div className={styles.item}>
+        <div>
           <h2 className={styles.prodName}>{data.productName}</h2>
-          <div className={styles.priceName}>{data.price}원</div>
+          <div className={styles.priceName}>{data.price.toLocaleString()}원</div>
 
             {/* 수량 선택 & 총 가격 */}
             <div className={styles.quantity}>

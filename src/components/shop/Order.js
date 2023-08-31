@@ -4,19 +4,20 @@ import addDays from 'date-fns/addDays';
 import { useLocation, useNavigate } from 'react-router-dom';
 import PurchasedProduct from './PurchasedProduct';
 import SearchAddress from './SearchAddress';
-import { IAMPORT_API_KEY, KAKAOPAY_PG } from '../../config';
+import { IAMPORT_API_KEY, KAKAOPAY_PG, TOSSPAY_PG } from '../../config';
 
 const Order = () => {
   const now = new Date();
   const navigate = useNavigate();
   const [cart, setCart] = useState([]);
   const [detailedAddress, setDetailedAddress] = useState('');
+  const [PGKey, setPGKey] = useState();
 
   const location = useLocation();
   const selectedItems = location.state.selectedItems;
 
   const initialOrderData = {
-    userId: selectedItems[0].userId, // You might want to replace this with the actual user ID
+    userId: selectedItems[0].userId,
     totalPrice: selectedItems.reduce((total, item) => total + item.price * item.quantity, 0),
     deliveryDate: addDays(now, 3),
     address: '',
@@ -78,56 +79,66 @@ const Order = () => {
   const isPhoneNumberValid = orderData.phoneNumber.trim() !== '';
   const isPaymentAllowed = isAddressValid && isPhoneNumberValid;
 
-// 아임포트 결제창 열기
-const openPaymentWindow = async () => {
-  if (!isPaymentAllowed) {
-    alert('주소와 연락처를 입력해주세요.');
-    return;
-  }
+  const handlePGSelection = (selectedPG) => {
+    if (selectedPG === 'kakaopay') {
+      setPGKey(KAKAOPAY_PG);
+    } else if (selectedPG === 'tosspay') {
+      setPGKey(TOSSPAY_PG);
+    } else if (selectedPG === null){
+      setPGKey(null);
+    }
+  };
 
-  const productId = selectedItems[0].productId; // 선택한 첫 번째 상품의 productId
-  try {
-    const productResponse = await axios.get(`/shopping/products/${productId}`); // 제품 정보 요청
-    const IMP = window.IMP;
-    IMP.init("IAMPORT_API_KEY");
-
-    // 주문 상품 수에 따라 이름 설정
-    let productName = productResponse.data.productName; // 기본 상품 이름
-    if (orderData.orderProducts.length > 1) {
-      productName += ` 외 ${orderData.orderProducts.length - 1}건`;
+  // 아임포트 결제창 열기
+  const openPaymentWindow = async () => {
+    if (!isPaymentAllowed) {
+      alert('주소와 연락처를 입력해주세요.');
+      return;
     }
 
-    IMP.request_pay(
-      {
-        pg: KAKAOPAY_PG,
-        pay_method: "card",
-        merchant_uid: orderData.orderId,
-        amount: orderData.totalPrice,
-        name: productName,                  // productName을 아임포트의 name 필드에 사용
-        buyer_email: orderData.userId,
-        buyer_name: orderData.userId,
-        buyer_tel: orderData.phoneNumber,
-        buyer_addr: orderData.address,
-      },
-      async function (rsp) {
-        if (rsp.success) {
-          // 결제 성공
-          console.log("결제가 성공적으로 완료되었습니다.");
+    const productId = selectedItems[0].productId; // 선택한 첫 번째 상품의 productId
+    try {
+      const productResponse = await axios.get(`/shopping/products/${productId}`); // 제품 정보 요청
+      const IMP = window.IMP;
+      IMP.init(IAMPORT_API_KEY);
 
-          // handleCreateOrder 함수 호출
-          await handleCreateOrder();
-
-        } else {
-          // 결제 실패
-          console.log(rsp);
-          alert(`결제에 실패하였습니다. 에러 내용: ${rsp.error_msg}`);
-        }
+      // 주문 상품 수에 따라 이름 설정
+      let productName = productResponse.data.productName; // 기본 상품 이름
+      if (orderData.orderProducts.length > 1) {
+        productName += ` 외 ${orderData.orderProducts.length - 1}건`;
       }
-    );
-  } catch (error) {
-    console.error('Error fetching product information:', error);
-  }
-};
+
+      IMP.request_pay(
+        {
+          pg: PGKey,
+          pay_method: "card",
+          merchant_uid: orderData.orderId,
+          amount: orderData.totalPrice,
+          name: productName,                  // productName을 아임포트의 name 필드에 사용
+          buyer_email: orderData.userId,
+          buyer_name: orderData.userId,
+          buyer_tel: orderData.phoneNumber,
+          buyer_addr: orderData.address,
+        },
+        async function (rsp) {
+          if (rsp.success) {
+            // 결제 성공
+            console.log("결제가 성공적으로 완료되었습니다.");
+
+            // handleCreateOrder 함수 호출
+            await handleCreateOrder();
+
+          } else {
+            // 결제 실패
+            console.log(rsp);
+            alert(`결제에 실패하였습니다. 에러 내용: ${rsp.error_msg}`);
+          }
+        }
+      );
+    } catch (error) {
+      console.error('Error fetching product information:', error);
+    }
+  };
 
   
   const handleCreateOrder = async () => {
@@ -254,6 +265,38 @@ const openPaymentWindow = async () => {
           </div>
           <div style={{ marginTop: '50px' }}>
             <h4>결제방식</h4>
+            <div style={{ display: 'flex', margin: '5px' }}>
+              <button
+                style={{
+                  width: '80px',
+                  height: '80px',
+                  margin: '5px',
+                  border: 'none',
+                  background: KAKAOPAY_PG === PGKey ? '#00BFFF' : '#000000',
+                  color: 'white',
+                  borderRadius: '20%',
+                  transition: 'background 1s',
+                }}
+                onClick={() => handlePGSelection(PGKey === KAKAOPAY_PG ? null : 'kakaopay')}
+              >
+                카카오<br />페이
+              </button>
+              <button
+                style={{
+                  width: '80px',
+                  height: '80px',
+                  margin: '5px',
+                  border: 'none',
+                  background: TOSSPAY_PG === PGKey ? '#00BFFF' : '#000000',
+                  color: 'white',
+                  borderRadius: '20%',
+                  transition: 'background 1s',
+                }}
+                onClick={() => handlePGSelection(PGKey === TOSSPAY_PG ? null : 'tosspay')}
+              >
+                토스<br />페이
+              </button>
+            </div>
           </div>
         </div>
         <div style={{ flex: 1, margin: '0 10%' }}>
