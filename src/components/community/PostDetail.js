@@ -84,6 +84,14 @@ const PostDetail = () => {
     }
   };
 
+  const handleDeleteReply = (replyId) => {
+    // 댓글 삭제 로직을 구현하고, 삭제 후 업데이트된 댓글 목록을 설정
+    axios.delete(`/reply/${replyId}`);
+    const updatedReplies = replies.filter(reply => reply.replyId !== replyId);
+    setReplies(updatedReplies);
+  };  
+
+
   return (
     <>
       <h2 align="center">게시글 상세정보</h2>
@@ -187,7 +195,7 @@ const PostDetail = () => {
                     style={{ marginTop: '10px', marginLeft: '10px' }}
               > 삭제하기 </Button> <br /> <br />
 
-              <ReplyList replies={replies} />
+              <ReplyList replies={replies} onDeleteReply={handleDeleteReply}/>
               <ReplyCreate postId={postId} onReplySubmit={handleNewReply} />
 
 

@@ -11,29 +11,35 @@ const ReplyCreate = ({ postId, onReplySubmit }) => {
 
     const handleSubmit = async e => {
         e.preventDefault();
-
-        // 서버로 보낼 데이터 구성
-        const replyData = new FormData();
-        replyData.append ('postId', postId);
-        replyData.append ('content', content);
-        replyData.append ('nickname', nickname);
-
+    
         if (content.trim() === '')  {
             alert("댓글 내용을 입력해주세요.");
             return;
         }
-        
+    
+        const replyData = {
+            user: {userId: userId},
+            post: {postId: postId},
+            content: content,
+            nickname: nickname
+        };
+    
         try {
-            const response = await axios.post(`/reply`, replyData);
+            const response = await axios.post('/reply', replyData, {
+                headers: {
+                    'Content-Type': 'application/json',
+                }
+            });
             onReplySubmit(response.data);
             setContent('');
 
-            
+            alert ("댓글이 등록되었습니다.")
         } catch (error) {
             console.error('댓글 등록 실패', error);
             alert("댓글이 등록되지 않았습니다.");
         }
-    };
+    }; 
+    
 
     return (
         <div>
