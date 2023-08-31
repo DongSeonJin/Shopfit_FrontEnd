@@ -96,6 +96,17 @@ const PostDetail = () => {
     setReplies(updatedReplies);
   };  
 
+  const handleUpdateReply = async (replyId, updatedReply) => {
+    try {
+        await axios.put(`/reply/${replyId}`, { content: updatedReply });
+        const responseReplies = await axios.get(`/reply/${postId}/all`);
+        setReplies(responseReplies.data);
+    } catch (error) {
+        console.error('댓글 수정 실패:', error);
+        alert('댓글 수정에 실패했습니다.');
+    }
+  };
+
 
   return (
     <>
@@ -200,7 +211,10 @@ const PostDetail = () => {
                     style={{ marginTop: '10px', marginLeft: '10px' }}
               > 삭제하기 </Button> <br /> <br />
 
-              <ReplyList replies={replies} onDeleteReply={handleDeleteReply}/>
+              <ReplyList 
+                replies={replies} 
+                onDeleteReply={handleDeleteReply}
+                onUpdateReply={handleUpdateReply} />
               <ReplyCreate postId={postId} onReplySubmit={handleNewReply} />
 
 
