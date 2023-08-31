@@ -1,39 +1,30 @@
 import React from "react";
 import PropTypes from "prop-types";
 import DeleteNews from "../news/DeleteNews";
-
-import styles from "../../styles/news/Article.module.css";
+import styles from "../../styles/news/Article.module.css"; // CSS 모듈 파일을 가져옴
 
 const Article = ({ data }) => {
   const handleClick = () => {
     window.open(data.newsUrl, "_blank");
   };
 
-  const imageStyle = {
-    width: "180px",
-    height: "120px",
-    backgroundImage: `url(${data.imageUrl})`,
-    backgroundSize: "cover",
-  };
-
   return (
-    <tr key={data.newsId}>
-      <div onClick={handleClick} className={`${styles.articleRow}`}>
-        <td
-          className={`${styles.img_item} ${styles.backgroundImage}`}
-          style={imageStyle}
-        ></td>
-        <td className={styles.table_content}>
-          <td className="content_title">{data.title}</td>
-          <br />
-          <td className="content_detail">{data.content}</td>
-        </td>
-        <td className={styles.when_post}>{data.createdAt}</td>
+    <div
+      key={data.newsId}
+      className={styles.articleContainer} // CSS 모듈의 클래스를 적용
+    >
+      <div
+        className={styles.image}
+        onClick={handleClick}
+        style={{ backgroundImage: `url(${data.imageUrl})` }}
+      />
+      <div className={styles.textContainer}>
+        <div className={styles.title}>{data.title}</div>
+        <div className={styles.content}>{data.content}</div>
       </div>
-      <td>
-          <DeleteNews newsId={data.newsId} />
-      </td>
-    </tr>
+      <div className={styles.date}>{data.createdAt}</div>
+      <DeleteNews newsId={data.newsId} />
+    </div>
   );
 };
 

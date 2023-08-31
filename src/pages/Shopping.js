@@ -7,11 +7,13 @@ import ProductDetail from "../components/shop/ProductDetail";
 import Order from "../components/shop/Order";
 import OrderDetail from "../components/shop/OrderDetail";
 import CartList from "../components/shop/CartList";
+import WishList from "../components/shop/WishList";
 
 import { ProductDetailProvider } from "../context/ProductDetailContext";
 
 import ProductCreate from "../components/shop/ProductCreate";
 import ProductUpdate from "../components/shop/ProductUpdate";
+
 
 const Shopping = () => {
   return (
@@ -33,13 +35,16 @@ const Shopping = () => {
 
         <Route path="/shopping/order" element={<Order />} />
         <Route path="/shopping/order/detail" element={<OrderDetail />} />
+          
+        <Route path="/shopping/cart" element={<CartList />} />  
 
-        <Route path="/shopping/cart" element={<CartList />} />
+        <Route path="/shopping/wishlist" element={<WishList />} />
 
         <Route path="/shopping/sort/:sortType" element={<ProductList />} />
         <Route path="/shopping/sort/:sortType/:pageNum" element={<ProductList />} />
         <Route path="/shopping/category/:categoryId/sort/:sortType" element={<ProductListCategory />} />
         <Route path="/shopping/category/:categoryId/sort/:sortType/:pageNum" element={<ProductListCategory />} />
+
       </Routes>
     </ProductDetailProvider>
   );

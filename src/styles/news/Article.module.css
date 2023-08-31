@@ -1,24 +1,33 @@
-.articleRow {
-    cursor: pointer;
+.articleContainer {
+  display: flex;
+  align-items: center;
+  margin: 10px 20%;
+  justify-content: space-between;
 }
 
-.img_item {
+.image {
   width: 180px;
   height: 120px;
-  background-size: 180px auto;
-  background-repeat: no-repeat;
+  background-size: cover;
+  cursor: pointer;
 }
 
-.table_content {
-  width: 600px;
-  padding-left: 10px;
-  padding-right: 10px;
-  white-space: normal;
+.textContainer {
+  display: flex;
+  flex-direction: column;
+  width: 55%;
 }
 
-.when_post {
-  text-align: center;
-  width: 100px;
-  padding-left: 10px;
-  padding-right: 10px;
+.title {
+  height: 50px;
+  margin-top: 10px;
+}
+
+.content {
+  height: 50px;
+  margin-bottom: 10px;
+}
+
+.date {
+  width: 10%;
 }

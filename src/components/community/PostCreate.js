@@ -19,9 +19,8 @@ const PostCreate = () => {
     const [imageUrl3, setImageUrl3] = useState('');
     
     const categories = [
-        { id: 1, name: '자유게시판' },
-        { id: 2, name: '오운완' },
-        { id: 3, name: '식단'},
+        { id: 1, name: '오운완' },
+        { id: 2, name: '식단' },
     ];
 
     const navigate = useNavigate();
@@ -45,7 +44,6 @@ const PostCreate = () => {
     // const handleFileChange = (e) => {
     //     setFile(e.target.files[0]);
     // }
-
 
     const handleUploadSuccess =(url) => {
         setImageUrl1(url);
@@ -95,7 +93,7 @@ const PostCreate = () => {
                 setImageUrl3('');
 
                 // 게시글 리스트로 이동
-                navigate('/post/list');
+                navigate(`/community/post/list/:categoryId`);
             } catch (error) {
                 console.error('게시글 등록 실패', error);
                 alert('게시글 등록에 실패했습니다.');
@@ -110,31 +108,31 @@ const PostCreate = () => {
             <div className={styles['post-create-container']}> {/* 클래스 이름을 가져옴 */}
                 <form onSubmit={handleSubmit} className={styles['post-form']}> {/* 클래스 이름을 가져옴 */}
                     <div className={styles['form-row']}>
-                    <   label className={styles['form-label']}>
-                            작성자:
-                            <input
-                                type="text"
-                                value={nickname}
-                                onChange={handleNicknameChange}
-                                className={styles['input-field']}
-                            />
-                        </label>
+                    <label className={styles['form-label']}>
+                        작성자:
+                        <input
+                            type="text"
+                            value={nickname}
+                            onChange={handleNicknameChange}
+                            className={styles['input-field']}
+                        />
+                    </label>
 
-                        <label className={styles['form-label']}>
-                            카테고리:
-                            <select
-                                value={category}
-                                onChange={handleCategoryChange}
-                                className={styles['input-field']}
-                            >
-                                <option value="">카테고리를 선택하세요</option>
-                                {categories.map((category) => (
-                                    <option key={category.id} value={category.id}>
-                                        {category.name}
-                                    </option>
-                                ))}
-                            </select>
-                        </label>
+                    <label className={styles['form-label']}>
+                        카테고리:
+                        <select
+                            value={category}
+                            onChange={handleCategoryChange}
+                            className={styles['input-field']}
+                        >
+                            <option value="">카테고리를 선택하세요</option>
+                            {categories.map((category) => (
+                                <option key={category.id} value={category.id}>
+                                    {category.name}
+                                </option>
+                            ))}
+                        </select>
+                    </label>
                         
                     </div> <br />
 
