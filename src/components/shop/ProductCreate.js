@@ -76,7 +76,7 @@ const ProductCreate = () => {
     } else {
       try {
         // 백엔드 서버에 POST 요청 보내기
-        await axios.post("/shopping/save", data, {
+        await axios.post("/shopping", data, {
           headers: {
             "Content-Type": "application/json",
           },
