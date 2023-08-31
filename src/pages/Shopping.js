@@ -40,6 +40,11 @@ const Shopping = () => {
 
         <Route path="/shopping/wishlist" element={<WishList />} />
 
+        <Route path="/shopping/sort/:sortType" element={<ProductList />} />
+        <Route path="/shopping/sort/:sortType/:pageNum" element={<ProductList />} />
+        <Route path="/shopping/category/:categoryId/sort/:sortType" element={<ProductListCategory />} />
+        <Route path="/shopping/category/:categoryId/sort/:sortType/:pageNum" element={<ProductListCategory />} />
+
       </Routes>
     </ProductDetailProvider>
   );

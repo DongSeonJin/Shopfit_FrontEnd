@@ -25,6 +25,17 @@ const ProductList = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
+  const [selectedSort, setSelectedSort] = useState("");
+
+  const activeStyle = {
+    color: "black",
+    fontWeight: "bold",
+  };
+
+  // 클릭된 요소에 대한 스타일링을 반환하는 함수
+  const getSortButtonStyle = (sortType) => {
+    return selectedSort === sortType ? activeStyle : {};
+  };
 
   useEffect(() => {
     if (searchTerm.trim() === "") {
@@ -84,6 +95,41 @@ const ProductList = () => {
     }
   };
 
+  const handleSortByPriceLow = () => {
+    setSelectedSort("priceLow");
+    const newUrl = `/shopping/sort/1/${currentPage}`;
+    fetchData(newUrl);
+    navigate(newUrl);
+  };
+
+  const handleSortByPriceHigh = () => {
+    setSelectedSort("priceHigh");
+    const newUrl = `/shopping/sort/2/${currentPage}`;
+    fetchData(newUrl);
+    navigate(newUrl);
+  };
+
+  const handleSortByNewest = () => {
+    setSelectedSort("newest");
+    const newUrl = `/shopping/${currentPage}`;
+    fetchData(newUrl);
+    navigate(newUrl);
+  };
+
+  const handleSortByOldest = () => {
+    setSelectedSort("oldest");
+    const newUrl = `/shopping/sort/3/${currentPage}`;
+    fetchData(newUrl);
+    navigate(newUrl);
+  };
+
+  const handleSortByMostReviews = () => {
+    setSelectedSort("mostReviews");
+    const newUrl = `/shopping/sort/4/${currentPage}`;
+    fetchData(newUrl);
+    navigate(newUrl);
+  };
+
   return (
     <div className={styles.container}>
       <div className={styles.pageTitle}>
@@ -92,6 +138,52 @@ const ProductList = () => {
           <Link to="/shopping/create">
             <Button variant="outlined">상품 등록</Button>
           </Link>
+        </div>
+      </div>
+      <div className={styles.sort}>
+        <div
+          role="button"
+          onClick={handleSortByPriceLow}
+          className={styles.sortButton}
+          style={getSortButtonStyle("priceLow")}
+        >
+          낮은 가격순
+        </div>
+        <div className={styles.sortButton}>|</div>
+        <div
+          role="button"
+          onClick={handleSortByPriceHigh}
+          className={styles.sortButton}
+          style={getSortButtonStyle("priceHigh")}
+        >
+          높은 가격순
+        </div>
+        <div className={styles.sortButton}>|</div>
+        <div
+          role="button"
+          onClick={handleSortByNewest}
+          className={styles.sortButton}
+          style={getSortButtonStyle("newest")}
+        >
+          신상품순
+        </div>
+        <div className={styles.sortButton}>|</div>
+        <div
+          role="button"
+          onClick={handleSortByOldest}
+          className={styles.sortButton}
+          style={getSortButtonStyle("oldest")}
+        >
+          오래된순
+        </div>
+        <div className={styles.sortButton}>|</div>
+        <div
+          role="button"
+          onClick={handleSortByMostReviews}
+          className={styles.sortButton}
+          style={getSortButtonStyle("mostReviews")}
+        >
+          리뷰 많은순
         </div>
       </div>
       <div className={styles.gridContainer}>
