@@ -10,7 +10,7 @@ import LikeIcon from '@material-ui/icons/Favorite';
 import UpdateIcon from '@material-ui/icons/Edit';
 import ReplyCreate from './ReplyCreate';
 import ReplyList from './ReplyList';
-import { LineAxisSharp } from '@mui/icons-material';
+
 
 
 
@@ -73,16 +73,21 @@ const PostDetail = () => {
     }
   };
 
-  const handleDelete = async () => {
-    try {
-      await axios.delete(`/post/delete/${postId}`);
-      alert('게시글이 삭제되었습니다.');
-      navigate('/community/post/list'); // 삭제 후 목록으로 돌아가기
-    } catch (error) {
-      console.error('게시글 삭제 실패:', error);
-      alert('게시글 삭제에 실패했습니다.');
+  const handleDeletePost = async () => {
+    // 사용자로부터 삭제 확인을 받기 위한 알림창 표시
+    const shouldDelete = window.confirm('게시글을 삭제하시겠습니까?');
+    if (shouldDelete) {
+        try {
+            await axios.delete(`/post/delete/${postId}`);
+            alert('게시글이 삭제되었습니다.');
+            navigate('/community/post/list'); // 삭제 후 목록으로 돌아가기
+        } catch (error) {
+            console.error('게시글 삭제 실패:', error);
+            alert('게시글 삭제에 실패했습니다.');
+        }
     }
-  };
+};
+
 
   const handleDeleteReply = (replyId) => {
     // 댓글 삭제 로직을 구현하고, 삭제 후 업데이트된 댓글 목록을 설정
@@ -191,7 +196,7 @@ const PostDetail = () => {
                     variant="contained"
                     color="primary"
                     component={Link}
-                    onClick={handleDelete}
+                    onClick={handleDeletePost}
                     style={{ marginTop: '10px', marginLeft: '10px' }}
               > 삭제하기 </Button> <br /> <br />
 
