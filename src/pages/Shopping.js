@@ -31,13 +31,15 @@ const Shopping = () => {
         <Route path="/shopping/create" element={<ProductCreate />} />
         <Route path="/shopping/update/:productNum" element={<ProductUpdate />} />
 
-        <Route path="/shopping/:productNum/order" element={<Order />} />
-        {/* 확인하기! */}
-
         <Route path="/shopping/order" element={<Order />} />
         <Route path="/shopping/order/detail" element={<OrderDetail />} />
 
         <Route path="/shopping/cart" element={<CartList />} />
+
+        <Route path="/shopping/sort/:sortType" element={<ProductList />} />
+        <Route path="/shopping/sort/:sortType/:pageNum" element={<ProductList />} />
+        <Route path="/shopping/category/:categoryId/sort/:sortType" element={<ProductListCategory />} />
+        <Route path="/shopping/category/:categoryId/sort/:sortType/:pageNum" element={<ProductListCategory />} />
       </Routes>
     </ProductDetailProvider>
   );
