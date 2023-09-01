@@ -42,7 +42,7 @@ function FileUploadComponent({ onUploadSuccess }) {
           formData.append("file", file);
 
           axios
-            .post("/api/upload", formData)
+            .post("/api", formData)
             .then((response) => {
               onUploadSuccess(response.data);
             })
