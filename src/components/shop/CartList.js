@@ -9,7 +9,7 @@ import CartQuantity from "./CartQuantity";
 
 const CartList = () => {
   const userId = 1; // 임시로 설정한 userId 변수 -> 추후 수정해야 함
-  
+
   const [cartItems, setCartItems] = useState([]); // 장바구니 아이템 상태 관리
   // const { userId } = useParams(); // userId를 useParams로 추출 -> 제거
   const navigate = useNavigate();
@@ -19,25 +19,19 @@ const CartList = () => {
   const handleCheckChange = () => {
     setIsCheckedAll(!isCheckedAll);
     // cartItems 상태를 업데이트하면서 isChecked 값을 변경
-    setCartItems((prevItems) =>
-      prevItems.map((item) => ({ ...item, isChecked: !isCheckedAll }))
-    );
+    setCartItems((prevItems) => prevItems.map((item) => ({ ...item, isChecked: !isCheckedAll })));
   };
 
   // 개별 아이템 체크 여부 변경 이벤트 핸들러
   const handleItemCheckChange = (cartId) => {
     setCartItems((prevItems) =>
-      prevItems.map((item) =>
-        item.cartId === cartId ? { ...item, isChecked: !item.isChecked } : item
-      )
+      prevItems.map((item) => (item.cartId === cartId ? { ...item, isChecked: !item.isChecked } : item))
     );
   };
 
   // 선택된 아이템 일괄 삭제 이벤트 핸들러
   const handleBulkDelete = async () => {
-    const selectedCartIds = cartItems
-      .filter((item) => item.isChecked)
-      .map((item) => item.cartId);
+    const selectedCartIds = cartItems.filter((item) => item.isChecked).map((item) => item.cartId);
 
     if (selectedCartIds.length === 0) {
       return;
@@ -45,13 +39,9 @@ const CartList = () => {
 
     // 선택된 아이템들을 순회하며 삭제 요청을 보내고, 성공한 경우 상태를 업데이트
     try {
-      await Promise.all(
-        selectedCartIds.map((cartId) => axios.delete(`/cart/remove/${cartId}`))
-      );
+      await Promise.all(selectedCartIds.map((cartId) => axios.delete(`/cart/${cartId}`)));
 
-      setCartItems((prevItems) =>
-        prevItems.filter((item) => !selectedCartIds.includes(item.cartId))
-      );
+      setCartItems((prevItems) => prevItems.filter((item) => !selectedCartIds.includes(item.cartId)));
     } catch (error) {
       console.error("선택 삭제 요청 에러", error);
     }
@@ -61,11 +51,9 @@ const CartList = () => {
   const handleDelete = async (cartId) => {
     try {
       // 선택한 아이템 하나를 삭제 요청
-      await axios.delete(`/cart/remove/${cartId}`);
+      await axios.delete(`/cart/${cartId}`);
       // 삭제 요청이 성공한 경우, 해당 아이템을 장바구니에서 제거
-      setCartItems((prevItems) =>
-        prevItems.filter((item) => item.cartId !== cartId)
-      );
+      setCartItems((prevItems) => prevItems.filter((item) => item.cartId !== cartId));
     } catch (error) {
       console.error("삭제 요청 에러", error);
     }
@@ -111,9 +99,7 @@ const CartList = () => {
     // console.log(cartId);
     // console.log(newQuantity);
     setCartItems((prevItems) =>
-      prevItems.map((item) =>
-        item.cartId === cartId ? { ...item, quantity: newQuantity } : item
-      )
+      prevItems.map((item) => (item.cartId === cartId ? { ...item, quantity: newQuantity } : item))
     );
   };
 
@@ -157,11 +143,7 @@ const CartList = () => {
           {isCheckedAll ? "전체해제" : "전체선택"}
         </label>
 
-        <Button
-          variant="outlined"
-          startIcon={<DeleteIcon />}
-          onClick={() => handleBulkDelete()}
-        >
+        <Button variant="outlined" startIcon={<DeleteIcon />} onClick={() => handleBulkDelete()}>
           선택삭제
         </Button>
       </div>
@@ -177,11 +159,7 @@ const CartList = () => {
               />
             </div>
             <div className={styles.imageContainer}>
-              <img
-                className={styles.repImg}
-                src={item.thumbnailUrl}
-                alt={item.productName}
-              />
+              <img className={styles.repImg} src={item.thumbnailUrl} alt={item.productName} />
             </div>
 
             <div>
@@ -199,19 +177,11 @@ const CartList = () => {
               <CartQuantity
                 count={item.quantity}
                 stockQuantity={item.stockQuantity}
-                onCountChange={(newCount) =>
-                  handleItemQuantityChange(item.cartId, newCount)
-                }
+                onCountChange={(newCount) => handleItemQuantityChange(item.cartId, newCount)}
               />
-              <div className={styles.itemTotalPrice}>
-                {(item.quantity * item.price).toLocaleString()} 원
-              </div>
+              <div className={styles.itemTotalPrice}>{(item.quantity * item.price).toLocaleString()} 원</div>
               <div className={styles.deleteBtn}>
-                <Button
-                  variant="outlined"
-                  color="error"
-                  onClick={() => handleDelete(item.cartId)}
-                >
+                <Button variant="outlined" color="error" onClick={() => handleDelete(item.cartId)}>
                   X
                 </Button>
               </div>
@@ -219,9 +189,7 @@ const CartList = () => {
           </div>
         ))}
         <div className={styles.bottomWrap}>
-          <div className={styles.totalPrice}>
-            총 금액: {calculateTotal().toLocaleString()} 원
-          </div>
+          <div className={styles.totalPrice}>총 금액: {calculateTotal().toLocaleString()} 원</div>
           <div className={styles.orderButtonContainer}>
             <Button variant="contained" color="primary" onClick={handleOrderClick}>
               주문하기

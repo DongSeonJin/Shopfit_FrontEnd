@@ -73,7 +73,7 @@ const ProductUpdate = () => {
     } else {
       try {
         // 백엔드 서버에 PATCH 요청 보내기
-        await axios.patch(`/shopping/update/${productNum}`, data, {
+        await axios.patch(`/shopping/${productNum}`, data, {
           headers: {
             "Content-Type": "application/json",
           },
@@ -123,7 +123,7 @@ const ProductUpdate = () => {
     const thumbnailObjectKey = thumbnailUrl.split("/").pop(); // 마지막 부분을 추출하여 S3 객체 키로 사용
 
     axios
-      .delete(`/api/delete/${thumbnailObjectKey}`)
+      .delete(`/api/${thumbnailObjectKey}`)
       .then(() => {
         console.log("S3 썸네일 삭제 성공");
         setThumbnailUrl("");
@@ -137,7 +137,7 @@ const ProductUpdate = () => {
     const imageUrlObjectKey = imageUrl.split("/").pop();
 
     axios
-      .delete(`/api/delete/${imageUrlObjectKey}`)
+      .delete(`/api/${imageUrlObjectKey}`)
       .then(() => {
         console.log("S3 상세이미지 삭제 성공");
 
