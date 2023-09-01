@@ -55,7 +55,7 @@ const PostList = () => {
      <div className={styles['post-list']}>
        {posts.map((post) => (
          <div className={styles['post-card']} key={post.id}>
-           <img src={post.imageUrl} alt={post.title} className={styles['post-image']} />
+           <img src={post.imageUrl1} alt={post.title} className={styles['post-image']} />
            <div className={styles['post-content']}>
              <h2 className={styles['post-title']}>{post.title}</h2>
              <p className={styles['post-author']}>{`작성자: ${post.nickname}`}</p>

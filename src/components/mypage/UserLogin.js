@@ -1,14 +1,15 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { setUser } from '../../redux/actions'
 import axios from 'axios';
 import Modal from '../common/Modal';
 
-const UserLogin = () => {
+const UserLogin = ({ setUser }) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [errorModalOpen, setErrorModalOpen] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
-    const [user, setUser] = useState(null); // 사용자 정보 상태 추가
     const navigate = useNavigate();
 
     const handleEmailChange = (event) => {
@@ -75,17 +76,12 @@ const UserLogin = () => {
                     onClose={handleCloseModal}
                 />
             )}
-
-            {user && (
-                <div>
-                    <p>로그인한 사용자 정보:</p>
-                    <p>이름: {user.name}</p>
-                    <p>이메일: {user.email}</p>
-                </div>
-            )}
-
         </div>
     );
 };
 
-export default UserLogin;
+const mapDispatchToProps = {
+    setUser,
+  };
+
+export default connect(null, mapDispatchToProps)(UserLogin);
