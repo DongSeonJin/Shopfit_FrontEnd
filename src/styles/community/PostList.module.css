@@ -1,12 +1,21 @@
+.container {
+  margin: 0 auto;
+  max-width: 1200px;
+  padding: 20px;
+}
+
+
 .post-list {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
+    
   }
   
   .post-card {
     width: calc(25% - 1em);
     margin-bottom: 2em;
+
   }
   
   .post-image {

@@ -78,7 +78,7 @@ const PostDetail = () => {
     const shouldDelete = window.confirm('게시글을 삭제하시겠습니까?');
     if (shouldDelete) {
         try {
-            await axios.delete(`/post/delete/${postId}`);
+            await axios.delete(`/post/${postId}`);
             alert('게시글이 삭제되었습니다.');
             navigate('/community/post/list'); // 삭제 후 목록으로 돌아가기
         } catch (error) {
