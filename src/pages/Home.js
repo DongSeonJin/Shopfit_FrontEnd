@@ -1,11 +1,13 @@
 import React from "react";
 import { Route, Routes } from "react-router-dom";
 
-import HomeContent from '../components/common/HomeContent';
-import Shopping from '../pages/Shopping';
-import News from '../pages/News';
+import HomeContent from "../components/common/HomeContent";
+import Shopping from "../pages/Shopping";
+import News from "../pages/News";
 import Community from "./Community";
-import Mypage from "./MyPage";
+import MyPage from "./MyPage";
+
+
 
 const Home = () => {
   return (
@@ -16,7 +18,7 @@ const Home = () => {
       <Community />
       <Shopping />
       <News />
-      <Mypage />
+      <MyPage />
     </div>
   );
 };

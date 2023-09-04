@@ -14,7 +14,6 @@ import { ProductDetailProvider } from "../context/ProductDetailContext";
 import ProductCreate from "../components/shop/ProductCreate";
 import ProductUpdate from "../components/shop/ProductUpdate";
 
-
 const Shopping = () => {
   return (
     <ProductDetailProvider>
@@ -35,16 +34,15 @@ const Shopping = () => {
 
         <Route path="/shopping/order" element={<Order />} />
         <Route path="/shopping/order/detail" element={<OrderDetail />} />
-          
-        <Route path="/shopping/cart" element={<CartList />} />  
 
+        {/* 추후 마이페이지로 옮기기! */}
+        <Route path="/shopping/cart" element={<CartList />} />
         <Route path="/shopping/wishlist" element={<WishList />} />
 
         <Route path="/shopping/sort/:sortType" element={<ProductList />} />
         <Route path="/shopping/sort/:sortType/:pageNum" element={<ProductList />} />
         <Route path="/shopping/category/:categoryId/sort/:sortType" element={<ProductListCategory />} />
         <Route path="/shopping/category/:categoryId/sort/:sortType/:pageNum" element={<ProductListCategory />} />
-
       </Routes>
     </ProductDetailProvider>
   );
