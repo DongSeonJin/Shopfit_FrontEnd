@@ -41,25 +41,25 @@ const PostList = () => {
     axios.get(`/post/list/${categoryId}/${pageNumb}`)
       .then(response => {
         // 서버에서 받은 데이터를 상태에 저장
-        setPosts(prevPosts => [...prevPosts, ...response.data.content]); 
+        setPosts(prevPosts => [...prevPosts, ...response.data.content]);
       })
       .catch(error => {
         console.error('Error fetching data:', error);
       });
-    
-   }, [categoryId,pageNumb]);
+
+  }, [categoryId, pageNumb]);
 
 
 
-   const handleLike = async () => {
+  const handleLike = async () => {
     try {
       // 서버로 좋아요 요청 보내기
-      await axios.post('/post/like', { postId, userId:1});
+      await axios.post('/post/like', { postId, userId: 1 });
       alert('좋아요 누르기 성공');
 
       // 좋아요 성공 후 해당 포스트 정보 다시 가져오기
       const response = await axios.get(`/post/${postId}`); // 좋아요 갯수만 따로 요청받을 컨트롤러 만들까 고민중
-                                                          //좋아요 갯수만 가져오면 되는데 resource낭비
+      //좋아요 갯수만 가져오면 되는데 resource낭비
 
       // 가져온 데이터를 통해 상태 갱신
       setPosts(response.data.content);
@@ -71,18 +71,18 @@ const PostList = () => {
 
 
 
-   // loader(ref) 가 화면에 나타났다 사라졌다 할 때 호출되는 함수입니다.
-   const handleObserver = (entities) => {
+  // loader(ref) 가 화면에 나타났다 사라졌다 할 때 호출되는 함수입니다.
+  const handleObserver = (entities) => {
     const target = entities[0];
-    if (target.isIntersecting) {   
+    if (target.isIntersecting) {
       setPageNumb((prevPageNumber) => prevPageNumber + 1)
     }
   }
 
-   return (
+  return (
     <div className='container'>
 
-      <div style={{ marginRight:"auto", marginLeft: "0" }}>
+      <div style={{ marginRight: "auto", marginLeft: "0" }}>
         <Button component={Link} to="/community/post/create" variant="contained" color="primary" className={styles['write-button']}>
           글 작성
         </Button>
@@ -91,19 +91,19 @@ const PostList = () => {
       <div className={styles['post-list']}>
 
         {posts.map((post) => (
-        
-          <div className={styles['post-card']} key={post.id}>
+          
+            <Link to={`/community/post/${post.postId}`} className={styles['post-card']} key={post.id}  style={{ textDecoration: 'none', color: 'black' }}>
 
-            <img src={post.imageUrl1} alt={post.title} className={styles['post-image']} />
-            <LikeIcon onClick={handleLike} style={{color:'red', cursor: 'pointer'}} />
-            <span>{likeCount}</span>
-            <div className={styles['post-content']}>
-              <h2 className={styles['post-title']}>{post.title}</h2>
-              <p className={styles['post-author']}>{`작성자: ${post.nickname}`}</p>
-              {/* 추가적인 내용들... */}
-            </div>
-          </div>
-        
+              <img src={post.imageUrl1} alt={post.title} className={styles['post-image']} />
+              <LikeIcon onClick={handleLike} style={{ color: 'red', cursor: 'pointer' }} />
+              <span>{likeCount}</span>
+              <div className={styles['post-content']}>
+                <h2 className={styles['post-title']}>{post.title}</h2>
+                <p className={styles['post-author']}>{`작성자: ${post.nickname}`}</p>
+                {/* 추가적인 내용들... */}
+              </div>
+            </Link>
+
         ))}
         <div ref={loader} className={styles['loading-indicator']}>
           {/* 로딩 인디케이터 (예: 스피너) */}
@@ -111,9 +111,9 @@ const PostList = () => {
         </div>
       </div>
     </div>
-    );
+  );
 };
 
 export default PostList;
 
-      
+
