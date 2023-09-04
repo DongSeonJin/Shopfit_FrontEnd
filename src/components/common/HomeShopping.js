@@ -11,6 +11,7 @@ const HomeShopping = () => {
     fetchTopProducts();
   }, []);
 
+
   const fetchTopProducts = async () => {
     try {
       const response = await axios.get("/wishlist/top3");
@@ -19,6 +20,7 @@ const HomeShopping = () => {
       console.error("상위 상품 가져오기 오류:", error);
     }
   };
+
 
   return (
     <div className={styles.container}>

@@ -56,6 +56,7 @@ const PostList = () => {
 
 
    return (
+
     <div className='container'>
 
       <div style={{ marginRight:"auto", marginLeft: "0" }}>
