@@ -19,8 +19,19 @@
   }
   
   .post-image {
+    width: 300px;
+    height: auto;
+  }
+
+  .post-title {
+    width: 300px;
+  }
+  
+  .post-author {
     width: 100%;
   }
+
+
   
   /* 반응형 디자인 */
   @media (max-width: 768px) {
@@ -28,8 +39,6 @@
         width: calc(50% - .5em);
       }
   }
-
-  .a {
-    width: 300px;
-  }
+  
+  
   

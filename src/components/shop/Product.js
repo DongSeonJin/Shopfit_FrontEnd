@@ -2,12 +2,12 @@ import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { useNavigate } from "react-router-dom";
 
-import BookmarkIcon from '@mui/icons-material/Bookmark';
+import BookmarkIcon from "@mui/icons-material/Bookmark";
 
 const Product = ({ data }) => {
   const navigate = useNavigate();
   const [isFavorite, setIsFavorite] = useState();
-  
+
   const userId = 1; // 사용자 ID
   const productId = data.productId; // 상품 ID
 
@@ -20,10 +20,10 @@ const Product = ({ data }) => {
     // 위시리스트 정보를 가져오는 API 요청을 수행
     async function fetchUserWishlist() {
       try {
-        const response = await fetch(`/api/wishlist/${userId}`);
+        const response = await fetch(`/wishlist/${userId}`);
         if (response.ok) {
           const wishlistItems = await response.json();
-          const isItemInWishlist = wishlistItems.some(item => item.productId === productId);
+          const isItemInWishlist = wishlistItems.some((item) => item.productId === productId);
           setIsFavorite(isItemInWishlist); // 위시리스트에 상품이 있는 경우 isFavorite 값을 true로 설정
         }
       } catch (error) {
@@ -40,15 +40,15 @@ const Product = ({ data }) => {
     } else {
       addToWishlist();
     }
-    setIsFavorite(prevState => !prevState); // 찜 상태 변경
+    setIsFavorite((prevState) => !prevState); // 찜 상태 변경
   };
-  
+
   const addToWishlist = async () => {
     try {
-      const response = await fetch(`/api/wishlist/add?userId=${userId}&productId=${productId}`, {
+      const response = await fetch(`/wishlist/add?userId=${userId}&productId=${productId}`, {
         method: "POST",
       });
-  
+
       if (response.ok) {
         console.log("상품이 위시리스트에 추가되었습니다.");
       } else {
@@ -61,7 +61,7 @@ const Product = ({ data }) => {
 
   const removeFromWishlist = async () => {
     try {
-      const response = await fetch(`/api/wishlist/remove?userId=${userId}&productId=${productId}`, {
+      const response = await fetch(`/wishlist/remove?userId=${userId}&productId=${productId}`, {
         method: "DELETE",
       });
 
@@ -104,30 +104,21 @@ const Product = ({ data }) => {
     zIndex: 1,
   };
 
-const favoriteButtonStyle = {
-  position: "absolute",
-  bottom: "10px",
-  right: "10px",
-  background: "transparent",
-  border: "none",
-  cursor: "pointer",
-  color: data.stockQuantity === 0 ? (isFavorite ? "lightgray" : "yellow") : (isFavorite ? "yellow" : "lightgray"),
-};
+  const favoriteButtonStyle = {
+    position: "absolute",
+    bottom: "10px",
+    right: "10px",
+    background: "transparent",
+    border: "none",
+    cursor: "pointer",
+    color: data.stockQuantity === 0 ? (isFavorite ? "lightgray" : "yellow") : isFavorite ? "yellow" : "lightgray",
+  };
 
   return (
-    <div
-      onClick={handleClick}
-      className={`${styles.articleRow} ${styles.productWrapper} ${styles.gridContainer}`}
-    >
+    <div onClick={handleClick} className={`${styles.articleRow} ${styles.productWrapper} ${styles.gridContainer}`}>
       <div className={styles.img_item} style={imageStyle}>
-        {data.stockQuantity === 0 && (
-          <div style={soldOutTextStyle}>품절</div>
-        )}
-        <button
-          className="favorite-button"
-          onClick={toggleFavorite}
-          style={favoriteButtonStyle}
-        >
+        {data.stockQuantity === 0 && <div style={soldOutTextStyle}>품절</div>}
+        <button className="favorite-button" onClick={toggleFavorite} style={favoriteButtonStyle}>
           <BookmarkIcon />
         </button>
       </div>

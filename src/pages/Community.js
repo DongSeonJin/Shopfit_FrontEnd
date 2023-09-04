@@ -12,9 +12,9 @@ const Community = () => {
     return (
         <div>
                       
-          <Routes>
+            <Routes>
                 <Route path='/community' element={<PostList />} />
-                <Route path="/post/list/:categoryId" element={<PostList />} />
+                <Route path="/community/post/list/:categoryId" element={<PostList />} />
                 <Route path="/community/post/:postId" element={<PostDetail />} />
                 <Route path='/community/post/create' element={<PostCreate />} />
                 <Route path='/community/post/update/:postId' element={<PostUpdate />} />

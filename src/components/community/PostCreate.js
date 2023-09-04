@@ -2,10 +2,11 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router';
 // import { useForm, Controller } from 'react-hook-form'
-import FileUploadComponent from "../../components/shop/FileUploadComponent";
+import PostFileUploadComponent from "../../components/community/PostFileUploadComponent";
 import styles from '../../styles/community/PostCreate.module.css';
+import { ButtonGroup } from 'react-bootstrap';
+import { Button } from 'bootstrap';
 
-import { url } from 'koa-router';
 
 const PostCreate = () => {
     const [title, setTitle] = useState('');
@@ -41,16 +42,29 @@ const PostCreate = () => {
         setNickname(e.target.value);
     }
 
-    // const handleFileChange = (e) => {
-    //     setFile(e.target.files[0]);
-    // }
-
     const handleUploadSuccess =(url) => {
         setImageUrl1(url);
         setImageUrl2(url);
         setImageUrl3(url);
     }
 
+    const handleDeleteImage = (imageIndex) => {
+        switch (imageIndex) {
+          case 1:
+            setImageUrl1(null);
+            break;
+          case 2:
+            setImageUrl2(null);
+            break;
+          case 3:
+            setImageUrl3(null);
+            break;
+          default:
+            break;
+        }
+      };
+
+    
     const handleSubmit = async (e) => {
         e.preventDefault();
     
@@ -75,8 +89,8 @@ const PostCreate = () => {
         } else {
 
             try {
-                // '/post/create' 경로에 post 요청 보내기
-                await axios.post('/post/create', postData, {
+                // '/post' 경로에 post 요청 보내기
+                await axios.post('/post',postData, {
                     headers: {
                         'Content-Type': 'application/json' // 파일 업로드 시 Content-Type 설정
                     }
@@ -158,10 +172,11 @@ const PostCreate = () => {
                         />
                     </label>
                     <br />
-
-                    <FileUploadComponent onUploadSuccess={(url) => setImageUrl1(url)} />
-                    <FileUploadComponent onUploadSuccess={(url) => setImageUrl2(url)} />
-                    <FileUploadComponent onUploadSuccess={(url) => setImageUrl3(url)} />
+                    <div>
+                        <PostFileUploadComponent onUploadSuccess={(url) => setImageUrl1(url)} />
+                        <PostFileUploadComponent onUploadSuccess={(url) => setImageUrl2(url)} />
+                        <PostFileUploadComponent onUploadSuccess={(url) => setImageUrl3(url)} />
+                    </div>
 
                     <input
                         type="submit"

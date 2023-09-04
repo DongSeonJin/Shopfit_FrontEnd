@@ -1,4 +1,3 @@
-import React, { useState } from "react";
 import axios from "axios";
 
 function FilesUploadComponent({ onUploadSuccess }) {
@@ -11,7 +10,7 @@ function FilesUploadComponent({ onUploadSuccess }) {
       formData.append("file", file);
 
       axios
-        .post("/api/upload", formData)
+        .post("/api/imageOptimizer/2", formData)
         .then((response) => {
           // console.log("파일 업로드 성공", response.data);
           onUploadSuccess(response.data);

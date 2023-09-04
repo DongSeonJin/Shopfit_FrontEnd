@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Form, useNavigate, useParams } from 'react-router-dom';
 import styles from '../../styles/community/PostCreate.module.css';
-import FileUploadComponent from "../../components/shop/FileUploadComponent";
+import PostFileUploadComponent from "../../components/community/PostFileUploadComponent";
 
 const PostUpdate = () => {
     const [title, setTitle] = useState('');
@@ -26,13 +26,6 @@ const PostUpdate = () => {
       setImageUrl2(url);
       setImageUrl3(url);
     }
-
-    // const handleUploadSuccess = (url, imageNumber) => {
-    //   if (imageNumber === 1) setImageUrl1(url);
-    //   else if (imageNumber === 2) setImageUrl2(url);
-    //   else if (imageNumber === 3) setImageUrl3(url);
-    // };
-    
 
     
     const navigate = useNavigate();
@@ -82,7 +75,7 @@ const PostUpdate = () => {
          
          
        try{
-           const response = await axios.put(`/post/update/${postId}`,postData,{
+           const response = await axios.put(`/post/${postId}`,postData,{
                headers:{
                    "Content-Type": "application/json"
                }
@@ -151,26 +144,34 @@ const PostUpdate = () => {
 
 
                 {imageUrl1 ? (
-                  <img src={imageUrl1} style={{width: '500px', height: '500px'}} alt="첨부이미지" />
+                  <div>
+                    <img src={imageUrl1} style={{ width: '200px', height: '200px' }} alt="첨부이미지" />
+                    <button onClick={() => setImageUrl1('')}>삭제</button>
+                  </div>
                 ) : (
-                  <FileUploadComponent onUploadSuccess={(url) => setImageUrl1(url)} />
+                  <PostFileUploadComponent onUploadSuccess={(url) => setImageUrl1(url)} />
                 )}
 
                 {imageUrl2 ? (
-                  <img src={imageUrl2} style={{width: '500px', height: '500px'}} alt="첨부이미지" />
+                  <div>
+                    <img src={imageUrl2} style={{ width: '200px', height: '200px' }} alt="첨부이미지" />
+                    <button onClick={() => setImageUrl2('')}>삭제</button>
+                  </div>
                 ) : (
-                  <FileUploadComponent onUploadSuccess={(url) => setImageUrl2(url)} />
+                  <PostFileUploadComponent onUploadSuccess={(url) => setImageUrl2(url)} />
                 )}
 
                 {imageUrl3 ? (
-                  <img src={imageUrl3} style={{width: '500px', height: '500px'}} alt="첨부이미지" />
+                  <div>
+                    <img src={imageUrl3} style={{ width: '200px', height: '200px' }} alt="첨부이미지" />
+                    <button onClick={() => setImageUrl3('')}>삭제</button>
+                  </div>
                 ) : (
-                  <FileUploadComponent onUploadSuccess={(url) => setImageUrl3(url)}  />
+                  <PostFileUploadComponent onUploadSuccess={(url) => setImageUrl3(url)} />
                 )}
 
-                {/* <FileUploadComponent onUploadSuccess={(url) => handleUploadSuccess(url, 1)} />
-                <FileUploadComponent onUploadSuccess={(url) => handleUploadSuccess(url, 2)} />
-                <FileUploadComponent onUploadSuccess={(url) => handleUploadSuccess(url, 3)} /> */}
+
+      
 
 
           
