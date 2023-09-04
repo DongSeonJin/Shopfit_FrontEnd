@@ -19,6 +19,7 @@ const PostDetail = () => {
   const [data, setData] = useState({});
   const { postId } = useParams(); // postId를 URL 파라미터로 가져옴
   const [replies, setReplies] = useState([]);
+  const [likeCount, setLikeCount] = useState(0);
   
 
   useEffect(() => {
@@ -39,6 +40,8 @@ const PostDetail = () => {
           ]});
 
           setReplies(repliesResponse.data);
+
+          setLikeCount(postResponse.data.likeCnt);
       } catch (error) {
         console.error('게시글 조회 실패 :', error);
       }
@@ -63,10 +66,11 @@ const PostDetail = () => {
       alert('좋아요 누르기 성공');
 
       // 좋아요 성공 후 해당 포스트 정보 다시 가져오기
-      const response = await axios.get(`/post/${postId}`);
+      const response = await axios.get(`/post/${postId}`); // 좋아요 갯수만 따로 요청받을 컨트롤러 만들까 고민중
+                                                          //좋아요 갯수만 가져오면 되는데 resource낭비
 
       // 가져온 데이터를 통해 상태 갱신
-      setData(response.data);
+      setLikeCount(response.data.setLikeCount); //좋아요 갯수만 다시 갱신
     } catch (error) {
       console.error('좋아요 실패:', error);
       alert('좋아요 실패');
@@ -185,6 +189,7 @@ const PostDetail = () => {
 
             
             <LikeIcon onClick={handleLike} style={{color:'red', cursor: 'pointer'}} />
+            <span>{likeCount}</span>
 
             <Button
               variant="contained"
