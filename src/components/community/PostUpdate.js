@@ -75,7 +75,7 @@ const PostUpdate = () => {
          
          
        try{
-           const response = await axios.put(`/post/update/${postId}`,postData,{
+           const response = await axios.put(`/post/${postId}`,postData,{
                headers:{
                    "Content-Type": "application/json"
                }

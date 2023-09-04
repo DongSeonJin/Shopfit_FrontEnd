@@ -7,6 +7,8 @@ import News from "../pages/News";
 import Community from "./Community";
 import MyPage from "./MyPage";
 
+
+
 const Home = () => {
   return (
     <div>

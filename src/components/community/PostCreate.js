@@ -89,8 +89,8 @@ const PostCreate = () => {
         } else {
 
             try {
-                // '/post/create' 경로에 post 요청 보내기
-                await axios.post('/post/create', postData, {
+                // '/post' 경로에 post 요청 보내기
+                await axios.post('/post',postData, {
                     headers: {
                         'Content-Type': 'application/json' // 파일 업로드 시 Content-Type 설정
                     }
@@ -173,11 +173,10 @@ const PostCreate = () => {
                     </label>
                     <br />
                     <div>
-      
                         <PostFileUploadComponent onUploadSuccess={(url) => setImageUrl1(url)} />
                         <PostFileUploadComponent onUploadSuccess={(url) => setImageUrl2(url)} />
                         <PostFileUploadComponent onUploadSuccess={(url) => setImageUrl3(url)} />
-    </div>
+                    </div>
 
                     <input
                         type="submit"
