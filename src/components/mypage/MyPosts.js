@@ -2,7 +2,7 @@ import axios from 'axios';
 
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router';
-import styles from '../../styles/community/PostList.module.css';
+import styles from '../../styles/mypage/MyPosts.module.css';
 import { Link } from 'react-router-dom';
 
 const MyPosts = () => {
@@ -26,24 +26,21 @@ const MyPosts = () => {
     return (
         <div className='container'>
             <div className={styles['post-list']}>
-
-            {posts.map((post) => (
-
-                <Link to={`/community/post/${post.postId}`}>
-                    <div className={styles['post-card']} key={post.id}>
-                    <img src={post.imageUrl1} alt={post.title} className={styles['post-image']} />
-                    <div className={styles['post-content']}>
-                        <h2 className={styles['post-title']}>{post.title}</h2>
-                        <p className={styles['post-author']}>{`작성자: ${post.nickname}`}</p>
-                        {/* 추가적인 내용들... */}
-                    </div>
-                    </div>
-                </Link>
-            ))}
-
+                {posts.map((post) => (
+                    <Link to={`/community/post/${post.postId}`} style={{textDecoration: 'none', color: 'inherit' }} >
+                        <div className={styles['post-card']} key={post.id}>
+                            <img src={post.imageUrl1} alt={post.title} className={styles['post-image']} />
+                            <div className={styles['post-content']}>
+                            <h2 className={styles['post-title']} style={{width: '100%'}}>{post.title}</h2>
+                            <p className={styles['post-author']} style={{width: '100%'}}>{`작성자: ${post.nickname}`}</p>
+                            </div>
+                        </div>
+                    </Link>
                 
+                ))}
             </div>
     </div>
+        
     );
 };
 
