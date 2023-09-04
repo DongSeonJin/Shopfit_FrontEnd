@@ -23,8 +23,8 @@ const OrderHistory = () => {
     }, []);
 
     return (
-    <div>
-        <h1>주문 내역</h1>
+    <div style={{margin: '0 20% 200px 20%'}}>
+        <h1 style={{margin: '0 0 30px 0'}}>주문 내역</h1>
         <div>
             <OrderHistoryProducts orders={orders} />
         </div>

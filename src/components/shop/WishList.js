@@ -10,7 +10,7 @@ const WishList = () => {
     const fetchWishlist = async () => {
         try {
             const userId = 1; // 하드코딩된 userId
-            const response = await axios.get(`/api/wishlist/${userId}`);
+            const response = await axios.get(`/wishlist/${userId}`);
             setWishlistItems(response.data);
         } catch (error) {
             console.error("Error fetching wishlist:", error);
@@ -43,7 +43,7 @@ const WishList = () => {
     const handleDelete = async (wishListId) => {
         try {
             // 삭제 요청을 보내서 Wishlist 항목을 제거합니다.
-            await axios.delete(`/api/wishlist/remove/${wishListId}`);
+            await axios.delete(`/wishlist/remove/${wishListId}`);
             
             // 삭제 후에 찜 목록을 다시 불러와서 업데이트합니다.
             fetchWishlist();

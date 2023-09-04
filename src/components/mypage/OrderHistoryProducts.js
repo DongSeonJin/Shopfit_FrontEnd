@@ -1,60 +1,107 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios'; // axios 라이브러리 import
+import { formatDateTime } from '../common/DateUtils';
+import { Link } from 'react-router-dom';
 
-const OrderList = ({ orders }) => {
-    const [orderProducts, setOrderProducts] = useState([]);
-    const [thumbnailUrls, setThumbnailUrls] = useState([]);
+const OrderHistoryProducts = ({ orders }) => {
+    const [productDetails, setProductDetails] = useState([]);
+    const [numberOfProducts, setNumberOfProducts] = useState([]);
+    const [orderState, setOrderState] = useState();
 
     useEffect(() => {
-        const fetchOrderProducts = async () => {
+        const fetchProductDetails = async () => {
             try {
-                const orderProductsData = await Promise.all(
-                    orders.map(async (order) => {
+                const details = await Promise.all(
+                    sortedOrders.map(async (order) => {
                         const response = await fetch(`/order-products/order/${order.orderId}`);
                         const data = await response.json();
-                        return data[0];
+                        const productIds = data.map(item => item.productId);
+                        setNumberOfProducts(prevNumberOfProducts => [...prevNumberOfProducts, productIds.length]);
+
+                        if (productIds.length > 0) {
+                            const productResponse = await fetch(`/shopping/products/${productIds[0]}`);
+                            const productData = await productResponse.json();
+                            return productData;
+                        }
+
+                        return null;
                     })
                 );
-                setOrderProducts(orderProductsData);
 
-                // 각 주문에 대한 첫 번째 productId를 가져와 썸네일 URL을 조회하기 위한 Promise 배열 생성
-                const thumbnailPromises = orderProductsData.map((product) =>
-                    getProductThumbnail(product.productId)
-                );
-
-                // 썸네일 URL을 병렬로 가져와 상태 업데이트
-                const thumbnailUrlsData = await Promise.all(thumbnailPromises);
-                setThumbnailUrls(thumbnailUrlsData);
+                setProductDetails(details);
             } catch (error) {
-                console.error('주문상품을 불러오는 중 오류가 발생했습니다.', error);
+                console.error('상품 정보를 가져오는 중 오류가 발생했습니다.', error);
             }
         };
 
-        fetchOrderProducts();
+        const sortedOrders = orders.slice().sort((a, b) => new Date(b.orderDate) - new Date(a.orderDate));
+        fetchProductDetails();
     }, [orders]);
 
-    const getProductThumbnail = async (productId) => {
+    // 주문을 orderDate를 기준으로 역순으로 정렬
+    const sortedOrders = orders.slice().sort((a, b) => new Date(b.orderDate) - new Date(a.orderDate));
+
+    const handleConfirmPurchase = async (orderId) => {
         try {
-            const response = await axios.get(`/shopping/products/${productId}`);
-            const data = response.data;
-            return data.thumbnailUrl;
+            const response = await fetch(`/orders/${orderId}/status/5`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                }
+            });
+
+            if (response.ok) {
+                console.error('주문 상태 업데이트 성공');
+                window.location.reload();
+                
+            } else {
+                console.error('주문 상태 업데이트 실패');
+            }
+            
         } catch (error) {
-            console.error('상품 정보를 불러오는 중 오류가 발생했습니다.', error);
-            return 'N/A';
+            console.error('주문 상태 업데이트 중 오류 발생', error);
         }
     };
 
+
     return (
         <div>
-            {orders.length > 0 ? (
-                orders.map((order, index) => (
-                    <div key={index}>
-                        <div>{order.orderId}</div>
-                        <div>상품번호: {orderProducts[index] ? orderProducts[index].productId : 'N/A'}</div>
-                        <div>
-                            썸네일 URL: {thumbnailUrls[orderProducts[index]] ? thumbnailUrls[orderProducts[index]] : 'N/A'}
-                        </div>
-                        <div>{order.totalPrice.toLocaleString()} 원</div>
+            {sortedOrders.length > 0 ? (
+                sortedOrders.map((order, index) => (
+                    <div style={{ margin: '10px 0' }} key={order.orderId}>
+                        <div>주문날짜: {formatDateTime(order.orderDate)}</div>
+                        {productDetails[index] ? (
+                            <div style={{ display: 'flex', alignItems: 'center', textAlign: 'center' }}>
+                                <div style={{ flex: '3', textAlign: 'left' }}>
+                                    <Link to={`/orderhistory/${order.orderId}`} style={{ textDecoration: 'none', color: 'inherit' }}>
+                                        <img src={productDetails[index].thumbnailUrl} alt="상품 이미지" style={{ width: '180px', height: '180px' }} />
+                                    </Link>
+                                </div>
+                                <div style={{ flex: '6', textAlign: 'left' }}>
+                                    <Link to={`/orderhistory/${order.orderId}`} style={{ textDecoration: 'none', color: 'inherit' }}>
+                                        {numberOfProducts[index] === 1 ? (
+                                            <>
+                                                {productDetails[index].productName}
+                                            </>
+                                        ) : (
+                                            <>
+                                                {productDetails[index].productName} 외 {numberOfProducts[index] - 1}건
+                                            </>
+                                        )}
+                                    </Link>
+                                </div>
+                                <div style={{ flex: '2' }}>{order.totalPrice.toLocaleString()} 원</div>
+                                <div style={{ flex: '1' }}>
+                                    <div>상태<br />{order.orderStatus}</div>
+                                    {order.orderStatus == 1 ? (
+                                        <button onClick={() => handleConfirmPurchase(order.orderId)}>구매확정</button>
+                                    ) : (
+                                        <button disabled>구매확정</button>
+                                    )}
+                                </div>
+                            </div>
+                        ) : (
+                            '로딩 중...'
+                        )}
                     </div>
                 ))
             ) : (
@@ -64,4 +111,4 @@ const OrderList = ({ orders }) => {
     );
 };
 
-export default OrderList;
+export default OrderHistoryProducts;

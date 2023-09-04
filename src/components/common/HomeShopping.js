@@ -13,7 +13,7 @@ const HomeShopping = () => {
 
     const fetchTopProducts = async () => {
         try {
-            const response = await axios.get('/api/wishlist/top3');
+            const response = await axios.get('/wishlist/top3');
             setTopProducts(response.data);
         } catch (error) {
             console.error('상위 상품 가져오기 오류:', error);
