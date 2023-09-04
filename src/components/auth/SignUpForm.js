@@ -1,13 +1,17 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import FileUploadComponent from '../shop/FileUploadComponent';
 import { TextField, Button, Typography } from '@mui/material';
+import userEvent from '@testing-library/user-event';
 
 function SignupForm() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [isMatching, setIsMatching] = useState(true);
   const [nickname, setNickname] = useState('');
   const [imageUrl, setImageUrl] = useState('');
+  
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -22,15 +26,24 @@ function SignupForm() {
     try {
       const response = await axios.post('/signup', formData); 
       console.log('회원가입 성공', response.data);
+      alert ('회원가입이 완료되었습니다.')
 
     } catch (error) {
       console.error('회원가입 실패', error);
+
     }
   };
 
   const handleUploadSuccess = (imageUrl) => {
     setImageUrl(imageUrl);
   }
+
+  // 비밀번호 또는 확인 비밀번호가 변경 될 때마다 실행되는 useEffect
+  useEffect (() => {
+    if (password && confirmPassword) {
+      setIsMatching (password === confirmPassword);
+    }
+  }, [password, confirmPassword]);
 
   return (
     <div style={{ display: 'flex', justifyContent: 'center' }}>
@@ -58,6 +71,17 @@ function SignupForm() {
         /> <br />
 
         <TextField
+            id="confirmPassword"
+            label="비밀번호 확인"
+            type="password"
+            value={confirmPassword}
+            onChange={(e) => setConfirmPassword(e.target.value)}
+            error={!isMatching}
+            helperText={!isMatching? "비밀번호가 일치하지 않습니다.":"비밀번호가 일치합니다."}
+            required
+          /> <br />
+
+        <TextField
             id="nickname"
             label="닉네임:"
             type="text"
@@ -73,6 +97,8 @@ function SignupForm() {
          <Button variant='contained' color='primary' type='submit'>
            가입하기
          </Button>
+
+
 
        </form>
      </div>
