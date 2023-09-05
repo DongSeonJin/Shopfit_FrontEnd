@@ -207,7 +207,7 @@ const PostDetail = () => {
             <Button
               variant="contained"
               color="primary"
-              onClick={() => navigate('/community/post/list')}
+              onClick={() => navigate('/community/post/list/:categoryId')}
               style={{ marginTop: '10px' }}
             > 목록으로 돌아가기 </Button>
 

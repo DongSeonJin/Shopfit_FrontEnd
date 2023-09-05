@@ -18,7 +18,7 @@
     "@testing-library/user-event": "^13.5.0",
     "@types/navermaps": "^3.6.5",
     "axios": "^1.4.0",
-    "bcrypt": "^5.1.0",
+    "bcrypt": "^5.1.1",
     "bootstrap": "^5.3.1",
     "date-fns": "^2.30.0",
     "http-proxy-middleware": "^2.0.6",

@@ -1,10 +1,11 @@
+
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import axios from 'axios';
 import { Link, useParams } from 'react-router-dom';
 import styles from '../../styles/community/PostList.module.css'
 import { Button } from '@material-ui/core'
-import LikeIcon from '@material-ui/icons/Favorite';
 import LikeButton from './LikeButton.js';
+
 
 const PostList = () => {
   const [posts, setPosts] = useState([]);
@@ -39,17 +40,15 @@ const PostList = () => {
   }, [prevCategoryId, categoryId]); // prevCategoryId와 categoryId에 따라 함수 재생성
 
 
-  useEffect(() => {
-    
 
-    // 카테고리 ID 변경 시에도 데이터 불러오기
+  useEffect(() => {
     axios.get(`/post/list/${categoryId}/${pageNumb}`)
       .then(response => {
         setPosts(prevPosts => [...prevPosts, ...response.data.content]); 
         setIsObserverActive(true); // 데이터 로드 후 observer 활성화
       })
-      .catch(error => {
-        console.error('Error fetching data:', error);
+      .catch((error) => {
+        console.error("Error fetching data:", error);
       });
 
   }, [categoryId, pageNumb]);
@@ -82,32 +81,8 @@ const PostList = () => {
 
 
 
-
-
-
-  // const handleLike = async () => {
-  //   try {
-  //     // 서버로 좋아요 요청 보내기
-  //     await axios.post('/post/like', { postId, userId: 1 });
-  //     alert('좋아요 누르기 성공');
-
-  //     // 좋아요 성공 후 해당 포스트 정보 다시 가져오기
-  //     const response = await axios.get(`/post/${postId}`); // 좋아요 갯수만 따로 요청받을 컨트롤러 만들까 고민중
-  //     //좋아요 갯수만 가져오면 되는데 resource낭비
-
-  //     // 가져온 데이터를 통해 상태 갱신
-  //     setPosts(response.data.content);
-  //   } catch (error) {
-  //     console.error('좋아요 실패:', error);
-  //     alert('좋아요 실패');
-  //   }
-  // };
-
-
-
-
-
   return (
+
     <div className='container'>
 
       <div style={{ marginRight: "auto", marginLeft: "0" }}>
@@ -146,5 +121,6 @@ const PostList = () => {
 };
 
 export default PostList;
+
 
 
