@@ -3,6 +3,7 @@ import axios from 'axios';
 import FileUploadComponent from '../shop/FileUploadComponent';
 import { TextField, Button, Typography } from '@mui/material';
 import userEvent from '@testing-library/user-event';
+import { useNavigate } from 'react-router';
 
 function SignupForm() {
   const [email, setEmail] = useState('');
@@ -11,6 +12,8 @@ function SignupForm() {
   const [isMatching, setIsMatching] = useState(true);
   const [nickname, setNickname] = useState('');
   const [imageUrl, setImageUrl] = useState('');
+
+  const navigate = useNavigate();
   
 
   const handleSubmit = async (e) => {
@@ -33,7 +36,9 @@ function SignupForm() {
     try {
       const response = await axios.post('/signup', formData); 
       console.log('회원가입 성공', response.data);
-      alert ('회원가입이 완료되었습니다.')
+      if (window.confirm('회원가입이 완료되었습니다.')) {
+        navigate ('/login');
+      }
 
     } catch (error) {
       console.error('회원가입 실패', error);

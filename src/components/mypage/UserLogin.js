@@ -22,7 +22,7 @@ const UserLogin = ({ setUser }) => {
 
     const handleLogin = async () => {
         try {
-            const response = await axios.post('/mypage/login', {
+            const response = await axios.post('/login', {
                 email: email,
                 password: password
             });

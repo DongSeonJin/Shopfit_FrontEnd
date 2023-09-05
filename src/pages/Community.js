@@ -14,6 +14,7 @@ const Community = () => {
                       
             <Routes>
                 <Route path='/community' element={<PostList />} />
+                <Route path="/community/post/list/" element={<PostList />} />
                 <Route path="/community/post/list/:categoryId" element={<PostList />} />
                 <Route path="/community/post/:postId" element={<PostDetail />} />
                 <Route path='/community/post/create' element={<PostCreate />} />
