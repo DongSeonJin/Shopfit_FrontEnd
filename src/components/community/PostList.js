@@ -84,10 +84,6 @@ const PostList = () => {
           {/* 로딩 인디케이터 (예: 스피너) */}
           Loading...
         </div>
-      ))}
-      <div ref={loader} className={styles["loading-indicator"]}>
-        {/* 로딩 인디케이터 (예: 스피너) */}
-        Loading...
       </div>
     </div>
 

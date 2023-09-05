@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 // import { connect } from 'react-redux';
 
@@ -9,6 +9,8 @@ const HeaderMain = ({ isCommunityHovered, isShoppingHovered }) => {
     const [isHoveredCommunity, setIsHoveredCommunity] = useState(false);
     const [isHoveredShopping, setIsHoveredShopping] = useState(false);
     const [isHoveredServices, setIsHoveredServices] = useState(false);
+
+    const navigate = useNavigate();
 
     return (
         <div className={styles.divcssI7a8i3}>
