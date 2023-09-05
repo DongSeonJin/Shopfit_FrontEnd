@@ -1,8 +1,8 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router";
-import FileUploadComponent from "./FileUploadComponent";
-import FilesUploadComponent from "./FilesUploadComponent";
+import FileUploadComponent from "../../components/shop/FileUploadComponent";
+import FilesUploadComponent from "../../components/shop/FilesUploadComponent";
 import { Button } from "@mui/material";
 
 import styles from "../../styles/shop/ProductUpdate.module.css";
