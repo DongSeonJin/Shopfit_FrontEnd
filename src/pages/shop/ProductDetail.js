@@ -3,12 +3,12 @@ import React from "react";
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { useProductDetail } from "../../context/ProductDetailContext";
+import { useProductDetail } from '../../context/ProductDetailContext';
 
 import { Button, Rating } from "@mui/material";
 import BookmarkIcon from "@mui/icons-material/Bookmark";
 
-import styles from "../../styles/shop/ProductDetail.module.css";
+import styles from '../../styles/shop/ProductDetail.module.css';
 
 const ProductDetail = () => {
   const userId = 1; // 임시로 설정한 userId 변수 -> 추후 수정해야 함

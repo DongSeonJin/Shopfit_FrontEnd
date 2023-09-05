@@ -1,10 +1,10 @@
 import axios from "axios";
 import { useState } from "react";
 import { useNavigate } from "react-router";
-import FileUploadComponent from "./FileUploadComponent";
-import FilesUploadComponent from "./FilesUploadComponent";
+import FileUploadComponent from '../../components/shop/FileUploadComponent';
+import FilesUploadComponent from '../../components/shop/FilesUploadComponent';
 
-import styles from "../../styles/shop/ProductCreate.module.css";
+import styles from '../../styles/shop/ProductCreate.module.css';
 import { Button } from "@mui/material";
 
 const ProductCreate = () => {

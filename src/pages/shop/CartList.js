@@ -2,10 +2,10 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 
-import styles from "../../styles/shop/CartList.module.css";
+import styles from '../../styles/shop/CartList.module.css';
 import { Button } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
-import CartQuantity from "./CartQuantity";
+import CartQuantity from '../../components/shop/CartQuantity';
 
 const CartList = () => {
   const userId = 1; // 임시로 설정한 userId 변수 -> 추후 수정해야 함
