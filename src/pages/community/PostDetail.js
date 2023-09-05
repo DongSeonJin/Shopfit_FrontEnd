@@ -1,17 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios'; // axios 추가
-
 import { useParams, useNavigate, Link } from 'react-router-dom'; // useParams와 useHistory 추가
-
-import styles from '../../styles/community/PostDetail.module.css';
 import { Table, TableBody, TableCell, TableRow } from '@material-ui/core';
 import { Button } from '@material-ui/core'
 import LikeIcon from '@material-ui/icons/Favorite';
 import UpdateIcon from '@material-ui/icons/Edit';
-import ReplyCreate from './ReplyCreate';
-import ReplyList from './ReplyList';
-import LikeButton from './LikeButton.js';
 
+import LikeButton from './../../components/community/LikeButton';
+import ReplyList from './../../components/community/ReplyList';
+import ReplyCreate from './../../components/community/ReplyCreate';
+
+import styles from '../../styles/community/PostDetail.module.css';
 
 
 

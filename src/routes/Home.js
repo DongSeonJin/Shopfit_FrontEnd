@@ -1,13 +1,12 @@
 import React from "react";
 import { Route, Routes } from "react-router-dom";
 
-import HomeContent from "../components/common/HomeContent";
-import Shopping from "../pages/Shopping";
-import News from "../pages/News";
-import Community from "./Community";
-import SignUp from "./SignUp";
-import MyPage from "./MyPage";
-
+import HomeContent from './../pages/home/HomeContent';
+import Community from './Community';
+import Shopping from './Shopping';
+import News from './News';
+import MyPage from './MyPage';
+import SignUp from './SignUp';
 
 const Home = () => {
   return (

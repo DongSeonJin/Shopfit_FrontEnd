@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { formatDateTime } from '../common/DateUtils';
 import { Link } from 'react-router-dom';
+
+import { formatDateTime } from '../../components/common/DateUtils';
 
 const OrderHistoryProducts = ({ orders }) => {
     const [productDetails, setProductDetails] = useState([]);

@@ -2,9 +2,10 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
-import Article from "../news/Article";
-import Search from "../common/Search";
-import Page from "../common/Page";
+import Page from './../../components/common/Page';
+import Search from './../../components/common/Search';
+import Article from './../../components/news/Article';
+
 
 const formatDate = (date) => {
   const d = new Date(date);

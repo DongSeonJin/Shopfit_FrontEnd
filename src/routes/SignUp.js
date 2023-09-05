@@ -1,5 +1,5 @@
 import React from 'react';
-import SignupForm from '../components/auth/SignUpForm';
+import SignupForm from '../pages/oauth/SignUpForm';
 import { Route, Routes } from 'react-router';
 
 const SignUp = () => {

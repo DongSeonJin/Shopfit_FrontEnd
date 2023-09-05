@@ -2,11 +2,11 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 
-import Product from "../shop/Product";
-import Page from "../common/Page";
-import Search from "../common/Search";
+import Product from '../../components/shop/Product';
+import Page from '../../components/common/Page';
+import Search from '../../components/common/Search';
 
-import styles from "../../styles/shop/ProductList.module.css";
+import styles from '../../styles/shop/ProductList.module.css';
 import { Button } from "@mui/material";
 
 const formatDate = (date) => {
