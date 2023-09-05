@@ -6,7 +6,7 @@ import Shopping from "../pages/Shopping";
 import News from "../pages/News";
 import Community from "./Community";
 import SignUp from "./SignUp";
-import MyPage from "./MyPage";
+import Mypage from "./Mypage";
 
 
 const Home = () => {
@@ -18,7 +18,7 @@ const Home = () => {
       <Community />
       <Shopping />
       <News />
-      <MyPage />
+      <Mypage />
       <SignUp />
 
     </div>
