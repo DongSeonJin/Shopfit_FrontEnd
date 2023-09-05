@@ -7,16 +7,16 @@ import UserInfoUpdate from "../components/mypage/UserInfoUpdate";
 import MyPosts from "../components/mypage/MyPosts";
 
 const MyPage = () => {
-    return (
-        <div>
-            <Routes>
+  return (
+    <div>
+      <Routes>
         {/* <Route path="/login" element={<UserLogin />} /> */}
         <Route path="/mypage/info" element={<UserInfo />} />
         <Route path="/mypage/edit" element={<UserInfoUpdate />} />
         <Route path="/mypage/myposts/:userId" element={<MyPosts />} />
-            </Routes>
-        </div>
-    );
+      </Routes>
+    </div>
+  );
 };
 export default MyPage;
-    
+
