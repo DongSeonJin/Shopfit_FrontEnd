@@ -1,0 +1,25 @@
+.button{
+    cursor:pointer;
+    transition: transform 300ms ease;
+    font-size: 30px;
+}
+
+.redButton{
+    cursor:pointer;
+    transition: transform 300ms ease;
+    font-size: 30px;
+}
+.redButton{
+  color:red;
+}
+h3{
+  height: 10px;
+  width: 50px;
+}
+.button:hover{
+    transform: scale(1.2);
+}
+
+.redButton:hover{
+    transform: scale(1.2);
+}

@@ -16,10 +16,6 @@
     width: calc(25% - 1em);
     margin-bottom: 2em;
 
-    .link-no-underline {
-      text-decoration: none;
-    }
-
   }
   
   .post-image {
@@ -33,5 +29,4 @@
       }
   }
 
-  
   
