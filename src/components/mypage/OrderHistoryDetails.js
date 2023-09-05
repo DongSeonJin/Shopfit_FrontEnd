@@ -1,3 +1,4 @@
+/* eslint-disable eqeqeq */
 import React, { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { formatDateTime } from '../common/DateUtils';
@@ -41,6 +42,7 @@ const OrderHistoryDetails = () => {
         if (order && order.orderStatus === 5) {
             setIsReviewModalOpen(true);
         }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [orderId]);
 
     // ReviewModal을 열고 닫는 함수

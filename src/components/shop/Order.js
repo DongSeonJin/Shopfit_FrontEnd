@@ -114,7 +114,7 @@ const Order = () => {
           pay_method: "card",
           merchant_uid: orderData.orderId,
           amount: orderData.totalPrice,
-          name: productName, // productName을 아임포트의 name 필드에 사용
+          name: productName,
           buyer_email: orderData.userId,
           buyer_name: orderData.userId,
           buyer_tel: orderData.phoneNumber,
