@@ -10,6 +10,7 @@ import LikeIcon from '@material-ui/icons/Favorite';
 import UpdateIcon from '@material-ui/icons/Edit';
 import ReplyCreate from './ReplyCreate';
 import ReplyList from './ReplyList';
+import LikeButton from './LikeButton.js';
 
 
 
@@ -19,6 +20,8 @@ const PostDetail = () => {
   const [data, setData] = useState({});
   const { postId } = useParams(); // postId를 URL 파라미터로 가져옴
   const [replies, setReplies] = useState([]);
+  // const [likeCount, setLikeCount] = useState(0);
+  // const [isLiked, setIsLiked] = useState(false); // 좋아요 상태
   
 
   useEffect(() => {
@@ -27,7 +30,7 @@ const PostDetail = () => {
         // 서버에서 게시글 정보를 가져오는 요청 보내기
         const [postResponse, repliesResponse] = await Promise.all ([
           axios.get(`/post/${postId}`),
-          axios.get(`/reply/${postId}/all`)
+          axios.get(`/reply/${postId}/all`),
         ]);
         
         setData({
@@ -39,6 +42,9 @@ const PostDetail = () => {
           ]});
 
           setReplies(repliesResponse.data);
+          // setLikeCount(postResponse.data.likeCnt);
+          // setIsLiked(LikeResponse.data === 1); // 백엔드에서 받은 값이 1이면 true(좋아요 함), 아니면 false(좋아요 안 함)
+          
       } catch (error) {
         console.error('게시글 조회 실패 :', error);
       }
@@ -56,22 +62,34 @@ const PostDetail = () => {
     setReplies(responseReplies.data);
   }
 
-  const handleLike = async () => {
-    try {
-      // 서버로 좋아요 요청 보내기
-      await axios.post('/post/like', { postId: data.postId, userId:1, nickname:'사용자 닉네임'});
-      alert('좋아요 누르기 성공');
+  // const handleLike = async () => {
+  //   try {
 
-      // 좋아요 성공 후 해당 포스트 정보 다시 가져오기
-      const response = await axios.get(`/post/${postId}`);
+  //     if(!isLiked){
+  //       // 서버로 좋아요 요청 보내기
+  //       await axios.post('/post/like/add', { postId: data.postId, userId:1});
+        
+  //     }else{
+  //       // 이미 누른거면 좋아요 취소 요청
+  //       await axios.post('/post/like/delete', { postId: data.postId, userId:1 });
+        
+  //     }
+      
 
-      // 가져온 데이터를 통해 상태 갱신
-      setData(response.data);
-    } catch (error) {
-      console.error('좋아요 실패:', error);
-      alert('좋아요 실패');
-    }
-  };
+  //     // 좋아요 성공 후 해당 포스트 정보 다시 가져오기
+  //     const response = await axios.get(`/post/${postId}`); // 좋아요 갯수만 따로 요청받을 컨트롤러 만들까 고민중
+  //                                                         //좋아요 갯수만 가져오면 되는데 resource낭비
+
+  //     // 가져온 데이터를 통해 상태 갱신
+  //     setLikeCount(response.data.likeCnt); //좋아요 갯수만 다시 갱신
+
+  //   // isLiked 상태 업데이트
+  //     setIsLiked(!isLiked);
+  //   } catch (error) {
+  //     console.error('좋아요 실패:', error);
+  //     alert('좋아요 실패');
+  //   }
+  // };
 
   const handleDeletePost = async () => {
     // 사용자로부터 삭제 확인을 받기 위한 알림창 표시
@@ -184,7 +202,7 @@ const PostDetail = () => {
             <br /><br /><br />
 
             
-            <LikeIcon onClick={handleLike} style={{color:'red', cursor: 'pointer'}} />
+            <LikeButton postId={postId} /> {/*좋아요 버튼 component 분리, prop으로 postId 전달*/}
 
             <Button
               variant="contained"
