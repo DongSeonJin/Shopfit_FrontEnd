@@ -47,7 +47,7 @@ const ReviewModal = ({ onClose, productId, userId }) => {
     return (
         <div className={styles.modal}>
             <div className={styles.modalContent}>
-                <h2>리뷰 작성</h2>
+                <h2>{productId} 리뷰 작성</h2>
                 <label>평점: </label>
                 <input
                     type="number"
