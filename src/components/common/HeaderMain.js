@@ -69,7 +69,7 @@ const HeaderMain = ({ isCommunityHovered, isShoppingHovered }) => {
                             </div>
                             <div className={styles.link4}>
                                 <div className={styles.div}>
-                                    <Link to="/register" style={{ textDecoration: 'none', color: 'inherit' }} onClick={() => {navigate("/register"); window.location.reload();}}>회원가입</Link>
+                                    <Link to="/signup" style={{ textDecoration: 'none', color: 'inherit' }} onClick={() => {navigate("/signup"); window.location.reload();}}>회원가입</Link>
                                 </div>
                             </div>
                             <div className={styles.link4}>

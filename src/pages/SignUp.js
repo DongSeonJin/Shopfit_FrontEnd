@@ -6,7 +6,7 @@ const SignUp = () => {
     return (
         <div>
             <Routes>
-                <Route path="/signUp" element={<SignupForm />} />
+                <Route path="/signup" element={<SignupForm />} />
             </Routes>
         </div>
     );
