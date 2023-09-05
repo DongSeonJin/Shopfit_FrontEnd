@@ -1,11 +1,14 @@
 import React from "react";
 import { Route, Routes } from "react-router-dom";
-import UserLogin from "../components/mypage/UserLogin";
-import UserInfo from "../components/mypage/UserInfo";
-import UserInfoUpdate from "../components/mypage/UserInfoUpdate";
-import MyPosts from "../components/mypage/MyPosts";
-import OrderHistory from "../components/mypage/OrderHistory";
-import OrderHistoryDetails from "../components/mypage/OrderHistoryDetails";
+
+import MyPosts from "../pages/mypage/MyPosts";
+import OrderHistory from './../pages/mypage/OrderHistory';
+import OrderHistoryDetails from './../pages/mypage/OrderHistoryDetails';
+import UserInfo from './../pages/mypage/UserInfo';
+import UserInfoUpdate from './../pages/mypage/UserInfoUpdate';
+import UserLogin from './../pages/mypage/UserLogin';
+
+
 const MyPage = () => {
   return (
     <div>

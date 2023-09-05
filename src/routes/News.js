@@ -2,8 +2,7 @@ import React from "react";
 
 import { Route, Routes } from 'react-router-dom';
 
-import NewsList from "../components/news/NewsList";
-
+import NewsList from './../pages/news/NewsList';
 
 const News = () => {
   return (

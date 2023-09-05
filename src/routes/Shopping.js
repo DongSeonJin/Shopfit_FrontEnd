@@ -1,18 +1,18 @@
 import React from "react";
 import { Route, Routes } from "react-router-dom";
 
-import ProductList from "../components/shop/ProductList";
-import ProductListCategory from "../components/shop/ProductListCategory";
-import ProductDetail from "../components/shop/ProductDetail";
-import Order from "../components/shop/Order";
-import OrderDetail from "../components/shop/OrderDetail";
-import CartList from "../components/shop/CartList";
-import WishList from "../components/shop/WishList";
-
 import { ProductDetailProvider } from "../context/ProductDetailContext";
 
-import ProductCreate from "../components/shop/ProductCreate";
-import ProductUpdate from "../components/shop/ProductUpdate";
+import ProductList from './../pages/shop/ProductList';
+import ProductListCategory from './../pages/shop/ProductListCategory';
+import ProductDetail from './../pages/shop/ProductDetail';
+import Order from './../pages/shop/Order';
+import OrderDetail from './../components/shop/OrderDetail';
+import CartList from './../pages/shop/CartList';
+import WishList from './../pages/shop/WishList';
+import ProductCreate from './../pages/shop/ProductCreate';
+import ProductUpdate from './../pages/shop/ProductUpdate';
+
 
 const Shopping = () => {
   return (

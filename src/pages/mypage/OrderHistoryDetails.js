@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import { formatDateTime } from '../common/DateUtils';
 
-import ReviewModal from '../common/modal/ReviewModal';
+import { formatDateTime } from '../../components/common/DateUtils';
+import ReviewModal from './../../components/common/modal/ReviewModal';
 
 const OrderHistoryDetails = () => {
     const { orderId } = useParams();

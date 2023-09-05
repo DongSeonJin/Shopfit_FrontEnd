@@ -2,10 +2,11 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import axios from 'axios';
 import { Link, useParams } from 'react-router-dom';
-import styles from '../../styles/community/PostList.module.css'
 import { Button } from '@material-ui/core'
-import LikeButton from './LikeButton.js';
 
+import LikeButton from './../../components/community/LikeButton';
+
+import styles from '../../styles/community/PostList.module.css'
 
 const PostList = () => {
   const [posts, setPosts] = useState([]);

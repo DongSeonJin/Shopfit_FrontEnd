@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import { Link, Route, Routes } from 'react-router-dom';
-
-import PostCreate from '../components/community/PostCreate';
-import PostDetail from '../components/community/PostDetail';
-import PostList from '../components/community/PostList';
-import PostUpdate from '../components/community/PostUpdate';
 import { RouteSharp } from '@mui/icons-material';
+
+import PostList from './../pages/community/PostList';
+import PostDetail from './../pages/community/PostDetail';
+import PostCreate from './../pages/community/PostCreate';
+import PostUpdate from './../pages/community/PostUpdate';
 
 const Community = () => {
 

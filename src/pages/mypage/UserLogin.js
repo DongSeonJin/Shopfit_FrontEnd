@@ -3,7 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { setUser } from '../../redux/actions'
 import axios from 'axios';
-import Modal from '../common/modal/Modal';
+
+import Modal from './../../components/common/modal/Modal';
 
 const UserLogin = ({ setUser }) => {
     const [email, setEmail] = useState('');
