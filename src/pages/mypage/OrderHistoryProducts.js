@@ -1,3 +1,4 @@
+/* eslint-disable eqeqeq */
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
@@ -6,34 +7,37 @@ import { formatDateTime } from '../../components/common/DateUtils';
 const OrderHistoryProducts = ({ orders }) => {
     const [productDetails, setProductDetails] = useState([]);
     const [numberOfProducts, setNumberOfProducts] = useState([]);
-    const [orderState, setOrderState] = useState();
 
     useEffect(() => {
         const fetchProductDetails = async () => {
             try {
                 const details = await Promise.all(
-                    sortedOrders.map(async (order) => {
+                    sortedOrders.map(async (order, index) => {
                         const response = await fetch(`/order-products/order/${order.orderId}`);
                         const data = await response.json();
                         const productIds = data.map(item => item.productId);
-                        setNumberOfProducts(prevNumberOfProducts => [...prevNumberOfProducts, productIds.length]);
-
+    
+                        setNumberOfProducts(prevNumberOfProducts => [
+                            ...prevNumberOfProducts.slice(0, index),
+                            productIds.length,
+                            ...prevNumberOfProducts.slice(index + 1),
+                        ]);
+    
                         if (productIds.length > 0) {
                             const productResponse = await fetch(`/shopping/products/${productIds[0]}`);
                             const productData = await productResponse.json();
                             return productData;
                         }
-
                         return null;
                     })
                 );
-
+    
                 setProductDetails(details);
             } catch (error) {
                 console.error('상품 정보를 가져오는 중 오류가 발생했습니다.', error);
             }
         };
-
+    
         const sortedOrders = orders.slice().sort((a, b) => new Date(b.orderDate) - new Date(a.orderDate));
         fetchProductDetails();
     }, [orders]);
@@ -79,14 +83,19 @@ const OrderHistoryProducts = ({ orders }) => {
                                 </div>
                                 <div style={{ flex: '6', textAlign: 'left' }}>
                                     <Link to={`/orderhistory/${order.orderId}`} style={{ textDecoration: 'none', color: 'inherit' }}>
-                                        {numberOfProducts[index] === 1 ? (
-                                            <>
-                                                {productDetails[index].productName}
-                                            </>
+                                        {numberOfProducts[index] > 1 ? (
+                                            <div style={{display: 'flex'}}>
+                                                <div style={{marginRight: '20px'}}>
+                                                    {productDetails[index].productName}
+                                                </div>
+                                                <div>
+                                                    외 {numberOfProducts[index] - 1}건
+                                                </div>
+                                            </div>
                                         ) : (
-                                            <>
-                                                {productDetails[index].productName} 외 {numberOfProducts[index] - 1}건
-                                            </>
+                                            <div >
+                                                {productDetails[index].productName}
+                                            </div>
                                         )}
                                     </Link>
                                 </div>
