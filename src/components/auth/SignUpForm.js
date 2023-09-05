@@ -15,6 +15,13 @@ function SignupForm() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    
+    // 비밀번호, 확인비밀번호 일치하는지 확인.
+    if (password != confirmPassword) {
+      setIsMatching(false);
+      alert("비밀번호가 일치하지 않습니다.")
+      return; 
+    }
 
     const formData = {
       email,
@@ -95,7 +102,7 @@ function SignupForm() {
          </div> <br />
 
          <Button variant='contained' color='primary' type='submit'>
-           가입하기
+           회원가입하기
          </Button>
 
 
