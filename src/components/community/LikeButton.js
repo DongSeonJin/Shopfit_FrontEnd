@@ -18,8 +18,8 @@ const LikeButton = ({ postId }) => {
                     axios.post(`/post/like`, { postId: postId, userId })
                 ]);
 
-                setLikeCount(likeResponse.date.likeCnt);
-                setIsLiked(likeResponse.data === 1);
+                setLikeCount(likeResponse.data.likeCnt);
+                setIsLiked(likeResponse.data.isLiked === 1);
             } catch (error) {
                 console.error('게시글 조회 실패 :', error);
             }
@@ -42,10 +42,9 @@ const LikeButton = ({ postId }) => {
             }
 
             // 좋아요 성공 후 해당 포스트 정보 다시 가져오기
-            const response = await axios.get(`/post/${postId}`);
-
+            const response = await axios.post(`/post/like`, { postId: postId, userId });
+            
             setLikeCount(response.data.likeCnt);
-
             setIsLiked(!isLiked);
         } catch (error) {
             console.error('좋아요 실패:', error);
