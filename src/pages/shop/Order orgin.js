@@ -2,20 +2,16 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import addDays from "date-fns/addDays";
 import { useLocation, useNavigate } from "react-router-dom";
-
 import PurchasedProduct from '../../components/shop/PurchasedProduct';
 import SearchAddress from '../../components/shop/SearchAddress';
 import { IAMPORT_API_KEY, KAKAOPAY_PG, TOSSPAY_PG } from "../../config";
-import { OrderStatusUpdater } from '../../components/shop/OrderStatusUpdater';
 
 const Order = () => {
   const now = new Date();
   const navigate = useNavigate();
   const [cart, setCart] = useState([]);
-  const [productStocks, setProductStocks] = useState({});
   const [detailedAddress, setDetailedAddress] = useState("");
   const [PGKey, setPGKey] = useState();
-  const [nowOrderId, setNowOrderId] = useState();
 
   const location = useLocation();
   const selectedItems = location.state.selectedItems;
@@ -34,7 +30,7 @@ const Order = () => {
     })),
   };
 
-  const [orderData, setOrderData] = useState(initialOrderData);
+  const [productStocks, setProductStocks] = useState({});
 
   useEffect(() => {
     // 선택한 상품들의 재고 정보를 가져오는 함수
@@ -54,15 +50,7 @@ const Order = () => {
     fetchProductStocks();
   }, [selectedItems]);
 
-  const updateOrderStatus = async (orderId) => {
-    try {
-        await OrderStatusUpdater(orderId, 2);
-
-        console.error('주문 상태 업데이트 성공');
-    } catch (error) {
-        console.error('주문 상태 업데이트 중 오류 발생', error);
-    }
-  };
+  const [orderData, setOrderData] = useState(initialOrderData);
 
   useEffect(() => {
     // userId를 이용하여 장바구니 정보를 가져오고, 가져온 정보로 cart 상태를 업데이트
@@ -77,7 +65,6 @@ const Order = () => {
 
     fetchUserCart();
   }, [orderData.userId]); // userId가 변경될 때마다 useEffect 실행
-  
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -87,6 +74,10 @@ const Order = () => {
     });
   };
 
+  // 결제 누락정보 확인
+  const isAddressValid = orderData.address.trim() !== "";
+  const isPhoneNumberValid = orderData.phoneNumber.trim() !== "";
+  const isPaymentAllowed = isAddressValid && isPhoneNumberValid;
 
   const handlePGSelection = (selectedPG) => {
     if (selectedPG === "kakaopay") {
@@ -98,53 +89,14 @@ const Order = () => {
     }
   };
 
-  // 결제 누락정보 확인
-  const isAddressValid = orderData.address.trim() !== "";
-  const isPhoneNumberValid = orderData.phoneNumber.trim() !== "";
-  const isPaymentAllowed = isAddressValid && isPhoneNumberValid;
-
-  const handleCreateOrder = async () => {
+  // 아임포트 결제창 열기
+  const openPaymentWindow = async () => {
     if (!isPaymentAllowed) {
       alert("주소와 연락처를 입력해주세요.");
       return;
     }
 
-    const finalAddress = `${orderData.address} ${detailedAddress}`;
-    const updatedOrderData = { ...orderData, address: finalAddress };
-
-    try {
-      // 주문 생성 요청 보내고 주문 성공 시
-      const response = await axios.post("/orders/create", updatedOrderData);
-
-      setNowOrderId(response.orderId);
-
-      console.log(nowOrderId);
-
-      // handleCreateOrder 함수 호출
-      await openPaymentWindow();
-
-    } catch (error) {
-      console.error("Error creating order:", error);
-    }
-  };
-
-  const handleDetailedAddressChange = (event) => {
-    setDetailedAddress(event.target.value);
-  };
-
-  const handleAddressSelected = (selectedAddress) => {
-    setOrderData({
-      ...orderData,
-      address: selectedAddress,
-    });
-  };
-
-
-
-  // 아임포트 결제창 열기
-  const openPaymentWindow = async () => {
     const productId = selectedItems[0].productId; // 선택한 첫 번째 상품의 productId
-    
     try {
       const productResponse = await axios.get(`/shopping/products/${productId}`); // 제품 정보 요청
       const IMP = window.IMP;
@@ -170,55 +122,15 @@ const Order = () => {
         },
         async function (rsp) {
           if (rsp.success) {
-            // 주문한 제품의 productId에 해당하는 row만 선택
-            const updatedCart = cart.filter((item) =>
-              selectedItems.some((selected) => selected.productId === item.productId)
-            );
-            setCart(updatedCart); // setCart 함수로 카트를 업데이트
-
-            // 주문이 성공적으로 생성되었으므로 주문 상세 페이지로 이동
-            navigate(`/shopping/order/detail`, { state: { purchasedProducts: selectedItems } });
-
-            // 장바구니에서 구매 이용 시 해당 상품들을 삭제
-            selectedItems.forEach(async (selected) => {
-              try {
-                await axios.delete(`/cart/${selected.cartId}`);
-              } catch (error) {
-                console.error("Error removing item from cart:", error);
-              }
-            });
-
-            // 주문한 제품의 재고량 업데이트
-            for (const selected of selectedItems) {
-              const updatedStockQuantity = productStocks[selected.productId] - selected.quantity;
-              try {
-                await axios.post(`/shopping/stock/${selected.productId}`, {
-                  stockQuantity: updatedStockQuantity,
-                });
-                console.log(`Stock quantity for product ${selected.productId} updated.`);
-              } catch (error) {
-                console.error(`Error updating stock quantity for product ${selected.productId}:`, error);
-              }
-            }
-
             // 결제 성공
             console.log("결제가 성공적으로 완료되었습니다.");
 
-            // 상태(결제완료) 업데이트
-            await updateOrderStatus(orderData.orderId, "결제완료");
-
+            // handleCreateOrder 함수 호출
+            await handleCreateOrder();
           } else {
             // 결제 실패
             console.log(rsp);
             alert(`결제에 실패하였습니다. 에러 내용: ${rsp.error_msg}`);
-            try{
-              await axios.delete(`/orders/${orderData.orderId}`);
-              console.error(`주문 삭제 완료(${orderData.orderId})`);
-
-            } catch (erro){
-              console.error(`존재하지 않는 주문`);
-            }
-            
           }
         }
       );
@@ -227,6 +139,61 @@ const Order = () => {
     }
   };
 
+  const handleCreateOrder = async () => {
+    // Create orderData with detailed address
+    const finalAddress = `${orderData.address} ${detailedAddress}`;
+    const updatedOrderData = { ...orderData, address: finalAddress };
+
+    try {
+      // 주문 생성 요청 보내고 주문 성공 시
+      const response = await axios.post("/orders", updatedOrderData);
+      console.log("Order created:", response.data);
+
+      // 주문한 제품의 productId에 해당하는 row만 선택
+      const updatedCart = cart.filter((item) =>
+        selectedItems.some((selected) => selected.productId === item.productId)
+      );
+      setCart(updatedCart); // setCart 함수로 카트를 업데이트
+
+      // 주문이 성공적으로 생성되었으므로 주문 상세 페이지로 이동
+      navigate(`/shopping/order/detail`, { state: { purchasedProducts: selectedItems } });
+
+      // 장바구니에서 구매 이용 시 해당 상품들을 삭제
+      selectedItems.forEach(async (selected) => {
+        try {
+          await axios.delete(`/cart/${selected.cartId}`);
+        } catch (error) {
+          console.error("Error removing item from cart:", error);
+        }
+      });
+
+      // 주문한 제품의 재고량 업데이트
+      for (const selected of selectedItems) {
+        const updatedStockQuantity = productStocks[selected.productId] - selected.quantity;
+        try {
+          await axios.post(`/shopping/stock/${selected.productId}`, {
+            stockQuantity: updatedStockQuantity,
+          });
+          console.log(`Stock quantity for product ${selected.productId} updated.`);
+        } catch (error) {
+          console.error(`Error updating stock quantity for product ${selected.productId}:`, error);
+        }
+      }
+    } catch (error) {
+      console.error("Error creating order:", error);
+    }
+  };
+
+  const handleDetailedAddressChange = (event) => {
+    setDetailedAddress(event.target.value);
+  };
+
+  const handleAddressSelected = (selectedAddress) => {
+    setOrderData({
+      ...orderData,
+      address: selectedAddress,
+    });
+  };
 
   return (
     <div style={{ margin: "0 20%" }}>
@@ -336,7 +303,7 @@ const Order = () => {
               </div>
             </div>
             <div style={{ display: "flex", justifyContent: "center", marginTop: "50px" }}>
-              <button onClick={handleCreateOrder}>결제하기</button>
+              <button onClick={openPaymentWindow}>결제하기</button>
             </div>
           </div>
         </div>

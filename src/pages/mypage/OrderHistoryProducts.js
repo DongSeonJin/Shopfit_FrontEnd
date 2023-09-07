@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import { formatDateTime } from '../../components/common/DateUtils';
+import { OrderStatusUpdater } from '../../components/shop/OrderStatusUpdater';
 
 const OrderHistoryProducts = ({ orders }) => {
     const [productDetails, setProductDetails] = useState([]);
@@ -47,21 +48,9 @@ const OrderHistoryProducts = ({ orders }) => {
 
     const handleConfirmPurchase = async (orderId) => {
         try {
-            const response = await fetch(`/orders/${orderId}/status/5`, {
-                method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json',
-                }
-            });
-
-            if (response.ok) {
-                console.error('주문 상태 업데이트 성공');
-                window.location.reload();
-                
-            } else {
-                console.error('주문 상태 업데이트 실패');
-            }
-            
+            await OrderStatusUpdater(orderId, "구매확정");
+            console.error('주문 상태 업데이트 성공');
+            window.location.reload();
         } catch (error) {
             console.error('주문 상태 업데이트 중 오류 발생', error);
         }
@@ -101,7 +90,7 @@ const OrderHistoryProducts = ({ orders }) => {
                                 </div>
                                 <div style={{ flex: '2' }}>{order.totalPrice.toLocaleString()} 원</div>
                                 <div style={{ flex: '1' }}>
-                                    <div>상태<br />{order.orderStatus}</div>
+                                    <div>주문상태<br />{order.orderStatus}</div>
                                     {order.orderStatus == 1 ? (
                                         <button onClick={() => handleConfirmPurchase(order.orderId)}>구매확정</button>
                                     ) : (
