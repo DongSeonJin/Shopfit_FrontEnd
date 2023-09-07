@@ -6,6 +6,7 @@ import PostFileUploadComponent from "../../components/community/PostFileUploadCo
 import styles from '../../styles/community/PostCreate.module.css';
 import { ButtonGroup } from 'react-bootstrap';
 import { Button } from 'bootstrap';
+import { Category } from '@material-ui/icons';
 
 
 const PostCreate = () => {
