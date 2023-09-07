@@ -6,6 +6,7 @@ import PostFileUploadComponent from "../../components/community/PostFileUploadCo
 import styles from '../../styles/community/PostCreate.module.css';
 import { ButtonGroup } from 'react-bootstrap';
 import { Button } from 'bootstrap';
+import { Category } from '@material-ui/icons';
 
 
 const PostCreate = () => {
@@ -70,15 +71,26 @@ const PostCreate = () => {
     
 
         // 서버로 보낼 데이터 구성
-        const postData = new FormData();
-        postData.append ('userId', userId);
-        postData.append ('title', title);
-        postData.append ('content', content);
-        postData.append ('categoryId', category);
-        postData.append ('nickname', nickname);
-        postData.append ('imageUrl1', imageUrl1);
-        postData.append ('imageUrl2', imageUrl2);        
-        postData.append ('imageUrl3', imageUrl3);
+        // const postData = new FormData();
+        // postData.append ('userId', userId);
+        // postData.append ('title', title);
+        // postData.append ('content', content);
+        // postData.append ('category', category);
+        // postData.append ('nickname', nickname);
+        // postData.append ('imageUrl1', imageUrl1);
+        // postData.append ('imageUrl2', imageUrl2);        
+        // postData.append ('imageUrl3', imageUrl3);
+
+        const postData = {
+            user: {userId: userId},
+            title: title,
+            content: content,
+            nickname: nickname,
+            postCategory: {categoryId: category},
+            imageUrl1: imageUrl1,
+            imageUrl2: imageUrl2,
+            imageUrl3: imageUrl3
+        };
 
         if (!title && !content) {
             alert("제목, 내용을 입력해주세요.");
