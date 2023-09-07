@@ -36,6 +36,11 @@ const UserInfo = () => {
     objectFit: "cover", // 이미지가 공간을 채우도록 설정 (가로세로 비율 유지)
   };
 
+  const handleChangePassword = () => {
+    // 비밀번호 변경 페이지로 이동
+    navigate("/mypage/edit/password");
+  };
+
   return (
     <div>
       <div>
@@ -51,6 +56,11 @@ const UserInfo = () => {
           <Link to="/orderhistory">주문내역</Link>
           <Link to="/shopping/wishlist">찜목록</Link>
           <Link to="/shopping/cart">장바구니</Link>
+        </div>
+        <div>
+          {/* 버튼만 만들어 놓음 */}
+          <button>탈퇴하기</button>
+          <button onClick={handleChangePassword}>비밀번호 변경하기</button>
         </div>
       </div>
     </div>
