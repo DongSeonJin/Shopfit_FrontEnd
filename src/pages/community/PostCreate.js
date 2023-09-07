@@ -70,15 +70,16 @@ const PostCreate = () => {
     
 
         // 서버로 보낼 데이터 구성
-        const postData = new FormData();
-        postData.append ('userId', userId);
-        postData.append ('title', title);
-        postData.append ('content', content);
-        postData.append ('categoryId', category);
-        postData.append ('nickname', nickname);
-        postData.append ('imageUrl1', imageUrl1);
-        postData.append ('imageUrl2', imageUrl2);        
-        postData.append ('imageUrl3', imageUrl3);
+        const postData = {
+            user: {userId: userId},
+            title: title,
+            content: content,
+            nickname: nickname,
+            postCategory: {categoryId: category},
+            imageUrl1: imageUrl1,
+            imageUrl2: imageUrl2,
+            imageUrl3: imageUrl3
+        };
 
         if (!title && !content) {
             alert("제목, 내용을 입력해주세요.");
@@ -107,7 +108,7 @@ const PostCreate = () => {
                 setImageUrl3('');
 
                 // 게시글 리스트로 이동
-                navigate(`/community/post/list/:categoryId`);
+                navigate(`/community/post/list/${category}`);
             } catch (error) {
                 console.error('게시글 등록 실패', error);
                 alert('게시글 등록에 실패했습니다.');
