@@ -7,6 +7,7 @@ import OrderHistoryDetails from './../pages/mypage/OrderHistoryDetails';
 import UserInfo from './../pages/mypage/UserInfo';
 import UserInfoUpdate from './../pages/mypage/UserInfoUpdate';
 import UserLogin from './../pages/mypage/UserLogin';
+import ChatBot from "../pages/mypage/ChatBot";
 
 
 const MyPage = () => {
@@ -19,6 +20,7 @@ const MyPage = () => {
         <Route path="/mypage/info" element={<UserInfo />} />
         <Route path="/mypage/edit" element={<UserInfoUpdate />} />
         <Route path="/mypage/myposts/:userId" element={<MyPosts />} />
+        <Route path="/chatbot" element={<ChatBot />} />
       </Routes>
     </div>
   );
