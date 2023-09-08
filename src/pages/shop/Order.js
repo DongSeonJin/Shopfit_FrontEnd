@@ -2,12 +2,13 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import addDays from "date-fns/addDays";
 import { useLocation, useNavigate } from "react-router-dom";
-import PurchasedProduct from '../../components/shop/PurchasedProduct';
-import SearchAddress from '../../components/shop/SearchAddress';
+import PurchasedProduct from "../../components/shop/PurchasedProduct";
+import SearchAddress from "../../components/shop/SearchAddress";
 import { IAMPORT_API_KEY, KAKAOPAY_PG, TOSSPAY_PG } from "../../config";
 
 const Order = () => {
   const now = new Date();
+  now.setHours(now.getHours() + 9);
   const navigate = useNavigate();
   const [cart, setCart] = useState([]);
   const [detailedAddress, setDetailedAddress] = useState("");
