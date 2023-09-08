@@ -73,7 +73,7 @@ const HeaderMain = ({ isCommunityHovered, isShoppingHovered }) => {
                                 </div>
                             </div>
                             <div className={styles.link4}>
-                                <div className={styles.div}>고객센터</div>
+                            <Link to="/chatbot" style={{ textDecoration: 'none', color: 'inherit' }} onClick={() => {navigate("/chatbot"); window.location.reload();}}>챗봇</Link>
                             </div>
                         </div>
                     </div>
