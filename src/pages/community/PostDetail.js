@@ -163,6 +163,13 @@ const PostDetail = () => {
 
               <TableBody>
                 <TableRow>
+                  <TableCell>카테고리</TableCell>
+                  <TableCell>{data.category}</TableCell>
+                </TableRow>
+              </TableBody>
+
+              <TableBody>
+                <TableRow>
                   <TableCell>제목</TableCell>
                   <TableCell>{data.title}</TableCell>
                 </TableRow>
@@ -206,7 +213,7 @@ const PostDetail = () => {
             <Button
               variant="contained"
               color="primary"
-              onClick={() => navigate('/community/post/list/:categoryId')}
+              onClick={() => navigate(`/community/post/list/${data.categoryId}`)}
               style={{ marginTop: '10px' }}
             > 목록으로 돌아가기 </Button>
 

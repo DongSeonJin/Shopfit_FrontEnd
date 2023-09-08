@@ -8,18 +8,18 @@ import styles from '../../styles/community/LikeButton.module.css'
 const LikeButton = ({ postId }) => {
     const [likeCount, setLikeCount] = useState(0);
     const [isLiked, setIsLiked] = useState(false);
+    const userId = 1; // 시큐리티 적용 전 테스트용 userId 1
 
     useEffect(() => {
         const fetchData = async () => {
             try {
-                // 서버에서 게시글 정보와 좋아요 상태 가져오기
-                const [postResponse, likeResponse] = await Promise.all([
-                    axios.get(`/post/${postId}`),
-                    axios.post(`/post/like/isLiked`, { postId: postId, userId: 1 })
+                // 서버에서 좋아요 상태 가져오기
+                const [likeResponse] = await Promise.all([
+                    axios.post(`/post/like`, { postId: postId, userId })
                 ]);
 
-                setLikeCount(postResponse.data.likeCnt);
-                setIsLiked(likeResponse.data === 1);
+                setLikeCount(likeResponse.data.likeCnt);
+                setIsLiked(likeResponse.data.isLiked === 1);
             } catch (error) {
                 console.error('게시글 조회 실패 :', error);
             }
@@ -33,19 +33,18 @@ const LikeButton = ({ postId }) => {
 
             if (!isLiked) {
                 // 서버로 좋아요 요청 보내기
-                await axios.post('/post/like/add', { postId: postId, userId: 1 });
+                await axios.post('/post/like/add', { postId: postId, userId });
 
             } else {
                 // 이미 누른거면 좋아요 취소 요청
-                await axios.post('/post/like/delete', { postId: postId, userId: 1 });
+                await axios.post('/post/like/delete', { postId: postId, userId });
 
             }
 
             // 좋아요 성공 후 해당 포스트 정보 다시 가져오기
-            const response = await axios.get(`/post/${postId}`);
-
+            const response = await axios.post(`/post/like`, { postId: postId, userId });
+            
             setLikeCount(response.data.likeCnt);
-
             setIsLiked(!isLiked);
         } catch (error) {
             console.error('좋아요 실패:', error);

@@ -102,7 +102,8 @@ const PostList = () => {
               <img src={post.imageUrl1} alt={post.title} className={styles['post-image']} />
             </Link>
             <LikeButton postId={post.postId} /> {/*좋아요 버튼 component 분리, prop으로 postId 전달*/}
-            <span>{`조회수: ${post.viewCount}`}</span>
+            <span>{`조회수: ${post.viewCount}, `}</span>
+            <span>{`댓글수: ${post.replyCnt}`}</span>
             <div className={styles['post-content']}>
               <h2 className={styles['post-title']}>{post.title}</h2>
               <p className={styles['post-author']}>{`작성자: ${post.nickname}`}</p>
