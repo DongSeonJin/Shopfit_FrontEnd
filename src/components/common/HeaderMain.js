@@ -86,7 +86,7 @@ const HeaderMain = ({ isCommunityHovered, isShoppingHovered }) => {
                         <Link to="/signup" style={{ textDecoration: 'none', color: 'inherit', margin: '10px' }} onClick={() => {window.location.reload();}}>회원가입</Link>
                     </div>
                     <div>
-                        <Link to="/service" style={{ textDecoration: 'none', color: 'inherit', margin: '10px' }} onClick={() => {window.location.reload();}}>고객센터</Link>
+                        <Link to="/chatbot" style={{ textDecoration: 'none', color: 'inherit', margin: '10px' }} onClick={() => {window.location.reload();}}>챗봇</Link>
                     </div>
                 </div>
             </div>

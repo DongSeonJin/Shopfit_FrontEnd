@@ -43,9 +43,7 @@ const OrderHistoryProducts = ({ orders }) => {
         fetchProductDetails();
     }, [orders]);
 
-    // 주문을 orderDate를 기준으로 역순으로 정렬
-    const sortedOrders = orders.slice().sort((a, b) => new Date(b.orderDate) - new Date(a.orderDate));
-
+  
     const handleConfirmPurchase = async (orderId) => {
         try {
             await OrderStatusUpdater(orderId, "구매확정");
@@ -55,6 +53,28 @@ const OrderHistoryProducts = ({ orders }) => {
             console.error('주문 상태 업데이트 중 오류 발생', error);
         }
     };
+  // 주문을 orderDate를 기준으로 역순으로 정렬
+  const sortedOrders = orders.slice().sort((a, b) => new Date(b.orderDate) - new Date(a.orderDate));
+
+  const handleConfirmPurchase = async (orderId) => {
+    try {
+      const response = await fetch(`/orders/${orderId}/status/5`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      if (response.ok) {
+        console.error("주문 상태 업데이트 성공");
+        window.location.reload();
+      } else {
+        console.error("주문 상태 업데이트 실패");
+      }
+    } catch (error) {
+      console.error("주문 상태 업데이트 중 오류 발생", error);
+    }
+  };
 
 
     return (
@@ -103,11 +123,11 @@ const OrderHistoryProducts = ({ orders }) => {
                         )}
                     </div>
                 ))
-            ) : (
-                <p>주문 내역이 없습니다.</p>
-            )}
-        </div>
-    );
+      ) : (
+        <p>주문 내역이 없습니다.</p>
+      )}
+    </div>
+  );
 };
 
 export default OrderHistoryProducts;

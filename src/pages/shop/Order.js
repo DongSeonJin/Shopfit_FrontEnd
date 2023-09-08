@@ -5,11 +5,13 @@ import { useLocation, useNavigate } from "react-router-dom";
 
 import PurchasedProduct from '../../components/shop/PurchasedProduct';
 import SearchAddress from '../../components/shop/SearchAddress';
+
 import { IAMPORT_API_KEY, KAKAOPAY_PG, TOSSPAY_PG } from "../../config";
 import { OrderStatusUpdater } from '../../components/shop/OrderStatusUpdater';
 
 const Order = () => {
   const now = new Date();
+  now.setHours(now.getHours() + 9);
   const navigate = useNavigate();
   const [cart, setCart] = useState([]);
   const [productStocks, setProductStocks] = useState({});

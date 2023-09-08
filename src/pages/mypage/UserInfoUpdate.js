@@ -5,20 +5,16 @@ import { useNavigate } from "react-router";
 
 const UserInfoUpdate = () => {
   const [nickname, setNickname] = useState("");
-
-  const [currentPassword, setCurrentPassword] = useState("");
-  const [newPassword, setNewPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
   const [profileImage, setProfileImage] = useState(null);
   const userId = 1; // 임시로 설정한 userId 변수 -> 추후 수정해야 함
   const [user, setUser] = useState({});
   const navigate = useNavigate();
+  const [isNicknameAvailable, setIsNicknameAvailable] = useState(true); // 닉네임 중복 여부 상태
 
   // 서버로 보낼 데이터
   const userUpdateData = {
     userId: userId,
     nickname: nickname,
-    password: currentPassword,
     imageUrl: profileImage ? profileImage : null,
   };
 
@@ -40,22 +36,8 @@ const UserInfoUpdate = () => {
   }, [userId]);
 
   const handleNicknameChange = (e) => {
-    setNickname(e.target.value);
-  };
-
-  // 현재 비밀번호가 맞는지 확인하는 로직 추가해야 함
-  const handleCurrentPasswordChange = (e) => {
-    setCurrentPassword(e.target.value);
-  };
-
-  // 새로운 비밀번호가 비밀번호 규칙에 맞는지 확인하는 로직 추가해야 함
-  const handleNewPasswordChange = (e) => {
-    setNewPassword(e.target.value);
-  };
-
-  // 새로운 비밀번호 확인이 맞는지 확인하는 로직 추가해야 함
-  const handleConfirmPasswordChange = (e) => {
-    setConfirmPassword(e.target.value);
+    const newNickname = e.target.value;
+    setNickname(newNickname);
   };
 
   const handleProfileImageUpload = async (event) => {
@@ -78,51 +60,64 @@ const UserInfoUpdate = () => {
     }
   };
 
-  // 서버로 patch 요청 보내기
+  // '회원정보 수정' 버튼 클릭 핸들러
   const handleUpdateProfile = () => {
+    // 닉네임 중복 여부 확인
     axios
-      .patch(`/mypage`, userUpdateData)
+      .post(`/checkNickname`, { nickname: nickname }, { headers: { "Content-Type": "application/json" } })
       .then((response) => {
-        console.log("프로필 업데이트 성공:", response.data);
-        // 프로필 업데이트 성공 후 리다이렉트
-        navigate("/mypage/info");
+        if (response.data) {
+          // 닉네임 사용 가능한 경우
+          setIsNicknameAvailable(true);
+          // 서버로 patch 요청 보내기
+          axios
+            .patch(`/mypage/${userId}`, userUpdateData)
+            .then((response) => {
+              console.log("프로필 업데이트 성공:", response.data);
+              // 프로필 업데이트 성공 후 리다이렉트
+              navigate("/mypage/info");
+            })
+            .catch((error) => {
+              console.error("프로필 업데이트 실패:", error);
+              // 프로필 업데이트 실패 시 오류 처리 또는 다른 작업 수행
+            });
+        } else {
+          // 만약 닉네임이 현재 사용자의 닉네임과 동일하다면 중복으로 처리하지 않음
+          if (nickname === user.nickname) {
+            setIsNicknameAvailable(true); // 중복이 아니라고 설정
+            axios
+              .patch(`/mypage/${userId}`, userUpdateData)
+              .then((response) => {
+                console.log("프로필 업데이트 성공:", response.data);
+                // 프로필 업데이트 성공 후 리다이렉트
+                navigate("/mypage/info");
+              })
+              .catch((error) => {
+                console.error("프로필 업데이트 실패:", error);
+                // 프로필 업데이트 실패 시 오류 처리 또는 다른 작업 수행
+              });
+          } else {
+            // 닉네임 중복인 경우
+            setIsNicknameAvailable(false);
+            alert("이미 사용 중인 닉네임입니다. 다른 닉네임을 입력해주세요.");
+          }
+        }
       })
       .catch((error) => {
-        console.error("프로필 업데이트 실패:", error);
-        // 프로필 업데이트 실패 시 오류 처리 또는 다른 작업 수행
+        console.error("에러:", error);
       });
   };
 
   return (
     <div>
-      <div>다른 유저와 겹치지 않도록 입력해 주세요 (2~15자)</div>
+      <div>다른 유저와 겹치지 않도록 입력해 주세요</div>
       <div>
         <label>닉네임</label>
         <input type="text" value={nickname} onChange={handleNicknameChange} placeholder="닉네임" />
       </div>
-      <div>영문, 숫자를 포함한 8자 이상의 비밀번호를 입력해주세요.</div>
-      <div>
-        <label>현재 비밀번호</label>
-        <input
-          type="password"
-          value={currentPassword}
-          onChange={handleCurrentPasswordChange}
-          placeholder="현재 비밀번호"
-        />
-      </div>
-      <div>
-        <label>비밀번호 재설정</label>
-        <input type="password" value={newPassword} onChange={handleNewPasswordChange} placeholder="새로운 비밀번호" />
-      </div>
-      <div>
-        <label>비밀번호 확인</label>
-        <input
-          type="password"
-          value={confirmPassword}
-          onChange={handleConfirmPasswordChange}
-          placeholder="비밀번호 확인"
-        />
-      </div>
+      {!isNicknameAvailable && (
+        <div style={{ color: "red" }}>이미 사용 중인 닉네임입니다. 다른 닉네임을 입력해주세요.</div>
+      )}
       <div>
         <label>프로필이미지</label>
         <div>
