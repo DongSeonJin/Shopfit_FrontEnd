@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/img-redundant-alt */
 import axios from "axios";
 import { useState } from "react";
 import { useNavigate } from "react-router";
