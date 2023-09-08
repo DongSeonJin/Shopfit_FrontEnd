@@ -5,7 +5,8 @@ import HomeCommunity from '../../components/home/HomeCommunity';
 import HomeNews from '../../components/home/HomeNews';
 import HomeShopping from '../../components/home/HomeShopping';
 import HomeIcons from '../../components/home/HomeIcons';
-import ChatBot from '../mypage/ChatBot';
+
+
 
 
 const HomeContent = () => {
