@@ -15,7 +15,6 @@ const Order = () => {
   const [productStocks, setProductStocks] = useState({});
   const [detailedAddress, setDetailedAddress] = useState("");
   const [PGKey, setPGKey] = useState();
-  const [nowOrderId, setNowOrderId] = useState();
 
   const location = useLocation();
   const selectedItems = location.state.selectedItems;
@@ -27,7 +26,7 @@ const Order = () => {
     address: "",
     phoneNumber: "",
     orderDate: now,
-    orderStatus: "1",
+    orderStatus: "결제대기",
     orderProducts: selectedItems.map((item) => ({
       productId: item.productId,
       quantity: item.quantity,
@@ -56,7 +55,7 @@ const Order = () => {
 
   const updateOrderStatus = async (orderId) => {
     try {
-        await OrderStatusUpdater(orderId, 2);
+        await OrderStatusUpdater(orderId, "결제완료");
 
         console.error('주문 상태 업데이트 성공');
     } catch (error) {
@@ -114,14 +113,12 @@ const Order = () => {
 
     try {
       // 주문 생성 요청 보내고 주문 성공 시
-      const response = await axios.post("/orders/create", updatedOrderData);
+      const response = await axios.post("/orders", updatedOrderData);
 
-      setNowOrderId(response.orderId);
-
-      console.log(nowOrderId);
+      console.log(response.data.orderId);   // 56
 
       // handleCreateOrder 함수 호출
-      await openPaymentWindow();
+      await openPaymentWindow(response.data.orderId);
 
     } catch (error) {
       console.error("Error creating order:", error);
@@ -142,7 +139,7 @@ const Order = () => {
 
 
   // 아임포트 결제창 열기
-  const openPaymentWindow = async () => {
+  const openPaymentWindow = async (orderId) => {
     const productId = selectedItems[0].productId; // 선택한 첫 번째 상품의 productId
     
     try {
@@ -160,7 +157,7 @@ const Order = () => {
         {
           pg: PGKey,
           pay_method: "card",
-          merchant_uid: orderData.orderId,
+          merchant_uid: orderId,
           amount: orderData.totalPrice,
           name: productName, // productName을 아임포트의 name 필드에 사용
           buyer_email: orderData.userId,
@@ -205,15 +202,15 @@ const Order = () => {
             console.log("결제가 성공적으로 완료되었습니다.");
 
             // 상태(결제완료) 업데이트
-            await updateOrderStatus(orderData.orderId, "결제완료");
+            await updateOrderStatus(orderId, "결제완료");
 
           } else {
             // 결제 실패
             console.log(rsp);
             alert(`결제에 실패하였습니다. 에러 내용: ${rsp.error_msg}`);
             try{
-              await axios.delete(`/orders/${orderData.orderId}`);
-              console.error(`주문 삭제 완료(${orderData.orderId})`);
+              await axios.delete(`/orders/${orderId}`);
+              console.error(`주문 삭제 완료(${orderId})`);
 
             } catch (erro){
               console.error(`존재하지 않는 주문`);

@@ -8,15 +8,7 @@ import Search from '../../components/common/Search';
 
 import styles from '../../styles/shop/ProductList.module.css';
 import { Button } from "@mui/material";
-
-const formatDate = (date) => {
-  const d = new Date(date);
-  const year = d.getFullYear();
-  const month = String(d.getMonth() + 1).padStart(2, "0");
-  const day = String(d.getDate()).padStart(2, "0");
-
-  return `${year}-${month}-${day}`;
-};
+import { formatDate } from './../../components/common/DateUtils';
 
 const ProductList = () => {
   const navigate = useNavigate();
