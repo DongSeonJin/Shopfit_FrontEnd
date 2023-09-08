@@ -3,12 +3,12 @@ import React from "react";
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { useProductDetail } from '../../context/ProductDetailContext';
+import { useProductDetail } from "../../context/ProductDetailContext";
 
 import { Button, Rating } from "@mui/material";
 import BookmarkIcon from "@mui/icons-material/Bookmark";
 
-import styles from '../../styles/shop/ProductDetail.module.css';
+import styles from "../../styles/shop/ProductDetail.module.css";
 
 const ProductDetail = () => {
   const userId = 1; // 임시로 설정한 userId 변수 -> 추후 수정해야 함
@@ -345,7 +345,7 @@ const ProductDetail = () => {
       </div>
       {/* 썸네일, 제품명, 가격 끝 */}
       {/* 상세이미지 시작 */}
-      <h3>상세정보</h3>
+      <h3 style={{ width: "200px" }}>상세정보</h3>
       <div className={styles.detailContainer}>
         {data.productImageUrls.map((imageUrl, index) => (
           <>
@@ -357,7 +357,7 @@ const ProductDetail = () => {
 
       {/* 상세이미지 끝 */}
       {/* 리뷰 시작 */}
-      <h3>구매후기</h3>
+      <h3 style={{ width: "200px" }}>구매후기</h3>
       <div className={styles.reviewContainer}>
         <div>
           {formattedReviews.map((review) => (

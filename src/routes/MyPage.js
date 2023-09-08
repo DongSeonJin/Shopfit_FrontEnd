@@ -6,14 +6,14 @@ import OrderHistory from "./../pages/mypage/OrderHistory";
 import OrderHistoryDetails from "./../pages/mypage/OrderHistoryDetails";
 import UserInfo from "./../pages/mypage/UserInfo";
 import UserInfoUpdate from "./../pages/mypage/UserInfoUpdate";
-import UserLogin from "./../pages/mypage/UserLogin";
 import PasswordUpdate from "../pages/mypage/PasswordUpdate";
+import HeaderSubMyPage from "../components/common/HeaderSubMypage";
 
 const MyPage = () => {
   return (
     <div>
+      <HeaderSubMyPage />
       <Routes>
-        <Route path="/login" element={<UserLogin />} />
         <Route path="/orderhistory" element={<OrderHistory />} />
         <Route path="/orderhistory/:orderId" element={<OrderHistoryDetails />} />
         <Route path="/mypage/info" element={<UserInfo />} />
