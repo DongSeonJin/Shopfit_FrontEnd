@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useState } from "react";
 import { useEffect } from "react";
 import { useNavigate } from "react-router";
+import HeaderSubMyPage from "../../components/common/HeaderSubMypage";
 
 const UserInfoUpdate = () => {
   const [nickname, setNickname] = useState("");
@@ -110,6 +111,7 @@ const UserInfoUpdate = () => {
 
   return (
     <div>
+      <HeaderSubMyPage></HeaderSubMyPage>
       <div>다른 유저와 겹치지 않도록 입력해 주세요</div>
       <div>
         <label>닉네임</label>
