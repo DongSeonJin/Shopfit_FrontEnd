@@ -115,8 +115,8 @@ const Product = ({ data }) => {
   };
 
   return (
-    <div onClick={handleClick} className={`${styles.articleRow} ${styles.productWrapper} ${styles.gridContainer}`}>
-      <div className={styles.img_item} style={imageStyle}>
+    <div className={`${styles.articleRow} ${styles.productWrapper} ${styles.gridContainer}`}>
+      <div className={styles.img_item} style={imageStyle} onClick={handleClick}>
         {data.stockQuantity === 0 && <div style={soldOutTextStyle}>품절</div>}
         <button className="favorite-button" onClick={toggleFavorite} style={favoriteButtonStyle}>
           <BookmarkIcon />

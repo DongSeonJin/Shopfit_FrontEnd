@@ -2,7 +2,7 @@ import React from "react";
 
 import styles from "../../styles/common/Page.module.css";
 
-const Page = ({ currentPage, onPageChange, totalPages, onSearch }) => {
+const Page = ({ currentPage, onPageChange, totalPages }) => {
 
   const renderPageButtons = () => {
     const pageButtons = [];

@@ -108,11 +108,6 @@ const UserInfoUpdate = () => {
       });
   };
 
-  const handleChangePassword = () => {
-    // 비밀번호 변경 페이지로 이동
-    navigate("/edit/password");
-  };
-
   return (
     <div>
       <div>다른 유저와 겹치지 않도록 입력해 주세요</div>
@@ -139,8 +134,6 @@ const UserInfoUpdate = () => {
         </div>
       </div>
       <button onClick={handleUpdateProfile}>회원정보 수정</button>
-      <button>탈퇴하기</button>
-      <button onClick={handleChangePassword}>비밀번호 변경하기</button>
     </div>
   );
 };

@@ -21,6 +21,12 @@ const ReplyList = ({ replies, onDeleteReply, onUpdateReply }) => {
         setUpdateReply(''); // 수정 후 updatedContent 초기화
     };
 
+    const handleDeleteReply = (replyId) => {
+        if (window.confirm('댓글을 삭제하시겠습니까?')) {
+            onDeleteReply(replyId);
+        }
+    };
+
     return (
         <div>
             <h2>댓글 목록</h2>
@@ -47,7 +53,7 @@ const ReplyList = ({ replies, onDeleteReply, onUpdateReply }) => {
                             ) : (
                                 <button onClick={() => handleEditClick(reply.replyId, reply.content)}>수정</button>
                             )}
-                            <button onClick={() => onDeleteReply(reply.replyId)}>삭제</button>
+                            <button onClick={() => handleDeleteReply(reply.replyId)}>삭제</button>
                         </p>
                     </div>
                 ))}

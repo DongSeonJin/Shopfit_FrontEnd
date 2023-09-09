@@ -50,7 +50,7 @@ const UserInfo = () => {
       </div>
       <div>
         <div>
-          쿠폰 {user.point} 포인트 {user.point}
+          쿠폰 {user.couponCount} 포인트 {user.point}
         </div>
         <div>
           <Link to="/orderhistory">주문내역</Link>

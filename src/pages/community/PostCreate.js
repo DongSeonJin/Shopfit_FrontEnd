@@ -69,8 +69,9 @@ const PostCreate = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
     
-        
 
+
+        // 서버로 보낼 데이터 구성
         const postData = {
             user: {userId: userId},
             title: title,
@@ -111,7 +112,7 @@ const PostCreate = () => {
                 setImageUrl3('');
 
                 // 게시글 리스트로 이동
-                navigate(`/community/post/list/:categoryId`);
+                navigate(`/community/post/list/${category}`);
             } catch (error) {
                 console.error('게시글 등록 실패', error);
                 alert('게시글 등록에 실패했습니다.');

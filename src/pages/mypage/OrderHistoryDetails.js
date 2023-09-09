@@ -1,3 +1,4 @@
+/* eslint-disable eqeqeq */
 import React, { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 
@@ -9,6 +10,7 @@ const OrderHistoryDetails = () => {
     const [order, setOrder] = useState(null);
     const [orderProducts, setOrderProducts] = useState([]);
     const [isReviewModalOpen, setIsReviewModalOpen] = useState(false);
+    const [selectedProductId, setSelectedProductId] = useState();
 
     useEffect(() => {
         const fetchOrderDetails = async () => {
@@ -40,12 +42,14 @@ const OrderHistoryDetails = () => {
         if (order && order.orderStatus === 5) {
             setIsReviewModalOpen(true);
         }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [orderId]);
 
     // ReviewModal을 열고 닫는 함수
-    const openReviewModal = () => {
-        console.log('Opening modal...');
+    const openReviewModal = (productId) => {
+        console.log('Opening modal for productId:', productId);
         setIsReviewModalOpen(true);
+        setSelectedProductId(productId);
     };
 
     const closeReviewModal = () => {
@@ -82,10 +86,10 @@ const OrderHistoryDetails = () => {
                                     {order.orderStatus != 5 ? (
                                         <button onClick={() => alert('구매확정 후 리뷰를 남겨주세요.')}>리뷰작성</button>
                                     ) : (
-                                        <button onClick={openReviewModal}>리뷰작성</button>
+                                        <button onClick={() => openReviewModal(orderProduct.productInfo.productId)}>리뷰작성</button>
                                     )}
                                     {isReviewModalOpen && (
-                                        <ReviewModal onClose={closeReviewModal} productId={orderProduct.productInfo.productId} userId={order.userId} />
+                                        <ReviewModal onClose={closeReviewModal} productId={selectedProductId} userId={order.userId} />
                                     )}
                                 </div>
                             </div>

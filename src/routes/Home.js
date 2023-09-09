@@ -7,6 +7,7 @@ import Shopping from './Shopping';
 import News from './News';
 import MyPage from './MyPage';
 import SignUp from './SignUp';
+import SearchResult from "./SearchResult";
 
 const Home = () => {
   return (
@@ -14,6 +15,7 @@ const Home = () => {
       <Routes>
         <Route path="/" element={<HomeContent />} />
       </Routes>
+      <SearchResult />
       <Community />
       <Shopping />
       <News />
