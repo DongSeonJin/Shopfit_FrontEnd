@@ -69,17 +69,7 @@ const PostCreate = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
     
-
-        // 서버로 보낼 데이터 구성
-        // const postData = new FormData();
-        // postData.append ('userId', userId);
-        // postData.append ('title', title);
-        // postData.append ('content', content);
-        // postData.append ('category', category);
-        // postData.append ('nickname', nickname);
-        // postData.append ('imageUrl1', imageUrl1);
-        // postData.append ('imageUrl2', imageUrl2);        
-        // postData.append ('imageUrl3', imageUrl3);
+        
 
         const postData = {
             user: {userId: userId},
@@ -91,6 +81,8 @@ const PostCreate = () => {
             imageUrl2: imageUrl2,
             imageUrl3: imageUrl3
         };
+
+
 
         if (!title && !content) {
             alert("제목, 내용을 입력해주세요.");
