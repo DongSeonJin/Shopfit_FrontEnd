@@ -70,6 +70,7 @@ const PostCreate = () => {
         e.preventDefault();
     
 
+
         // 서버로 보낼 데이터 구성
         const postData = {
             user: {userId: userId},
@@ -81,6 +82,8 @@ const PostCreate = () => {
             imageUrl2: imageUrl2,
             imageUrl3: imageUrl3
         };
+
+
 
         if (!title && !content) {
             alert("제목, 내용을 입력해주세요.");
