@@ -30,11 +30,11 @@ const Page = ({ currentPage, onPageChange, totalPages }) => {
 
   return (
     <div className={styles.pagination}>
-      <button onClick={() => onPageChange(1)} disabled={currentPage === 1} >{"<<"}</button>
-      <button onClick={() => onPageChange(currentPage - 1)} disabled={currentPage === 1}>{"<"}</button>
+      <button onClick={() => onPageChange(1)} disabled={currentPage === 1 || totalPages === 0} >{"<<"}</button>
+      <button onClick={() => onPageChange(currentPage - 1)} disabled={currentPage === 1 || totalPages === 0}>{"<"}</button>
       {renderPageButtons()}
-      <button onClick={() => onPageChange(currentPage + 1)} disabled={currentPage === totalPages}>{">"}</button>
-      <button onClick={() => onPageChange(totalPages)} disabled={currentPage === totalPages}>{">>"}</button>
+      <button onClick={() => onPageChange(currentPage + 1)} disabled={currentPage === totalPages || totalPages === 0}>{">"}</button>
+      <button onClick={() => onPageChange(totalPages)} disabled={currentPage === totalPages || totalPages === 0}>{">>"}</button>
     </div>
   );
 };
