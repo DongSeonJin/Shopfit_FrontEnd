@@ -131,7 +131,7 @@ const Order = () => {
       // 주문 생성 요청 보내고 주문 성공 시
       const response = await axios.post("/orders", updatedOrderData);
 
-      console.log(response.data.orderId); // 56
+      console.log(response.data.orderId);
 
       // 포인트 사용 업데이트를 수행
       await updateUsedPoints(usingPoint);
