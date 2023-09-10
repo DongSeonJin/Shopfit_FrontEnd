@@ -3,11 +3,12 @@ import axios from "axios";
 import addDays from "date-fns/addDays";
 import { useLocation, useNavigate } from "react-router-dom";
 
-import PurchasedProduct from '../../components/shop/PurchasedProduct';
-import SearchAddress from '../../components/shop/SearchAddress';
+import PurchasedProduct from "../../components/shop/PurchasedProduct";
+import SearchAddress from "../../components/shop/SearchAddress";
 
 import { IAMPORT_API_KEY, KAKAOPAY_PG, TOSSPAY_PG } from "../../config";
-import { OrderStatusUpdater } from '../../components/shop/OrderStatusUpdater';
+import { OrderStatusUpdater } from "../../components/shop/OrderStatusUpdater";
+import UserPoint from "../../components/shop/UserPoint";
 
 const Order = () => {
   const now = new Date();
@@ -17,6 +18,8 @@ const Order = () => {
   const [productStocks, setProductStocks] = useState({});
   const [detailedAddress, setDetailedAddress] = useState("");
   const [PGKey, setPGKey] = useState();
+  const [userPoint, setUserPoint] = useState(null);
+  const [usingPoint, setUsingPoint] = useState(0);
 
   const location = useLocation();
   const selectedItems = location.state.selectedItems;
@@ -57,11 +60,11 @@ const Order = () => {
 
   const updateOrderStatus = async (orderId) => {
     try {
-        await OrderStatusUpdater(orderId, "결제완료");
+      await OrderStatusUpdater(orderId, "결제완료");
 
-        console.error('주문 상태 업데이트 성공');
+      console.error("주문 상태 업데이트 성공");
     } catch (error) {
-        console.error('주문 상태 업데이트 중 오류 발생', error);
+      console.error("주문 상태 업데이트 중 오류 발생", error);
     }
   };
 
@@ -78,7 +81,19 @@ const Order = () => {
 
     fetchUserCart();
   }, [orderData.userId]); // userId가 변경될 때마다 useEffect 실행
-  
+
+  useEffect(() => {
+    const fetchUserPoint = async () => {
+      try {
+        const response = await axios.get(`/${orderData.userId}/point`);
+        setUserPoint(response.data.point);
+      } catch (error) {
+        console.error("Error fetching user point:", error);
+      }
+    };
+
+    fetchUserPoint();
+  }, [orderData.userId]);
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -87,7 +102,6 @@ const Order = () => {
       [name]: value,
     });
   };
-
 
   const handlePGSelection = (selectedPG) => {
     if (selectedPG === "kakaopay") {
@@ -117,11 +131,13 @@ const Order = () => {
       // 주문 생성 요청 보내고 주문 성공 시
       const response = await axios.post("/orders", updatedOrderData);
 
-      console.log(response.data.orderId);   // 56
+      console.log(response.data.orderId); // 56
+
+      // 포인트 사용 업데이트를 수행
+      await updateUsedPoints(usingPoint);
 
       // handleCreateOrder 함수 호출
       await openPaymentWindow(response.data.orderId);
-
     } catch (error) {
       console.error("Error creating order:", error);
     }
@@ -138,12 +154,25 @@ const Order = () => {
     });
   };
 
+  const handleUserPointUpdate = (newPointValue) => {
+    // UserPoint 컴포넌트에서 전달된 업데이트된 포인트 값
+    setUsingPoint(newPointValue);
+  };
 
+  // 함수 추가: 포인트 사용 업데이트
+  const updateUsedPoints = async (usedPoints) => {
+    try {
+      await axios.patch(`/${orderData.userId}/usePoints/${usedPoints}`);
+      console.log(`포인트 사용 업데이트 완료: ${usedPoints}`);
+    } catch (error) {
+      console.error("포인트 사용 업데이트 중 오류 발생", error);
+    }
+  };
 
   // 아임포트 결제창 열기
   const openPaymentWindow = async (orderId) => {
     const productId = selectedItems[0].productId; // 선택한 첫 번째 상품의 productId
-    
+
     try {
       const productResponse = await axios.get(`/shopping/products/${productId}`); // 제품 정보 요청
       const IMP = window.IMP;
@@ -155,12 +184,15 @@ const Order = () => {
         productName += ` 외 ${orderData.orderProducts.length - 1}건`;
       }
 
+      // 계산된 최종 가격을 finalPrice 변수에 저장
+      const finalPrice = orderData.totalPrice + 3000 - usingPoint;
+
       IMP.request_pay(
         {
           pg: PGKey,
           pay_method: "card",
           merchant_uid: orderId,
-          amount: orderData.totalPrice,
+          amount: finalPrice, // finalPrice를 사용
           name: productName, // productName을 아임포트의 name 필드에 사용
           buyer_email: orderData.userId,
           buyer_name: orderData.userId,
@@ -205,19 +237,16 @@ const Order = () => {
 
             // 상태(결제완료) 업데이트
             await updateOrderStatus(orderId, "결제완료");
-
           } else {
             // 결제 실패
             console.log(rsp);
             alert(`결제에 실패하였습니다. 에러 내용: ${rsp.error_msg}`);
-            try{
+            try {
               await axios.delete(`/orders/${orderId}`);
               console.error(`주문 삭제 완료(${orderId})`);
-
-            } catch (erro){
+            } catch (erro) {
               console.error(`존재하지 않는 주문`);
             }
-            
           }
         }
       );
@@ -225,7 +254,6 @@ const Order = () => {
       console.error("Error fetching product information:", error);
     }
   };
-
 
   return (
     <div style={{ margin: "0 20%" }}>
@@ -277,6 +305,20 @@ const Order = () => {
             <div>
               <PurchasedProduct products={orderData.orderProducts} />
             </div>
+          </div>
+          <div>
+            {/* 포인트 */}
+            {userPoint !== null && (
+              <UserPoint
+                userPoint={userPoint}
+                totalPrice={orderData.totalPrice}
+                onUpdateUserPoint={handleUserPointUpdate}
+              />
+            )}
+          </div>
+          <div>
+            <h4>쿠폰</h4>
+            <button>쿠폰적용</button>
           </div>
           <div style={{ marginTop: "50px" }}>
             <h4>결제방식</h4>
@@ -330,8 +372,16 @@ const Order = () => {
                 <div>3,000원</div>
               </div>
               <div style={{ display: "flex", justifyContent: "space-between" }}>
+                <div>포인트 사용:</div>
+                <div style={{ color: "red" }}>{usingPoint}원</div>
+              </div>
+              <div style={{ display: "flex", justifyContent: "space-between" }}>
+                <div>쿠폰 사용:</div>
+                <div style={{ color: "red" }}>원</div>
+              </div>
+              <div style={{ display: "flex", justifyContent: "space-between" }}>
                 <div>최종 결제 금액:</div>
-                <div>{(orderData.totalPrice + 3000).toLocaleString()}원</div>
+                <div>{(orderData.totalPrice + 3000 - usingPoint).toLocaleString()}원</div>
               </div>
             </div>
             <div style={{ display: "flex", justifyContent: "center", marginTop: "50px" }}>
