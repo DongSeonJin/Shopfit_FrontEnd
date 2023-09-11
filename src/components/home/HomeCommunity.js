@@ -22,28 +22,25 @@ const HomeCommunity = () => {
     };
 
     return (
-        <div style={{ display: 'flex', justifyContent: 'center' }}>
+        <div style={{margin: '5% 20%'}}>
             <div>
-                <h2>인기 게시글</h2>
-                <ul style={{ display: 'flex', listStyle: 'none', padding: 0 }}>
-                    {top4Posts.map(post => (
-                        <li key={post.postId} style={{ margin: '0 16px', textAlign: 'center' }}>
-                            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                                <Link to={`/community/post/${post.postId}`}>
-                                    <img
-                                        src={post.imageUrl}
-                                        alt={post.title}
-                                        style={{ width: '180px', height: '160px', objectFit: 'cover' }}
-                                    />
-                                </Link>
-                                
-                                <h3 style={{ marginTop: '8px', display: '-webkit-box', WebkitLineClamp: 2, overflow: 'hidden', textOverflow: 'ellipsis', WebkitBoxOrient: 'vertical' }}>
-                                    {post.title}
-                                </h3>
-                            </div>
-                        </li>
-                    ))}
-                </ul>
+                인기 게시글
+            </div>
+            <div style={{ display: 'flex', justifyContent: 'space-between'}}>
+                {top4Posts.map(post => (
+                    <div>
+                        <Link to={`/community/post/${post.postId}`}>
+                            <img
+                                src={post.imageUrl}
+                                alt={post.title}
+                                style={{ width: '240px', height: '240px', objectFit: 'cover' }}
+                            />
+                        </Link>
+                        <div style={{display: '-webkit-box', WebkitBoxOrient: 'vertical', WebkitLineClamp: 2, overflow: 'hidden', textOverflow: 'ellipsis', fontWeight: 'bold'}}>{post.title}</div>
+                        <div style={{display: '-webkit-box', WebkitBoxOrient: 'vertical', WebkitLineClamp: 2, overflow: 'hidden', textOverflow: 'ellipsis'}}>{post.content}</div>
+                    </div>
+
+                ))}
             </div>
         </div>
     );

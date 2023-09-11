@@ -57,7 +57,7 @@ const SearchNews = () => {
             <div>
                 news "{text}" 검색결과 - {numberOfSearch} 개
             </div>
-            <div style={{ display: 'flex', flexWrap: 'wrap', width: '80%', margin: '0 auto' }}>
+            <div style={{ display: 'flex', flexWrap: 'wrap', width: '100%', margin: '0 auto' }}>
                 {(searchResults.length > 0 ? searchResults : dataList).map((data) => (
                     <div key={data.newsId} style={{ flexBasis: '20%', padding: '10px' }}>
                         <SearchResultArticle data={data} />
