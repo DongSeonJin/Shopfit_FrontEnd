@@ -8,7 +8,7 @@ import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline'; // ì±
 const HomeIcons = () => {
 
     return (
-        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '5% 20%'}}>
             
             <Link to="/shopping/wishlist">
                 <StarIcon style={{ width: '60px', height: '60px', margin: '0 10px 0 10px'}} />
