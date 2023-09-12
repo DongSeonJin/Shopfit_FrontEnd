@@ -36,7 +36,7 @@ const UserLogin = ({ setUser }) => {
 
         } catch (error) {
             console.error('로그인 실패:', error);
-            setErrorMessage('로그인에 실패했습니다. 다시 시도해주세요.');
+            setErrorMessage('이메일 또는 비밀번호를 확인해 주십시오.');
             setErrorModalOpen(true);
         }
     };

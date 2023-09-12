@@ -31,6 +31,7 @@ function SignupForm() {
       password,
       nickname,
       imageUrl,
+      confirmPassword
     };
 
     try {
@@ -39,8 +40,16 @@ function SignupForm() {
       if (window.confirm("회원가입이 완료되었습니다.")) {
         navigate("/login");
       }
+
     } catch (error) {
-      console.error("회원가입 실패", error);
+
+       // 서버로부터의 에러 메시지를 받아 alert 띄우기
+       if(error.response && error.response.data){
+        alert(error.response.data.message); 
+     } else{
+        alert('회원가입 실패');
+     }
+
     }
   };
 
