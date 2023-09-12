@@ -3,16 +3,16 @@ import { Route, Routes } from "react-router-dom";
 
 import { ProductDetailProvider } from "../context/ProductDetailContext";
 
-import ProductList from './../pages/shop/ProductList';
-import ProductListCategory from './../pages/shop/ProductListCategory';
-import ProductDetail from './../pages/shop/ProductDetail';
-import Order from './../pages/shop/Order';
-import OrderDetail from './../components/shop/OrderDetail';
-import CartList from './../pages/shop/CartList';
-import WishList from './../pages/shop/WishList';
-import ProductCreate from './../pages/shop/ProductCreate';
-import ProductUpdate from './../pages/shop/ProductUpdate';
-
+import ProductList from "./../pages/shop/ProductList";
+import ProductListCategory from "./../pages/shop/ProductListCategory";
+import ProductDetail from "./../pages/shop/ProductDetail";
+import Order from "./../pages/shop/Order";
+import OrderDetail from "./../components/shop/OrderDetail";
+import CartList from "./../pages/shop/CartList";
+import WishList from "./../pages/shop/WishList";
+import ProductCreate from "./../pages/shop/ProductCreate";
+import ProductUpdate from "./../pages/shop/ProductUpdate";
+import Coupon from "../pages/shop/Coupon";
 
 const Shopping = () => {
   return (
@@ -43,6 +43,8 @@ const Shopping = () => {
         <Route path="/shopping/sort/:sortType/:pageNum" element={<ProductList />} />
         <Route path="/shopping/category/:categoryId/sort/:sortType" element={<ProductListCategory />} />
         <Route path="/shopping/category/:categoryId/sort/:sortType/:pageNum" element={<ProductListCategory />} />
+
+        <Route path="/coupon" element={<Coupon />} />
       </Routes>
     </ProductDetailProvider>
   );
