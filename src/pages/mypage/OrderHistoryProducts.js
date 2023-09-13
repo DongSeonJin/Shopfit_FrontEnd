@@ -43,16 +43,6 @@ const OrderHistoryProducts = ({ orders }) => {
         fetchProductDetails();
     }, [orders]);
 
-  
-    const handleConfirmPurchase = async (orderId) => {
-        try {
-            await OrderStatusUpdater(orderId, "구매확정");
-            console.error('주문 상태 업데이트 성공');
-            window.location.reload();
-        } catch (error) {
-            console.error('주문 상태 업데이트 중 오류 발생', error);
-        }
-    };
   // 주문을 orderDate를 기준으로 역순으로 정렬
   const sortedOrders = orders.slice().sort((a, b) => new Date(b.orderDate) - new Date(a.orderDate));
 

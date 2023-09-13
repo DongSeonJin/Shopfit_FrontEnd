@@ -12,12 +12,12 @@ const MyPosts = () => {
 
     useEffect(() => {
         const fetchPosts = async () => {
-            try {
+            // try {
                 const response = await axios.get(`/post/myPage/myCommunity/${userId}`);
                 setPosts(response.data);
-            } catch (error) {
-                console.error('실패', error);
-            }
+            // } catch (error) {
+                // console.error('실패', error);
+            // }
         };
 
         fetchPosts();

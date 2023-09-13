@@ -96,6 +96,12 @@ const PostUpdate = () => {
            
        }catch(error){
            console.error("게시글 수정 실패:",error);
+           
+           if(error.response && error.response.status === 404) {
+            alert('존재하지 않는 게시글입니다.');
+            return;
+           }
+
            alert("다시 시도해주세요.");
        }
      }

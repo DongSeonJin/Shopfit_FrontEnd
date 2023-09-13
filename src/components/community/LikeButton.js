@@ -48,7 +48,19 @@ const LikeButton = ({ postId }) => {
             setIsLiked(!isLiked);
         } catch (error) {
             console.error('좋아요 실패:', error);
-            alert('좋아요 실패');
+
+            if (error.response && error.response.status === 404) {
+                alert('로그인이 필요한 기능입니다.');
+                return;
+            }
+
+            if (error.response && error.response.status === 400) {
+                alert("이미 '좋아요'를 누른 상태입니다.");
+                return;
+            }
+
+            
+
         }
     };
 

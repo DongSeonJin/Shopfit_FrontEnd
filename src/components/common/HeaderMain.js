@@ -26,7 +26,9 @@ const HeaderMain = ({ isCommunityHovered, isShoppingHovered }) => {
             <div style={{display: 'flex'}}>
                 <div style={{flex: '1', fontSize: '24px', fontFamily: 'Arial, sans-serif', fontWeight: 'bold', color: 'deepskyblue'}}>
                     <Link to="/" style={{ textDecoration: 'none', color: 'inherit' }}>
-                        # Fit
+                        <div>
+                            <img src="https://kr.object.ncloudstorage.com/post-bucket/imageslide/%23fit%20%281%29.gif" style={{width:"200px", height:"200px"}}/>
+                        </div>
                     </Link>
                 </div>
 
@@ -92,6 +94,5 @@ const HeaderMain = ({ isCommunityHovered, isShoppingHovered }) => {
             </div>
     );
 };
-
 
 export default HeaderMain;
