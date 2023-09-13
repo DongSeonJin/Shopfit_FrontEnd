@@ -7,6 +7,7 @@ import styles from '../../styles/community/PostCreate.module.css';
 import { ButtonGroup } from 'react-bootstrap';
 import { Button } from 'bootstrap';
 import { Category } from '@material-ui/icons';
+import { el } from 'date-fns/locale';
 
 
 const PostCreate = () => {
@@ -88,6 +89,8 @@ const PostCreate = () => {
             alert ("제목을 입력해주세요.");
         } else if (!content) {
             alert ("내용을 입력해주세요.");
+        } else if (!imageUrl1) {
+            alert("사진을 한 장 이상 등록해주세요.");
         } else {
 
             try {
