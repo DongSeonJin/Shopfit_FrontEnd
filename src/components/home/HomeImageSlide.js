@@ -5,12 +5,16 @@ import { url } from "koa-router";
 import { Link } from "react-router-dom";
 
 const HomeImageSlide = () => {
-  const imageUrls = [
-    "https://file.rankingdak.com/image/RANK/BANNER/AR_IMG_1/20230907/IMG1694qCb059621087.gif", // 닭가슴살 순정마켓
-    "https://file.rankingdak.com/image/RANK/BANNER/AR_IMG_1/20230828/IMG1693zaY208907934.jpg", // 랭킹닭컴 쿠폰
-    "https://file.rankingdak.com/image/RANK/BANNER/AR_IMG_1/20230830/IMG1693stS355076138.jpg", // 닭가슴살 사진
-    "https://file.rankingdak.com/image/RANK/BANNER/AR_IMG_1/20230831/IMG1693WJJ464777439.jpg", // 추석 이벤트
-  ];
+
+
+    const imageUrls = [
+        "https://kr.object.ncloudstorage.com/post-bucket/imageslide/KakaoTalk_Photo_2023-09-12-15-03-43.png", // 샵피트 쿠폰
+        "https://file.rankingdak.com/image/RANK/BANNER/AR_IMG_1/20230907/IMG1694qCb059621087.gif", // 닭가슴살 순정마켓
+        "https://file.rankingdak.com/image/RANK/BANNER/AR_IMG_1/20230830/IMG1693stS355076138.jpg", // 닭가슴살 사진
+        "https://file.rankingdak.com/image/RANK/BANNER/AR_IMG_1/20230831/IMG1693WJJ464777439.jpg" // 추석 이벤트
+    ];
+
+    
 
   return (
     <Carousel showThumbs={false} infiniteLoop useKeyboardArrows autoPlay>
@@ -30,6 +34,7 @@ const HomeImageSlide = () => {
       ))}
     </Carousel>
   );
+
 };
 
 export default HomeImageSlide;

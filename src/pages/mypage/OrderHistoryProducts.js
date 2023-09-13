@@ -33,6 +33,8 @@ const OrderHistoryProducts = ({ orders }) => {
           })
         );
 
+
+
         setProductDetails(details);
       } catch (error) {
         console.error("상품 정보를 가져오는 중 오류가 발생했습니다.", error);
@@ -42,6 +44,7 @@ const OrderHistoryProducts = ({ orders }) => {
     const sortedOrders = orders.slice().sort((a, b) => new Date(b.orderDate) - new Date(a.orderDate));
     fetchProductDetails();
   }, [orders]);
+
 
   // 주문을 orderDate를 기준으로 역순으로 정렬
   const sortedOrders = orders.slice().sort((a, b) => new Date(b.orderDate) - new Date(a.orderDate));

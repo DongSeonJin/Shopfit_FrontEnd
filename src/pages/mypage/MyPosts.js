@@ -20,8 +20,20 @@ const MyPosts = () => {
       }
     };
 
+
+    useEffect(() => {
+        const fetchPosts = async () => {
+            try {
+                const response = await axios.get(`/post/myPage/myCommunity/${userId}`);
+                setPosts(response.data);
+            } catch (error) {
+                console.error('실패', error);
+            }
+        };
+
     fetchPosts();
   }, [userId]);
+
 
   return (
     <div>
