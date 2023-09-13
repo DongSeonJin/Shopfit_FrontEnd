@@ -8,7 +8,7 @@ const HeaderMain = ({ isCommunityHovered, isShoppingHovered }) => {
     const navigate = useNavigate();
     const [isHoveredCommunity, setIsHoveredCommunity] = useState(false);
     const [isHoveredShopping, setIsHoveredShopping] = useState(false);
-    const [isHoveredServices, setIsHoveredServices] = useState(false);
+    const [isHoveredNews, setIsHoveredNews] = useState(false);
     const [searchText, setSearchText] = useState(""); // 1. searchText 상태 변수 추가
 
     const handleSearchTextChange = (e) => {
@@ -17,8 +17,12 @@ const HeaderMain = ({ isCommunityHovered, isShoppingHovered }) => {
     };
 
     const performSearch = (searchText) => {
-        navigate(`/searchresult/${searchText}`);
-        console.log("검색어:", searchText);
+        if(searchText == ""){
+            alert('검색어를 입력해주세요.')
+        }else {
+            navigate(`/searchresult/${searchText}`);
+            console.log("검색어:", searchText);
+        }
     };
 
 
@@ -34,7 +38,9 @@ const HeaderMain = ({ isCommunityHovered, isShoppingHovered }) => {
 
                 <div style={{flex: '1',display: 'flex'}}>
                     <div
-                        style={{margin: '10px'}}
+                        style={{margin: '10px',
+                            color: isHoveredCommunity ? 'rgb(53, 197, 240)' : 'black',
+                        }}
                         onMouseEnter={() => {
                             setIsHoveredCommunity(true);
                             isCommunityHovered(true);
@@ -47,7 +53,9 @@ const HeaderMain = ({ isCommunityHovered, isShoppingHovered }) => {
                         <Link to="/community" style={{ textDecoration: 'none', color: 'inherit' }}>커뮤니티</Link>
                     </div>
                     <div
-                        style={{margin: '10px'}}
+                        style={{margin: '10px',
+                            color: isHoveredShopping ? 'rgb(53, 197, 240)' : 'black',
+                        }}
                         onMouseEnter={() => {
                             setIsHoveredShopping(true);
                             isCommunityHovered(false);
@@ -60,13 +68,15 @@ const HeaderMain = ({ isCommunityHovered, isShoppingHovered }) => {
                         <Link to="/shopping" style={{ textDecoration: 'none', color: 'inherit' }}>쇼핑</Link>
                     </div>
                     <div
-                        style={{margin: '10px'}}
+                        style={{margin: '10px',
+                            color: isHoveredNews ? 'rgb(53, 197, 240)' : 'black',
+                        }}
                         onMouseEnter={() => {
-                            setIsHoveredServices(true);
+                            setIsHoveredNews(true);
                             isCommunityHovered(false);
                             isShoppingHovered(false);
                         }}
-                        onMouseLeave={() => setIsHoveredServices(false)}
+                        onMouseLeave={() => setIsHoveredNews(false)}
                     >
                         <Link to="/news/list" style={{ textDecoration: 'none', color: 'inherit' }}>뉴스</Link>
                     </div>
@@ -82,13 +92,13 @@ const HeaderMain = ({ isCommunityHovered, isShoppingHovered }) => {
                 </div>
                 <div style={{flex: '1', display: 'flex'}}>
                     <div>
-                        <Link to="/login" style={{ textDecoration: 'none', color: 'inherit', margin: '10px' }} onClick={() => {window.location.reload();}}>로그인</Link>
+                        <Link to="/login" style={{ textDecoration: 'none', color: 'inherit', margin: '10px' }}>로그인</Link>
                     </div>
                     <div>
-                        <Link to="/signup" style={{ textDecoration: 'none', color: 'inherit', margin: '10px' }} onClick={() => {window.location.reload();}}>회원가입</Link>
+                        <Link to="/signup" style={{ textDecoration: 'none', color: 'inherit', margin: '10px' }}>회원가입</Link>
                     </div>
                     <div>
-                        <Link to="/chatbot" style={{ textDecoration: 'none', color: 'inherit', margin: '10px' }} onClick={() => {window.location.reload();}}>챗봇</Link>
+                        <Link to="/chatbot" style={{ textDecoration: 'none', color: 'inherit', margin: '10px' }}>챗봇</Link>
                     </div>
                 </div>
             </div>

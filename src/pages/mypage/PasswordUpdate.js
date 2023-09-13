@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import HeaderSubMyPage from "../../components/common/HeaderSubMypage";
 
 const PasswordUpdate = () => {
   const [newPassword, setNewPassword] = useState("");
@@ -18,6 +19,7 @@ const PasswordUpdate = () => {
 
   return (
     <div>
+      <HeaderSubMyPage />
       <h1>비밀번호 변경</h1>
       <div>
         <label>새로운 비밀번호</label>

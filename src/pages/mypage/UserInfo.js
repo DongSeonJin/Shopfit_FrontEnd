@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
+import HeaderSubMyPage from "../../components/common/HeaderSubMypage";
 
 const UserInfo = () => {
   const userId = 1; // 임시로 설정한 userId 변수 -> 추후 수정해야 함
@@ -43,6 +44,7 @@ const UserInfo = () => {
 
   return (
     <div>
+      <HeaderSubMyPage />
       <div>
         <img src={user.imageUrl} alt="프로필사진" style={profilePictureStyle} />
         <h1>{user.nickname}</h1>
