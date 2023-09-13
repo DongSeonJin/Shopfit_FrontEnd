@@ -4,7 +4,7 @@ import FileUploadComponent from "../../components/shop/FileUploadComponent";
 import { TextField, Button, Typography } from "@mui/material";
 import userEvent from "@testing-library/user-event";
 import { useNavigate } from "react-router";
-import { signUp } from "../../components/auth/authApi";
+import { signUp } from "../../lib/api/authApi";
 
 function SignupForm() {
   const [email, setEmail] = useState("");

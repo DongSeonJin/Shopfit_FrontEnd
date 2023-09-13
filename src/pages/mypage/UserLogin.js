@@ -2,17 +2,20 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { setUser } from '../../redux/actions'
-import { login } from '../../components/auth/authApi'
+import { login } from '../../lib/api/authApi'
 import axios from 'axios';
+import { useDispatch } from 'react-redux';
 
 import Modal from './../../components/common/modal/Modal';
 
+import { setRefreshToken } from '../../store/Cookie';
+import { SET_TOKEN } from '../../store/AuthSlice';
+
 const UserLogin = ({ setUser }) => {
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
     const [errorModalOpen, setErrorModalOpen] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
     const navigate = useNavigate();
+    const dispatch = useDispatch();
     const [values, setValues] = useState({
         email: "",
         password: "",
@@ -35,11 +38,14 @@ const UserLogin = ({ setUser }) => {
         // try {
             login(values)
             .then((response) => {
-                localStorage.clear();
-                localStorage.setItem('tokenType', response.tokenType);
-                localStorage.setItem('accessToken', response.accessToken);
-                localStorage.setItem('refreshToken', response.refreshToken);
-                window.location.href = `/`;
+                
+                    // 쿠키에 Refresh Token, store에 Access Token 저장
+                    setRefreshToken(response.json.refreshToken);
+                    dispatch(SET_TOKEN(response.json.accessToken));
+                    console.log(response.json.accessToken);
+        
+                    navigate("/");
+                
             }).catch((error) => {
                 console.error('로그인 실패:', error);
                 setErrorMessage('이메일 또는 비밀번호를 확인해 주십시오.');
