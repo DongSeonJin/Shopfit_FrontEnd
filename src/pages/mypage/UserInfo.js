@@ -52,12 +52,21 @@ const UserInfo = () => {
       </div>
       <div>
         <div>
-          쿠폰 {user.couponCount} 포인트 {user.point}
+          <div>
+            <Link to="/mypage/mycoupon">쿠폰 {user.couponCount}</Link>
+          </div>
+          <div>포인트 {user.point}</div>
         </div>
         <div>
-          <Link to="/orderhistory">주문내역</Link>
-          <Link to="/shopping/wishlist">찜목록</Link>
-          <Link to="/shopping/cart">장바구니</Link>
+          <div>
+            <Link to="/orderhistory">주문내역</Link>
+          </div>
+          <div>
+            <Link to="/shopping/wishlist">찜목록</Link>
+          </div>
+          <div>
+            <Link to="/shopping/cart">장바구니</Link>
+          </div>
         </div>
         <div>
           {/* 버튼만 만들어 놓음 */}

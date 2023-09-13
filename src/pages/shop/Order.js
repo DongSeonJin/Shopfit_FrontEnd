@@ -9,6 +9,7 @@ import SearchAddress from "../../components/shop/SearchAddress";
 import { IAMPORT_API_KEY, KAKAOPAY_PG, TOSSPAY_PG } from "../../config";
 import { OrderStatusUpdater } from "../../components/shop/OrderStatusUpdater";
 import UserPoint from "../../components/shop/UserPoint";
+import CouponSelectModal from "../../components/common/modal/CouponSelectModal";
 
 const Order = () => {
   const now = new Date();
@@ -20,6 +21,10 @@ const Order = () => {
   const [PGKey, setPGKey] = useState();
   const [userPoint, setUserPoint] = useState(null);
   const [usingPoint, setUsingPoint] = useState(0);
+  const [isModalOpen, setIsModalOpen] = useState(false); // 모달의 열림/닫힘 상태를 관리하는 상태 변수
+  const [usingCoupon, setUsingCoupon] = useState(0);
+  const [couponDescription, setCouponDescription] = useState(null);
+  const [isCouponUsed, setIsCouponUsed] = useState(0);
 
   const location = useLocation();
   const selectedItems = location.state.selectedItems;
@@ -133,9 +138,6 @@ const Order = () => {
 
       console.log(response.data.orderId);
 
-      // 포인트 사용 업데이트를 수행
-      await updateUsedPoints(usingPoint);
-
       // handleCreateOrder 함수 호출
       await openPaymentWindow(response.data.orderId);
     } catch (error) {
@@ -235,6 +237,9 @@ const Order = () => {
             // 결제 성공
             console.log("결제가 성공적으로 완료되었습니다.");
 
+            // 포인트 사용 업데이트를 수행
+            await updateUsedPoints(usingPoint);
+
             // 상태(결제완료) 업데이트
             await updateOrderStatus(orderId, "결제완료");
           } else {
@@ -253,6 +258,22 @@ const Order = () => {
     } catch (error) {
       console.error("Error fetching product information:", error);
     }
+  };
+
+  const handleCouponApplyClick = () => {
+    setIsModalOpen(true); // 쿠폰 적용 버튼 클릭 시 모달을 열기 위해 상태 변경
+    setUsingPoint(0);
+  };
+
+  const closeCouponModal = () => {
+    setIsModalOpen(false);
+  };
+
+  const handleCouponSelection = (discountValue, description) => {
+    console.log(`선택한 쿠폰의 할인 값: ${discountValue}원`);
+    setUsingCoupon(discountValue);
+    setCouponDescription(description);
+    setIsCouponUsed(1);
   };
 
   return (
@@ -307,18 +328,28 @@ const Order = () => {
             </div>
           </div>
           <div>
+            <h4>쿠폰</h4>
+            <button onClick={handleCouponApplyClick}>쿠폰적용</button>
+            {isModalOpen && (
+              <CouponSelectModal
+                onClose={closeCouponModal}
+                userId={orderData.userId}
+                orderData={orderData}
+                onSelectCoupon={handleCouponSelection}
+              />
+            )}
+            {couponDescription && <div>선택한 쿠폰 : {couponDescription}</div>}
+          </div>
+          <div>
             {/* 포인트 */}
             {userPoint !== null && (
               <UserPoint
                 userPoint={userPoint}
-                totalPrice={orderData.totalPrice}
+                totalPrice={orderData.totalPrice - usingCoupon}
                 onUpdateUserPoint={handleUserPointUpdate}
+                isCouponUsed={isCouponUsed}
               />
             )}
-          </div>
-          <div>
-            <h4>쿠폰</h4>
-            <button>쿠폰적용</button>
           </div>
           <div style={{ marginTop: "50px" }}>
             <h4>결제방식</h4>
@@ -372,16 +403,16 @@ const Order = () => {
                 <div>3,000원</div>
               </div>
               <div style={{ display: "flex", justifyContent: "space-between" }}>
+                <div>쿠폰 사용:</div>
+                <div style={{ color: "red" }}>{usingCoupon}원</div>
+              </div>
+              <div style={{ display: "flex", justifyContent: "space-between" }}>
                 <div>포인트 사용:</div>
                 <div style={{ color: "red" }}>{usingPoint}원</div>
               </div>
               <div style={{ display: "flex", justifyContent: "space-between" }}>
-                <div>쿠폰 사용:</div>
-                <div style={{ color: "red" }}>원</div>
-              </div>
-              <div style={{ display: "flex", justifyContent: "space-between" }}>
                 <div>최종 결제 금액:</div>
-                <div>{(orderData.totalPrice + 3000 - usingPoint).toLocaleString()}원</div>
+                <div>{(orderData.totalPrice + 3000 - usingCoupon - usingPoint).toLocaleString()}원</div>
               </div>
             </div>
             <div style={{ display: "flex", justifyContent: "center", marginTop: "50px" }}>
