@@ -16,8 +16,8 @@ const HomeImageSlide = () => {
     <Carousel showThumbs={false} infiniteLoop useKeyboardArrows autoPlay>
       {imageUrls.map((url, index) => (
         <div key={index}>
-          {index === 1 ? (
-            // 2번째 이미지(인덱스 1) 클릭 시 /coupon 경로로 이동
+          {index === 0 ? (
+            // 1번째 이미지(인덱스 0) 클릭 시 /coupon 경로로 이동
             <div style={{ cursor: "pointer" }}>
               <img src={url} alt={`slide ${index + 1}`} />
               <Link to="/coupon" style={{ position: "absolute", top: 0, bottom: 0, left: 0, right: 0 }} />
