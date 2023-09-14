@@ -8,8 +8,6 @@ import HomeIcons from '../../components/home/HomeIcons';
 import HomeImageSlide from '../../components/home/HomeImageSlide';
 
 
-
-
 const HomeContent = () => {
     return (
         <div>

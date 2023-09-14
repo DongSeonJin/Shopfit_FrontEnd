@@ -29,6 +29,7 @@ function SignupForm() {
     const formData = {
       email,
       password,
+      confirmPassword,
       nickname,
       imageUrl,
     };
