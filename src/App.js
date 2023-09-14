@@ -6,7 +6,7 @@ import Footer from './components/common/Footer';
 
 const App = () => {
   return (
-    <div>
+    <div style={{ background: 'black', color: 'white' }}>
       <Header />
       <Home />
       <Footer />

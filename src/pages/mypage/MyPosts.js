@@ -19,6 +19,7 @@ const MyPosts = () => {
         console.error("실패", error);
       }
     };
+  });
 
 
     useEffect(() => {

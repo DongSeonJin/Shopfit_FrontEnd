@@ -21,7 +21,6 @@ const Home = () => {
       <News />
       <MyPage />
       <SignUp />
-
     </div>
   );
 };

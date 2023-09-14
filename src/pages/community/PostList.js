@@ -6,7 +6,7 @@ import { Button } from '@material-ui/core'
 
 import LikeButton from './../../components/community/LikeButton';
 
-import styles from '../../styles/community/PostList.module.css'
+// import styles from '../../styles/community/PostList.module.css'
 
 const PostList = () => {
   const [posts, setPosts] = useState([]);
@@ -54,67 +54,50 @@ const PostList = () => {
 
   }, [categoryId, pageNumb]);
 
-
-
-
-
-
   useEffect(() => {
     if (!isObserverActive) return; // isObserverActive가 false일 경우 observer 생성하지 않음
-
     var options = {
       root: null,
       rootMargin: "20px",
       threshold: 1.0
     };
-
     // Intersection Observer를 생성하고 시작합니다.
     const observer = new IntersectionObserver(handleObserver, options);
     if (loader.current) {
       observer.observe(loader.current)
     }
-
-
     // cleanup function을 추가하여 이전의 observer를 해제합니다.
     return () => observer.disconnect();
   }, [handleObserver, isObserverActive]); // handleObserver의 변경에 따라 새로운 observer 생성
 
 
-
-
   return (
-
-    <div className='container'>
-
-      <div style={{ marginRight: "auto", marginLeft: "0" }}>
-        <Button component={Link} to="/community/post/create" variant="contained" color="primary" className={styles['write-button']}>
+    <div>
+      <div style={{ margin: "3%", textAlign: 'right' }}>
+        <Button component={Link} to="/community/post/create" variant="contained" color="primary">
           글 작성
         </Button>
       </div>
-
-      <div className={styles['post-list']}>
-
-        {posts.map((post) => (
-
-
-          <div className={styles['post-card']} key={post.id}>
-            <Link to={`/community/post/${post.postId}`} style={{ textDecoration: 'none', color: 'black' }}>
-              <img src={post.imageUrl1} alt={post.title} className={styles['post-image']} />
-            </Link>
-            <LikeButton postId={post.postId} /> {/*좋아요 버튼 component 분리, prop으로 postId 전달*/}
-            <span>{`조회수: ${post.viewCount}, `}</span>
-            <span>{`댓글수: ${post.replyCnt}`}</span>
-            <div className={styles['post-content']}>
-              <h2 className={styles['post-title']}>{post.title}</h2>
-              <p className={styles['post-author']}>{`작성자: ${post.nickname}`}</p>
-              {/* 추가적인 내용들... */}
+      <div>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '1%', width: '100%' }}>
+          {posts.map((post) => (
+            <div key={post.id} style={{width: '100%'}}>
+              <Link to={`/community/post/${post.postId}`}>
+                <img
+                    src={post.imageUrl1}
+                    alt={post.title}
+                    style={{ width: '100%', height: 'auto', objectFit: 'cover', border: '1px solid white', borderRadius: '5%'}}
+                />
+              </Link>
+              <LikeButton postId={post.postId} />
+              <div>{`조회수: ${post.viewCount}, `}</div>
+              <div>{`댓글수: ${post.replyCnt}`}</div>
+              <div>{post.title}</div>
+              <div>{`작성자: ${post.nickname}`}</div>
             </div>
-
-          </div>
-
-        ))}
-        <div ref={loader} className={styles['loading-indicator']}>
-          {/* 로딩 인디케이터 (예: 스피너) */}
+          ))}
+        </div>
+        <div ref={loader}>
           Loading...
         </div>
       </div>
