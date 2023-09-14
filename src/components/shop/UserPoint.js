@@ -1,16 +1,20 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
-const UserPoint = ({ userPoint, totalPrice, onUpdateUserPoint }) => {
+const UserPoint = ({ userPoint, totalPrice, onUpdateUserPoint, isCouponUsed }) => {
   const [inputValue, setInputValue] = useState("");
+
+  useEffect(() => {
+    if (isCouponUsed === 1) {
+      setInputValue("0");
+    }
+  }, [isCouponUsed]);
 
   const handleInputChange = (e) => {
     setInputValue(e.target.value);
   };
 
   const updatePoint = () => {
-    // 입력한 값을 숫자로 변환
     const enteredValue = parseInt(inputValue);
-
     // 입력 값이 NaN (숫자가 아닌 경우) 또는 음수인 경우 0으로 설정
     if (isNaN(enteredValue) || enteredValue < 0) {
       setInputValue("0");

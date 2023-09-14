@@ -9,6 +9,7 @@ import UserInfoUpdate from "./../pages/mypage/UserInfoUpdate";
 import UserLogin from "./../pages/mypage/UserLogin";
 import ChatBot from "../pages/mypage/ChatBot";
 import PasswordUpdate from "../pages/mypage/PasswordUpdate";
+import MyCoupons from "../pages/mypage/MyCoupons";
 
 const MyPage = () => {
   return (
@@ -20,6 +21,7 @@ const MyPage = () => {
         <Route path="/mypage/edit" element={<UserInfoUpdate />} />
         <Route path="/mypage/edit/password" element={<PasswordUpdate />} />
         <Route path="/mypage/myposts/:userId" element={<MyPosts />} />
+        <Route path="/mypage/mycoupon" element={<MyCoupons />} />
         <Route path="/chatbot" element={<ChatBot />} />
       </Routes>
     </div>

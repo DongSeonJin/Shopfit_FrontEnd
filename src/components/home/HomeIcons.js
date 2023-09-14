@@ -9,6 +9,7 @@ import ChatBot from '../../pages/mypage/ChatBot';
 
 const HomeIcons = () => {
 
+
     const [isChatBotModalOpen, setIsChatBotModalOpen] = useState(false);
 
     const openAndCloseChatbotModal = () => {
@@ -24,7 +25,7 @@ const HomeIcons = () => {
             </Link>
 
             <Link to="/shopping/cart">
-                <ShoppingCartIcon style={{ width: '60px', height: '60px', margin: '0 10px 0 10px' }} />
+              <ShoppingCartIcon style={{ width: "60px", height: "60px", margin: "0 10px 0 10px" }} />
             </Link>
 
             {/* <button onClick={openAndCloseChatbotModal}> */}
@@ -33,11 +34,16 @@ const HomeIcons = () => {
 
             {/* 챗봇 모달 */}
             {isChatBotModalOpen && <ChatBot closeModal={openAndCloseChatbotModal} />}
+            
+             <Link to="/mypage/info">
+              <AccountCircleIcon style={{ width: "60px", height: "60px", margin: "0 10px" }} />
+             </Link>
 
 
         </div>
       
     );
+     
 };
 
 export default HomeIcons;

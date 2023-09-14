@@ -7,14 +7,8 @@ import Page from "../../components/common/Page";
 import Search from "../../components/common/Search";
 import Product from "../../components/shop/Product";
 import { Button } from "@mui/material";
+import { formatDate } from "../../components/common/DateUtils";
 
-const formatDate = (date) => {
-  const d = new Date(date);
-  const year = d.getFullYear();
-  const month = String(d.getMonth() + 1).padStart(2, "0");
-  const day = String(d.getDate()).padStart(2, "0");
-  return `${year}-${month}-${day}`;
-};
 
 const ProductListCategory = () => {
   const { categoryId, pageNum } = useParams();
@@ -37,7 +31,7 @@ const ProductListCategory = () => {
 
   useEffect(() => {
     if (pageNum !== currentPage) {
-      setCurrentPage(1);
+      setCurrentPage(Number(pageNum));
     }
     if (searchTerm.trim() === "") {
       fetchData(`/shopping/category/${categoryId}/${currentPage}`);
@@ -134,7 +128,7 @@ const ProductListCategory = () => {
   return (
     <div className={styles.container}>
       <div className={styles.pageTitle}>
-        쇼핑리스트
+        쇼핑리스트 - {categoryId === 1 ? "닭가슴살" : categoryId === 2 ? "음료/보충제" : "운동용품"}
         <div style={{ marginLeft: "auto" }}>
           <Link to="/shopping/create">
             <Button variant="outlined">상품 등록</Button>
