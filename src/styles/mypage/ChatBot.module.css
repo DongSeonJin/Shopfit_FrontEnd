@@ -8,7 +8,7 @@
 
 .title {
   align-self: center;
-  margin-top: 30px;
+  /* margin-top: 30px; */
 }
 
 .close-button {
@@ -17,7 +17,7 @@
 
 .input-container {
   align-self: center;
-  margin-bottom: 30px;
+  /* margin-bottom: 30px; */
 }
 
 #chat-container {
