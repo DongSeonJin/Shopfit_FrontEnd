@@ -6,6 +6,7 @@ import StarIcon from '@mui/icons-material/Star';
 import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline';
 import ChatBot from '../../pages/mypage/ChatBot';
 
+
 const HomeIcons = () => {
 
     const [isChatBotModalOpen, setIsChatBotModalOpen] = useState(false);

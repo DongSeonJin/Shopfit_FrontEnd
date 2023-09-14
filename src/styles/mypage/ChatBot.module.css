@@ -1,58 +1,38 @@
-/* ChatBot.css */
+
 
 .modal-content {
-    padding: 16px;
-    width: auto;
-    text-align: center;
-    margin: auto;
-    flex: "1";
-    overflow-y: scroll;
-  }
-  
-  .chat-container {
-    max-height: 300px;
-    overflow-y: scroll;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    padding: 10px;
-    margin-bottom: 10px;
-  }
-  
-  .chatMessage {
-    border-radius: 5px;
-    padding: 5px 10px;
-    margin-bottom: 5px;
-  }
-  
-  .userMessage {
-    background-color: #E3F2FD;
-    align-self: flex-end;
-  }
-  
-  .botMessage {
-    background-color: #B3E0A3;
-    align-self: flex-start;
-  }
-  
-  .input-container {
-    position: fixed;
-    bottom: 110px;
-    width: inherit;
-  }
-  
-  .input {
-    flex: 1;
-  }
-  
-  .button {
-    margin-left: 10px;
-  }
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
 
-  .close-button {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-  }
+.title {
+  align-self: center;
+  margin-top: 30px;
+}
 
-  
- 
+.close-button {
+  align-self: flex-end;
+}
+
+.input-container {
+  align-self: center;
+  margin-bottom: 30px;
+}
+
+#chat-container {
+  overflow-y:auto;
+  max-height:none;
+  flex-grow :1 ;
+}
+
+.close-button {
+position: absolute;
+top: 10px;
+right: 10px;
+}
+
+.chat-message {
+  height: 300px;
+  overflow-y: auto;
+}
