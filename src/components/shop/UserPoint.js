@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
 
-const UserPoint = ({ userPoint, totalPrice, onUpdateUserPoint, isCouponUsed }) => {
+const UserPoint = ({ userPoint, totalPrice, onUpdateUserPoint, selectedCouponId }) => {
   const [inputValue, setInputValue] = useState("");
 
   useEffect(() => {
-    if (isCouponUsed === 1) {
+    if (selectedCouponId) {
       setInputValue("0");
     }
-  }, [isCouponUsed]);
+  }, [selectedCouponId]);
 
   const handleInputChange = (e) => {
     setInputValue(e.target.value);

@@ -25,7 +25,7 @@ const CouponSelectModal = ({ userId, onClose, onSelectCoupon, orderData }) => {
     }
 
     setSelectedCoupon(coupon); // 선택한 쿠폰 상태 업데이트
-    onSelectCoupon(coupon.discountValue, coupon.description); // 선택한 쿠폰 정보를 부모 컴포넌트로 전달
+    onSelectCoupon(coupon.discountValue, coupon.description, coupon.couponId); // 선택한 쿠폰 정보를 부모 컴포넌트로 전달
     onClose(); // 쿠폰 선택 후 모달 닫기
   };
 
