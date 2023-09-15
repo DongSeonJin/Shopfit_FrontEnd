@@ -24,7 +24,7 @@ const Order = () => {
   const [isModalOpen, setIsModalOpen] = useState(false); // 모달의 열림/닫힘 상태를 관리하는 상태 변수
   const [usingCoupon, setUsingCoupon] = useState(0);
   const [couponDescription, setCouponDescription] = useState(null);
-  const [isCouponUsed, setIsCouponUsed] = useState(0);
+  const [selectedCouponId, setSelectedCouponId] = useState();
 
   const location = useLocation();
   const selectedItems = location.state.selectedItems;
@@ -171,6 +171,16 @@ const Order = () => {
     }
   };
 
+  // 함수 추가: 쿠폰 사용 업데이트
+  const updateUsedCoupon = async (couponId) => {
+    try {
+      await axios.post(`/coupon/expire/${couponId}`);
+      console.log(`쿠폰 사용 업데이트 완료: ${couponId}`);
+    } catch (error) {
+      console.error("쿠폰 사용 업데이트 중 오류 발생", error);
+    }
+  };
+
   // 아임포트 결제창 열기
   const openPaymentWindow = async (orderId) => {
     const productId = selectedItems[0].productId; // 선택한 첫 번째 상품의 productId
@@ -240,6 +250,11 @@ const Order = () => {
             // 포인트 사용 업데이트를 수행
             await updateUsedPoints(usingPoint);
 
+            // 쿠폰 사용 업데이트를 수행
+            if (selectedCouponId) {
+              // couponId가 유효한 경우만 실행
+              await updateUsedCoupon(selectedCouponId);
+            }
             // 상태(결제완료) 업데이트
             await updateOrderStatus(orderId, "결제완료");
           } else {
@@ -269,11 +284,11 @@ const Order = () => {
     setIsModalOpen(false);
   };
 
-  const handleCouponSelection = (discountValue, description) => {
+  const handleCouponSelection = (discountValue, description, couponId) => {
     console.log(`선택한 쿠폰의 할인 값: ${discountValue}원`);
     setUsingCoupon(discountValue);
     setCouponDescription(description);
-    setIsCouponUsed(1);
+    setSelectedCouponId(couponId);
   };
 
   return (
@@ -347,7 +362,7 @@ const Order = () => {
                 userPoint={userPoint}
                 totalPrice={orderData.totalPrice - usingCoupon}
                 onUpdateUserPoint={handleUserPointUpdate}
-                isCouponUsed={isCouponUsed}
+                selectedCouponId={selectedCouponId}
               />
             )}
           </div>
