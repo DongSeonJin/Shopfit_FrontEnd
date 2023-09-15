@@ -1,5 +1,11 @@
 import React from "react";
 
+import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore';
+import NavigateNextIcon from '@mui/icons-material/NavigateNext';
+import KeyboardDoubleArrowLeftIcon from '@mui/icons-material/KeyboardDoubleArrowLeft';
+import KeyboardDoubleArrowRightIcon from '@mui/icons-material/KeyboardDoubleArrowRight';
+
+
 import styles from "../../styles/common/Page.module.css";
 
 const Page = ({ currentPage, onPageChange, totalPages }) => {
@@ -30,11 +36,11 @@ const Page = ({ currentPage, onPageChange, totalPages }) => {
 
   return (
     <div className={styles.pagination}>
-      <button onClick={() => onPageChange(1)} disabled={currentPage === 1 || totalPages === 0} >{"<<"}</button>
-      <button onClick={() => onPageChange(currentPage - 1)} disabled={currentPage === 1 || totalPages === 0}>{"<"}</button>
+      <KeyboardDoubleArrowLeftIcon onClick={() => onPageChange(1)} disabled={currentPage === 1 || totalPages === 0} style={{margin: '0 5px', cursor: 'pointer'}} />
+      <NavigateBeforeIcon onClick={() => onPageChange(currentPage - 1)} disabled={currentPage === 1 || totalPages === 0} style={{margin: '0 5px', cursor: 'pointer'}} />
       {renderPageButtons()}
-      <button onClick={() => onPageChange(currentPage + 1)} disabled={currentPage === totalPages || totalPages === 0}>{">"}</button>
-      <button onClick={() => onPageChange(totalPages)} disabled={currentPage === totalPages || totalPages === 0}>{">>"}</button>
+      <NavigateNextIcon onClick={() => onPageChange(currentPage + 1)} disabled={currentPage === totalPages || totalPages === 0} style={{margin: '0 5px', cursor: 'pointer'}} />
+      <KeyboardDoubleArrowRightIcon onClick={() => onPageChange(totalPages)} disabled={currentPage === totalPages || totalPages === 0} style={{margin: '0 5px', cursor: 'pointer'}} />
     </div>
   );
 };

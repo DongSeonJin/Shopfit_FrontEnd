@@ -11,7 +11,7 @@ import SearchResult from "./SearchResult";
 
 const Home = () => {
   return (
-    <div>
+    <div style={{minHeight: '480px'}}>
       <Routes>
         <Route path="/" element={<HomeContent />} />
       </Routes>

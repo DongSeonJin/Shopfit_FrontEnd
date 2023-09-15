@@ -1,4 +1,3 @@
-// api.js (또는 원하는 다른 파일명)
 import axios from 'axios';
 import { formatDate } from '../common/DateUtils';
 

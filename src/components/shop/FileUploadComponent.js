@@ -4,8 +4,6 @@ import axios from "axios";
 function FileUploadComponent({ onUploadSuccess }) {
   const [previewImage, setPreviewImage] = useState(null);
 
-  const MAX_WIDTH = 150; // 원하는 최대 너비 설정
-
   const handleFileChange = async (event) => {
     const file = event.target.files[0];
 
@@ -35,8 +33,12 @@ function FileUploadComponent({ onUploadSuccess }) {
 
   return (
     <div>
-      <input type="file" onChange={handleFileChange} />
-      {previewImage && <img src={previewImage} alt="Preview" style={{ maxWidth: `${MAX_WIDTH}px` }} />}
+      <div style={{margin: '2% 0'}}>
+        <input type="file" onChange={handleFileChange} />
+      </div>
+      <div style={{margin: '2% 0'}}>
+        {previewImage && <img src={previewImage} alt="Preview" style={{ maxWidth: '40%'}} />}
+      </div>
     </div>
   );
 }

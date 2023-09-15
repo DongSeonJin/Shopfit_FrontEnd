@@ -36,7 +36,6 @@ const UserPoint = ({ userPoint, totalPrice, onUpdateUserPoint, selectedCouponId 
 
   return (
     <div>
-      <h4>포인트</h4>
       <div>
         <input type="number" placeholder="포인트를 입력하세요" value={inputValue} onChange={handleInputChange} />
         <button onClick={updatePoint}>사용하기</button>

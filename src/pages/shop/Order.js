@@ -292,89 +292,72 @@ const Order = () => {
   };
 
   return (
-    <div style={{ margin: "0 20%" }}>
-      <h2>주문/결제</h2>
-      <h4 style={{ marginTop: "50px" }}>배송정보</h4>
-      <div style={{ display: "flex" }}>
-        <div style={{ flex: 1 }}>
+    <div>
+      <div style={{ fontSize: '24px', fontWeight: 'bold', marginBottom: '2%' }}>주문/결제</div>
+
+      <div style={{display: 'flex'}}>
+        <div style={{flex:'2'}}>
+          <div style={{marginBottom: '5%'}}>
+            <div style={{ fontSize: '20px', marginBottom: '2%'}}>배송정보</div>
+            <div style={{margin: '5px 0'}}>
+              <label style={{ width: "80px" }}>이름</label>
+              <input style={{ width: "360px" }} type="text" name="name" value={orderData.userId} readOnly />
+            </div>
+            <div style={{margin: '5px 0'}}>
+              <label style={{ width: "80px" }}>이메일</label>
+              <input style={{ width: "360px" }} type="email" name="email" value={orderData.userId} readOnly />
+            </div>
+            <div style={{margin: '5px 0'}}>
+              <label style={{ width: "80px" }}>연락처</label>
+              <input style={{ width: "360px" }} type="tel" name="phoneNumber" value={orderData.phoneNumber} onChange={handleInputChange} />
+            </div>
+            <div style={{margin: '5px 0'}}>
+              <div style={{ display: "flex", alignItems: "center" }}>
+                <label style={{ width: "80px" }}>주소</label>
+                <input style={{ width: "240px" }} type="text" name="address" value={orderData.address} onChange={handleInputChange} />
+                <SearchAddress onSelect={handleAddressSelected} />
+              </div>
+            </div>
+            <div style={{margin: '5px 0'}}>
+              <div style={{ display: "flex", alignItems: "center" }}>
+                <label style={{ width: "80px" }}>상세주소</label>
+                <input style={{ width: "360px" }} type="text" name="detailedAddress" value={detailedAddress} onChange={handleDetailedAddressChange} />
+              </div>
+            </div>
+          </div>
+
           <div>
-            <label style={{ width: "80px" }}>이름</label>
-            <input style={{ width: "240px" }} type="text" name="name" value={orderData.userId} readOnly />
-          </div>
-          <div>
-            <label style={{ width: "80px" }}>이메일</label>
-            <input style={{ width: "240px" }} type="email" name="email" value={orderData.userId} readOnly />
-          </div>
-          <div>
-            <label style={{ width: "80px" }}>연락처</label>
-            <input
-              style={{ width: "240px" }}
-              type="tel"
-              name="phoneNumber"
-              value={orderData.phoneNumber}
-              onChange={handleInputChange}
-            />
-          </div>
-          <div style={{ display: "flex", alignItems: "center" }}>
-            <label style={{ width: "80px" }}>주소</label>
-            <input
-              style={{ width: "240px" }}
-              type="text"
-              name="address"
-              value={orderData.address}
-              onChange={handleInputChange}
-            />
-            <SearchAddress onSelect={handleAddressSelected} />
-          </div>
-          <div style={{ display: "flex", alignItems: "center" }}>
-            <label style={{ width: "80px" }}>상세주소</label>
-            <input
-              style={{ width: "240px" }}
-              type="text"
-              name="detailedAddress"
-              value={detailedAddress}
-              onChange={handleDetailedAddressChange}
-            />
-          </div>
-          <div style={{ marginTop: "50px" }}>
-            <h4>주문상품</h4>
+            <div style={{ fontSize: '20px', marginBottom: '2%'}}>주문상품</div>
             <div>
               <PurchasedProduct products={orderData.orderProducts} />
             </div>
           </div>
-          <div>
-            <h4>쿠폰</h4>
-            <button onClick={handleCouponApplyClick}>쿠폰적용</button>
-            {isModalOpen && (
-              <CouponSelectModal
-                onClose={closeCouponModal}
-                userId={orderData.userId}
-                orderData={orderData}
-                onSelectCoupon={handleCouponSelection}
-              />
-            )}
-            {couponDescription && <div>선택한 쿠폰 : {couponDescription}</div>}
+        </div>
+
+        <div style={{flex: '1'}}>
+          <div style={{marginBottom: '5%'}}>
+            <div style={{ fontSize: '20px', marginBottom: '2%'}}>쿠폰</div>
+            <div style={{display: 'flex'}}>              
+              {isModalOpen && (<CouponSelectModal onClose={closeCouponModal} userId={orderData.userId} orderData={orderData} onSelectCoupon={handleCouponSelection} />)}
+              {couponDescription && <div>선택한 쿠폰 : {couponDescription}</div>}
+              <button onClick={handleCouponApplyClick}>쿠폰선택</button>
+            </div>
           </div>
-          <div>
-            {/* 포인트 */}
-            {userPoint !== null && (
-              <UserPoint
-                userPoint={userPoint}
-                totalPrice={orderData.totalPrice - usingCoupon}
-                onUpdateUserPoint={handleUserPointUpdate}
-                selectedCouponId={selectedCouponId}
-              />
-            )}
+
+          <div style={{marginBottom: '5%'}}>
+            <div style={{ fontSize: '20px', marginBottom: '2%'}}>포인트</div>
+            {userPoint !== null && (<UserPoint userPoint={userPoint} totalPrice={orderData.totalPrice - usingCoupon} onUpdateUserPoint={handleUserPointUpdate} selectedCouponId={selectedCouponId} />)}
           </div>
-          <div style={{ marginTop: "50px" }}>
-            <h4>결제방식</h4>
+
+          <div style={{marginBottom: '5%'}}>
+            <div style={{ fontSize: '20px', marginBottom: '2%'}}>결제방식</div>
             <div style={{ display: "flex", margin: "5px" }}>
               <button
                 style={{
                   width: "80px",
                   height: "80px",
                   margin: "5px",
-                  border: "none",
+                  border: KAKAOPAY_PG === PGKey ? 'none' : '1px solid white',
                   background: KAKAOPAY_PG === PGKey ? "#00BFFF" : "#000000",
                   color: "white",
                   borderRadius: "20%",
@@ -391,7 +374,7 @@ const Order = () => {
                   width: "80px",
                   height: "80px",
                   margin: "5px",
-                  border: "none",
+                  border: KAKAOPAY_PG === PGKey ? 'none' : '1px solid white',
                   background: TOSSPAY_PG === PGKey ? "#00BFFF" : "#000000",
                   color: "white",
                   borderRadius: "20%",
@@ -405,8 +388,7 @@ const Order = () => {
               </button>
             </div>
           </div>
-        </div>
-        <div style={{ flex: 1, margin: "0 10%" }}>
+
           <div>
             <div>
               <div style={{ display: "flex", justifyContent: "space-between" }}>
