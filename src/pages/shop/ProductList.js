@@ -1,14 +1,13 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 
 import Product from '../../components/shop/Product';
 import Page from '../../components/common/Page';
 import Search from '../../components/common/Search';
 
-import styles from '../../styles/shop/ProductList.module.css';
+// import styles from '../../styles/shop/ProductList.module.css';
 import { Button } from "@mui/material";
-import { formatDate } from './../../components/common/DateUtils';
+import { fetchData } from "../../components/shop/FetchProductData";
 
 const ProductList = () => {
   const navigate = useNavigate();
@@ -20,7 +19,7 @@ const ProductList = () => {
   const [selectedSort, setSelectedSort] = useState("");
 
   const activeStyle = {
-    color: "black",
+    color: "red",
     fontWeight: "bold",
   };
 
@@ -31,40 +30,15 @@ const ProductList = () => {
 
   useEffect(() => {
     if (searchTerm.trim() === "") {
-      fetchData(`/shopping/${currentPage}`);
+      handleFetchData(`/shopping/${currentPage}`);
     } else {
-      fetchData(`/shopping/search/${searchTerm}/${currentPage}`);
+      handleFetchData(`/shopping/search/${searchTerm}/${currentPage}`);
     }
     // eslint-disable-next-line
   }, [currentPage, searchTerm]);
 
-  const fetchData = (url) => {
-    axios
-      .get(url)
-      .then((response) => {
-        const contentArray = response.data.content;
-        const extractedData = contentArray.map((item) => ({
-          productId: item.productId,
-          createdAt: formatDate(item.createdAt),
-          price: item.price,
-          productName: item.productName,
-          stockQuantity: item.stockQuantity,
-          thumbnailUrl: item.thumbnailUrl,
-          updatedAt: formatDate(item.updatedAt),
-          categoryId: item.categoryId,
-          totalPages: item.totalPages,
-        }));
-        if (searchTerm.trim() === "") {
-          setDataList(extractedData);
-        } else {
-          setSearchResults(extractedData);
-        }
-        const calculatedTotalPages = response.data.totalPages;
-        setTotalPages(calculatedTotalPages);
-      })
-      .catch((error) => {
-        console.error("데이터를 불러오는 중 에러 발생:", error);
-      });
+  const handleFetchData = (url) => {
+    fetchData(url, searchTerm, setDataList, setSearchResults, setTotalPages);
   };
 
   const handleSearch = (searchTerm) => {
@@ -87,108 +61,65 @@ const ProductList = () => {
     }
   };
 
-  const handleSortByPriceLow = () => {
-    setSelectedSort("priceLow");
-    const newUrl = `/shopping/sort/1/${currentPage}`;
-    fetchData(newUrl);
+  const handleSortBy = (sortType) => {
+    setSelectedSort(sortType);
+    const newUrl = (sortType !== "") ? `/shopping/sort/${sortType}/${currentPage}` : `/shopping/${currentPage}`;
+    handleFetchData(newUrl);
     navigate(newUrl);
   };
 
-  const handleSortByPriceHigh = () => {
-    setSelectedSort("priceHigh");
-    const newUrl = `/shopping/sort/2/${currentPage}`;
-    fetchData(newUrl);
-    navigate(newUrl);
-  };
-
-  const handleSortByNewest = () => {
-    setSelectedSort("newest");
-    const newUrl = `/shopping/${currentPage}`;
-    fetchData(newUrl);
-    navigate(newUrl);
-  };
-
-  const handleSortByOldest = () => {
-    setSelectedSort("oldest");
-    const newUrl = `/shopping/sort/3/${currentPage}`;
-    fetchData(newUrl);
-    navigate(newUrl);
-  };
-
-  const handleSortByMostReviews = () => {
-    setSelectedSort("mostReviews");
-    const newUrl = `/shopping/sort/4/${currentPage}`;
-    fetchData(newUrl);
-    navigate(newUrl);
-  };
+  const sortItems = [
+    { id: "1", label: "낮은 가격순"},
+    { id: "2", label: "높은 가격순"},
+    { id: "", label: "신상품순"},
+    { id: "3", label: "오래된순"},
+    { id: "4", label: "리뷰 많은순"},
+  ];
 
   return (
-    <div className={styles.container}>
-      <div className={styles.pageTitle}>
-        쇼핑리스트
-        <div style={{ marginLeft: "auto" }}>
-          <Link to="/shopping/create">
-            <Button variant="outlined">상품 등록</Button>
-          </Link>
+    <div>
+      <div style={{display: 'flex'}}>
+        <div style={{flex: '1', fontWeight: 'bold', fontSize: '24px', paddingLeft: '3%'}}>
+          쇼핑리스트
+        </div>
+
+        <div style={{flex: '1', paddingRight: '3%'}}>
+          <div style={{ textAlign: 'right', margin: '1% 2%'}}>
+            <Link to="/shopping/create">
+              <Button variant="outlined">상품 등록</Button>
+            </Link>
+          </div>
+
+          <div style={{display: 'flex', justifyContent: 'right', margin: '2% 2%'}}>
+            {sortItems.map((item, index) => (
+              <React.Fragment key={item.id}>
+                <div
+                  role="button"
+                  onClick={() => handleSortBy(item.id)}
+                  style={getSortButtonStyle(item.id)}
+                >
+                  {item.label}
+                </div>
+                {index !== sortItems.length - 1 && <div>|</div>}
+              </React.Fragment>
+            ))}
+          </div>
         </div>
       </div>
-      <div className={styles.sort}>
-        <div
-          role="button"
-          onClick={handleSortByPriceLow}
-          className={styles.sortButton}
-          style={getSortButtonStyle("priceLow")}
-        >
-          낮은 가격순
-        </div>
-        <div className={styles.sortButton}>|</div>
-        <div
-          role="button"
-          onClick={handleSortByPriceHigh}
-          className={styles.sortButton}
-          style={getSortButtonStyle("priceHigh")}
-        >
-          높은 가격순
-        </div>
-        <div className={styles.sortButton}>|</div>
-        <div
-          role="button"
-          onClick={handleSortByNewest}
-          className={styles.sortButton}
-          style={getSortButtonStyle("newest")}
-        >
-          신상품순
-        </div>
-        <div className={styles.sortButton}>|</div>
-        <div
-          role="button"
-          onClick={handleSortByOldest}
-          className={styles.sortButton}
-          style={getSortButtonStyle("oldest")}
-        >
-          오래된순
-        </div>
-        <div className={styles.sortButton}>|</div>
-        <div
-          role="button"
-          onClick={handleSortByMostReviews}
-          className={styles.sortButton}
-          style={getSortButtonStyle("mostReviews")}
-        >
-          리뷰 많은순
-        </div>
-      </div>
-      <div className={styles.gridContainer}>
+
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(5, 1fr)', gap: '1%', margin: '0 0 5% 0 ' }}>
         {(searchResults.length > 0 ? searchResults : dataList).map((data) => (
-          <div key={data.productId} className={styles.productItem}>
+          <div key={data.productId} style={{width: '100%'}}>
             <Product data={data} />
           </div>
         ))}
       </div>
+
       <Page currentPage={currentPage} onPageChange={handlePageChange} totalPages={totalPages} />
       <Search onSearch={handleSearch} />
     </div>
   );
+  
 };
 
 export default ProductList;

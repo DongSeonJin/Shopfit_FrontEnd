@@ -77,7 +77,7 @@ const Top3Product = ({ data }) => {
 
   return (
     <div style={{width: '300px'}}>
-      <div style={{ backgroundImage: `url(${data.thumbnailUrl})`, backgroundSize: 'cover', backgroundPosition: 'center', width: '300px', height: '300px', cursor: 'pointer', position: 'relative', filter: data.stockQuantity === 0 ? "grayscale(100%)" : "none"}} onClick={handleClick}>
+      <div style={{ backgroundImage: `url(${data.thumbnailUrl})`, backgroundSize: 'cover', backgroundPosition: 'center', width: '300px', height: '300px', cursor: 'pointer', position: 'relative', border: '1px solid white', borderRadius: '5%', filter: data.stockQuantity === 0 ? "grayscale(100%)" : "none"}} onClick={handleClick}>
           {data.stockQuantity === 0 && <div style={{
             position: 'absolute',
             top: '50%',

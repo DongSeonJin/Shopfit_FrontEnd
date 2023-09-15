@@ -22,10 +22,8 @@ const HomeShopping = () => {
 
 
   return (
-    <div style={{margin: '5% 20%'}}>
-      <div>
-        인기상품
-      </div>
+    <div style={{margin: '5% 0'}}>
+      <div style={{fontWeight: 'bold', margin: '2% 0', fontSize: '24px'}}>인기 상품</div>
       <div style={{display: 'flex', justifyContent: 'space-between'}}>
         {topProducts.map((data) => (
           <div style={{width: '300px'}}>

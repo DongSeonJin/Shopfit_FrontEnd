@@ -32,16 +32,16 @@ const HomeNews = () => {
   const latestNews = dataList.slice(0, 4);
 
   return (
-    <div style={{margin: '5% 20%'}}>
-      <div>최신 뉴스</div>
+    <div style={{margin: '5% 0'}}>
+      <div style={{fontWeight: 'bold', margin: '2% 0', fontSize: '24px'}}>최신 뉴스</div>
       <div style={{display: 'flex', justifyContent: 'space-between'}}>
         {latestNews.map(news => (
           <div style={{width: '240px'}}>
             <a href={news.newsUrl} target="_blank" rel="noopener noreferrer">
-              <div style={{ backgroundImage: `url(${news.imageUrl})`, backgroundSize: 'cover', backgroundPosition: 'center', width: '240px', height: '150px', cursor: 'pointer', position: 'relative'}} />
+              <div style={{ backgroundImage: `url(${news.imageUrl})`, backgroundSize: 'cover', backgroundPosition: 'center', width: '240px', height: '150px', cursor: 'pointer', position: 'relative', border: '1px solid white', borderRadius: '5%'}} />
             </a>
-            <div style={{display: '-webkit-box', WebkitBoxOrient: 'vertical', WebkitLineClamp: 2, overflow: 'hidden', textOverflow: 'ellipsis', fontWeight: 'bold'}}>{news.title}</div>
-            <div style={{display: '-webkit-box', WebkitBoxOrient: 'vertical', WebkitLineClamp: 2, overflow: 'hidden', textOverflow: 'ellipsis'}}>{news.content}</div>
+            <div style={{display: '-webkit-box', WebkitBoxOrient: 'vertical', WebkitLineClamp: 2, overflow: 'hidden', textOverflow: 'ellipsis', fontWeight: 'bold', fontSize: '16px'}}>{news.title}</div>
+            <div style={{display: '-webkit-box', WebkitBoxOrient: 'vertical', WebkitLineClamp: 2, overflow: 'hidden', textOverflow: 'ellipsis', fontSize: '12px'}}>{news.content}</div>
           </div>
         ))}
       </div>
