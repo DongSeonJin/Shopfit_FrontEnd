@@ -5,6 +5,7 @@ import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import StarIcon from '@mui/icons-material/Star';
 import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline';
 import ChatBot from '../../pages/mypage/ChatBot';
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 
 
 const HomeIcons = () => {
