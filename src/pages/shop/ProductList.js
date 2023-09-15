@@ -7,7 +7,7 @@ import Search from '../../components/common/Search';
 
 // import styles from '../../styles/shop/ProductList.module.css';
 import { Button } from "@mui/material";
-import { fetchData } from "./FetchProductData";
+import { fetchData } from "../../components/shop/FetchProductData";
 
 const ProductList = () => {
   const navigate = useNavigate();

@@ -6,7 +6,7 @@ import Page from "../../components/common/Page";
 import Search from "../../components/common/Search";
 import Product from "../../components/shop/Product";
 import { Button } from "@mui/material";
-import { fetchData } from "./FetchProductData";
+import { fetchData } from "../../components/shop/FetchProductData";
 
 
 const ProductListCategory = () => {

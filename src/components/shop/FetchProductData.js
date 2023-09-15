@@ -1,6 +1,6 @@
 // api.js (또는 원하는 다른 파일명)
 import axios from 'axios';
-import { formatDate } from '../../components/common/DateUtils';
+import { formatDate } from '../common/DateUtils';
 
 export const fetchData = async (url, searchTerm, setDataList, setSearchResults, setTotalPages) => {
   try {
