@@ -17,8 +17,12 @@ const HeaderMain = ({ isCommunityHovered, isShoppingHovered }) => {
     };
 
     const performSearch = (searchText) => {
-        navigate(`/searchresult/${searchText}`);
-        console.log("검색어:", searchText);
+        if(searchText == ""){
+            alert('검색어를 입력해주세요.')
+        }else {
+            navigate(`/searchresult/${searchText}`);
+            console.log("검색어:", searchText);
+        }
     };
 
 
@@ -80,13 +84,13 @@ const HeaderMain = ({ isCommunityHovered, isShoppingHovered }) => {
                 </div>
                 <div style={{flex: '1', display: 'flex'}}>
                     <div>
-                        <Link to="/login" style={{ textDecoration: 'none', color: 'inherit', margin: '10px' }} onClick={() => {window.location.reload();}}>로그인</Link>
+                        <Link to="/login" style={{ textDecoration: 'none', color: 'inherit', margin: '10px' }}>로그인</Link>
                     </div>
                     <div>
-                        <Link to="/signup" style={{ textDecoration: 'none', color: 'inherit', margin: '10px' }} onClick={() => {window.location.reload();}}>회원가입</Link>
+                        <Link to="/signup" style={{ textDecoration: 'none', color: 'inherit', margin: '10px' }}>회원가입</Link>
                     </div>
                     <div>
-                        <Link to="/chatbot" style={{ textDecoration: 'none', color: 'inherit', margin: '10px' }} onClick={() => {window.location.reload();}}>챗봇</Link>
+                        <Link to="/chatbot" style={{ textDecoration: 'none', color: 'inherit', margin: '10px' }}>챗봇</Link>
                     </div>
                 </div>
             </div>

@@ -4,6 +4,7 @@ import FileUploadComponent from "../../components/shop/FileUploadComponent";
 import { TextField, Button, Typography } from "@mui/material";
 import userEvent from "@testing-library/user-event";
 import { useNavigate } from "react-router";
+import { signUp } from "../../lib/api/authApi";
 
 function SignupForm() {
   const [email, setEmail] = useState("");
@@ -13,8 +14,10 @@ function SignupForm() {
   const [nickname, setNickname] = useState("");
   const [imageUrl, setImageUrl] = useState("");
   const [profileImage, setProfileImage] = useState(null);
+  
 
   const navigate = useNavigate();
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -31,17 +34,25 @@ function SignupForm() {
       password,
       nickname,
       imageUrl,
+      confirmPassword
     };
 
-    try {
-      const response = await axios.post("/signup", formData);
-      console.log("회원가입 성공", response.data);
+    //회원가입 api
+    signUp(formData)
+    .then((response) => {
       if (window.confirm("회원가입이 완료되었습니다.")) {
         navigate("/login");
       }
-    } catch (error) {
-      console.error("회원가입 실패", error);
-    }
+    }).catch((error) => {
+
+       // 서버로부터의 에러 메시지를 받아 alert 띄우기
+       if(error.response && error.response.data){
+        alert(error.response.data.message); 
+     } else{
+        alert('회원가입 실패');
+     }
+
+    });
   };
 
   const handleUploadSuccess = (imageUrl) => {

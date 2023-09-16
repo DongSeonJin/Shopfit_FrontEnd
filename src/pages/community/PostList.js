@@ -98,7 +98,7 @@ const PostList = () => {
 
 
           <div className={styles['post-card']} key={post.id}>
-            <Link to={`/community/post/${post.postId}`} style={{ textDecoration: 'none', color: 'black' }}>
+            <Link to={`/community/post/${post.postId}`}>
               <img src={post.imageUrl1} alt={post.title} className={styles['post-image']} />
             </Link>
             <LikeButton postId={post.postId} /> {/*좋아요 버튼 component 분리, prop으로 postId 전달*/}

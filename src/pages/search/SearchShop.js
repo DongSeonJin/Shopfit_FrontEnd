@@ -11,14 +11,10 @@ const SearchShop = () => {
     const [shopTotalPages, setShopTotalPages] = useState(1);
     const [dataList, setDataList] = useState([]);
     const [searchResults, setSearchResults] = useState([]);
-    
+    const [numberOfSearch, setNumberOfSearch] = useState(0);
 
     useEffect(() => {
-        if (text.trim() === "") {
-          fetchData(`/shopping/${shopPage}`);
-        } else {
-          fetchData(`/shopping/search/${text}/${shopPage}`);
-        }
+        fetchData(`/shopping/search/${text}/${shopPage}`);
         // eslint-disable-next-line
       }, [shopPage, text]);
     
@@ -43,8 +39,9 @@ const SearchShop = () => {
             } else {
               setSearchResults(extractedData);
             }
-            const calculatedTotalPages = response.data.totalPages;
-            setShopTotalPages(calculatedTotalPages);
+
+            setShopTotalPages(response.data.totalPages);
+            setNumberOfSearch(response.data.totalElements)
           })
           .catch((error) => {
             console.error("데이터를 불러오는 중 에러 발생:", error);
@@ -59,11 +56,11 @@ const SearchShop = () => {
     return (
         <div style={{margin: '50px 0'}}>
             <div>
-                shop 검색결과 : {text}
+              shop "{text}" 검색결과 - {numberOfSearch} 개
             </div>
-            <div style={{ display: 'flex', flexWrap: 'wrap', width: '80%', margin: '0 auto' }}>
+            <div style={{ display: 'flex', flexWrap: 'wrap', width: '80%', margin: '0 auto'}}>
                 {(searchResults.length > 0 ? searchResults : dataList).map((data) => (
-                    <div key={data.id} style={{ flexBasis: '20%', padding: '10px' }}>
+                    <div key={data.id} style={{ flexBasis: '20%', padding: '10px', textAlign: 'center' }}>
                         <Product data={data} />
                     </div>
                 ))}

@@ -1,5 +1,5 @@
 import React from "react";
-import SignupForm from "../pages/oauth/SignUpForm";
+import SignupForm from "../pages/mypage/SignUpForm";
 import UserLogin from "./../pages/mypage/UserLogin";
 import { Route, Routes } from "react-router";
 
