@@ -15,7 +15,6 @@ function SignupForm() {
   const [imageUrl, setImageUrl] = useState("");
   const [profileImage, setProfileImage] = useState(null);
   
-  const authority = 'USER'; //회원가입시, 기본적인 권한은 USER.
 
   const navigate = useNavigate();
 
@@ -35,8 +34,7 @@ function SignupForm() {
       password,
       nickname,
       imageUrl,
-      confirmPassword,
-      authority
+      confirmPassword
     };
 
     //회원가입 api
