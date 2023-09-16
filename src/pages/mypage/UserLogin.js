@@ -65,8 +65,8 @@ const UserLogin = ({ setUser }) => {
             console.log('Response:', response); // Add this line to debug the response
 
             if (response) {
-
-                // setUser(response.data); // 로그인 성공 시 사용자 정보 업데이트
+                    
+                setUser(response.data); // 로그인 성공 시 사용자 정보 업데이트
                 // 쿠키에 Refresh Token, store에 Access Token 저장
                 setRefreshToken(response.refreshToken);
                 dispatch(SET_TOKEN(response.accessToken));
