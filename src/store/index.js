@@ -1,6 +1,6 @@
 import { configureStore } from "@reduxjs/toolkit";
 
-import rootReducer from "../redux/AuthReducer";
+import rootReducer from "../redux/rootReducer";
 
 
 const initialState = {};
