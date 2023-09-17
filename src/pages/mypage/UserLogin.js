@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { setUser } from '../../redux/actions'
+import { SET_USER, setUser } from '../../redux/actions'
 import { login } from '../../lib/api/authApi'
 import axios from 'axios';
 import { useDispatch } from 'react-redux';
@@ -65,8 +65,8 @@ const UserLogin = ({ setUser }) => {
             console.log('Response:', response); // Add this line to debug the response
 
             if (response) {
-                    
-                setUser(response.data); // 로그인 성공 시 사용자 정보 업데이트
+                console.log(response.user);
+                dispatch(SET_USER(response.user)) // 로그인 성공 시 사용자 정보 업데이트
                 // 쿠키에 Refresh Token, store에 Access Token 저장
                 setRefreshToken(response.refreshToken);
                 dispatch(SET_TOKEN(response.accessToken));
