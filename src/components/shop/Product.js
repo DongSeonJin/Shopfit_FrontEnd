@@ -6,7 +6,7 @@ import BookmarkIcon from "@mui/icons-material/Bookmark";
 
 const Product = ({ data }) => {
   const navigate = useNavigate();
-  const [isFavorite, setIsFavorite] = useState();
+const [isFavorite, setIsFavorite] = useState();
 
   const userId = 1; // 사용자 ID
   const productId = data.productId; // 상품 ID
