@@ -6,13 +6,14 @@ import Footer from './components/common/Footer';
 
 const App = () => {
   return (
-    <div style={{ background: 'black', color: 'white' }}>
+    <div style={{ background: 'black', color: 'white'}}>
       <Header />
       <Home />
       <Footer />
     </div>
   );
 };
+
 
 export default App;
   

@@ -60,7 +60,7 @@ const HeaderMain = ({ isCommunityHovered, isShoppingHovered }) => {
                         setIsHoveredShopping(false);  
                     }}
                 >
-                    <Link to="/shopping" style={{ textDecoration: 'none', color: 'inherit' }}>쇼핑</Link>
+                    <Link to="/shopping/1" style={{ textDecoration: 'none', color: 'inherit' }}>쇼핑</Link>
                 </div>
                 <div
                     style={{display: 'inline-block', width: 'auto', textAlign: 'center', margin: '0 10%',

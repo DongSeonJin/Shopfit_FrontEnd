@@ -9,6 +9,7 @@
 .searchbox input{
     box-sizing: border-box;
     width: calc(50% - 120px);
+    max-width: 1080px;
 }
 .searchbox button{
     box-sizing: border-box;

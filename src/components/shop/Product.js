@@ -94,16 +94,8 @@ const Product = ({ data }) => {
             background: "transparent",
             border: "none",
             cursor: "pointer",
-            color:
-              data.stockQuantity === 0
-                ? isFavorite
-                  ? "lightgray"
-                  : "yellow"
-                : isFavorite
-                ? "yellow"
-                : "lightgray",
         }}>
-          <BookmarkIcon />
+          <BookmarkIcon style={{ filter: "none", color: isFavorite ? "yellow" : "lightgray" }} />
         </button>
       </div>
       <div style={{ textAlign: "left", height: "48px", overflow: "hidden" }}>

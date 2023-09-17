@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 
 import styles from "../../styles/common/Search.module.css"
+import { Button } from '@mui/material';
 
 const Search = ({ onSearch }) => {
   const [searchTerm, setSearchTerm] = useState('');
@@ -22,7 +23,7 @@ const Search = ({ onSearch }) => {
         value={searchTerm}
         onChange={handleSearchChange}
       />
-      <button type="submit">검색</button>
+      <Button type="submit" variant="outlined" style={{color: 'white', height: '30px', width: '120px'}}>검 색</Button>
     </form>
   );
 };

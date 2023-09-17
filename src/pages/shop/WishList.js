@@ -53,8 +53,8 @@ const WishList = () => {
   };
 
   return (
-    <div style={{ margin: "0 20%" }}>
-      <h1>찜 목록</h1>
+    <div style={{ display: 'flex', flexDirection: 'column', margin: '0 15%', marginBottom: '100px'}}>
+      <div style={{ fontSize: '36px', fontWeight: 'bold', textAlign: 'center', marginBottom: '5%', width: '100%' }}>찜 목 록</div>
       {wishlistItems.map((item) => (
         <div
           key={item.productId}
@@ -64,13 +64,13 @@ const WishList = () => {
             <img
               src={productDetails[item.productId]?.thumbnailUrl}
               alt={`Thumbnail for ${productDetails[item.productId]?.productName}`}
-              style={{ width: "120px", height: "120px", cursor: "pointer" }}
+              style={{ width: "180px", height: "180px", cursor: "pointer", borderRadius: '5%', border: '1px solid white' }}
             />
           </Link>
-          <p style={{ width: "50%" }}>{productDetails[item.productId]?.productName}</p>
-          <p style={{ width: "15%", textAlign: "right" }}>
-            {productDetails[item.productId]?.price.toLocaleString()} 원
-          </p>
+          <div style={{ width: '96%', margin: '0 2%' }}>
+            <div style={{ fontSize: '24px', display: 'block', flex: 1 }}>{productDetails[item.productId]?.productName}</div>
+            <div style={{ textAlign: 'right', color: '#888', flex: 1, fontSize: '20px' }}>{productDetails[item.productId]?.price.toLocaleString()} 원</div>
+          </div>
           <div style={{ width: "10%", textAlign: "center" }}>
             <Button variant="outlined" color="error" onClick={() => handleDelete(item.wishlistId)}>
               찜 해제

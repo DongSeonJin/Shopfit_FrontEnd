@@ -3,8 +3,6 @@ import { Route, Routes } from "react-router-dom";
 
 import { ProductDetailProvider } from "../context/ProductDetailContext";
 
-import ProductList from "./../pages/shop/ProductList";
-import ProductListCategory from "./../pages/shop/ProductListCategory";
 import ProductDetail from "./../pages/shop/ProductDetail";
 import Order from "./../pages/shop/Order";
 import OrderDetail from "./../components/shop/OrderDetail";
@@ -13,21 +11,22 @@ import WishList from "./../pages/shop/WishList";
 import ProductCreate from "./../pages/shop/ProductCreate";
 import ProductUpdate from "./../pages/shop/ProductUpdate";
 import Coupon from "../pages/shop/Coupon";
+import ProductListPage from './../pages/shop/ProductListPage';
 
 const Shopping = () => {
   return (
     <div style={{margin: '0 10%'}}>
       <ProductDetailProvider>
         <Routes>
-          <Route path="/shopping" element={<ProductList />} />
-          <Route path="/shopping/:pageNum" element={<ProductList />} />
-          <Route path="/shopping/search/:keyword" element={<ProductList />} />
-          <Route path="/shopping/search/:keyword/:pageNum" element={<ProductList />} />
+          <Route path="/shopping" element={<ProductListPage />} />
+          <Route path="/shopping/:pageNum" element={<ProductListPage />} />
+          <Route path="/shopping/search/:keyword" element={<ProductListPage />} />
+          <Route path="/shopping/search/:keyword/:pageNum" element={<ProductListPage />} />
 
-          <Route path="/shopping/category/:categoryId" element={<ProductListCategory />} />
-          <Route path="/shopping/category/:categoryId/:pageNum" element={<ProductListCategory />} />
-          <Route path="/shopping/category/:categoryId/search/:keyword" element={<ProductListCategory />} />
-          <Route path="/shopping/category/:categoryId/search/:keyword/:pageNum" element={<ProductListCategory />} />
+          <Route path="/shopping/category/:categoryId" element={<ProductListPage />} />
+          <Route path="/shopping/category/:categoryId/:pageNum" element={<ProductListPage />} />
+          <Route path="/shopping/category/:categoryId/search/:keyword" element={<ProductListPage />} />
+          <Route path="/shopping/category/:categoryId/search/:keyword/:pageNum" element={<ProductListPage />} />
 
           <Route path="/shopping/products/:productNum" element={<ProductDetail />} />
           <Route path="/shopping/create" element={<ProductCreate />} />
@@ -40,10 +39,10 @@ const Shopping = () => {
           <Route path="/shopping/cart" element={<CartList />} />
           <Route path="/shopping/wishlist" element={<WishList />} />
 
-          <Route path="/shopping/sort/:sortType" element={<ProductList />} />
-          <Route path="/shopping/sort/:sortType/:pageNum" element={<ProductList />} />
-          <Route path="/shopping/category/:categoryId/sort/:sortType" element={<ProductListCategory />} />
-          <Route path="/shopping/category/:categoryId/sort/:sortType/:pageNum" element={<ProductListCategory />} />
+          <Route path="/shopping/sort/:sortType" element={<ProductListPage />} />
+          <Route path="/shopping/sort/:sortType/:pageNum" element={<ProductListPage />} />
+          <Route path="/shopping/category/:categoryId/sort/:sortType" element={<ProductListPage />} />
+          <Route path="/shopping/category/:categoryId/sort/:sortType/:pageNum" element={<ProductListPage />} />
 
           <Route path="/coupon" element={<Coupon />} />
         </Routes>

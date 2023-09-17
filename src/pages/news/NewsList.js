@@ -71,15 +71,19 @@ const NewsList = () => {
   };
   
   return (
-    <div>
-      <p style={{ margin: '0 20%', fontSize: '20px', fontWeight: 'bold' }}>뉴스 리스트</p>
+    <div style={{margin: ' 0 10% 150px 10%'}}>
+      <div style={{ fontSize: '36px', fontWeight: 'bold', textAlign: 'center', marginBottom: '5%', width: '100%' }}>뉴스 리스트</div>
       {(searchResults.length > 0 ? searchResults : dataList).map((data) => (
         <div key={data.newsId}>
           <Article data={data} />
         </div>
       ))}
-      <Page currentPage={currentPage} onPageChange={handlePageChange} totalPages={totalPages} />
-      <Search onSearch={handleSearch} />
+      <div style={{margin: '50px 0'}}>
+        <Page currentPage={currentPage} onPageChange={handlePageChange} totalPages={totalPages} />
+      </div>
+      <div style={{margin: '50px 0'}}>
+        <Search onSearch={handleSearch} />
+      </div>
     </div>
   );
 };
