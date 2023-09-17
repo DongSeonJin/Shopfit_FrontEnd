@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { SET_USER, setUser } from '../../redux/actions'
+import { SET_USER } from '../../redux/UserReducer'
 import { login } from '../../lib/api/authApi'
 import axios from 'axios';
 import { useDispatch } from 'react-redux';
@@ -126,7 +126,8 @@ const UserLogin = ({ setUser }) => {
 };
 
 const mapDispatchToProps = {
-    setUser,
+    SET_USER,
+    SET_TOKEN
 };
 
 export default connect(null, mapDispatchToProps)(UserLogin);
