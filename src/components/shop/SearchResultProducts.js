@@ -4,9 +4,9 @@ import { useNavigate } from "react-router-dom";
 
 import BookmarkIcon from "@mui/icons-material/Bookmark";
 
-const Product = ({ data }) => {
+const SearchResultProducts = ({ data }) => {
   const navigate = useNavigate();
-const [isFavorite, setIsFavorite] = useState();
+  const [isFavorite, setIsFavorite] = useState();
 
   const userId = 1; // 사용자 ID
   const productId = data.productId; // 상품 ID
@@ -75,41 +75,62 @@ const [isFavorite, setIsFavorite] = useState();
     }
   };
 
+  const imageStyle = {
+    width: "240px",
+    height: "240px",
+    backgroundImage: `url(${data.thumbnailUrl})`,
+    backgroundSize: "cover",
+    cursor: "pointer",
+    position: "relative",
+    filter: data.stockQuantity === 0 ? "grayscale(100%)" : "none",
+  };
+
+  const styles = {
+    articleRow: "cursor-pointer padding-10 margin-bottom-10",
+    productWrapper: "display-flex align-items-center",
+    gridContainer: "display-flex",
+    img_item: "width-200 height-160 margin-bottom-10",
+    table_content: "display-flex flex-direction-column align-items-center",
+  };
+
+  const soldOutTextStyle = {
+    position: "absolute",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
+    fontWeight: "bold",
+    fontSize: "40px",
+    color: "white",
+    zIndex: 1,
+  };
+
+  const favoriteButtonStyle = {
+    position: "absolute",
+    bottom: "10px",
+    right: "10px",
+    background: "transparent",
+    border: "none",
+    cursor: "pointer",
+    color: data.stockQuantity === 0 ? (isFavorite ? "lightgray" : "yellow") : isFavorite ? "yellow" : "lightgray",
+  };
+
   return (
-    <div style={{ marginBottom: "5%", alignItems: "center", width: '240px' }}>
-      <div style={{ cursor: "pointer", width: "240px", height: '240px', marginBottom: "10px", border: '1px solid white', borderRadius: '5%',
-      backgroundImage: `url(${data.thumbnailUrl})`, backgroundSize: "cover", position: "relative", 
-      filter: data.stockQuantity === 0 ? "grayscale(100%)" : "none", }} onClick={handleClick}>
-
-        {data.stockQuantity === 0 && (
-          <div style={{position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)", fontWeight: "bold", fontSize: "40px", color: "white", zIndex: 1,}}>품절</div>
-        )}
-
-        <button
-          onClick={toggleFavorite}
-          style={{
-            position: "absolute",
-            bottom: "10px",
-            right: "10px",
-            background: "transparent",
-            border: "none",
-            cursor: "pointer",
-        }}>
-          <BookmarkIcon style={{ filter: "none", color: isFavorite ? "yellow" : "lightgray" }} />
+    <div className={`${styles.articleRow} ${styles.productWrapper} ${styles.gridContainer}`}>
+      <div className={styles.img_item} style={imageStyle} onClick={handleClick}>
+        {data.stockQuantity === 0 && <div style={soldOutTextStyle}>품절</div>}
+        <button className="favorite-button" onClick={toggleFavorite} style={favoriteButtonStyle}>
+          <BookmarkIcon />
         </button>
       </div>
-      <div style={{ textAlign: "left", height: "48px", overflow: "hidden" }}>
-        {data.productName}
-      </div>
-      <div style={{ textAlign: "right", height: "24px" }}>
-        {data.price.toLocaleString()} 원
+      <div className={styles.table_content}>
+        <div className="text-align-left">{data.productName}</div>
+        <div style={{ textAlign: "right" }}>{data.price.toLocaleString()} 원</div>
       </div>
     </div>
   );
-  
 };
 
-Product.propTypes = {
+SearchResultProducts.propTypes = {
   data: PropTypes.shape({
     productId: PropTypes.number.isRequired,
     createdAt: PropTypes.string.isRequired,
@@ -122,4 +143,4 @@ Product.propTypes = {
   }).isRequired,
 };
 
-export default Product;
+export default SearchResultProducts;

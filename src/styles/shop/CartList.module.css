@@ -1,12 +1,8 @@
-.contentWrap {
-    margin-left: 250px;
-    margin-right: 250px;
-}
-
 .cartOption {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    margin: 2% 0;
   }
 
 
@@ -18,12 +14,14 @@
   }
   
   .imageContainer {
-    margin-right: 10px;
+    margin: 0 2%;
   }
 
   .repImg {
-    height: 80px;
-    width: 80px;
+    height: 180px;
+    width: 180px;
+    border-radius: 25px;
+    border: 1px white solid;
   }
 
   .infoContainer {
@@ -31,14 +29,19 @@
     position: absolute;
     right: 0;
   }
+
+  .productDetail {
+    width: 50%;
+  }
   
   .productName {
-    font-weight: bold;
+    font-size: 21px;
     display: block;
     flex: 1;
   }
   
   .price {
+    text-align: right;
     color: #888;
     flex: 1;
   }

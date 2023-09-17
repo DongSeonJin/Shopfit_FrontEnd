@@ -2,10 +2,11 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 
-import styles from '../../styles/shop/CartList.module.css';
 import { Button } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import CartQuantity from '../../components/shop/CartQuantity';
+
+// import styles from '../../styles/shop/CartList.module.css';
 
 const CartList = () => {
   const userId = 1; // 임시로 설정한 userId 변수 -> 추후 수정해야 함
@@ -59,35 +60,6 @@ const CartList = () => {
     }
   };
 
-  // const handleQuantityChange = (event, cartId) => {
-  //   const updatedValue = parseInt(event.target.value);
-  //   const cartItem = cartItems.find((item) => item.cartId === cartId);
-
-  //   if (
-  //     updatedValue === undefined ||
-  //     (updatedValue >= 1 && updatedValue <= cartItem.stockQuantity)
-  //   ) {
-  //     const updatedCartItems = cartItems.map((item) => {
-  //       if (item.cartId === cartId) {
-  //         return { ...item, quantity: updatedValue };
-  //       }
-  //       return item;
-  //     });
-  //     setCartItems(updatedCartItems);
-  //   } else {
-  //     alert("수량은 1~" + cartItem.stockQuantity + "범위에서 입력 가능합니다");
-  //     return;
-  //   }
-
-  //   const updatedCartItems = cartItems.map((item) => {
-  //     if (item.cartId === cartId) {
-  //       return { ...item, quantity: updatedValue };
-  //     }
-  //     return item;
-  //   });
-  //   setCartItems(updatedCartItems);
-  // };
-
   // 선택된 아이템의 총 가격 계산
   const calculateTotal = () => {
     return cartItems
@@ -129,76 +101,67 @@ const CartList = () => {
   };
 
   return (
-    <div className={styles.contentWrap}>
-      <h2>장바구니</h2>
-      <div className={styles.cartOption}>
-        <label htmlFor="checkAll">
-          <input
-            type="checkbox"
-            className={styles.checkBox}
-            id="checkAll"
-            checked={isCheckedAll}
-            onChange={handleCheckChange}
-          />
+    <div style={{ display: 'flex', flexDirection: 'column', margin: '0 5%'}}>
+      <div style={{ fontSize: '36px', fontWeight: 'bold', textAlign: 'center', marginBottom: '5%', width: '100%' }}>장바구니</div>
+      <div style={{display: 'flex', marginBottom: '2%'}}>
+        <div style={{flex: 1}}>
+          <input type="checkbox" style={{ margin: '10px' }} id="checkAll" checked={isCheckedAll} onChange={handleCheckChange} />
           {isCheckedAll ? "전체해제" : "전체선택"}
-        </label>
-
-        <Button variant="outlined" startIcon={<DeleteIcon />} onClick={() => handleBulkDelete()}>
-          선택삭제
-        </Button>
+        </div>
+        <div style={{flex: 1, textAlign: 'right'}}>
+          <Button variant="outlined" startIcon={<DeleteIcon />} onClick={() => handleBulkDelete()}>
+            선택삭제
+          </Button>
+        </div>
       </div>
+
+
       <div>
         {cartItems.map((item) => (
-          <div key={item.cartId} className={styles.cartItems}>
+          <div key={item.cartId} style={{ display: 'flex', alignItems: 'center', marginBottom: '10px', position: 'relative' }}>
             <div>
               <input
                 type="checkbox"
-                className={styles.checkBox}
+                style={{ margin: '5px', width: '10px' }}
                 checked={item.isChecked}
                 onChange={() => handleItemCheckChange(item.cartId)}
               />
             </div>
-            <div className={styles.imageContainer}>
-              <img className={styles.repImg} src={item.thumbnailUrl} alt={item.productName} />
+            <div style={{ margin: '0 2%' }}>
+              <img style={{ height: '180px', width: '180px', borderRadius: '25px', border: '1px white solid' }} src={item.thumbnailUrl} alt={item.productName} />
             </div>
-
-            <div>
-              <div className={styles.productName}>{item.productName}</div>
-              <div className={styles.price}>{item.price.toLocaleString()}원</div>
+            <div style={{ width: '52%', margin: '0 2%' }}>
+              <div style={{ fontSize: '24px', display: 'block', flex: 1 }}>{item.productName}</div>
+              <div style={{ textAlign: 'right', color: '#888', flex: 1, fontSize: '20px' }}>{item.price.toLocaleString()}원</div>
             </div>
-            <div className={styles.infoContainer}>
-              {/* <input
-                type="text"
-                className={styles.quantity}
-                value={item.quantity}
-                onChange={(e) => handleQuantityChange(e, item.cartId)}
-                readOnly
-              /> */}
-              <CartQuantity
-                count={item.quantity}
-                stockQuantity={item.stockQuantity}
-                onCountChange={(newCount) => handleItemQuantityChange(item.cartId, newCount)}
-              />
-              <div className={styles.itemTotalPrice}>{(item.quantity * item.price).toLocaleString()} 원</div>
-              <div className={styles.deleteBtn}>
+            <div style={{ display: 'flex', width: `calc(40% - 200px)`, textAlign: 'center', alignItems: 'center'}}>
+              <div style={{ flex: '1'}}>
+                <CartQuantity
+                  count={item.quantity}
+                  stockQuantity={item.stockQuantity}
+                  onCountChange={(newCount) => handleItemQuantityChange(item.cartId, newCount)}
+                />
+              </div>
+              <div style={{ color: '#888', flex: '1', fontSize: '24px', textAlign: "right" }}>{(item.quantity * item.price).toLocaleString()} 원</div>
+              <div style={{ flex: '1', textAlign: "right"}}>
                 <Button variant="outlined" color="error" onClick={() => handleDelete(item.cartId)}>
-                  X
+                  삭제
                 </Button>
               </div>
             </div>
           </div>
         ))}
-        <div className={styles.bottomWrap}>
-          <div className={styles.totalPrice}>총 금액: {calculateTotal().toLocaleString()} 원</div>
-          <div className={styles.orderButtonContainer}>
-            <Button variant="contained" color="primary" onClick={handleOrderClick}>
-              주문하기
-            </Button>
-            {/* 주문하기 버튼 -> 주문하기 페이지와 연결해야 함 */}
-          </div>
-        </div>
       </div>
+
+      <div style={{ color: '#888', textAlign: "right", fontSize: '28px'}}>총 금액 : {calculateTotal().toLocaleString()} 원</div>
+      <div style={{ textAlign: 'right', margin: '3% 0'}}>
+        <Button variant="outlined" onClick={() => handleOrderClick()} style={{width: '240px', height: '60px', fontSize: '28px'}}>
+            주문하기
+        </Button>
+      </div>
+
     </div>
+
   );
 };
 

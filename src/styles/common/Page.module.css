@@ -8,6 +8,9 @@
     border: none;
     margin: 0 5px;
     font-size: 16px;
+    font-weight: bold;
+    color: white;
+    background-color: black;
     cursor: pointer;
     border-radius: 30%;
     text-align: center;
@@ -17,6 +20,7 @@
     background-color: #adc9ff;
 }
 
-.currentPageButton{
-    background-color: #adc9ff;
+
+.pagination button.currentPageButton {
+    border: 1px white solid;
 }

@@ -11,7 +11,7 @@ import SearchResult from "./SearchResult";
 
 const Home = () => {
   return (
-    <div>
+    <div style={{ minHeight: `calc(100vh - 560px)` }}>
       <Routes>
         <Route path="/" element={<HomeContent />} />
       </Routes>
@@ -21,7 +21,6 @@ const Home = () => {
       <News />
       <MyPage />
       <SignUp />
-
     </div>
   );
 };

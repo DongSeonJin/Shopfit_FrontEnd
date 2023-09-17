@@ -4,9 +4,9 @@ import { useNavigate } from "react-router-dom";
 
 import BookmarkIcon from "@mui/icons-material/Bookmark";
 
-const Product = ({ data }) => {
+const Top3Product = ({ data }) => {
   const navigate = useNavigate();
-const [isFavorite, setIsFavorite] = useState();
+  const [isFavorite, setIsFavorite] = useState();
 
   const userId = 1; // 사용자 ID
   const productId = data.productId; // 상품 ID
@@ -76,40 +76,35 @@ const [isFavorite, setIsFavorite] = useState();
   };
 
   return (
-    <div style={{ marginBottom: "5%", alignItems: "center", width: '240px' }}>
-      <div style={{ cursor: "pointer", width: "240px", height: '240px', marginBottom: "10px", border: '1px solid white', borderRadius: '5%',
-      backgroundImage: `url(${data.thumbnailUrl})`, backgroundSize: "cover", position: "relative", 
-      filter: data.stockQuantity === 0 ? "grayscale(100%)" : "none", }} onClick={handleClick}>
-
-        {data.stockQuantity === 0 && (
-          <div style={{position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)", fontWeight: "bold", fontSize: "40px", color: "white", zIndex: 1,}}>품절</div>
-        )}
-
-        <button
-          onClick={toggleFavorite}
-          style={{
-            position: "absolute",
-            bottom: "10px",
-            right: "10px",
-            background: "transparent",
-            border: "none",
-            cursor: "pointer",
-        }}>
-          <BookmarkIcon style={{ filter: "none", color: isFavorite ? "yellow" : "lightgray" }} />
-        </button>
+    <div style={{width: '300px'}}>
+      <div style={{ backgroundImage: `url(${data.thumbnailUrl})`, backgroundSize: 'cover', backgroundPosition: 'center', width: '300px', height: '300px', cursor: 'pointer', position: 'relative', border: '1px solid white', borderRadius: '5%', filter: data.stockQuantity === 0 ? "grayscale(100%)" : "none"}} onClick={handleClick}>
+          {data.stockQuantity === 0 && <div style={{
+            position: 'absolute',
+            top: '50%',
+            left: '50%',
+            transform: 'translate(-50%, -50%)',
+            fontWeight: "bold",
+            fontSize: "40px",
+            color: "white",
+            zIndex: 1,}}>품절</div>}
+          <BookmarkIcon style={{
+            position: 'relative', 
+            top: '250px', 
+            left: '250px',
+            width: '30px', 
+            height: '30px', 
+            cursor: 'pointer',
+            color: data.stockQuantity === 0 ? (isFavorite ? 'lightgray' : 'yellow') : (isFavorite ? 'yellow' : 'lightgray')}}
+            onClick={toggleFavorite}
+          />
       </div>
-      <div style={{ textAlign: "left", height: "48px", overflow: "hidden" }}>
-        {data.productName}
-      </div>
-      <div style={{ textAlign: "right", height: "24px" }}>
-        {data.price.toLocaleString()} 원
-      </div>
+      <div>{data.productName}</div>
+      <div style={{textAlign: 'right'}}>{data.price.toLocaleString()} 원</div>
     </div>
   );
-  
 };
 
-Product.propTypes = {
+Top3Product.propTypes = {
   data: PropTypes.shape({
     productId: PropTypes.number.isRequired,
     createdAt: PropTypes.string.isRequired,
@@ -122,4 +117,4 @@ Product.propTypes = {
   }).isRequired,
 };
 
-export default Product;
+export default Top3Product;

@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-const SearchAddress = ({ onSelect }) => {
+export const SearchAddress = ({ onSelect }) => {
   const handleAddressSearch = () => {
     const newWindow = window.open(
       '',
@@ -31,7 +31,7 @@ const SearchAddress = ({ onSelect }) => {
 
   return (
     <div>
-      <button onClick={handleAddressSearch} style={{marginLeft: '10px'}}>주소찾기</button>
+      <button onClick={handleAddressSearch} style={{marginLeft: '10px', width: '110px'}}>주소찾기</button>
     </div>
   );
 };

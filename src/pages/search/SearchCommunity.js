@@ -56,9 +56,9 @@ const SearchCommunity = () => {
             <div>
                 community "{text}" 검색결과 - {numberOfSearch} 개
             </div>
-            <div style={{ display: 'flex', flexWrap: 'wrap', margin: '0 auto' }}>
+            <div style={{ display: 'flex', flexWrap: 'wrap', width: '100%', margin: '0 auto' }}>
                 {(searchResults.length > 0 ? searchResults : dataList).map((data) => (
-                    <div key={data.postId} style={{ flexBasis: '20%', padding: '10px' }}>
+                    <div key={data.newsId} style={{ flexBasis: '20%', padding: '10px' }}>
                         <SearchResultPost data={data} />
                     </div>
                 ))}

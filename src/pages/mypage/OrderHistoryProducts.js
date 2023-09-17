@@ -33,6 +33,8 @@ const OrderHistoryProducts = ({ orders }) => {
           })
         );
 
+
+
         setProductDetails(details);
       } catch (error) {
         console.error("상품 정보를 가져오는 중 오류가 발생했습니다.", error);
@@ -43,28 +45,9 @@ const OrderHistoryProducts = ({ orders }) => {
     fetchProductDetails();
   }, [orders]);
 
+
   // 주문을 orderDate를 기준으로 역순으로 정렬
   const sortedOrders = orders.slice().sort((a, b) => new Date(b.orderDate) - new Date(a.orderDate));
-
-  const handleConfirmPurchase = async (orderId) => {
-    try {
-      const response = await fetch(`/orders/${orderId}/status/5`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-
-      if (response.ok) {
-        console.error("주문 상태 업데이트 성공");
-        window.location.reload();
-      } else {
-        console.error("주문 상태 업데이트 실패");
-      }
-    } catch (error) {
-      console.error("주문 상태 업데이트 중 오류 발생", error);
-    }
-  };
 
   return (
     <div>
@@ -102,8 +85,15 @@ const OrderHistoryProducts = ({ orders }) => {
                     <br />
                     {order.orderStatus}
                   </div>
-                  {order.orderStatus == 1 ? (
-                    <button onClick={() => handleConfirmPurchase(order.orderId)}>구매확정</button>
+                  {order.orderStatus == 2 ? (
+                    <button
+                      onClick={() => {
+                        OrderStatusUpdater(order.orderId, 5);
+                        window.location.reload();
+                      }}
+                    >
+                      구매확정
+                    </button>
                   ) : (
                     <button disabled>구매확정</button>
                   )}

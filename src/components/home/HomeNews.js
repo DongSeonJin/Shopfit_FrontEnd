@@ -1,13 +1,11 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 
-import styles from "../../styles/common/HomeNews.module.css";
-
 const HomeNews = () => {
   const [dataList, setDataList] = useState([]);
 
   useEffect(() => {
-  fetchData(`/news/list`);
+    fetchData(`/news/list`);
   }, []);
 
   const fetchData = (url) => {
@@ -34,29 +32,19 @@ const HomeNews = () => {
   const latestNews = dataList.slice(0, 4);
 
   return (
-    <div className={styles.container}>
-      <div className={styles.title}>Latest News</div>
-      <ul className={styles.newsList}>
+    <div style={{margin: '5% 0'}}>
+      <div style={{fontWeight: 'bold', margin: '2% 0', fontSize: '24px'}}>최신 뉴스</div>
+      <div style={{display: 'flex', justifyContent: 'space-between'}}>
         {latestNews.map(news => (
-          <li key={news.newsId} className={styles.newsItem}>
-              <div>
-                <a href={news.newsUrl} target="_blank" rel="noopener noreferrer">
-                  <img
-                  src={news.imageUrl}
-                  alt={news.title}
-                  className={styles.newsImage}
-                  />
-                </a>
-                <h3 className={styles.newsTitle}>
-                  {news.title}
-                </h3>
-                <p className={styles.newsContent}>
-                  {news.content}
-                </p>
-            </div>
-          </li>
+          <div style={{width: '240px'}}>
+            <a href={news.newsUrl} target="_blank" rel="noopener noreferrer">
+              <div style={{ backgroundImage: `url(${news.imageUrl})`, backgroundSize: 'cover', backgroundPosition: 'center', width: '240px', height: '150px', cursor: 'pointer', position: 'relative', border: '1px solid white', borderRadius: '5%'}} />
+            </a>
+            <div style={{display: '-webkit-box', WebkitBoxOrient: 'vertical', WebkitLineClamp: 2, overflow: 'hidden', textOverflow: 'ellipsis', fontWeight: 'bold', fontSize: '16px'}}>{news.title}</div>
+            <div style={{display: '-webkit-box', WebkitBoxOrient: 'vertical', WebkitLineClamp: 2, overflow: 'hidden', textOverflow: 'ellipsis', fontSize: '12px'}}>{news.content}</div>
+          </div>
         ))}
-      </ul>
+      </div>
     </div>
   );   
 };
