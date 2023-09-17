@@ -1,33 +1,43 @@
 .articleContainer {
   display: flex;
   align-items: center;
-  margin: 10px 20%;
-  justify-content: space-between;
+  margin: 20px 20%;
 }
 
 .image {
-  width: 180px;
-  height: 120px;
+  border: white 1px solid;
+  width: 384px;
+  height: 216px;
   background-size: cover;
   cursor: pointer;
+  border-radius: 5px;
 }
 
 .textContainer {
+  padding: 0 50px;
   display: flex;
   flex-direction: column;
-  width: 55%;
+  width: 80%;
 }
 
 .title {
+  font-size: 24px;
+  font-weight: bold;
   height: 50px;
   margin-top: 10px;
 }
 
 .content {
+  font-size: 20px;
   height: 50px;
   margin-bottom: 10px;
 }
 
 .date {
+  font-size: 16px;
+  width: 10%;
+}
+
+.delButton{
   width: 10%;
 }

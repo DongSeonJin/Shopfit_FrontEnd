@@ -25,20 +25,19 @@ const PurchasedProduct = ({ products }) => {
 
     return (
         <div>
-            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', width: '90%'}}>
                 {productData.map((product, index) => (
-                    <li key={product.productId} style={{ display: 'flex', alignItems: 'center', margin: '10px 0' }}>
-                        <img src={product.thumbnailUrl} alt={product.productName} style={{ width: '100px', height: '100px'}} />
-                        <div style={{ width: '1px', height: '80px', backgroundColor: '#ccc', margin: '0 5px' }}></div>
+                    <div style={{display: 'flex', margin: '5px 0', height: '120px', width: '100%'}}>
+                        <img src={product.thumbnailUrl} alt={product.productName} style={{ width: 'auto', height: '100%', borderRadius: '5px', border: '1px white solid'}} />
+                        <div style={{ width: '1px', height: '100%', backgroundColor: 'white', margin: '0 10px' }} />
                         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%', margin: '5px 0' }}>
-                            <p style={{ width: '300px', marginRight: '5px' }}>상품명: {product.productName}</p>
-                            <div style={{ width: '1px', height: '80px', backgroundColor: '#ccc', margin: '0 5px' }}></div>
-                            <p style={{ width: '150px', marginRight: '5px' }}>수량: {products[index].quantity}</p>
-                            <div style={{ width: '1px', height: '80px', backgroundColor: '#ccc', margin: '0 5px' }}></div>
-                            <p style={{ width: '150px' }}>가격: {(products[index].quantity * product.price).toLocaleString()}원</p>
+                            <div style={{ flex: '4', margin: '0 5px' }}>{product.productName}</div>
+                            <div style={{ width: '1px', height: '100%', backgroundColor: 'white', margin: '0 10px' }} />
+                            <div style={{ flex: '1', margin: '0 10px',textAlign: 'right' }}>{products[index].quantity} 개</div>
+                            <div style={{ width: '1px', height: '100%', backgroundColor: 'white', margin: '0 10px' }} />
+                            <div style={{ flex: '1', margin: '0 10px', textAlign:'right' }}>{(products[index].quantity * product.price).toLocaleString()} 원</div>
                         </div>
-
-                    </li>
+                    </div>
                 ))}
             </div>
         </div>

@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import axios from "axios";
 
-function FileUploadComponent({ onUploadSuccess }) {
+const FileUploadComponent = ({ onUploadSuccess }) => {
+
   const [previewImage, setPreviewImage] = useState(null);
 
   const handleFileChange = async (event) => {
@@ -33,12 +34,7 @@ function FileUploadComponent({ onUploadSuccess }) {
 
   return (
     <div>
-      <div style={{margin: '2% 0'}}>
-        <input type="file" onChange={handleFileChange} />
-      </div>
-      <div style={{margin: '2% 0'}}>
-        {previewImage && <img src={previewImage} alt="Preview" style={{ maxWidth: '40%'}} />}
-      </div>
+      <input type="file" onChange={handleFileChange} />
     </div>
   );
 }
