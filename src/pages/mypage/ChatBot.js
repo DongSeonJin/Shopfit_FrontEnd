@@ -1,18 +1,14 @@
 import React, { useEffect, useRef, useState } from "react";
 import axios from "axios";
 import Modal from "react-modal";
-
 import { Button, TextField, Paper, List, ListItem, Typography, Box } from "@mui/material";
 import { Send, Close } from "@mui/icons-material";
-
 // import styles from "../../styles/mypage/ChatBot.module.css";
-
 const ChatBot = ({ closeModal }) => {
   const [messages, setMessages] = useState([]);
   const [inputMessage, setInputMessage] = useState("");
   const chatBotRef = useRef(null);
   const messageEndRef = useRef(null);
-
   const modalStyles = {
     overlay: {
       backgroundColor: "rgba(0, 0, 0, 0.3)",
@@ -20,34 +16,61 @@ const ChatBot = ({ closeModal }) => {
     content: {
       display: "flex",
       flexDirection: "column",
-      width: "360px",
+      width: "450px",
       height: '720px',
       backgroundColor: "white",
-      border: "4px solid #1976d2",
+      border: "4px solid #1976D2",
       borderRadius: '25px',
-      marginLeft: 'calc(98% - 380px)',
-      marginTop: '480px',
+      marginLeft: 'calc(98% - 470px)',
+      // marginTop: '10%',
     },
   };
+
+  // 웰컴메세지 요청 함수
+  const welcomeMessage = async () => {
+    try {
+      // 서버로 웰컴 메세지 요청 전송
+      const response = await axios.post("/rest/chatBot", {
+        event: "open",
+      });
+
+      console.log(response.data);
+
+      if (response.data && response.data.bubbles && response.data.bubbles.length > 0) {
+        const welcomeMessage = response.data.bubbles[0].bubbles[0].data.description;
+
+        // 챗봇 응답을 화면에 출력
+        setMessages((prevMessages) => [
+          ...prevMessages,
+          { isUser: false, text: welcomeMessage },
+        ]);
+      } else {
+        console.error("웰컴메세지 응답 에러");
+      }
+    } 
+     catch (error) {
+      console.error("api 호출 중 에러", error);
+    }
+  }
+
+  useEffect (() => {
+    welcomeMessage(); // 챗봇 컴포넌트가 처음 렌더링 될 때 웰컴 메세지 요청 
+  }, []);
 
   // ChatBot 닫기
   const closeChatBot = () => {
     closeModal();
   };
-
   const sendMessage = async () => {
     if (inputMessage.trim() === "") return;
-
     try {
       // 사용자의 메시지를 화면에 추가
       setMessages([...messages, { isUser: true, text: inputMessage }]);
-
       // 서버로 요청을 보내고 응답을 받는다.
       const response = await axios.post("/rest/chatBot", {
         event: "send",
         inputText: inputMessage,
       });
-
       // 챗봇의 응답을 화면에 추가
       setMessages((prevMessages) => [
         ...prevMessages,
@@ -56,9 +79,9 @@ const ChatBot = ({ closeModal }) => {
     } catch (error) {
       console.error("Error during API call", error);
     }
-
     setInputMessage("");
   };
+
 
   useEffect(() => {
     // 메세지 목록이 변경될 때, 스크롤을 가장 아래로 이동
@@ -66,16 +89,8 @@ const ChatBot = ({ closeModal }) => {
       messageEndRef.current.scrollIntoView({ behavior: "smooth" });
     }
   }, [messages]);
-
-  // useEffect(() => {
-  //   // 웰컴 메세지
-  //   setMessages([{ isUser: false, test: "안녕하세요! '#fit'에 오신 것을 환영합니다. 운동과 건강에 관심을 가지고 계신 여러분을 위한 헬스와 피트니스의 모든 것을 한 곳에서 찾아보실 수 있습니다. 헬스관련 정보, 커뮤니티, 최신 뉴스, 그리고 저희 챗봇이 여러분의 운동 관련 질문에 도움을 드릴 준비가 되어 있습니다. 어떤 도움이 필요하신가요?"}]);
-  // }, []);
-
   return (
-
-    <div>
-      {/* 모달 창 */}
+    <div style={{ zIndex: "9999" }}>
       <Modal
         ref={chatBotRef}
         isOpen={true}
@@ -84,27 +99,6 @@ const ChatBot = ({ closeModal }) => {
         ariaHideApp={false}
         style={modalStyles}
       >
-// <<<<<<< feature143
-
-//         <Button
-//             variant="outlined"
-//             color="error"
-//             className={styles["close-button"]}
-//             onClick={closeChatBot}
-//           >
-//           <Close />
-//         </Button>
-//         <h2 className={styles["title"]}>#FIT CHATBOT</h2>
-
-//         <div className={styles["modal-content"]}>
-          
-
-//           <List
-//             id={styles["chat-container"]}
-//             className={styles["chat-message"]}
-//             sx={{ overflowY: 'auto', width: '100%' }}
-//           >
-// =======
         <div style={{display: 'flex', marginBottom: '15px'}}>
           <div style={{fontSize: '24px', fontWeight: 'bold', flex: '2', textAlign: 'center'}}>#FIT CHATBOT</div>
           <div style={{flex: '1', textAlign: "right"}}>
@@ -116,12 +110,8 @@ const ChatBot = ({ closeModal }) => {
             </Button>
           </div>
         </div>
-
         <div style={{display: 'flex', flexDirection: "column", height: '100%'}}>
-
-
           <List style={{overflowY:'auto', maxHeight: 'none', flexGrow: '1', height: '300px', borderTop: '1px lightgray solid', borderBottom: '1px lightgray solid'}}>
-// >>>>>>> develop
             {messages.map((message, index) => (
               <ListItem
                 key={index}
@@ -155,7 +145,6 @@ const ChatBot = ({ closeModal }) => {
               gap: '10px',
               marginTop: '10px',
               width: '100%'
-              
             }}
           >
             <TextField
@@ -187,5 +176,4 @@ const ChatBot = ({ closeModal }) => {
     </div>
   );
 };
-
 export default ChatBot;
