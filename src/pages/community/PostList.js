@@ -83,11 +83,9 @@ const PostList = () => {
           {posts.map((post) => (
             <div key={post.id} style={{width: '100%'}}>
               <Link to={`/community/post/${post.postId}`}>
-                <img
-                    src={post.imageUrl1}
-                    alt={post.title}
-                    style={{ width: '100%', height: 'auto', objectFit: 'cover', border: '1px solid white', borderRadius: '5%'}}
-                />
+                <div alt={post.title} style={{
+                  backgroundImage: `url(${post.imageUrl1})`, backgroundSize: 'cover', backgroundPosition: 'center', paddingTop: '100%', 
+                  width: '100%', height: '0', objectFit: 'cover', border: '1px solid white', borderRadius: '5%'}} />
               </Link>
               <LikeButton postId={post.postId} />
               <div>{`조회수: ${post.viewCount}, `}</div>

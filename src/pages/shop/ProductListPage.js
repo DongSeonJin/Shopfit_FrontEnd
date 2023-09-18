@@ -78,13 +78,13 @@ const ProductListPage = () => {
   ];
 
   return (
-    <div>
+    <div style={{width: '100%', maxWidth: '1920px', margin: 'auto'}}>
       <div style={{ display: 'flex'}}>
-        <div style={{ flex: '1', fontWeight: 'bold', fontSize: '24px', paddingLeft: '3%'}}>
+        <div style={{ flex: '1 1', fontWeight: 'bold', fontSize: '24px', paddingLeft: '10px'}}>
           쇼핑리스트 - {categoryId === "1" ? "닭가슴살" : categoryId === "2" ? "음료/보충제" : categoryId === "3" ? "운동용품" : "전체"}
         </div>
 
-        <div style={{ flex: '1', paddingRight: '3%' }}>
+        <div style={{ flex: '2 1' }}>
           <div style={{ textAlign: 'right', margin: '1% 2%' }}>
             <Link to="/shopping/create">
               <Button variant="outlined" style={{color: 'white', width: '120px'}}>상품 등록</Button>

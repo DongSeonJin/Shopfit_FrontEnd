@@ -133,7 +133,7 @@ const ProductDetail = () => {
   };
 
   return (
-    <div style={{margin: '0 15%'}}>
+    <div style={{maxWidth: '1420px', width: '100%', margin: 'auto'}}>
       <UTurnRightRoundedIcon onClick={scrollToTop} style={{ position: 'fixed', bottom: '20px', right: '20px', zIndex: '9999', transform: 'rotate(180deg)', cursor: 'pointer'}} />
 
       <div style={{textAlign: 'right'}}>
@@ -147,13 +147,13 @@ const ProductDetail = () => {
           <div style={{ filter: data.stockQuantity === 0 ? "grayscale(100%)" : "none", width: '90%', paddingTop: '90%', position: 'relative', overflow: 'hidden',}}>
             <img src={data.thumbnailUrl} alt={data.productName} style={{position: 'absolute', top: '0', left: '0', width: '100%', height: 'auto', borderRadius: '5%', border: '1px white solid'}}/>
           </div>
-          <div onClick={toggleFavorite} style={{textAlign: "right", cursor: "pointer", color: isFavorite ? "yellow" : "lightgray", paddingRight: '10%'}}>
+          <div onClick={toggleFavorite} style={{textAlign: "right", cursor: "pointer", color: isFavorite ? "yellow" : "lightgray", paddingRight: '10%', marginTop: '10px'}}>
               <BookmarkIcon style={{ width: "40px", height: "40px" }} />
           </div>
         </div>
 
         <div style={{flex: '1', marginTop: '1%'}}>
-          <a href={`/shopping/category/${data.categoryId}`} style={{textDecoration: 'none', color: 'inherit'}}>카테고리 : {data.categoryName}</a>
+          <a href={`/shopping/category/${data.categoryId}`} style={{textDecoration: 'none', color: 'inherit', fontSize: '20px'}}>카테고리 : {data.categoryName}</a>
           <div style={{fontSize: '36px', margin: '5% 0', fontWeight: 'bold', height: '25%'}}>{data.productName}</div>
           <div style={{fontSize: '24px'}}>{data.price.toLocaleString()}원</div>
 
