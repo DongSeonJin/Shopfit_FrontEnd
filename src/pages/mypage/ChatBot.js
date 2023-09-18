@@ -67,8 +67,15 @@ const ChatBot = ({ closeModal }) => {
     }
   }, [messages]);
 
+  // useEffect(() => {
+  //   // 웰컴 메세지
+  //   setMessages([{ isUser: false, test: "안녕하세요! '#fit'에 오신 것을 환영합니다. 운동과 건강에 관심을 가지고 계신 여러분을 위한 헬스와 피트니스의 모든 것을 한 곳에서 찾아보실 수 있습니다. 헬스관련 정보, 커뮤니티, 최신 뉴스, 그리고 저희 챗봇이 여러분의 운동 관련 질문에 도움을 드릴 준비가 되어 있습니다. 어떤 도움이 필요하신가요?"}]);
+  // }, []);
+
   return (
-    <div style={{ zIndex: "9999" }}>
+
+    <div>
+      {/* 모달 창 */}
       <Modal
         ref={chatBotRef}
         isOpen={true}
@@ -77,6 +84,27 @@ const ChatBot = ({ closeModal }) => {
         ariaHideApp={false}
         style={modalStyles}
       >
+// <<<<<<< feature143
+
+//         <Button
+//             variant="outlined"
+//             color="error"
+//             className={styles["close-button"]}
+//             onClick={closeChatBot}
+//           >
+//           <Close />
+//         </Button>
+//         <h2 className={styles["title"]}>#FIT CHATBOT</h2>
+
+//         <div className={styles["modal-content"]}>
+          
+
+//           <List
+//             id={styles["chat-container"]}
+//             className={styles["chat-message"]}
+//             sx={{ overflowY: 'auto', width: '100%' }}
+//           >
+// =======
         <div style={{display: 'flex', marginBottom: '15px'}}>
           <div style={{fontSize: '24px', fontWeight: 'bold', flex: '2', textAlign: 'center'}}>#FIT CHATBOT</div>
           <div style={{flex: '1', textAlign: "right"}}>
@@ -93,6 +121,7 @@ const ChatBot = ({ closeModal }) => {
 
 
           <List style={{overflowY:'auto', maxHeight: 'none', flexGrow: '1', height: '300px', borderTop: '1px lightgray solid', borderBottom: '1px lightgray solid'}}>
+// >>>>>>> develop
             {messages.map((message, index) => (
               <ListItem
                 key={index}
