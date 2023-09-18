@@ -1,5 +1,4 @@
 import axios from "axios";
-
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router";
 import styles from "../../styles/mypage/MyPosts.module.css";
@@ -19,9 +18,8 @@ const MyPosts = () => {
         console.error("실패", error);
       }
     };
-  });
 
-    fetchPosts();
+    fetchPosts(); // useEffect 내부에서 호출되어야 합니다.
   }, [userId]);
 
   return (
@@ -30,8 +28,8 @@ const MyPosts = () => {
       <div className="container">
         <div className={styles["post-list"]}>
           {posts.map((post) => (
-            <Link to={`/community/post/${post.postId}`} style={{ textDecoration: "none", color: "inherit" }}>
-              <div className={styles["post-card"]} key={post.id}>
+            <Link to={`/community/post/${post.postId}`} style={{ textDecoration: "none", color: "inherit" }} key={post.id}>
+              <div className={styles["post-card"]}>
                 <img src={post.imageUrl1} alt={post.title} className={styles["post-image"]} />
                 <div className={styles["post-content"]}>
                   <h2 className={styles["post-title"]} style={{ width: "100%" }}>
