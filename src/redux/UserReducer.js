@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const userSlice = createSlice({
-  name: 'user',
+  name: 'authUser',
   initialState: {
     user: null, // 초기 상태는 로그인되지 않은 상태로 설정합니다.
   },

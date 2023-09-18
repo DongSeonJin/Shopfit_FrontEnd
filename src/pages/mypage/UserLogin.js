@@ -11,7 +11,7 @@ import Modal from './../../components/common/modal/Modal';
 import { setRefreshToken } from '../../store/Cookie';
 import { SET_TOKEN } from '../../redux/AuthReducer';
 
-const UserLogin = ({ setUser }) => {
+const UserLogin = () => {
     const [errorModalOpen, setErrorModalOpen] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
     const navigate = useNavigate();

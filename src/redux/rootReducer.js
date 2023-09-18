@@ -1,11 +1,11 @@
 // modules.js
 import { combineReducers } from 'redux';
-import UserReducer from './UserReducer';
-import AuthReducer from './AuthReducer';
+import authUser from './UserReducer';
+import authToken from './AuthReducer';
 
 const rootReducer = combineReducers({
-  UserReducer,
-  AuthReducer
+  authUser,
+  authToken
   // ...다른 리듀서들 추가
 });
 
