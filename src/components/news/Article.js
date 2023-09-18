@@ -23,7 +23,9 @@ const Article = ({ data }) => {
         <div className={styles.content}>{data.content}</div>
       </div>
       <div className={styles.date}>{data.createdAt}</div>
-      <DeleteNews newsId={data.newsId} />
+      <div className={styles.delButton}>
+        <DeleteNews newsId={data.newsId} />
+      </div>
     </div>
   );
 };
