@@ -4,6 +4,7 @@ import FileUploadComponent from "../../components/shop/FileUploadComponent";
 import { TextField, Button, Typography } from "@mui/material";
 import userEvent from "@testing-library/user-event";
 import { useNavigate } from "react-router";
+import { Link } from "react-router-dom";
 
 function SignupForm() {
   const [email, setEmail] = useState("");
@@ -77,71 +78,90 @@ function SignupForm() {
   };
 
   return (
-    <div style={{ display: "flex", justifyContent: "center" }}>
-      <div>
-        <Typography variant="h4" component="h1">
+    <div style={{display: 'flex', justifyContent: 'center'}}>
+      <div style={{width: '480px'}}>
+        {/* <Typography variant="h4" component="h1">
           회원가입
-        </Typography>{" "}
-        <br />
+        </Typography>{" "} */}
+        <div style={{fontSize: '36px', fontWeight: 'bold', textAlign: 'center', marginBottom: '50px'}}>회원가입</div>
+
         <form onSubmit={handleSubmit}>
+          <div style={{fontWeight: 'bold', marginBottom: '5px'}}>이메일</div>
           <TextField
             id="email"
             label="이메일"
             type="email"
             value={email}
+            style={{backgroundColor: 'white', borderRadius: '5px', marginBottom: '10px', width: '100%'}}
             onChange={(e) => setEmail(e.target.value)}
             required
-          />{" "}
-          <br />
+          />
+          <div style={{fontWeight: 'bold', marginBottom: '5px'}}>비밀번호</div>
+          <div style={{fontWeight: 'bold', marginBottom: '5px', fontSize: '12px', color: 'lightgray'}}>영문, 숫자를 포함한 8자 이상의 비밀번호를 입력해주세요.</div>
           <TextField
             id="password"
             label="비밀번호"
             type="password"
             value={password}
+            style={{backgroundColor: 'white', borderRadius: '5px', marginBottom: '10px', width: '100%'}}
             onChange={(e) => setPassword(e.target.value)}
             required
-          />{" "}
-          <br />
+          />
+          <div style={{fontWeight: 'bold', marginBottom: '5px'}}>비밀번호 확인</div>
           <TextField
             id="confirmPassword"
             label="비밀번호 확인"
             type="password"
             value={confirmPassword}
+            style={{backgroundColor: 'white', borderRadius: '5px', marginBottom: '10px', width: '100%'}}
             onChange={(e) => setConfirmPassword(e.target.value)}
             error={!isMatching}
             helperText={!isMatching ? "비밀번호가 일치하지 않습니다." : "비밀번호가 일치합니다."}
             required
-          />{" "}
-          <br />
+          />
+          <div style={{fontWeight: 'bold', marginBottom: '5px'}}>닉네임</div>
+          <div style={{fontWeight: 'bold', marginBottom: '5px', fontSize: '12px', color: 'lightgray'}}>다른 유저와 겹치지 않도록 입력해주세요.</div>
           <TextField
             id="nickname"
             label="닉네임:"
             type="text"
             value={nickname}
+            style={{backgroundColor: 'white', borderRadius: '5px', marginBottom: '10px', width: '100%'}}
             onChange={(e) => setNickname(e.target.value)}
-          />{" "}
-          <br />
+          />
           <div>
-            <Typography variant="body1">프로필 이미지 업로드</Typography>
-            <div>
-              {profileImage ? (
-                <img
-                  src={profileImage}
-                  alt="Profile Preview"
-                  style={{ width: "200px", height: "200px", borderRadius: "50%" }}
-                />
-              ) : (
-                <div
-                  style={{ width: "200px", height: "200px", backgroundColor: "lightgray", borderRadius: "50%" }}
-                ></div>
-              )}
-              <input type="file" accept="image/*" onChange={handleProfileImageUpload} />
+            {/* <Typography variant="body1">프로필 이미지 업로드</Typography> */}
+            <div style={{display: 'flex', height: '30px'}}>
+              <div style={{flex: '1', fontWeight: 'bold', lineHeight: '30px' }}>프로필 이미지</div>
+              <input type="file" accept="image/*" onChange={handleProfileImageUpload} style={{flex: '3', lineHeight: '30px'}}/>
             </div>
-          </div>{" "}
-          <br />
-          <Button variant="contained" color="primary" type="submit">
-            회원가입하기
-          </Button>
+            <div style={{textAlign: 'center'}}>
+              <div style={{ margin: '50px 0', display: 'flex', justifyContent: 'center' }}>
+                {profileImage ? (
+                  <img
+                    src={profileImage}
+                    alt="Profile Preview"
+                    style={{ width: "360px", height: "360px", border: '1px white solid', borderRadius: "50%" }}
+                  />
+                ) : (
+                  <div
+                    style={{ width: "360px", height: "360px", backgroundColor: 'gray' ,border: '1px white solid', borderRadius: "50%" }}
+                  />
+                )}
+              </div>
+            </div>
+          </div>
+
+          <div style={{textAlign: 'center'}}>
+            <Button variant="outlined" type="submit" style={{
+              width: '360px', height: '60px', textAlign: 'center', borderRadius: '10px', fontSize: '24px', marginBottom: '20px'}}>회원가입하기</Button>
+            <div style={{display: 'flex', justifyContent: 'center'}}>
+              <div>
+                이미 아이디가 있으신가요? 
+              </div>
+              <Link to='http://localhost:3000/login' style={{color: 'white', fontWeight: 'bold', paddingLeft: '20px'}}> 로그인</Link>
+            </div>
+          </div>
         </form>
       </div>
     </div>
