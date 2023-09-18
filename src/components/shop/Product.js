@@ -6,7 +6,7 @@ import BookmarkIcon from "@mui/icons-material/Bookmark";
 
 const Product = ({ data }) => {
   const navigate = useNavigate();
-  const [isFavorite, setIsFavorite] = useState();
+const [isFavorite, setIsFavorite] = useState();
 
   const userId = 1; // 사용자 ID
   const productId = data.productId; // 상품 ID
@@ -94,16 +94,8 @@ const Product = ({ data }) => {
             background: "transparent",
             border: "none",
             cursor: "pointer",
-            color:
-              data.stockQuantity === 0
-                ? isFavorite
-                  ? "lightgray"
-                  : "yellow"
-                : isFavorite
-                ? "yellow"
-                : "lightgray",
         }}>
-          <BookmarkIcon />
+          <BookmarkIcon style={{ filter: "none", color: isFavorite ? "yellow" : "lightgray" }} />
         </button>
       </div>
       <div style={{ textAlign: "left", height: "48px", overflow: "hidden" }}>

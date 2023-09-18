@@ -17,6 +17,8 @@ const Order = () => {
   const navigate = useNavigate();
   const [cart, setCart] = useState([]);
   const [productStocks, setProductStocks] = useState({});
+  const [phoneNumber2, setPhoneNumber2] = useState("");
+  const [phoneNumber3, setPhoneNumber3] = useState("");
   const [detailedAddress, setDetailedAddress] = useState("");
   const [PGKey, setPGKey] = useState();
   const [userPoint, setUserPoint] = useState(null);
@@ -119,8 +121,8 @@ const Order = () => {
   };
 
   // 결제 누락정보 확인
-  const isAddressValid = orderData.address.trim() !== "";
-  const isPhoneNumberValid = orderData.phoneNumber.trim() !== "";
+  const isAddressValid = orderData.address.trim() !== "" && detailedAddress.trim() !== "";
+  const isPhoneNumberValid = orderData.phoneNumber.trim() !== "" && phoneNumber2.trim() !== "" && phoneNumber3.trim() !== "";
   const isPaymentAllowed = isAddressValid && isPhoneNumberValid;
 
   const handleCreateOrder = async () => {
@@ -130,7 +132,8 @@ const Order = () => {
     }
 
     const finalAddress = `${orderData.address} ${detailedAddress}`;
-    const updatedOrderData = { ...orderData, address: finalAddress };
+    const finalPhoneNumber = `${orderData.phoneNumber}-${phoneNumber2}-${phoneNumber3}`
+    const updatedOrderData = { ...orderData, address: finalAddress, phoneNumber: finalPhoneNumber };
 
     try {
       // 주문 생성 요청 보내고 주문 성공 시
@@ -143,6 +146,14 @@ const Order = () => {
     } catch (error) {
       console.error("Error creating order:", error);
     }
+  };
+
+  const handlePhoneNumber2 = (event) => {
+    setPhoneNumber2(event.target.value);
+  };
+
+  const handlePhoneNumber3 = (event) => {
+    setPhoneNumber3(event.target.value);
   };
 
   const handleDetailedAddressChange = (event) => {
@@ -292,89 +303,76 @@ const Order = () => {
   };
 
   return (
-    <div style={{ margin: "0 20%" }}>
-      <h2>주문/결제</h2>
-      <h4 style={{ marginTop: "50px" }}>배송정보</h4>
-      <div style={{ display: "flex" }}>
-        <div style={{ flex: 1 }}>
+    <div>
+      <div style={{ fontSize: '24px', fontWeight: 'bold', marginBottom: '2%' }}>주문/결제</div>
+
+      <div style={{display: 'flex'}}>
+        <div style={{flex:'2'}}>
+          <div style={{marginBottom: '5%'}}>
+            <div style={{ fontSize: '20px', marginBottom: '2%'}}>배송정보</div>
+            <div style={{margin: '5px 0'}}>
+              <label style={{ width: "80px" }}>이름</label>
+              <input style={{ width: `calc(72% - 80px)` }} type="text" name="name" value={orderData.userId} readOnly />
+            </div>
+            <div style={{margin: '5px 0'}}>
+              <label style={{ width: "80px" }}>이메일</label>
+              <input style={{ width: `calc(72% - 80px)` }} type="email" name="email" value={orderData.userId} readOnly />
+            </div>
+            <div style={{margin: '5px 0', display: 'flex'}}>
+              <label style={{ width: "80px" }}>연락처</label>
+              <input type='tel' min='0' maxLength='3' style={{ width: `calc(24% - 80px)`, textAlign: 'center' }} name="phoneNumber" value={orderData.phoneNumber} onChange={handleInputChange} />
+              <div style={{ width: '80px', textAlign: 'center'}}>-</div>
+              <input type='tel' min='0' maxLength='4' style={{ width: `calc(24% - 80px)`, textAlign: 'center' }} name="phoneNumber2" value={phoneNumber2} onChange={handlePhoneNumber2} />
+              <div style={{ width: '80px', textAlign: 'center'}}>-</div>
+              <input type='tel' min='0' maxLength='4' style={{ width: `calc(24% - 80px)`, textAlign: 'center' }} name="phoneNumber3" value={phoneNumber3} onChange={handlePhoneNumber3} />
+            </div>
+            <div style={{margin: '5px 0'}}>
+              <div style={{ display: "flex", alignItems: "center" }}>
+                <label style={{ width: "80px" }}>주소</label>
+                <input style={{ width: `calc(72% - 200px)` }} type="text" name="address" value={orderData.address} onChange={handleInputChange} />
+                <SearchAddress onSelect={handleAddressSelected} />
+              </div>
+            </div>
+            <div style={{margin: '5px 0'}}>
+              <div style={{ display: "flex", alignItems: "center" }}>
+                <label style={{ width: "80px" }}>상세주소</label>
+                <input style={{ width: `calc(72% - 80px)` }} type="text" name="detailedAddress" value={detailedAddress} onChange={handleDetailedAddressChange} />
+              </div>
+            </div>
+          </div>
+
           <div>
-            <label style={{ width: "80px" }}>이름</label>
-            <input style={{ width: "240px" }} type="text" name="name" value={orderData.userId} readOnly />
-          </div>
-          <div>
-            <label style={{ width: "80px" }}>이메일</label>
-            <input style={{ width: "240px" }} type="email" name="email" value={orderData.userId} readOnly />
-          </div>
-          <div>
-            <label style={{ width: "80px" }}>연락처</label>
-            <input
-              style={{ width: "240px" }}
-              type="tel"
-              name="phoneNumber"
-              value={orderData.phoneNumber}
-              onChange={handleInputChange}
-            />
-          </div>
-          <div style={{ display: "flex", alignItems: "center" }}>
-            <label style={{ width: "80px" }}>주소</label>
-            <input
-              style={{ width: "240px" }}
-              type="text"
-              name="address"
-              value={orderData.address}
-              onChange={handleInputChange}
-            />
-            <SearchAddress onSelect={handleAddressSelected} />
-          </div>
-          <div style={{ display: "flex", alignItems: "center" }}>
-            <label style={{ width: "80px" }}>상세주소</label>
-            <input
-              style={{ width: "240px" }}
-              type="text"
-              name="detailedAddress"
-              value={detailedAddress}
-              onChange={handleDetailedAddressChange}
-            />
-          </div>
-          <div style={{ marginTop: "50px" }}>
-            <h4>주문상품</h4>
+            <div style={{ fontSize: '20px', marginBottom: '2%'}}>주문상품</div>
             <div>
               <PurchasedProduct products={orderData.orderProducts} />
             </div>
           </div>
-          <div>
-            <h4>쿠폰</h4>
-            <button onClick={handleCouponApplyClick}>쿠폰적용</button>
-            {isModalOpen && (
-              <CouponSelectModal
-                onClose={closeCouponModal}
-                userId={orderData.userId}
-                orderData={orderData}
-                onSelectCoupon={handleCouponSelection}
-              />
-            )}
-            {couponDescription && <div>선택한 쿠폰 : {couponDescription}</div>}
+        </div>
+
+        <div style={{flex: '1'}}>
+          <div style={{marginBottom: '15%'}}>
+            <div style={{ fontSize: '20px', marginBottom: '2%'}}>쿠폰</div>
+            <div style={{display: 'flex'}}>              
+              {isModalOpen && (<CouponSelectModal onClose={closeCouponModal} userId={orderData.userId} orderData={orderData} onSelectCoupon={handleCouponSelection} />)}
+              <input placeholder="쿠폰을 선택하세요" value={couponDescription} style={{width: '50%'}} />
+              <button onClick={handleCouponApplyClick}>쿠폰선택</button>
+            </div>
           </div>
-          <div>
-            {/* 포인트 */}
-            {userPoint !== null && (
-              <UserPoint
-                userPoint={userPoint}
-                totalPrice={orderData.totalPrice - usingCoupon}
-                onUpdateUserPoint={handleUserPointUpdate}
-                selectedCouponId={selectedCouponId}
-              />
-            )}
+
+          <div style={{marginBottom: '15%'}}>
+            <div style={{ fontSize: '20px', marginBottom: '2%'}}>포인트</div>
+            {userPoint !== null && (<UserPoint userPoint={userPoint} totalPrice={orderData.totalPrice - usingCoupon} onUpdateUserPoint={handleUserPointUpdate} selectedCouponId={selectedCouponId} />)}
           </div>
-          <div style={{ marginTop: "50px" }}>
-            <h4>결제방식</h4>
+
+          <div style={{marginBottom: '15%'}}>
+            <div style={{ fontSize: '20px', marginBottom: '2%'}}>결제방식</div>
             <div style={{ display: "flex", margin: "5px" }}>
               <button
                 style={{
                   width: "80px",
                   height: "80px",
                   margin: "5px",
-                  border: "none",
+                  border: '1px solid white',
                   background: KAKAOPAY_PG === PGKey ? "#00BFFF" : "#000000",
                   color: "white",
                   borderRadius: "20%",
@@ -382,8 +380,7 @@ const Order = () => {
                 }}
                 onClick={() => handlePGSelection(PGKey === KAKAOPAY_PG ? null : "kakaopay")}
               >
-                카카오
-                <br />
+                카카오<br />
                 페이
               </button>
               <button
@@ -391,7 +388,7 @@ const Order = () => {
                   width: "80px",
                   height: "80px",
                   margin: "5px",
-                  border: "none",
+                  border: '1px solid white',
                   background: TOSSPAY_PG === PGKey ? "#00BFFF" : "#000000",
                   color: "white",
                   borderRadius: "20%",
@@ -399,14 +396,12 @@ const Order = () => {
                 }}
                 onClick={() => handlePGSelection(PGKey === TOSSPAY_PG ? null : "tosspay")}
               >
-                토스
-                <br />
+                토스<br />
                 페이
               </button>
             </div>
           </div>
-        </div>
-        <div style={{ flex: 1, margin: "0 10%" }}>
+
           <div>
             <div>
               <div style={{ display: "flex", justifyContent: "space-between" }}>
@@ -419,19 +414,25 @@ const Order = () => {
               </div>
               <div style={{ display: "flex", justifyContent: "space-between" }}>
                 <div>쿠폰 사용:</div>
-                <div style={{ color: "red" }}>{usingCoupon}원</div>
+                <div style={{ color: "green" }}>{usingCoupon.toLocaleString()}원</div>
               </div>
               <div style={{ display: "flex", justifyContent: "space-between" }}>
                 <div>포인트 사용:</div>
-                <div style={{ color: "red" }}>{usingPoint}원</div>
+                <div style={{ color: "blue" }}>{usingPoint.toLocaleString()}P</div>
               </div>
+              <div style={{borderBottom: '1px red solid', margin: '15px 0'}} />
               <div style={{ display: "flex", justifyContent: "space-between" }}>
                 <div>최종 결제 금액:</div>
                 <div>{(orderData.totalPrice + 3000 - usingCoupon - usingPoint).toLocaleString()}원</div>
               </div>
             </div>
             <div style={{ display: "flex", justifyContent: "center", marginTop: "50px" }}>
-              <button onClick={handleCreateOrder}>결제하기</button>
+              <button style={{
+                width: "120px", height: "40px", margin: "5px", border: '1px solid white', color: "white", backgroundColor: 'black', 
+                borderRadius: "10px", transition: "background 1s"}} onClick={handleCreateOrder}
+              >
+                결제하기
+              </button>
             </div>
           </div>
         </div>

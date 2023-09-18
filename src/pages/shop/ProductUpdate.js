@@ -4,8 +4,9 @@ import { useParams, useNavigate } from "react-router";
 import FileUploadComponent from "../../components/shop/FileUploadComponent";
 import FilesUploadComponent from "../../components/shop/FilesUploadComponent";
 import { Button } from "@mui/material";
+import { Link } from "react-router-dom";
 
-import styles from "../../styles/shop/ProductUpdate.module.css";
+// import styles from "../../styles/shop/ProductUpdate.module.css";
 
 const ProductUpdate = () => {
   const [ProductCategory, setProductCategory] = useState("");
@@ -156,12 +157,12 @@ const ProductUpdate = () => {
   };
 
   return (
-    <div style={{ margin: "0 20%" }}>
-      <h2>상품 수정</h2>
-      <form onSubmit={handleSubmit}>
-        <div style={{ marginTop: "50px" }}>
-          <label className={styles.label}>상품 카테고리: </label>
-          <select value={ProductCategory} onChange={handleProductCategoryChange}>
+    <div style={{ margin: "0 10%" }}>
+      <div style={{fontSize: '36px', fontWeight:'bold', textAlign: 'center', marginBottom: '5%'}}>상품 수정</div>
+      <form onSubmit={handleSubmit} style={{fontSize: '20px'}}>
+        <div style={{margin: '2% 0'}}>
+          <label style={{width: '50%'}}>상품 카테고리: </label>
+          <select value={ProductCategory} onChange={handleProductCategoryChange} style={{width: '50%', height: '36px'}}>
             <option value="">카테고리를 선택하세요</option>
             {productCategories.map((category) => (
               <option key={category.id} value={category.id}>
@@ -171,52 +172,77 @@ const ProductUpdate = () => {
           </select>
         </div>
 
-        <div>
-          <label className={styles.label}>상품명:</label>
-          <input type="text" value={productName} onChange={handleProductNameChange} />
+        <div style={{margin: '2% 0', display: 'flex'}}>
+          <label style={{width: '50%'}}>상품명:</label>
+          <input type="text" value={productName} onChange={handleProductNameChange} style={{width: '50%'}}/>
         </div>
 
-        <div>
-          <label className={styles.label}>썸네일: </label>
-          <img src={thumbnailUrl} alt="" style={{ maxWidth: "150px", maxHeight: "150px" }}></img>
-          <Button variant="outlined" color="error" onClick={() => handleDeleteThumbnail(thumbnailUrl)}>
-            삭제
-          </Button>
-          <FileUploadComponent onUploadSuccess={handleUploadSuccess} />
+        <div style={{margin: '2% 0', display: 'flex'}}>
+          <label style={{width: '50%'}}>가격:</label>
+          <input type="number" value={price} onChange={handlePriceChange} style={{width: '50%'}}/>
         </div>
 
-        <div>
-          <label className={styles.label}>가격:</label>
-          <input type="number" value={price} onChange={handlePriceChange} />
-        </div>
-        <div>
-          <label className={styles.label}>재고 수량:</label>
-          <input type="number" value={stockQuantity} onChange={handleStockQuantityChange} />
+        <div style={{margin: '2% 0', display: 'flex'}}>
+          <label style={{width: '50%'}}>재고 수량:</label>
+          <input type="number" value={stockQuantity} onChange={handleStockQuantityChange} style={{width: '50%'}} />
         </div>
 
-        <div>
-          <label className={styles.label}>상세 이미지 :</label>
-          <FilesUploadComponent onUploadSuccess={handleAddImage} />
-          <ul>
+        <div style={{margin: '2% 0'}}>
+          <div style={{display: 'flex'}}>
+            <label style={{width: '50%'}}>썸네일: </label>
+            <div style={{width: '50%'}}>
+              <FileUploadComponent onUploadSuccess={handleUploadSuccess} />
+            </div>
+          </div>
+          <div>
+            {thumbnailUrl && 
+              <div style={{ margin: '3% 0', display: 'flex'}}>
+                <div style={{width: '50%', textAlign: 'center'}}>
+                  <img src={thumbnailUrl} alt="Preview" style={{maxWidth: '80%', height: 'auto'}}/>
+                </div>
+                <div style={{width: '50%', display: 'flex', alignItems: 'center', justifyContent: 'left'}}>
+                  <Button variant="outlined" color="error" onClick={() => handleDeleteThumbnail(thumbnailUrl)}>
+                    삭제
+                  </Button>
+                </div>
+              </div>
+            }
+          </div>
+        </div>
+        
+
+        <div style={{margin: '2% 0'}}>
+          <div style={{display: 'flex'}}>
+            <label style={{width: '50%'}}>상세 이미지 :</label>
+            <div style={{width: '50%'}}>
+              <FilesUploadComponent onUploadSuccess={handleAddImage} />
+            </div>
+          </div>
+          <div>
             {productImageUrls.map((imageUrl, index) => (
-              <li key={index}>
-                <img src={imageUrl} alt="" style={{ maxWidth: "100px", maxHeight: "100px" }} />
-                <Button
-                  variant="outlined"
-                  color="error"
-                  onClick={() => handleDeleteImages(imageUrl, productImageIds[index])}
-                >
-                  삭제
-                </Button>
-              </li>
+              <div style={{ margin: '3% 0', display: 'flex'}}>
+                <div style={{width: '50%', textAlign: 'center'}}>
+                  <img src={imageUrl} alt="Preview" style={{maxWidth: '80%', height: 'auto'}}/>
+                </div>
+                <div style={{width: '50%', display: 'flex', alignItems: 'center', justifyContent: 'left'}}>
+                  <Button variant="outlined" color="error" onClick={() => handleDeleteImages(imageUrl, productImageIds[index])}>
+                    삭제
+                  </Button>
+                </div>
+              </div>
             ))}
-          </ul>
+          </div>
         </div>
 
-        <div>
-          <Button variant="outlined" type="submit">
+        <div style={{textAlign: 'center', margin: "5% 0"}}>
+          <Button variant="outlined" type="submit" style={{width: '180px', height: '60px', fontSize: '28px', margin: '0 5px'}}>
             등록
           </Button>
+          <Link to={'http://localhost:3000/shopping/1'}>
+            <Button variant="outlined" color="error" style={{width: '180px', height: '60px', fontSize: '28px', margin: '0 5px'}}>
+              취소
+            </Button>
+          </Link>
         </div>
       </form>
     </div>

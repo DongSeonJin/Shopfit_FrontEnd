@@ -5,8 +5,10 @@ import { useNavigate } from "react-router";
 import FileUploadComponent from '../../components/shop/FileUploadComponent';
 import FilesUploadComponent from '../../components/shop/FilesUploadComponent';
 
-import styles from '../../styles/shop/ProductCreate.module.css';
+// import styles from '../../styles/shop/ProductCreate.module.css';
+import CloseIcon from '@mui/icons-material/Close';
 import { Button } from "@mui/material";
+
 
 const ProductCreate = () => {
   const [ProductCategory, setProductCategory] = useState("");
@@ -101,61 +103,90 @@ const ProductCreate = () => {
   };
 
   return (
-    <div style={{ margin: "0 20%" }}>
-      <h2>상품 등록</h2>
+    <div style={{margin: '3% 10%'}}>
+      <div style={{fontSize: '24px', fontWeight: 'bold', textAlign: 'center'}}>
+        상 품 등 록
+      </div>
+
+      <div style={{borderBottom: '2px solid red', margin: '3% 20%'}} />
+
       <form onSubmit={handleSubmit}>
-        <div style={{ marginTop: "50px" }}>
-          <label className={styles.label}>상품 카테고리:</label>
-          <select value={ProductCategory} onChange={handleProductCategoryChange}>
-            <option value="">카테고리를 선택하세요</option>
-            {productCategories.map((category) => (
-              <option key={category.id} value={category.id}>
-                {category.name}
-              </option>
-            ))}
-          </select>
+
+        <div style={{margin: '2% 0', display:'flex'}}>
+          <div style={{flex: '1', paddingLeft: '20%'}}>상품 카테고리:</div>
+
+          <div style={{flex: '1'}}>
+            <select value={ProductCategory} onChange={handleProductCategoryChange} style={{width: '50%'}}>
+              <option value="">카테고리를 선택하세요</option>
+              {productCategories.map((category) => (
+                <option key={category.id} value={category.id}>
+                  {category.name}
+                </option>
+              ))}
+            </select>
+          </div>
         </div>
 
-        <div>
-          <label className={styles.label}>상품명: </label>
-          <input type="text" value={productName} onChange={handleProductNameChange} />
+
+        <div style={{margin: '2% 0', display:'flex'}}>
+          <div style={{flex: '1', paddingLeft: '20%'}}>상품명: </div>
+          <div style={{flex: '1'}}>
+            <input type="text" value={productName} onChange={handleProductNameChange} style={{width: '50%'}} />
+          </div>
         </div>
 
-        <div>
-          <label className={styles.label}>썸네일:</label>
-          <FileUploadComponent onUploadSuccess={handleUploadSuccess} />
+
+        <div style={{margin: '2% 0', display:'flex'}}>
+          <div style={{flex: '1', paddingLeft: '20%'}}>가격:</div>
+          <div style={{flex: '1', width: '50%'}}>
+            <input type="number" value={price} onChange={handlePriceChange} style={{width: '50%'}} />
+          </div>
         </div>
 
-        <div>
-          <label className={styles.label}>가격:</label>
-          <input type="number" value={price} onChange={handlePriceChange} />
-        </div>
-        <div>
-          <label className={styles.label}>재고 수량:</label>
-          <input type="number" value={stockQuantity} onChange={handleStockQuantityChange} />
+
+        <div style={{margin: '2% 0', display:'flex'}}>
+          <div style={{flex: '1', paddingLeft: '20%'}}>재고 수량:</div>
+          <div style={{flex: '1'}}>
+            <input type="number" value={stockQuantity} onChange={handleStockQuantityChange} style={{width: '50%'}} />
+          </div>
         </div>
 
-        <div>
-          <label className={styles.label}>상세 이미지 :</label>
-          <FilesUploadComponent onUploadSuccess={handleAddImage} />
-          <ul>
-            {productImageUrls.map((imageUrl, index) => (
-              <li key={index}>
-                <img src={imageUrl} alt={`Image ${index}`} style={{ maxWidth: "100px", maxHeight: "100px" }} />
-                <button type="button" onClick={() => handleRemoveImage(index)}>
-                  삭제
-                </button>
-              </li>
-            ))}
-          </ul>
+        <div style={{borderBottom: '2px solid red', margin: '3% 20%'}} />
+
+        <div style={{margin: '2% 0', paddingLeft: '20%'}}>
+          <div>썸네일:</div>
+          <div style={{width: '100%'}}>
+            <FileUploadComponent onUploadSuccess={handleUploadSuccess} />
+          </div>
         </div>
 
-        <div>
-          <Button variant="outlined" type="submit">
-            등록
-          </Button>
+        <div style={{borderBottom: '2px solid red', margin: '3% 20%'}} />
+
+        <div style={{margin: '2% 0'}}>
+          <div style={{flex: '1', paddingLeft: '20%'}}>상세 이미지 :</div>
+
+          <div style={{margin: '2% 0', paddingLeft: '20%'}}>
+            <FilesUploadComponent onUploadSuccess={handleAddImage} />
+          </div>
+
+          {productImageUrls.map((imageUrl, index) => (
+            <div key={index} style={{display: 'flex', margin: '2% 0', paddingLeft: '20%'}}>
+              <div style={{flex: '1'}}>
+                <img src={imageUrl} alt={`Image ${index}`} style={{ maxWidth: "80%", border: '1px solid white'}} />
+              </div>
+              <div style={{flex: '1', display: 'flex', alignItems: 'center'}}>
+                <CloseIcon onClick={() => handleRemoveImage(index)} style={{width: '60px', height: '60px', cursor:'pointer'}} />
+              </div>
+            </div>
+          ))}
+
         </div>
       </form>
+
+      <div style={{margin: '5% 0', textAlign: 'center'}}>
+          <Button type="submit" variant="outlined" style={{color: 'white', width: '120px', height: '45px', fontWeight: 'bold'}} onClick={handleSubmit} >등 록</Button>
+      </div>
+
     </div>
   );
 };

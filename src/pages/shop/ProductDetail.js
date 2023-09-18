@@ -5,15 +5,22 @@ import { useParams, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { useProductDetail } from "../../context/ProductDetailContext";
 
+import { addToWishlist, removeFromWishlist } from "../../components/shop/ActionWishlist";
+import { handleDeleteProduct, handleProductUpdate } from "../../components/shop/HandleProduct";
+import { formatDate } from "../../components/common/DateUtils";
+import { addCart } from './../../components/shop/AddCart';
+
 import { Button, Rating } from "@mui/material";
 import BookmarkIcon from "@mui/icons-material/Bookmark";
+import UTurnRightRoundedIcon from '@mui/icons-material/UTurnRightRounded';
 
-import styles from "../../styles/shop/ProductDetail.module.css";
+// import styles from "../../styles/shop/ProductDetail.module.css";
+
 
 const ProductDetail = () => {
   const userId = 1; // 임시로 설정한 userId 변수 -> 추후 수정해야 함
 
-  const { productNum } = useParams(); // productNum을 useParams로 추출
+  const { productNum } = useParams();
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -24,15 +31,6 @@ const ProductDetail = () => {
   const { setQuantity } = useProductDetail();
 
   const [isFavorite, setIsFavorite] = useState();
-
-  // 날짜 yyyy-mm-dd로 변경
-  const formatDate = (date) => {
-    const d = new Date(date);
-    const year = d.getFullYear();
-    const month = String(d.getMonth() + 1).padStart(2, "0");
-    const day = String(d.getDate()).padStart(2, "0");
-    return `${year}.${month}.${day}`;
-  };
 
   useEffect(() => {
     async function fetchUserWishlist() {
@@ -53,44 +51,13 @@ const ProductDetail = () => {
 
   const toggleFavorite = () => {
     if (isFavorite) {
-      removeFromWishlist();
+      removeFromWishlist(userId, productNum);
     } else {
-      addToWishlist();
+      addToWishlist(userId, productNum);
     }
     setIsFavorite((prevState) => !prevState); // 찜 상태 변경
   };
 
-  const addToWishlist = async () => {
-    try {
-      const response = await fetch(`/wishlist/add?userId=${userId}&productId=${productNum}`, {
-        method: "POST",
-      });
-
-      if (response.ok) {
-        console.log("상품이 위시리스트에 추가되었습니다.");
-      } else {
-        console.error("상품 추가 실패");
-      }
-    } catch (error) {
-      console.error("오류 발생", error);
-    }
-  };
-
-  const removeFromWishlist = async () => {
-    try {
-      const response = await fetch(`/wishlist/remove?userId=${userId}&productId=${productNum}`, {
-        method: "DELETE",
-      });
-
-      if (response.ok) {
-        console.log("상품이 위시리스트에서 삭제되었습니다.");
-      } else {
-        console.error("상품 삭제 실패");
-      }
-    } catch (error) {
-      console.error("오류 발생", error);
-    }
-  };
 
   useEffect(() => {
     axios
@@ -107,41 +74,7 @@ const ProductDetail = () => {
   const countUp = () => setCount((prevCount) => prevCount + 1);
   const countDown = () => setCount((prevCount) => prevCount - 1);
   // const value = (e) => setCount(Number(e.target.value));
-  const addCart = (userId, productNum, count) => {
-    axios
-      .get("/cart/checkCart", {
-        // 해당 유저의 장바구니에 이미 상품이 있는지 확인하기
-        params: {
-          userId: userId,
-          productId: productNum,
-        },
-      })
-      .then((response) => {
-        console.log(response.data);
-        if (response.data === false) {
-          // 상품이 없으면
-          axios
-            .post("/cart", {
-              // 장바구니에 추가
-              userId: userId,
-              productId: productNum,
-              quantity: count,
-            })
-            .then(() => {
-              alert("장바구니에 담았습니다");
-            })
-            .catch((error) => {
-              console.error("Error adding to cart:", error);
-            });
-        } else {
-          // 상품이 이미 장바구니에 있으면 alert
-          alert("이미 장바구니에 담긴 상품입니다");
-        }
-      })
-      .catch((error) => {
-        console.error("Error checking cart:", error);
-      });
-  };
+  
 
   if (data === null) {
     return <div>Loading...</div>; // 로딩 메시지 표시
@@ -195,190 +128,99 @@ const ProductDetail = () => {
     navigate(`/shopping/order`, { state: { selectedItems } });
   };
 
-  const handleDeleteProduct = (productId, thumbnailUrl, productImageUrls) => {
-    // thumbnailUrl과 productImageUrls를 사용해서 S3 객체 키들을 생성
-    const thumbnailObjectKey = thumbnailUrl.split("/").pop(); // 마지막 부분을 추출하여 S3 객체 키로 사용
-    const imageObjectKeys = productImageUrls.map((url) => url.split("/").pop());
-    // 모든 이미지 URL의 마지막 부분을 추출하여 S3 객체 키들로 사용
-
-    axios
-      .delete(`/shopping/${productId}`)
-      .then(() => {
-        // DELETE 요청 성공 처리
-        console.log("상품 삭제 성공");
-
-        // 여기서 S3 thumbnailUrl 삭제 요청 보내기
-        axios
-          .delete(`/api/${thumbnailObjectKey}`)
-          .then(() => {
-            console.log("S3 썸네일 삭제 성공");
-          })
-          .catch((error) => {
-            console.log("S3 썸네일 객체 삭제 실패".error);
-          });
-
-        // productImageUrls 삭제 요청
-        imageObjectKeys.forEach((imageObjectKey) => {
-          axios
-            .delete(`/api/${imageObjectKey}`)
-            .then(() => {
-              console.log("S3 상품 상세 이미지 삭제 성공");
-            })
-            .catch((error) => {
-              console.log("S3 상품 상세 이미지 삭제 실패", error);
-            });
-        });
-
-        // 리스트로 돌아가기
-        navigate("/shopping");
-      })
-      .catch((error) => {
-        // DELETE 요청 실패 처리
-        console.log("상품 삭제 실패", error);
-      });
-  };
-
-  const handleProductUpdate = () => {
-    // "상품 수정" 버튼을 클릭할 때 ProductUpdate 페이지로 이동하면서 productId를 전달
-    navigate(`/shopping/update/${productNum}`);
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   return (
-    <div className={styles.contentWrap}>
-      {/* 카테고리 시작 */}
-      <div className={styles.cateName}>
-        <a className={styles.categoryLink} href={`/shopping/category/${data.categoryId}`}>
-          {data.categoryName}
-        </a>
+    <div style={{margin: '0 15%'}}>
+      <UTurnRightRoundedIcon onClick={scrollToTop} style={{ position: 'fixed', bottom: '20px', right: '20px', zIndex: '9999', transform: 'rotate(180deg)', cursor: 'pointer'}} />
+
+      <div style={{textAlign: 'right'}}>
+        <Button variant="outlined" color='inherit' onClick={() => handleProductUpdate(data.productNum, navigate)} style={{margin: '0 1%', backgroundColor: 'black'}}>상품 수정</Button>
+        <Button variant="outlined" color="error" onClick={() => handleDeleteProduct(data.productId, data.thumbnailUrl, data.productImageUrls, navigate)} style={{margin: '0 1%'}}>상품 삭제</Button>
       </div>
-      {/* 카테고리 끝 */}
-      <div style={{ display: "flex", justifyContent: "flex-end" }}>
-        <Button variant="contained" onClick={handleProductUpdate}>
-          상품 수정
-        </Button>
-        <br />
-        <Button
-          variant="outlined"
-          color="error"
-          onClick={() => handleDeleteProduct(data.productId, data.thumbnailUrl, data.productImageUrls)}
-        >
-          상품 삭제
-        </Button>
-      </div>
-      {/* 썸네일, 제품명, 가격 시작 */}
-      <div className={styles.productContainer}>
-        <div className={styles.imgContainer}>
-          <div>
-            <div style={{ filter: data.stockQuantity === 0 ? "grayscale(100%)" : "none" }}>
-              <img className={styles.repImg} src={data.thumbnailUrl} alt={data.productName} />
-            </div>
-            <div
-              onClick={toggleFavorite}
-              style={{
-                textAlign: "right",
-                cursor: "pointer",
-                color: isFavorite ? "yellow" : "lightgray",
-              }}
-            >
+
+
+      <div style={{display: 'flex'}}>
+        <div style={{flex: '1'}}>
+          <div style={{ filter: data.stockQuantity === 0 ? "grayscale(100%)" : "none", width: '90%', paddingTop: '90%', position: 'relative', overflow: 'hidden',}}>
+            <img src={data.thumbnailUrl} alt={data.productName} style={{position: 'absolute', top: '0', left: '0', width: '100%', height: 'auto', borderRadius: '5%', border: '1px white solid'}}/>
+          </div>
+          <div onClick={toggleFavorite} style={{textAlign: "right", cursor: "pointer", color: isFavorite ? "yellow" : "lightgray", paddingRight: '10%'}}>
               <BookmarkIcon style={{ width: "40px", height: "40px" }} />
+          </div>
+        </div>
+
+        <div style={{flex: '1', marginTop: '1%'}}>
+          <a href={`/shopping/category/${data.categoryId}`} style={{textDecoration: 'none', color: 'inherit'}}>카테고리 : {data.categoryName}</a>
+          <div style={{fontSize: '36px', margin: '5% 0', fontWeight: 'bold', height: '25%'}}>{data.productName}</div>
+          <div style={{fontSize: '24px'}}>{data.price.toLocaleString()}원</div>
+
+          <div style={{display: 'flex', margin: '5% 0'}}>
+            <div style={{display: 'flex', flex: '1'}}>
+              <div><button onClick={countDown} disabled={count < 2} style={{width: '60px', height: '60px', fontSize: '24px', fontWeight: 'bold', border: 'none', margin: '0 3px', backgroundColor: 'lightgray', borderRadius: '5%' }}>-</button></div>              
+              <div><input onChange={(e) => handleInputChange(e)} value={count} min="1" max={data.stockQuantity} style={{width: '60px', height: '60px', textAlign: 'center', fontWeight: 'bold', border: 'none', margin: '0 3px', borderRadius: '5%'}} /></div>              
+              <div><button onClick={countUp} disabled={count >= data.stockQuantity} style={{width: '60px', height: '60px', fontSize: '24px', fontWeight: 'bold', border: 'none', margin: '0 3px', backgroundColor: 'lightgray', borderRadius: '5%'}}>+</button></div>              
+            </div>
+            <div style={{ flex: '1', fontSize: '24px', display: 'flex', justifyContent: 'flex-end', alignItems: 'center' }}>{(data.price * count).toLocaleString()}원</div>
+          </div>
+
+          <div style={{margin: '5% 0'}}>
+            {data.stockQuantity === 0 ? (
+              <div>품절</div>
+            ) : (
+              <div>남은 수량 : {data.stockQuantity.toLocaleString()} 개</div>
+            )}
+          </div>
+
+          <div style={{display: 'flex', height: '12%'}}>
+            <div style={{flex: '1'}}>
+              <button onClick={() => (userId ? addCart(userId, productNum, count) : alert("로그인 후 이용해주세요"))} disabled={data.stockQuantity === 0} 
+              style={{width: '99%', marginRight: '1%', height: '100%', color: 'white', fontSize:'24px', border: '1px white solid', backgroundColor: 'black', fontWeight: 'bold', borderRadius: '5px'}}>장바구니</button>
+            </div>
+            <div style={{flex: '1'}}>
+              <button size="large" variant="contained" onClick={handleBuyNow} disabled={data.stockQuantity === 0} 
+              style={{width: '99%', marginLeft: '1%', height: '100%', color: 'black', fontSize:'24px', border: '1px black solid', backgroundColor: 'white', fontWeight: 'bold', borderRadius: '5px'}}>바로구매</button>
             </div>
           </div>
         </div>
-        <div>
-          <h2 className={styles.prodName}>{data.productName}</h2>
-          <div className={styles.priceName}>{data.price.toLocaleString()}원</div>
-
-          {/* 수량 선택 & 총 가격 */}
-          <div className={styles.quantity}>
-            <button
-              className={`${styles.quantityBtn} ${styles.sameSizeElements}`}
-              onClick={countDown}
-              disabled={count < 2}
-            >
-              -
-            </button>
-            <input
-              className={`${styles.quantityNum} ${styles.sameSizeElements}`}
-              // onChange={value}
-              onChange={(e) => handleInputChange(e)}
-              value={count}
-              min="1" // 최소값 설정
-              max={data.stockQuantity} // 최대값 설정 - 재고수량
-            ></input>
-            <button
-              className={`${styles.quantityBtn} ${styles.sameSizeElements}`}
-              onClick={countUp}
-              disabled={count >= data.stockQuantity}
-            >
-              +
-            </button>
-            <span className={styles.totalPrice}>{(data.price * count).toLocaleString()}원</span>
-          </div>
-          {data.stockQuantity === 0 ? (
-            <div className={styles.stockMessage}>품절</div>
-          ) : (
-            <div>남은 수량 : {data.stockQuantity.toLocaleString()} 개</div>
-          )}
-          <div className={styles.cartBuy}>
-            {/* 장바구니 - userId가 없으면 로그인 후 이용 알림창 */}
-            <button
-              className={styles.cartBtn}
-              onClick={() => (userId ? addCart(userId, productNum, count) : alert("로그인 후 이용해주세요"))}
-              disabled={data.stockQuantity === 0} // 품절 상태일 때 버튼 비활성화
-            >
-              장바구니
-            </button>
-            {/* 바로구매 */}
-
-            <button
-              className={styles.buyBtn}
-              size="large"
-              variant="contained"
-              onClick={handleBuyNow} // 바로구매 버튼 클릭 시 이벤트 핸들러 연결
-              disabled={data.stockQuantity === 0} // 품절 상태일 때 버튼 비활성화
-            >
-              바로구매
-            </button>
-          </div>
-          {/* <p>Stock Quantity: {data.stockQuantity}</p>  재고수량*/}
-        </div>
-      </div>
-      {/* 썸네일, 제품명, 가격 끝 */}
-      {/* 상세이미지 시작 */}
-      <h3 style={{ width: "200px" }}>상세정보</h3>
-      <div className={styles.detailContainer}>
-        {data.productImageUrls.map((imageUrl, index) => (
-          <>
-            <img className={styles.detailImg} key={index} src={imageUrl} alt={`Product ${index}`} />
-            <br />
-          </>
-        ))}
       </div>
 
-      {/* 상세이미지 끝 */}
-      {/* 리뷰 시작 */}
-      <h3 style={{ width: "200px" }}>구매후기</h3>
-      <div className={styles.reviewContainer}>
-        <div>
-          {formattedReviews.map((review) => (
-            <div key={review.reviewId}>
-              <span>
-                <Rating name="read-only" value={review.rating} readOnly size="small" />{" "}
-              </span>
-              <div>
+      <div style={{fontSize: '24px', fontWeight: 'bold', margin: '3% 5%'}}>상세정보</div>
+
+      <div style={{display: 'flex', margin: '0 10%'}}>
+        <div style={{flex: '2'}}>
+          <div>
+            <div>
+              {data.productImageUrls.map((imageUrl, index) => (
                 <div>
-                  <span className={styles.name}>{review.nickname}</span>
+                  <img key={index} src={imageUrl} alt={`Product ${index}`} style={{width: '100%'}} />
                 </div>
-                <div className={styles.date}>{review.createdAt}</div>
-              </div>
-
-              <p>{review.comment}</p>
-              <hr />
+              ))}
             </div>
-          ))}
+          </div>
+
+          <div style={{margin: '5% 0'}}>
+          <div style={{fontSize: '24px', fontWeight: 'bold', marginBottom: '3%'}}>구매후기</div>
+            <div style={{width: '100%'}}>
+              <div style={{margin: '3% 0'}}>
+                {formattedReviews.map((review) => (
+                  <div key={review.reviewId} style={{margin: '3% 0', display:'flex', border: '1px solid white', borderRadius: '5px', height: '60px', placeItems: 'center', padding: '1%'}}>
+                    <div style={{flex: '1'}}>
+                      <Rating name="read-only" value={review.rating} readOnly size="small" />{" "}
+                    </div>
+                    <div style={{flex: '2'}}>{review.nickname}</div>
+                    <div style={{flex: '4'}}>{review.comment}</div>
+                    <div style={{flex: '1'}}>{review.createdAt}</div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
         </div>
+
       </div>
-      {/* 리뷰 끝 */}
     </div>
   );
 };

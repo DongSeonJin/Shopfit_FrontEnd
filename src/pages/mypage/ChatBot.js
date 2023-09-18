@@ -1,9 +1,11 @@
 import React, { useEffect, useRef, useState } from "react";
 import axios from "axios";
 import Modal from "react-modal";
+
 import { Button, TextField, Paper, List, ListItem, Typography, Box } from "@mui/material";
 import { Send, Close } from "@mui/icons-material";
-import styles from "../../styles/mypage/ChatBot.module.css";
+
+// import styles from "../../styles/mypage/ChatBot.module.css";
 
 const ChatBot = ({ closeModal }) => {
   const [messages, setMessages] = useState([]);
@@ -13,18 +15,18 @@ const ChatBot = ({ closeModal }) => {
 
   const modalStyles = {
     overlay: {
-      backgroundColor: "rgba(0, 0, 0, 0.5)", // 챗봇 실행했을 때 뒷 배경 색상
+      backgroundColor: "rgba(0, 0, 0, 0.3)",
     },
     content: {
       display: "flex",
       flexDirection: "column",
-      alignItems: "center",
-      justifyContent: "center",
-      width: "500px", // 원하는 가로 크기로 조절
-      maxHeight: "80%", // 원하는 세로 크기로 조절
-      margin: "auto", // 가운데 정렬
+      width: "360px",
+      height: '720px',
       backgroundColor: "white",
-      border: "7px solid #81D594",
+      border: "4px solid #1976d2",
+      borderRadius: '25px',
+      marginLeft: 'calc(98% - 380px)',
+      marginTop: '480px',
     },
   };
 
@@ -71,6 +73,7 @@ const ChatBot = ({ closeModal }) => {
   // }, []);
 
   return (
+
     <div>
       {/* 모달 창 */}
       <Modal
@@ -81,25 +84,44 @@ const ChatBot = ({ closeModal }) => {
         ariaHideApp={false}
         style={modalStyles}
       >
+// <<<<<<< feature143
 
-        <Button
-            variant="outlined"
-            color="error"
-            className={styles["close-button"]}
-            onClick={closeChatBot}
-          >
-          <Close />
-        </Button>
-        <h2 className={styles["title"]}>#FIT CHATBOT</h2>
+//         <Button
+//             variant="outlined"
+//             color="error"
+//             className={styles["close-button"]}
+//             onClick={closeChatBot}
+//           >
+//           <Close />
+//         </Button>
+//         <h2 className={styles["title"]}>#FIT CHATBOT</h2>
 
-        <div className={styles["modal-content"]}>
+//         <div className={styles["modal-content"]}>
           
 
-          <List
-            id={styles["chat-container"]}
-            className={styles["chat-message"]}
-            sx={{ overflowY: 'auto', width: '100%' }}
-          >
+//           <List
+//             id={styles["chat-container"]}
+//             className={styles["chat-message"]}
+//             sx={{ overflowY: 'auto', width: '100%' }}
+//           >
+// =======
+        <div style={{display: 'flex', marginBottom: '15px'}}>
+          <div style={{fontSize: '24px', fontWeight: 'bold', flex: '2', textAlign: 'center'}}>#FIT CHATBOT</div>
+          <div style={{flex: '1', textAlign: "right"}}>
+            <Button
+                variant="outlined"
+                color="error"
+                onClick={closeChatBot}
+              >닫기
+            </Button>
+          </div>
+        </div>
+
+        <div style={{display: 'flex', flexDirection: "column", height: '100%'}}>
+
+
+          <List style={{overflowY:'auto', maxHeight: 'none', flexGrow: '1', height: '300px', borderTop: '1px lightgray solid', borderBottom: '1px lightgray solid'}}>
+// >>>>>>> develop
             {messages.map((message, index) => (
               <ListItem
                 key={index}
@@ -126,7 +148,7 @@ const ChatBot = ({ closeModal }) => {
             <div ref={messageEndRef} />
           </List>
           <Box
-            className={styles["input-container"]}
+            style={{alignSelf: 'center'}}
             sx={{
               display: "flex",
               alignItems: "stretch",
