@@ -208,7 +208,7 @@ const Order = () => {
       }
 
       // 계산된 최종 가격을 finalPrice 변수에 저장
-      const finalPrice = orderData.totalPrice + 3000 - usingPoint;
+      const finalPrice = orderData.totalPrice + 3000 - usingPoint - usingCoupon;
 
       IMP.request_pay(
         {
