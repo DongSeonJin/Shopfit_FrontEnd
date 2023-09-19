@@ -6,7 +6,6 @@ import OrderHistory from "./../pages/mypage/OrderHistory";
 import OrderHistoryDetails from "./../pages/mypage/OrderHistoryDetails";
 import UserInfo from "./../pages/mypage/UserInfo";
 import UserInfoUpdate from "./../pages/mypage/UserInfoUpdate";
-import UserLogin from "./../pages/mypage/UserLogin";
 import ChatBot from "../pages/mypage/ChatBot";
 import PasswordUpdate from "../pages/mypage/PasswordUpdate";
 import MyCoupons from "../pages/mypage/MyCoupons";

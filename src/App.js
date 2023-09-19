@@ -1,11 +1,15 @@
 import React, { useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
+
 import Header from './components/common/Header';
 import Home from './routes/Home';
 import Footer from './components/common/Footer';
+
 import { refreshTokenApi } from './lib/api/authApi'; 
 import { getCookieToken } from './store/Cookie'; 
 import { useSelector } from 'react-redux';
+
+import ChatbotButton from './components/common/ChatbotButton';
 
 
 const App = () => {
@@ -21,6 +25,7 @@ const App = () => {
     <div style={{ background: 'black', color: 'white'}}>
       <Header />
       <Home />
+      <ChatbotButton />
       <Footer />
     </div>
   );

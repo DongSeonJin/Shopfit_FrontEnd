@@ -12,7 +12,7 @@ const Header = () => {
   const [isShoppingHovered, setIsShoppingHovered] = useState(false);
 
   return (
-    <div style={{display: 'flex', marginBottom: '50px'}}>
+    <div style={{display: 'flex', marginBottom: '30px'}}>
       <div style={{width: '200px', height: '200px'}}>
           <Link to="/" style={{ textDecoration: 'none', color: 'inherit' }}>
               <div>

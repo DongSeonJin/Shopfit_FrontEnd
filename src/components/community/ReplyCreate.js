@@ -1,13 +1,41 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { Reply } from '@material-ui/icons';
-import { Button } from "@mui/material";
+import { TextField, Button, Box, makeStyles, InputAdornment } from '@material-ui/core';
+
+const useStyles = makeStyles({
+    input: {
+      color: '#fff',
+    },
+    textField: {
+      '& .MuiOutlinedInput-root': {
+        '& fieldset': {
+          borderColor: 'white',
+        },
+        '&:hover fieldset': {
+          borderColor: 'white',
+        },
+        '&.Mui-focused fieldset': {
+          borderColor: 'white',
+        },
+      },
+    },
+    buttonContainer: {
+      position:'relative'
+    }, 
+    button:{
+      position:'absolute', 
+      bottom:'12px', 
+      right:'10px'
+    }
+});
 
 
 const ReplyCreate = ({ postId, onReplySubmit }) => {
     const [content, setContent] = useState('');
     const nickname = 'nickname1';
     const userId = 1;
+    const classes = useStyles();
 
     const handleSubmit = async e => {
         e.preventDefault();
@@ -43,19 +71,32 @@ const ReplyCreate = ({ postId, onReplySubmit }) => {
 
     return (
         <div>
-            <h2>댓글 작성</h2>
+            {/* <h2>댓글 작성</h2> */}
             <form onSubmit={handleSubmit}>
-                <textarea
+                <TextField
                     value={content}
                     onChange={e => setContent(e.target.value)}
+                    variant='outlined'
+                    multiline
+                    rows={4}
+                    fullWidth
+                    placeholder='댓글을 입력해주세요.'
+                    InputProps={{
+                        className: classes.input,
+                        endAdornment:
+                        <InputAdornment position='end'>
+                            <Button type='submit' variant='contained' color='primary' className={classes.button}> 댓글 등록 </Button>
+                        </InputAdornment>
+                    }}
+                    className={classes.textField}
                 />
 
-                <Button
+                {/* <Button mt={2}
                     type="submit"
                     variant="contained"
                     color="primary"
                     style={{ marginTop: '10px', marginLeft: '10px' }}
-                > 댓글 등록 </Button>
+                > 댓글 등록 </Button> */}
             </form>
         </div>
     );

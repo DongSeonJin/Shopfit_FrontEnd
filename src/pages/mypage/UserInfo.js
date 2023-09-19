@@ -1,6 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
+
+import { Button } from "@mui/material";
+import StarIcon from '@mui/icons-material/Star';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import BookmarkIcon from '@mui/icons-material/Bookmark';
 import HeaderSubMyPage from "../../components/common/HeaderSubMypage";
 
 const UserInfo = () => {
@@ -29,14 +34,6 @@ const UserInfo = () => {
     navigate("/mypage/edit");
   };
 
-  // 인라인 스타일로 프로필 사진 스타일 설정
-  const profilePictureStyle = {
-    width: "200px",
-    height: "200px",
-    borderRadius: "50%", // 동그랗게 만들기
-    objectFit: "cover", // 이미지가 공간을 채우도록 설정 (가로세로 비율 유지)
-  };
-
   const handleChangePassword = () => {
     // 비밀번호 변경 페이지로 이동
     navigate("/mypage/edit/password");
@@ -45,34 +42,60 @@ const UserInfo = () => {
   return (
     <div>
       <HeaderSubMyPage />
-      <div>
-        <img src={user.imageUrl} alt="프로필사진" style={profilePictureStyle} />
-        <h1>{user.nickname}</h1>
-        <button onClick={handleEditProfile}>회원정보 수정</button>
-      </div>
-      <div>
-        <div>
-          <div>
-            <Link to="/mypage/mycoupon">쿠폰 {user.couponCount}</Link>
-          </div>
-          <div>포인트 {user.point}</div>
+      <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center',  width:'100%', minHeight: `calc(100vh - 720px)`}}>
+        
+
+        <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', borderBottom: '1px solid lightgray', margin: '20px 0', width: '300px'}}>
+          <img src={user.imageUrl} alt="프로필사진" style={{width: '240px', height: '240px', border: '1px solid white', borderRadius: '50%', objectFit: 'cover', marginBottom: '10px'}} />
+          <div style={{ fontSize: '28px', fontWeight: 'bold', width: '240px', marginBottom: '20px', textAlign: 'center'}}>{user.nickname}</div>
+          <Button onClick={handleEditProfile} variant="outlined" style={{width: '120px', height: '40px', textAlign: 'center', marginBottom: '20px', borderRadius: '10px', fontSize: '18px'}}>설정</Button>
         </div>
+
         <div>
-          <div>
-            <Link to="/orderhistory">주문내역</Link>
+          <div style={{textAlign: 'center', display: 'flex', marginBottom: '30px'}}>
+            <div style={{flex: '1'}}>
+              <Link to="/mypage/mycoupon" style={{textDecoration:'none'}}>보유쿠폰 {user.couponCount}</Link>
+            </div>
+            <div style={{flex: '1'}}>포인트 {user.point.toLocaleString()}</div>
           </div>
-          <div>
-            <Link to="/shopping/wishlist">찜목록</Link>
-          </div>
-          <div>
-            <Link to="/shopping/cart">장바구니</Link>
-          </div>
+
+          <div style={{textAlign: 'center', display: 'flex', marginBottom: '30px'}}>
+            <div>
+              <Link to="/orderhistory">
+                <StarIcon style={{ width: "60px", height: "60px", margin: "0 10px", color: 'white' }} />
+              </Link>
+              <div>
+                주문내역
+              </div>
+            </div>
+            
+            <div>
+              <Link to="/shopping/wishlist">
+                <BookmarkIcon style={{ width: "60px", height: "60px", margin: "0 10px", color: 'white' }} />
+              </Link>
+              <div>
+                찜목록
+              </div>
+            </div>
+
+            <div>
+              <Link to="/shopping/cart">
+                <ShoppingCartIcon style={{ width: "60px", height: "60px", margin: "0 10px", color: 'white' }} />
+              </Link>
+              <div style={{textAlign: 'center'}}>
+                장바구니
+              </div>
+            </div>
+          </div> 
+        </div>         
+
+        <div style={{marginBottom: '20px'}}>
+          <Button onClick={handleChangePassword}>비밀번호 변경하기</Button>
         </div>
-        <div>
-          {/* 버튼만 만들어 놓음 */}
-          <button>탈퇴하기</button>
-          <button onClick={handleChangePassword}>비밀번호 변경하기</button>
+        <div style={{marginBottom: '20px'}}>
+          <Button color="error">탈퇴하기</Button>
         </div>
+
       </div>
     </div>
   );

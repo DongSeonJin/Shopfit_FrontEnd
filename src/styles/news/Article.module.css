@@ -1,7 +1,7 @@
 .articleContainer {
   display: flex;
   align-items: center;
-  margin: 20px 20%;
+  margin-bottom: 20px;
 }
 
 .image {
@@ -10,7 +10,7 @@
   height: 216px;
   background-size: cover;
   cursor: pointer;
-  border-radius: 5px;
+  border-radius: 10px;
 }
 
 .textContainer {
@@ -23,14 +23,12 @@
 .title {
   font-size: 24px;
   font-weight: bold;
-  height: 50px;
-  margin-top: 10px;
+  height: 50%;
 }
 
 .content {
   font-size: 20px;
-  height: 50px;
-  margin-bottom: 10px;
+  height: 50%;
 }
 
 .date {

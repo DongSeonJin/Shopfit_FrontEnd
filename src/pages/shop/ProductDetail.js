@@ -133,9 +133,10 @@ const ProductDetail = () => {
   };
 
   return (
-    <div style={{margin: '0 15%'}}>
+    <div style={{maxWidth: '1080px', width: '100%', margin: 'auto'}}>
       <UTurnRightRoundedIcon onClick={scrollToTop} style={{ position: 'fixed', bottom: '20px', right: '20px', zIndex: '9999', transform: 'rotate(180deg)', cursor: 'pointer'}} />
 
+      {/* 관리자 권한 */}
       <div style={{textAlign: 'right'}}>
         <Button variant="outlined" color='inherit' onClick={() => handleProductUpdate(data.productNum, navigate)} style={{margin: '0 1%', backgroundColor: 'black'}}>상품 수정</Button>
         <Button variant="outlined" color="error" onClick={() => handleDeleteProduct(data.productId, data.thumbnailUrl, data.productImageUrls, navigate)} style={{margin: '0 1%'}}>상품 삭제</Button>
@@ -147,13 +148,13 @@ const ProductDetail = () => {
           <div style={{ filter: data.stockQuantity === 0 ? "grayscale(100%)" : "none", width: '90%', paddingTop: '90%', position: 'relative', overflow: 'hidden',}}>
             <img src={data.thumbnailUrl} alt={data.productName} style={{position: 'absolute', top: '0', left: '0', width: '100%', height: 'auto', borderRadius: '5%', border: '1px white solid'}}/>
           </div>
-          <div onClick={toggleFavorite} style={{textAlign: "right", cursor: "pointer", color: isFavorite ? "yellow" : "lightgray", paddingRight: '10%'}}>
+          <div onClick={toggleFavorite} style={{textAlign: "right", cursor: "pointer", color: isFavorite ? "yellow" : "lightgray", paddingRight: '10%', marginTop: '10px'}}>
               <BookmarkIcon style={{ width: "40px", height: "40px" }} />
           </div>
         </div>
 
         <div style={{flex: '1', marginTop: '1%'}}>
-          <a href={`/shopping/category/${data.categoryId}`} style={{textDecoration: 'none', color: 'inherit'}}>카테고리 : {data.categoryName}</a>
+          <a href={`/shopping/category/${data.categoryId}`} style={{textDecoration: 'none', color: 'inherit', fontSize: '20px'}}>카테고리 : {data.categoryName}</a>
           <div style={{fontSize: '36px', margin: '5% 0', fontWeight: 'bold', height: '25%'}}>{data.productName}</div>
           <div style={{fontSize: '24px'}}>{data.price.toLocaleString()}원</div>
 
@@ -187,11 +188,10 @@ const ProductDetail = () => {
         </div>
       </div>
 
-      <div style={{fontSize: '24px', fontWeight: 'bold', margin: '3% 5%'}}>상세정보</div>
-
-      <div style={{display: 'flex', margin: '0 10%'}}>
-        <div style={{flex: '2'}}>
-          <div>
+      <div style={{margin: '0 50px', padding: '20px'}}>
+        <div>
+          <div style={{fontSize: '24px', fontWeight: 'bold', marginBottom: '20px'}}>상세정보</div>
+          <div style={{minHeight: '200px', padding: '20px'}}>
             <div>
               {data.productImageUrls.map((imageUrl, index) => (
                 <div>
@@ -201,10 +201,10 @@ const ProductDetail = () => {
             </div>
           </div>
 
-          <div style={{margin: '5% 0'}}>
-          <div style={{fontSize: '24px', fontWeight: 'bold', marginBottom: '3%'}}>구매후기</div>
-            <div style={{width: '100%'}}>
-              <div style={{margin: '3% 0'}}>
+          <div style={{marginBottom: '150px'}}>
+          <div style={{fontSize: '24px', fontWeight: 'bold', marginBottom: '20px'}}>구매후기</div>
+            <div style={{width: '100%', minHeight: '200px'}}>
+              <div>
                 {formattedReviews.map((review) => (
                   <div key={review.reviewId} style={{margin: '3% 0', display:'flex', border: '1px solid white', borderRadius: '5px', height: '60px', placeItems: 'center', padding: '1%'}}>
                     <div style={{flex: '1'}}>
@@ -219,7 +219,6 @@ const ProductDetail = () => {
             </div>
           </div>
         </div>
-
       </div>
     </div>
   );

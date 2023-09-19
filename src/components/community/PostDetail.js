@@ -1,18 +1,19 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios'; // axios 추가
-
-import { useParams, useNavigate, Link } from 'react-router-dom'; // useParams와 useHistory 추가
-
+import axios from 'axios'; 
+import { useParams, useNavigate, Link } from 'react-router-dom'; 
 import styles from '../../styles/community/PostDetail.module.css';
-import { Table, TableBody, TableCell, TableRow } from '@material-ui/core';
-import { Button } from '@material-ui/core'
+import { Table, TableBody, TableCell, TableRow, Button } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
 import LikeIcon from '@material-ui/icons/Favorite';
 import UpdateIcon from '@material-ui/icons/Edit';
 import ReplyCreate from './ReplyCreate';
 import ReplyList from './ReplyList';
 
-
-
+const useStyles = makeStyles({
+  whiteText: {
+    color: '#fff',
+  },
+});
 
 const PostDetail = () => {
   const navigate = useNavigate(); 
@@ -20,7 +21,8 @@ const PostDetail = () => {
   const { postId } = useParams(); // postId를 URL 파라미터로 가져옴
   const [replies, setReplies] = useState([]);
   const [likeCount, setLikeCount] = useState(0);
-  
+  const classes = useStyles();
+
 
   useEffect(() => {
     const fetchData = async () => {
