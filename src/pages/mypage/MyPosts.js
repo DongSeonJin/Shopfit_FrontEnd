@@ -1,9 +1,11 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router";
-import styles from "../../styles/mypage/MyPosts.module.css";
 import { Link } from "react-router-dom";
+
 import HeaderSubMyPage from "../../components/common/HeaderSubMypage";
+
+// import styles from "../../styles/mypage/MyPosts.module.css";
 
 const MyPosts = () => {
   const [posts, setPosts] = useState([]);
@@ -23,22 +25,21 @@ const MyPosts = () => {
   }, [userId]);
 
   return (
-    <div>
+    <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center',  width:'100%', minHeight: `calc(100vh - 720px)`}}>
       <HeaderSubMyPage />
-      <div className="container">
-        <div className={styles["post-list"]}>
+      <div style={{width: '80%', maxWidth: '1920px'}}>
+        <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between' }}>
           {posts.map((post) => (
-            <Link to={`/community/post/${post.postId}`} style={{ textDecoration: "none", color: "inherit" }} key={post.id}>
-              <div className={styles["post-card"]}>
-                <img src={post.imageUrl1} alt={post.title} className={styles["post-image"]} />
-                <div className={styles["post-content"]}>
-                  <h2 className={styles["post-title"]} style={{ width: "100%" }}>
-                    {post.title}
-                  </h2>
-                  <p className={styles["post-author"]} style={{ width: "100%" }}>{`작성자: ${post.nickname}`}</p>
-                </div>
+            <div style={{ width: 'calc(25% - 10px)', marginBottom: '30px' }} key={post.id}>
+              <Link to={`/community/post/${post.postId}`} style={{ textDecoration: "none", color: "inherit" }} key={post.id}>
+                <div alt={post.title} style={{backgroundSize: 'cover', backgroundPosition: 'top center', backgroundImage: `url(${post.imageUrl1})`, width: '100%', paddingBottom: '100%',maxHeight: '384px', border: '1px solid white', borderRadius: '10px'}} />
+              </Link>
+              <div>
+                <div style={{fontSize: '24px'}}>{post.title}</div>
+                <div style={{fontSize: '20px'}}>작성자</div>
+                <div style={{fontSize: '20px'}}>{`${post.nickname}`}</div>
               </div>
-            </Link>
+            </div>
           ))}
         </div>
       </div>

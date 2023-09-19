@@ -24,13 +24,12 @@ const OrderHistory = () => {
   }, []);
 
   return (
-    <div>
+    <div style={{ maxWidth: '1080px', width: '100%', margin: '0 auto 150px'}}>
       <HeaderSubMyPage />
-      <div style={{ margin: "0 20% 200px 20%" }}>
-        <h1 style={{ margin: "0 0 30px 0" }}>주문 내역</h1>
-        <div>
-          <OrderHistoryProducts orders={orders} />
-        </div>
+      <div style={{ fontSize: '36px', fontWeight: 'bold', textAlign: 'center', marginBottom: '50px', width: '100%' }}>주문 내역</div>
+
+      <div style={{ minHeight: '240px', borderTop: '1px solid lightgray', borderBottom: '1px solid lightgray', padding: '20px', width: '90%', margin: 'auto'}}>  
+        <OrderHistoryProducts orders={orders} />
       </div>
     </div>
   );

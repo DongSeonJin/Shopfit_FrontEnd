@@ -5,6 +5,7 @@
     align-items: center;
     flex-wrap: nowrap;
     margin-top: 25px;
+    margin-bottom: 150px;
 }
 .searchbox input{
     box-sizing: border-box;

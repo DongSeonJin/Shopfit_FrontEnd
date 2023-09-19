@@ -1,18 +1,22 @@
 .linkContainer {
   text-align: center;
+  height: 32px;
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 50px;
 }
 
 .link {
   position: relative;
   letter-spacing: -0.3px;
   line-height: 20px;
-  font-weight: 500;
   text-decoration: none;
   color: inherit;
-  margin-right: 20px;
+  margin: 0 20px;
   transition: color 0.3s ease;
 }
 
 .link:hover {
-  color: rgb(53, 197, 240);
+  /* color: #dc3545; */
+  color: red;
 }

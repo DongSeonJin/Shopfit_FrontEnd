@@ -78,36 +78,34 @@ const ProductListPage = () => {
   ];
 
   return (
-    <div>
+    <div style={{width: '100%', maxWidth: '1920px', margin: 'auto'}}>
       <div style={{ display: 'flex'}}>
-        <div style={{ flex: '1', fontWeight: 'bold', fontSize: '24px', paddingLeft: '3%'}}>
+        <div style={{ flex: '1', fontWeight: 'bold', fontSize: '24px', paddingLeft: '10px'}}>
           쇼핑리스트 - {categoryId === "1" ? "닭가슴살" : categoryId === "2" ? "음료/보충제" : categoryId === "3" ? "운동용품" : "전체"}
         </div>
-
-        <div style={{ flex: '1', paddingRight: '3%' }}>
-          <div style={{ textAlign: 'right', margin: '1% 2%' }}>
-            <Link to="/shopping/create">
-              <Button variant="outlined" style={{color: 'white', width: '120px'}}>상품 등록</Button>
-            </Link>
-          </div>
-
-          <div style={{ display: 'flex', justifyContent: 'right', margin: '2% 2%' }}>
-            {sortItems.map((item, index) => (
-              <React.Fragment key={item.id}>
-                <div
-                  role="button"
-                  onClick={() => handleSortBy(item.id)}
-                  style={getSortButtonStyle(item.id)}
-                >
-                  {item.label}
-                </div>
-                {index !== sortItems.length - 1 && <div>|</div>}
-              </React.Fragment>
-            ))}
-          </div>
+        {/* 권한 : 관리자 */}
+        <div style={{ flex: '1', textAlign: 'right', margin: '0 20px' }}>
+          <Link to="/shopping/create">
+            <Button variant="outlined" style={{color: 'white', width: '120px'}}>상품 등록</Button>
+          </Link>
         </div>
       </div>
 
+      <div style={{ display: 'flex', justifyContent: 'right', margin: '10px' }}>
+        {sortItems.map((item, index) => (
+          <React.Fragment key={item.id}>
+            <div
+              role="button"
+              onClick={() => handleSortBy(item.id)}
+              style={getSortButtonStyle(item.id)}
+            >
+              {item.label}
+            </div>
+            {index !== sortItems.length - 1 && <div>|</div>}
+          </React.Fragment>
+        ))}
+      </div>
+      
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(5, 1fr)', gap: '1%', margin: '0 0 5% 0' }}>
         {(searchResults.length > 0 ? searchResults : dataList).map((data) => (
           <div key={data.productId}>

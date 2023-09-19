@@ -3,16 +3,12 @@ import axios from 'axios'; // axios 추가
 import { useParams, useNavigate, Link } from 'react-router-dom'; // useParams와 useHistory 추가
 import { Table, TableBody, TableCell, TableRow } from '@material-ui/core';
 import { Button } from '@material-ui/core'
-import LikeIcon from '@material-ui/icons/Favorite';
-import UpdateIcon from '@material-ui/icons/Edit';
 
 import LikeButton from './../../components/community/LikeButton';
 import ReplyList from './../../components/community/ReplyList';
 import ReplyCreate from './../../components/community/ReplyCreate';
 
-import styles from '../../styles/community/PostDetail.module.css';
-
-
+// import styles from '../../styles/community/PostDetail.module.css';
 
 const PostDetail = () => {
   const navigate = useNavigate(); 

@@ -3,6 +3,8 @@ import axios from "axios";
 import Modal from "react-modal";
 import { Button, TextField, Paper, List, ListItem, Typography, Box } from "@mui/material";
 import { Send, Close } from "@mui/icons-material";
+import { Send } from "@mui/icons-material";
+
 // import styles from "../../styles/mypage/ChatBot.module.css";
 const ChatBot = ({ closeModal }) => {
   const [messages, setMessages] = useState([]);
@@ -14,15 +16,31 @@ const ChatBot = ({ closeModal }) => {
       backgroundColor: "rgba(0, 0, 0, 0.3)",
     },
     content: {
-      display: "flex",
-      flexDirection: "column",
-      width: "450px",
-      height: '720px',
-      backgroundColor: "white",
-      border: "4px solid #1976D2",
+
+//       display: "flex",
+//       flexDirection: "column",
+//       width: "450px",
+//       height: '720px',
+//       backgroundColor: "white",
+//       border: "4px solid #1976D2",
+//       borderRadius: '25px',
+//       marginLeft: 'calc(98% - 470px)',
+//       // marginTop: '10%',
+
+      position: "fixed",
+      top: `calc(70% - 40px)`,
+      left: `calc(100% - 200px)`,
+      transform: "translate(-50%, -50%)",
+      border: '4px solid rgb(25, 118, 210)',
+      background: 'white',
+      overflow: 'auto',
       borderRadius: '25px',
-      marginLeft: 'calc(98% - 470px)',
-      // marginTop: '10%',
+      outline: 'none',
+      display: 'flex',
+      flexDirection: 'column',
+      width: '360px',
+      height: '60%',
+
     },
   };
 
@@ -82,7 +100,6 @@ const ChatBot = ({ closeModal }) => {
     setInputMessage("");
   };
 
-
   useEffect(() => {
     // 메세지 목록이 변경될 때, 스크롤을 가장 아래로 이동
     if (messageEndRef.current) {
@@ -90,6 +107,7 @@ const ChatBot = ({ closeModal }) => {
     }
   }, [messages]);
   return (
+
     <div style={{ zIndex: "9999" }}>
       <Modal
         ref={chatBotRef}
