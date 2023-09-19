@@ -1,9 +1,27 @@
 import React, { useState } from 'react';
+import { List, ListItem, ListItemText, TextField, Button, Avatar, Typography } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
+import { ClassSharp, Style } from '@material-ui/icons';
+
+
+const useStyles = makeStyles({
+    whiteText: {
+        color: '#fff'
+    },
+    whiteBorder: {
+        color: '#fff',
+        '& .MuiOutlinedInput-notchedOutline': {
+            borderColor: '#fff',
+        },
+    },
+});
 
 const ReplyList = ({ replies, onDeleteReply, onUpdateReply }) => {
     const [editingReplyId, setEditingReplyId] = useState(null);
     const [updateReply, setUpdateReply] = useState(''); // updatedContent 상태 추가
     const nickname = 'nickname1';
+    const classes = useStyles();
+
 
     const handleEditClick = (replyId, content) => {
         setEditingReplyId(replyId);
@@ -29,35 +47,47 @@ const ReplyList = ({ replies, onDeleteReply, onUpdateReply }) => {
 
     return (
         <div>
-            <h2>댓글 목록</h2>
-            <ul>
+            {/* <h2>댓글 목록</h2> */}
+            <List>
                 {replies.map(reply => (
-                    <div key={reply.replyId}>
-                        <p>
-                            댓글 번호: {reply.replyId},   
-                            댓글 작성자: {nickname},  
-                            {editingReplyId === reply.replyId ? (
-                                <input
-                                    type="text"
-                                    value={updateReply}
-                                    onChange={(e) => setUpdateReply(e.target.value)} // 수정된 내용을 updatedContent 상태에 설정
-                                />
-                            ) : (
-                                <>댓글 내용: {reply.content}</>
-                            )}
-                            {editingReplyId === reply.replyId ? (
+                    <ListItem key={reply.replyId}>
+                        <Avatar src={reply.profileImage} style={{ marginRight: '10px'}}/>
+                        <ListItemText
+                            primary = {
                                 <>
-                                    <button onClick={() => handleUpdateReply(reply.replyId)}>저장</button>
-                                    <button onClick={handleCancelEdit}>취소</button>
+                                <strong>{`${nickname}`}</strong> <br />
+                                {
+                                    editingReplyId === reply.replyId ? (
+                                        <TextField
+                                        value={updateReply}
+                                        onChange={ (e) => setUpdateReply(e.target.value)} 
+                                        InputProps = {{
+                                            className: classes.whiteBorder,
+                                        }}
+                                        variant='outlined'
+                                        InputLabelProps={{
+                                            className: classes.whiteBorder,
+                                        }} />
+                                    ) : <span className={classes.whiteText}>{reply.content}</span>
+
+                                }
                                 </>
-                            ) : (
-                                <button onClick={() => handleEditClick(reply.replyId, reply.content)}>수정</button>
-                            )}
-                            <button onClick={() => handleDeleteReply(reply.replyId)}>삭제</button>
-                        </p>
-                    </div>
+                            }
+                        />
+                            
+                        {editingReplyId === reply.replyId ? (
+                            <>
+                                <Button color='primary' onClick={() => handleUpdateReply(reply.replyId)}>저장</Button>
+                                <Button color='secondary' onClick={handleCancelEdit}>취소</Button>
+                            </>
+                        ) : (
+                            <Button color='primary' onClick={() => handleEditClick(reply.replyId, reply.content)}>수정</Button>
+                        )}
+                        <Button color='secondary' onClick={() => handleDeleteReply(reply.replyId)}>삭제</Button>
+
+                    </ListItem>
                 ))}
-            </ul>
+            </List>
         </div>
     );
 };

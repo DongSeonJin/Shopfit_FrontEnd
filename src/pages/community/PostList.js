@@ -86,13 +86,22 @@ const PostList = () => {
                 <img
                     src={post.imageUrl1}
                     alt={post.title}
-                    style={{ width: '100%', height: 'auto', objectFit: 'cover', border: '1px solid white', borderRadius: '5%'}}
+                    style={{ width: '300px', height: '300px', objectFit: 'cover', border: '1px solid white', borderRadius: '5%'}}
                 />
               </Link>
-              <LikeButton postId={post.postId} />
-              <div>{`조회수: ${post.viewCount}, `}</div>
-              <div>{`댓글수: ${post.replyCnt}`}</div>
-              <div>{post.title}</div>
+              <div style={{ display: 'flex', alignItems: 'center', marginTop: '10px' }}>
+                <LikeButton postId={post.postId} />
+                <span>{`,조회수: ${post.viewCount}, `}</span>
+                <span>{`댓글수: ${post.replyCnt}`}</span>
+              </div>
+              <div style={{ 
+                  fontSize: 'calc(1vw + 1vh)', 
+                  // whiteSpace: 'nowrap', 
+                  // overflow: 'hidden', 
+                  textOverflow: 'ellipsis' 
+              }}>
+                  {post.title}
+              </div>
               <div>{`작성자: ${post.nickname}`}</div>
             </div>
           ))}
