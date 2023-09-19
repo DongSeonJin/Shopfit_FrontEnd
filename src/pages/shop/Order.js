@@ -414,11 +414,11 @@ const Order = () => {
               </div>
               <div style={{ display: "flex", justifyContent: "space-between" }}>
                 <div>쿠폰 사용:</div>
-                <div style={{ color: "green" }}>{usingCoupon.toLocaleString()}원</div>
+                <div style={{ color: "red" }}>{usingCoupon.toLocaleString()}원</div>
               </div>
               <div style={{ display: "flex", justifyContent: "space-between" }}>
                 <div>포인트 사용:</div>
-                <div style={{ color: "blue" }}>{usingPoint.toLocaleString()}P</div>
+                <div style={{ color: "red" }}>{usingPoint.toLocaleString()}P</div>
               </div>
               <div style={{borderBottom: '1px red solid', margin: '15px 0'}} />
               <div style={{ display: "flex", justifyContent: "space-between" }}>

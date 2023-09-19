@@ -19,15 +19,22 @@ const MyCoupons = () => {
     <div style={{maxWidth: '720px', width: '100%', margin: 'auto'}}>
       <HeaderSubMyPage />
       <div>
-        {coupons.map((coupon) => (
-          <div key={coupon.couponId} style={{borderTop: '1px solid lightgray', borderBottom: '1px solid lightgray', margin: '30px 0', padding: '20px'}}>
-            <div style={{fontSize: '24px', fontWeight: 'bold'}}>{coupon.description}</div>
-            <div style={{textAlign: "right"}}>{coupon.discountValue.toLocaleString()} 원</div>
-            <div style={{textAlign: "right"}}>{new Date(coupon.validTo).toLocaleDateString()} 까지</div>
-          </div>
-        ))}
+        {coupons.length === 0 ? (
+            <div style={{textAlign: 'center', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '24px', fontWeight: 'bold', height: '360px', }}>
+              보유하신 쿠폰이 없습니다.
+            </div>
+          ) : (
+          coupons.map((coupon) => (
+            <div>
+              <div key={coupon.couponId} style={{borderTop: '1px solid lightgray', borderBottom: '1px solid lightgray', margin: '30px 0', padding: '20px'}}>
+                <div style={{fontSize: '24px', fontWeight: 'bold'}}>{coupon.description}</div>
+                <div style={{textAlign: "right"}}>{coupon.discountValue.toLocaleString()} 원</div>
+                <div style={{textAlign: "right"}}>{new Date(coupon.validTo).toLocaleDateString()} 까지</div>
+              </div>
+              <div style={{ marginBottom: '5px'}}>유효기간이 지난 쿠폰은 자동 삭제됩니다.</div>
+            </div>
+        )))}
       </div>
-      <div style={{ marginBottom: '5px'}}>유효기간이 지난 쿠폰은 자동 삭제됩니다.</div>
       <div style={{ marginBottom: '150px', textAlign: 'right'}}>
         <Link to='http://localhost:3000/mypage/info' style={{textDecoration: 'none'}}>이전으로</Link>
       </div>

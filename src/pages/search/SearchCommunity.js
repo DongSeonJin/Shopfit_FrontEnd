@@ -52,11 +52,16 @@ const SearchCommunity = () => {
     };
 
     return (
-        <div>
-            <div>
-                community "{text}" 검색결과 - {numberOfSearch} 개
+        <div style={{maxWidth: '1420px', width: '100%', margin: '0 auto 100px'}}>
+            <div style={{ fontSize: '36px', fontWeight: 'bold', textAlign: 'center', marginBottom: '50px'}}>전체 검색 결과</div>
+
+            <div style={{ fontSize: '24px', marginBottom: '30px'}}>
+                커뮤니티 '{text}' 검색결과 : {numberOfSearch} 개
             </div>
-            <div style={{ display: 'flex', flexWrap: 'wrap', width: '100%', margin: '0 auto' }}>
+
+            {numberOfSearch === 0 ? <div style={{textAlign: 'center', height: '240px', fontSize: '2vw', display: 'flex', justifyContent: 'center', alignItems: 'center'}}>검색 결과가 없습니다.</div> : ""}
+
+            <div style={{ display: 'flex', flexWrap: 'wrap', width: '100%', margin: '0 auto 50px', }}>
                 {(searchResults.length > 0 ? searchResults : dataList).map((data) => (
                     <div key={data.newsId} style={{ flexBasis: '20%', padding: '10px' }}>
                         <SearchResultPost data={data} />

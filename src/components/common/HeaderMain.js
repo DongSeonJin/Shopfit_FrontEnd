@@ -31,9 +31,9 @@ const HeaderMain = ({ isCommunityHovered, isShoppingHovered }) => {
         <div style={{display: 'flex', height: '90px', alignItems: 'center', marginTop: '30px'}}>
 
             
-            <div style={{flex: '1',display: 'flex', fontWeight: 'bold', fontSize: '24px'}}>
+            <div style={{flex: '2',display: 'flex', fontWeight: 'bold', fontSize: '1.5vw', paddingLeft: '20px'}}>
                 <div
-                    style={{display: 'inline-block', width: 'auto', textAlign: 'center', margin: '0 10%',
+                    style={{display: 'inline-block', width: 'auto', textAlign: 'center', margin: '0 1.5vw',
                         color: isHoveredCommunity ? 'red' : 'white',
                     }}
                     onMouseEnter={() => {
@@ -48,7 +48,7 @@ const HeaderMain = ({ isCommunityHovered, isShoppingHovered }) => {
                     <Link to="/community" style={{ textDecoration: 'none', color: 'inherit' }}>커뮤니티</Link>
                 </div>
                 <div
-                    style={{display: 'inline-block', width: 'auto', textAlign: 'center', margin: '0 5%',
+                    style={{display: 'inline-block', width: 'auto', textAlign: 'center', margin: '0 1.5vw',
                         color: isHoveredShopping ? 'red' : 'white',
                     }}
                     onMouseEnter={() => {
@@ -63,7 +63,7 @@ const HeaderMain = ({ isCommunityHovered, isShoppingHovered }) => {
                     <Link to="/shopping/1" style={{ textDecoration: 'none', color: 'inherit' }}>쇼핑</Link>
                 </div>
                 <div
-                    style={{display: 'inline-block', width: 'auto', textAlign: 'center', margin: '0 10%',
+                    style={{display: 'inline-block', width: 'auto', textAlign: 'center', margin: '0 1.5vw',
                         color: isHoveredNews ? 'red' : 'white',
                     }}
                     onMouseEnter={() => {
@@ -78,7 +78,7 @@ const HeaderMain = ({ isCommunityHovered, isShoppingHovered }) => {
             </div>
 
 
-            <div style={{flex: '1', display: 'flex', height: '40px'}}>
+            <div style={{flex: '2', display: 'flex', height: '40px'}}>
                 <input
                     type="text"
                     value={searchText}
@@ -90,11 +90,13 @@ const HeaderMain = ({ isCommunityHovered, isShoppingHovered }) => {
             </div>
 
 
-            <div style={{flex: '1', display: 'flex', marginLeft: '10%', fontWeight: 'bold'}}>
-                <div style={{textAlign: 'center',display: 'inline-block', width: 'auto', margin: '0 5%'}}>
+            <div style={{flex: '1', display: 'flex', fontWeight: 'bold', paddingRight: '200px', justifyContent: 'right', fontSize: '1vw'}}>
+
+                <div style={{display: 'inline-block', width: 'auto', textAlign: 'center', margin: '0 1vw',}}>
                     <Link to="/login" style={{ textDecoration: 'none', color: 'inherit'}}>로그인</Link>
                 </div>
-                <div style={{textAlign: 'center',display: 'inline-block', width: 'auto', margin: '0 5%'}}>
+
+                <div style={{display: 'inline-block', width: 'auto', textAlign: 'center', margin: '0 1vw',}}>
                     <Link to="/signup" style={{ textDecoration: 'none', color: 'inherit'}}>회원가입</Link>
                 </div>
             </div>

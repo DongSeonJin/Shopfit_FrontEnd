@@ -22,11 +22,13 @@ const HomeShopping = () => {
 
 
   return (
-    <div style={{margin: '5% 0'}}>
-      <div style={{fontWeight: 'bold', margin: '2% 0', fontSize: '24px'}}>인기 상품</div>
-      <div style={{display: 'flex', justifyContent: 'space-between'}}>
+    <div style={{maxWidth: '1080px', width: '90%', margin: '0 auto 150px'}}>
+
+      <div style={{fontWeight: 'bold', margin: '25px 0', fontSize: '24px'}}>인기 상품</div>
+
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '30px'}}>
         {topProducts.map((data) => (
-          <div style={{width: '300px'}}>
+          <div>
             <Top3Product data={data} />
           </div>
         ))}
