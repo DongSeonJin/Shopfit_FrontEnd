@@ -4,12 +4,13 @@ const cookies = new Cookies();
 
 export const setRefreshToken = (refreshToken) => {
     const today = new Date();
-    const expireDate = today.setDate(today.getDate() + 7);
+    const expireDate = new Date(); // Create a new date object
+    expireDate.setDate(today.getDate() + 7); // Set the expiration date
 
     return cookies.set('refresh_token', refreshToken, { 
         sameSite: 'strict', 
         path: "/", 
-        expires: new Date(expireDate)
+        expires: expireDate // Use the updated date object
     });
 };
 
