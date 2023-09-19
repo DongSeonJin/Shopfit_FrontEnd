@@ -303,7 +303,7 @@ const Order = () => {
   };
 
   return (
-    <div>
+    <div style={{ maxWidth: '1420px', width: '100%', margin: '0 auto 150px'}}>
       <div style={{ fontSize: '24px', fontWeight: 'bold', marginBottom: '2%' }}>주문/결제</div>
 
       <div style={{display: 'flex'}}>

@@ -133,9 +133,10 @@ const ProductDetail = () => {
   };
 
   return (
-    <div style={{maxWidth: '1420px', width: '100%', margin: 'auto'}}>
+    <div style={{maxWidth: '1080px', width: '100%', margin: 'auto'}}>
       <UTurnRightRoundedIcon onClick={scrollToTop} style={{ position: 'fixed', bottom: '20px', right: '20px', zIndex: '9999', transform: 'rotate(180deg)', cursor: 'pointer'}} />
 
+      {/* 관리자 권한 */}
       <div style={{textAlign: 'right'}}>
         <Button variant="outlined" color='inherit' onClick={() => handleProductUpdate(data.productNum, navigate)} style={{margin: '0 1%', backgroundColor: 'black'}}>상품 수정</Button>
         <Button variant="outlined" color="error" onClick={() => handleDeleteProduct(data.productId, data.thumbnailUrl, data.productImageUrls, navigate)} style={{margin: '0 1%'}}>상품 삭제</Button>
@@ -187,11 +188,10 @@ const ProductDetail = () => {
         </div>
       </div>
 
-      <div style={{fontSize: '24px', fontWeight: 'bold', margin: '3% 5%'}}>상세정보</div>
-
-      <div style={{display: 'flex', margin: '0 10%'}}>
-        <div style={{flex: '2'}}>
-          <div>
+      <div style={{margin: '0 50px', padding: '20px'}}>
+        <div>
+          <div style={{fontSize: '24px', fontWeight: 'bold', marginBottom: '20px'}}>상세정보</div>
+          <div style={{minHeight: '200px', padding: '20px'}}>
             <div>
               {data.productImageUrls.map((imageUrl, index) => (
                 <div>
@@ -201,10 +201,10 @@ const ProductDetail = () => {
             </div>
           </div>
 
-          <div style={{margin: '5% 0'}}>
-          <div style={{fontSize: '24px', fontWeight: 'bold', marginBottom: '3%'}}>구매후기</div>
-            <div style={{width: '100%'}}>
-              <div style={{margin: '3% 0'}}>
+          <div style={{marginBottom: '150px'}}>
+          <div style={{fontSize: '24px', fontWeight: 'bold', marginBottom: '20px'}}>구매후기</div>
+            <div style={{width: '100%', minHeight: '200px'}}>
+              <div>
                 {formattedReviews.map((review) => (
                   <div key={review.reviewId} style={{margin: '3% 0', display:'flex', border: '1px solid white', borderRadius: '5px', height: '60px', placeItems: 'center', padding: '1%'}}>
                     <div style={{flex: '1'}}>
@@ -219,7 +219,6 @@ const ProductDetail = () => {
             </div>
           </div>
         </div>
-
       </div>
     </div>
   );

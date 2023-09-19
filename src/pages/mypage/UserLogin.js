@@ -51,7 +51,7 @@ const UserLogin = ({ setUser }) => {
     };
 
     return (
-        <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', width:'100%', minHeight: `calc(100vh - 720px)`}}>
+        <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', maxWidth: '1420px', width:'100%', minHeight: `calc(100vh - 720px)`, margin: '0 auto 150px'}}>
             <div style={{width: '360px', alignContent: 'center'}}>
                 <div style={{display: 'flex', width: '240px', cursor: 'pointer', marginLeft: '20px'}} onClick={handleHome}>
                     <div style={{flex: "1"}}>

@@ -20,16 +20,17 @@ const OrderDetail = () => {
 
 
     return (
-        <div style={{margin: '5% 0'}}>
-            <div style={{margin: '5% 0', fontSize: '36px', fontWeight: 'bold', textAlign: 'center'}}>주문완료</div>
+        <div style={{ maxWidth: '1420px', width: '100%', margin: '0 auto 150px'}}>
+            <div style={{ fontSize: '36px', fontWeight: 'bold', textAlign: 'center', marginBottom: '50px'}}>주문완료</div>
             <PurchasedProduct products={purchasedProducts} />
+
             <div style={{display: 'flex', justifyContent: 'center'}}>
-                <div style={{margin: '5% 0', width: '36%'}}>
+                <div style={{margin: '50px 0'}}>
                     <Link to="/" style={{ textAlign: 'center', textDecoration: 'none', color: 'inherit', fontSize: '24px'}}>
                         <div>총 주문 가격 : {totalPrice.toLocaleString()}원</div>
                         <div style={{margin: '8px'}}>상품 구매가 완료되었습니다.</div>
                         <div style={{fontSize: '16px'}}>클릭하면 홈으로 돌아갑니다.</div>
-                    </Link>
+                    </Link> 
                 </div>
             </div>
         </div>

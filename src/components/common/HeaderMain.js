@@ -31,7 +31,7 @@ const HeaderMain = ({ isCommunityHovered, isShoppingHovered }) => {
         <div style={{display: 'flex', height: '90px', alignItems: 'center', marginTop: '30px'}}>
 
             
-            <div style={{flex: '1',display: 'flex', fontWeight: 'bold', fontSize: '20px'}}>
+            <div style={{flex: '1',display: 'flex', fontWeight: 'bold', fontSize: '24px'}}>
                 <div
                     style={{display: 'inline-block', width: 'auto', textAlign: 'center', margin: '0 10%',
                         color: isHoveredCommunity ? 'red' : 'white',
