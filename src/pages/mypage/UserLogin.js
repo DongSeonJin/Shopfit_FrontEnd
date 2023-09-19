@@ -65,7 +65,7 @@ const UserLogin = () => {
 
             if (response) {
                     
-                dispatch(SET_USER(response.user)); // 로그인 성공 시 사용자 정보 업데이트
+                dispatch(SET_USER(response)); // 로그인 성공 시 사용자 정보 업데이트
                 // 쿠키에 Refresh Token, store에 Access Token 저장
                 setRefreshToken(response.refreshToken);
                 dispatch(SET_TOKEN(response.accessToken));

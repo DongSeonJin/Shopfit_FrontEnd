@@ -1,18 +1,33 @@
 import { createSlice } from '@reduxjs/toolkit';
 
+const initialState = {
+  accessToken: '',
+  refreshToken: '',
+  authority: '',
+  userId: '0',
+  email: '',
+  nickname: ''
+};
+
 const userSlice = createSlice({
   name: 'authUser',
-  initialState: {
-    user: null, // 초기 상태는 로그인되지 않은 상태로 설정합니다.
-  },
+  initialState,
   reducers: {
     SET_USER: (state, action) => {
-      // Immer 덕분에 state를 직접 변경해도 불변성이 유지됩니다.
-      state.user = action.payload;
+      state.accessToken = action.payload.accessToken;
+      state.refreshToken = action.payload.refreshToken;
+      state.authority = action.payload.authority;
+      state.userId = action.payload.userId;
+      state.email = action.payload.email;
+      state.nickname = action.payload.nickname;
     },
-  },
+    LOGOUT_USER:(state) =>{
+        Object.assign(state,initialState); // 로그아웃시 모든 정보 초기화
+    }
+    
+   },
 });
 
-export const { SET_USER } = userSlice.actions;
+export const { SET_USER,LOGOUT_USER } = userSlice.actions;
 
 export default userSlice.reducer;

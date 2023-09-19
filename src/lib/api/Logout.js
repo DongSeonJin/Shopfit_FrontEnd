@@ -2,6 +2,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
 import { DELETE_TOKEN } from '../../redux/AuthReducer';
 import { getCookieToken, removeCookieToken } from '../../store/Cookie';
+import { LOGOUT_USER } from '../../redux/UserReducer';
 
 
 export const logout = async () => {
@@ -29,6 +30,9 @@ export const logout = async () => {
                 dispatch(DELETE_TOKEN());
                 // Cookie에 저장된 Refresh Token 정보를 삭제
                 removeCookieToken();
+                // store에 저장된 user 데이터 초기화
+                dispatch(LOGOUT_USER());
+
             }
         } catch (error) {
             console.error(error.response.data.message);
