@@ -5,6 +5,7 @@ import { useNavigate } from "react-router";
 import { Button } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import CartQuantity from '../../components/shop/CartQuantity';
+import HeaderSubMyPage from "../../components/common/HeaderSubMypage";
 
 // import styles from '../../styles/shop/CartList.module.css';
 
@@ -101,9 +102,11 @@ const CartList = () => {
   };
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', margin: '0 5%'}}>
-      <div style={{ fontSize: '36px', fontWeight: 'bold', textAlign: 'center', marginBottom: '5%', width: '100%' }}>장바구니</div>
-      <div style={{display: 'flex', marginBottom: '2%'}}>
+    <div style={{ maxWidth: '1420px', width: '100%', margin: '0 auto 150px'}}>
+      <HeaderSubMyPage />
+
+      <div style={{ fontSize: '36px', fontWeight: 'bold', textAlign: 'center', marginBottom: '20px', width: '100%' }}>장바구니</div>
+      <div style={{display: 'flex'}}>
         <div style={{flex: 1}}>
           <input type="checkbox" style={{ margin: '10px' }} id="checkAll" checked={isCheckedAll} onChange={handleCheckChange} />
           {isCheckedAll ? "전체해제" : "전체선택"}
@@ -116,34 +119,37 @@ const CartList = () => {
       </div>
 
 
-      <div>
+      <div style={{ borderTop: '1px solid lightgray', borderBottom: '1px solid lightgray', minHeight: '240px', padding: '20px', margin: '50px 0'}}>
         {cartItems.map((item) => (
           <div key={item.cartId} style={{ display: 'flex', alignItems: 'center', marginBottom: '10px', position: 'relative' }}>
             <div>
               <input
                 type="checkbox"
-                style={{ margin: '5px', width: '10px' }}
+                style={{ margin: '0 5px', width: '10px' }}
                 checked={item.isChecked}
                 onChange={() => handleItemCheckChange(item.cartId)}
               />
             </div>
-            <div style={{ margin: '0 2%' }}>
+            <div style={{margin: '0 10px'}}>
               <img style={{ height: '180px', width: '180px', borderRadius: '25px', border: '1px white solid' }} src={item.thumbnailUrl} alt={item.productName} />
             </div>
-            <div style={{ width: '52%', margin: '0 2%' }}>
+
+            <div style={{ width: '60%', padding: '0 20px' }}>
               <div style={{ fontSize: '24px', display: 'block', flex: 1 }}>{item.productName}</div>
               <div style={{ textAlign: 'right', color: '#888', flex: 1, fontSize: '20px' }}>{item.price.toLocaleString()}원</div>
             </div>
-            <div style={{ display: 'flex', width: `calc(40% - 200px)`, textAlign: 'center', alignItems: 'center'}}>
-              <div style={{ flex: '1'}}>
-                <CartQuantity
-                  count={item.quantity}
-                  stockQuantity={item.stockQuantity}
-                  onCountChange={(newCount) => handleItemQuantityChange(item.cartId, newCount)}
-                />
+            <div style={{ display: 'flex', width: '40%', textAlign: 'center', alignItems: 'center'}}>
+              <div style={{flex: '4', paddingRight: '20px'}}>
+                <div style={{ display: 'flex', width: '100%', justifyContent: "right", paddingBottom: '20px'}}>
+                  <CartQuantity
+                    count={item.quantity}
+                    stockQuantity={item.stockQuantity}
+                    onCountChange={(newCount) => handleItemQuantityChange(item.cartId, newCount)}
+                  />
+                </div>
+                <div style={{ color: '#888', fontSize: '24px', textAlign: "right", paddingTop: '20px' }}>{(item.quantity * item.price).toLocaleString()} 원</div>
               </div>
-              <div style={{ color: '#888', flex: '1', fontSize: '24px', textAlign: "right" }}>{(item.quantity * item.price).toLocaleString()} 원</div>
-              <div style={{ flex: '1', textAlign: "right"}}>
+              <div style={{flex: '1', textAlign: "right"}}>
                 <Button variant="outlined" color="error" onClick={() => handleDelete(item.cartId)}>
                   삭제
                 </Button>

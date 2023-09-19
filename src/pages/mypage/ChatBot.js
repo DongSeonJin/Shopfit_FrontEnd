@@ -2,29 +2,37 @@ import React, { useEffect, useRef, useState } from "react";
 import axios from "axios";
 import Modal from "react-modal";
 import { Button, TextField, Paper, List, ListItem, Typography, Box } from "@mui/material";
-import { Send, Close } from "@mui/icons-material";
+import { Send } from "@mui/icons-material";
+
 // import styles from "../../styles/mypage/ChatBot.module.css";
+
 const ChatBot = ({ closeModal }) => {
   const [messages, setMessages] = useState([]);
   const [inputMessage, setInputMessage] = useState("");
   const chatBotRef = useRef(null);
   const messageEndRef = useRef(null);
+
   const modalStyles = {
     overlay: {
       backgroundColor: "rgba(0, 0, 0, 0.3)",
     },
     content: {
-      display: "flex",
-      flexDirection: "column",
-      width: "360px",
-      height: '55%',
-      backgroundColor: "white",
-      border: "4px solid #1976D2",
+      position: "fixed",
+      top: `calc(70% - 40px)`,
+      left: `calc(100% - 200px)`,
+      transform: "translate(-50%, -50%)",
+      border: '4px solid rgb(25, 118, 210)',
+      background: 'white',
+      overflow: 'auto',
       borderRadius: '25px',
-      marginLeft: 'calc(98% - 380px)',
-      marginTop: '30%',
+      outline: 'none',
+      display: 'flex',
+      flexDirection: 'column',
+      width: '360px',
+      height: '60%',
     },
   };
+
   // ChatBot 닫기
   const closeChatBot = () => {
     closeModal();
@@ -56,7 +64,7 @@ const ChatBot = ({ closeModal }) => {
     }
   }, [messages]);
   return (
-    <div style={{ zIndex: "9999" }}>
+    <div style={{zIndex: '9999'}}>
       <Modal
         ref={chatBotRef}
         isOpen={true}
@@ -76,6 +84,7 @@ const ChatBot = ({ closeModal }) => {
             </Button>
           </div>
         </div>
+
         <div style={{display: 'flex', flexDirection: "column", height: '100%'}}>
           <List style={{overflowY:'auto', maxHeight: 'none', flexGrow: '1', height: '300px', borderTop: '1px lightgray solid', borderBottom: '1px lightgray solid'}}>
             {messages.map((message, index) => (

@@ -55,6 +55,9 @@ const OrderHistoryProducts = ({ orders }) => {
         sortedOrders.map((order, index) => (
           <div style={{ margin: "10px 0" }} key={order.orderId}>
             <div>주문날짜: {formatDateTime(order.orderDate)}</div>
+            <div>주문번호: {order.orderId}</div>
+            <div>{index}</div>
+
             {productDetails[index] ? (
               <div style={{ display: "flex", alignItems: "center", textAlign: "center" }}>
                 <div style={{ flex: "3", textAlign: "left" }}>
@@ -105,7 +108,7 @@ const OrderHistoryProducts = ({ orders }) => {
           </div>
         ))
       ) : (
-        <p>주문 내역이 없습니다.</p>
+        <div style={{ height: '200px', textAlign: 'center', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '24px' }}>주문 내역이 없습니다.</div>
       )}
     </div>
   );

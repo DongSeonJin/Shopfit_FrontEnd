@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 
 import styles from "../../../styles/common/modal/ReviewModal.module.css";
+import { Button } from "@mui/material";
 
 const CouponSelectModal = ({ userId, onClose, onSelectCoupon, orderData }) => {
   const [coupons, setCoupons] = useState([]);
@@ -32,20 +33,16 @@ const CouponSelectModal = ({ userId, onClose, onSelectCoupon, orderData }) => {
   return (
     <div className={styles.modal}>
       <div className={styles.modalContent}>
-        <div>사용 가능한 쿠폰</div>
+        <div className={styles.title}>사용 가능한 쿠폰</div>
         {coupons.map((coupon) => (
-          <div key={coupon.couponId} onClick={() => handleCouponSelect(coupon)} style={{ cursor: "pointer" }}>
-            {/* 쿠폰 클릭 시 handleCouponSelect 함수 호출 */}
-            <hr />
+          <div key={coupon.couponId} onClick={() => handleCouponSelect(coupon)} style={{ cursor: "pointer", borderTop: '1px solid lightgray', borderBottom: '1px solid lightgray', padding: '10px', margin: '20px 0' }}>
             <div>{coupon.description}</div>
-            <div>{coupon.discountValue}원</div>
+            <div>{coupon.discountValue.toLocaleString()}원</div>
             <div>{new Date(coupon.validTo).toLocaleDateString()}까지</div>
-            <hr />
-            <br />
           </div>
         ))}
-        <div>
-          <button onClick={onClose}>닫기</button>
+        <div style={{textAlign: 'right'}}>
+          <Button onClick={onClose} variant="outlined" style={{width: '120px', height: '40px', textAlign: 'center', borderRadius: '10px', fontSize: '16px'}}>닫기</Button>
         </div>
       </div>
     </div>

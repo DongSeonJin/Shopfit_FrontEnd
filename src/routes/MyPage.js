@@ -9,7 +9,6 @@ import UserInfoUpdate from "./../pages/mypage/UserInfoUpdate";
 import ChatBot from "../pages/mypage/ChatBot";
 import PasswordUpdate from "../pages/mypage/PasswordUpdate";
 import MyCoupons from "../pages/mypage/MyCoupons";
-import HeaderSubMyPage from "../components/common/HeaderSubMypage";
 
 const MyPage = () => {
   return (
