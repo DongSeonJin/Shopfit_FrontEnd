@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { SET_USER } from '../../redux/UserReducer'
 import { login } from '../../lib/api/authApi'
 import axios from 'axios';
 import { useDispatch } from 'react-redux';
@@ -10,6 +9,7 @@ import Modal from './../../components/common/modal/Modal';
 
 import { setRefreshToken } from '../../store/Cookie';
 import { SET_TOKEN } from '../../redux/AuthReducer';
+import { SET_USER } from '../../redux/UserReducer';
 
 const UserLogin = () => {
     const [errorModalOpen, setErrorModalOpen] = useState(false);
@@ -38,39 +38,37 @@ const UserLogin = () => {
 
 
     const handleLogin = async (e) => {
+        if (!values.email && !values.password) {
+            setErrorMessage('이메일과 비밀번호를 입력해주세요.');
+            setErrorModalOpen(true);
+            return; // Don't proceed further
+        }
+
+        if(!values.email){
+            setErrorMessage('이메일을 입력해주세요.');
+            setErrorModalOpen(true);
+            return;
+        }
+
+        if(!values.password){
+            setErrorMessage('비밀번호를 입력해주세요.');
+            setErrorModalOpen(true);
+            return;
+        }
+
         try {
+            
 
-            // try {
-            //     login(values)
-            //         .then((response) => {
-
-            //                 setUser(response.data); // 로그인 성공 시 사용자 정보 업데이트
-            //                 // 쿠키에 Refresh Token, store에 Access Token 저장
-            //                 setRefreshToken(response.json.refreshToken);
-            //                 dispatch(SET_TOKEN(response.json.accessToken));
-            //                 console.log(response.json.accessToken);
-
-            //                 navigate('/');
-
-
-
-            //         })
-            // } catch (error) {
-            //     console.error('로그인 실패:', error);
-            //     setErrorMessage('이메일 또는 비밀번호를 확인해 주십시오.');
-            //     setErrorModalOpen(true);
-            // }
             const response = await login(values);
 
             console.log('Response:', response); // Add this line to debug the response
 
             if (response) {
-                console.log(response.user);
-                dispatch(SET_USER(response.user)) // 로그인 성공 시 사용자 정보 업데이트
+                    
+                dispatch(SET_USER(response.user)); // 로그인 성공 시 사용자 정보 업데이트
                 // 쿠키에 Refresh Token, store에 Access Token 저장
                 setRefreshToken(response.refreshToken);
                 dispatch(SET_TOKEN(response.accessToken));
-                console.log(response.accessToken);
                 console.log('로그인 성공:');
 
                 navigate('/');

@@ -2,6 +2,7 @@ import axios from "axios";
 import store from '../../store/ReduxStore'
 import { SET_TOKEN } from '../../redux/AuthReducer';
 import { getCookieToken, setRefreshToken } from "../../store/Cookie";
+import logout from './Logout';
 
 const dispatch = store.dispatch;
 
@@ -21,12 +22,11 @@ export async function refreshTokenApi() {
     const { data } = await axios.post(
       `/api/token`, // token refresh api
       {},
-      { headers: { authorization: `Bearer ${refreshToken}` } }
+      { headers: { Authorization: `${refreshToken}`}
+                 }
     );
 
-    if (data.status === 200) {
-      const newAccessToken = data.data.accessToken;
-      const newRefreshToken = data.data.refreshToken;
+      const { accessToken: newAccessToken, refreshToken: newRefreshToken } = data;
 
       dispatch(SET_TOKEN(newAccessToken));
 
@@ -36,18 +36,18 @@ export async function refreshTokenApi() {
 
        return newAccessToken;
       
-    } else {
-        throw new Error("Unable to refresh token");
-    }
+
   } catch (error) {
-    alert(error.response.data.message);
-    // window.location.replace('/login');
+    if (error.response && error.response.status === 401) {
+      logout();
+      alert(error.response.data.message);
+  }
   }
 };
 
 
 
-// authApi의 axios 요청을 가로채서 실행되는 코드 
+// authApi의 axios 요청을 가로채서 먼저 실행되는 코드 
 authApi.interceptors.request.use((config) => {
   const state = store.getState();
 
@@ -57,7 +57,7 @@ authApi.interceptors.request.use((config) => {
     config.headers.Authorization = `Bearer ${token}`;
   }
 
-  return config;
+  return config; // config는 기존의 axios 요청. interceptor 코드가 끝나면 요청을 이어나가야 하기 때문에 리턴.
 
 
 
@@ -84,7 +84,7 @@ authApi.interceptors.response.use(
     if (status === 401) {
         const newAccessToken = await refreshTokenApi(); // 리프레시 토큰 검증 함수 api
         config.headers.Authorization = `Bearer ${newAccessToken}`;
-
+        // 응답interceptor 로직이 끝나면 이어받은 config 헤더에 토큰을 담아 원래의 요청을 이어간다.
       return axios(config);
       
     }
