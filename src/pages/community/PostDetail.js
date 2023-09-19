@@ -1,14 +1,22 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios'; // axios 추가
 import { useParams, useNavigate, Link } from 'react-router-dom'; // useParams와 useHistory 추가
-import { Table, TableBody, TableCell, TableRow } from '@material-ui/core';
+import { Table, TableBody, TableCell, TableRow, Box } from '@material-ui/core';
 import { Button } from '@material-ui/core'
-
 import LikeButton from './../../components/community/LikeButton';
 import ReplyList from './../../components/community/ReplyList';
 import ReplyCreate from './../../components/community/ReplyCreate';
-
+import { makeStyles } from '@material-ui/core/styles';
 // import styles from '../../styles/community/PostDetail.module.css';
+
+const useStyles = makeStyles({
+  whiteText: {
+    color: '#fff',
+  },
+  cellPadding: {
+    paddingLeft: '0px',
+  },
+});
 
 const PostDetail = () => {
   const navigate = useNavigate(); 
@@ -17,6 +25,7 @@ const PostDetail = () => {
   const [replies, setReplies] = useState([]);
   // const [likeCount, setLikeCount] = useState(0);
   // const [isLiked, setIsLiked] = useState(false); // 좋아요 상태
+  const classes = useStyles();
   
 
   useEffect(() => {
@@ -57,35 +66,6 @@ const PostDetail = () => {
     setReplies(responseReplies.data);
   }
 
-  // const handleLike = async () => {
-  //   try {
-
-  //     if(!isLiked){
-  //       // 서버로 좋아요 요청 보내기
-  //       await axios.post('/post/like/add', { postId: data.postId, userId:1});
-        
-  //     }else{
-  //       // 이미 누른거면 좋아요 취소 요청
-  //       await axios.post('/post/like/delete', { postId: data.postId, userId:1 });
-        
-  //     }
-      
-
-  //     // 좋아요 성공 후 해당 포스트 정보 다시 가져오기
-  //     const response = await axios.get(`/post/${postId}`); // 좋아요 갯수만 따로 요청받을 컨트롤러 만들까 고민중
-  //                                                         //좋아요 갯수만 가져오면 되는데 resource낭비
-
-  //     // 가져온 데이터를 통해 상태 갱신
-  //     setLikeCount(response.data.likeCnt); //좋아요 갯수만 다시 갱신
-
-  //   // isLiked 상태 업데이트
-  //     setIsLiked(!isLiked);
-  //   } catch (error) {
-  //     console.error('좋아요 실패:', error);
-  //     alert('좋아요 실패');
-  //   }
-  // };
-
   const handleDeletePost = async () => {
     // 사용자로부터 삭제 확인을 받기 위한 알림창 표시
     const shouldDelete = window.confirm('게시글을 삭제하시겠습니까?');
@@ -100,7 +80,6 @@ const PostDetail = () => {
         }
     }
 };
-
 
   const handleDeleteReply = (replyId) => {
     // 댓글 삭제 로직을 구현하고, 삭제 후 업데이트된 댓글 목록을 설정
@@ -125,121 +104,115 @@ const PostDetail = () => {
     <>
       <h2 align="center">게시글 상세정보</h2>
 
-      <div className="post-view-wrapper">
+      <div className="post-view-wrapper" style={{ width: '80%', margin: '0 auto'}}>
         {data.postId ? (
           <>
             <Table>
               <TableBody>
-                <TableRow>
-                  <TableCell>게시글 번호</TableCell>
-                  <TableCell>{data.postId}</TableCell>
+                <TableRow >
+                  <TableCell className={`${classes.whiteText}`} style={{ width: '110px'}}>게시글 번호</TableCell>
+                  <TableCell className={`${classes.whiteText}`}>{data.postId}</TableCell>
                 </TableRow>
               </TableBody>
 
               <TableBody>
                 <TableRow>
-                  <TableCell>작성자</TableCell>
-                  <TableCell>{data.nickname}</TableCell>
+                  <TableCell className={classes.whiteText}>작성자</TableCell>
+                  <TableCell className={classes.whiteText}>{data.nickname}</TableCell>
                 </TableRow>
               </TableBody>
 
               <TableBody>
                 <TableRow>
-                  <TableCell>작성일</TableCell>
-                  <TableCell>{data.createdAt}</TableCell>
+                  <TableCell className={classes.whiteText}>작성일</TableCell>
+                  <TableCell className={classes.whiteText}>{data.createdAt}</TableCell>
                 </TableRow>
               </TableBody>
 
               <TableBody>
                 <TableRow>
-                  <TableCell>조회수</TableCell>
-                  <TableCell>{data.viewCount}</TableCell>
+                  <TableCell className={classes.whiteText}>조회수</TableCell>
+                  <TableCell className={classes.whiteText}>{data.viewCount}</TableCell>
                 </TableRow>
               </TableBody>
 
               <TableBody>
                 <TableRow>
-                  <TableCell>카테고리</TableCell>
-                  <TableCell>{data.category}</TableCell>
+                  <TableCell className={classes.whiteText}>카테고리</TableCell>
+                  <TableCell className={classes.whiteText}>{data.category}</TableCell>
                 </TableRow>
               </TableBody>
 
               <TableBody>
                 <TableRow>
-                  <TableCell>제목</TableCell>
-                  <TableCell>{data.title}</TableCell>
+                  <TableCell className={classes.whiteText}>제목</TableCell>
+                  <TableCell className={classes.whiteText}> {data.title}</TableCell>
                 </TableRow>
               </TableBody>
 
               <TableBody>
                 <TableRow>
-                  <TableCell>내용</TableCell>
-                  <TableCell>{data.content}</TableCell>
+                  <TableCell className={classes.whiteText}>내용</TableCell>
+                  <TableCell className={classes.whiteText}>{data.content}</TableCell>
                 </TableRow>
               </TableBody>
               
             </Table>
+            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
 
-            {data.imageUrls.map((imageUrl, index) =>
-              imageUrl && (
-                <img
-                  key={index}
-                  src={imageUrl}
-                  alt={`첨부이미지${index + 1}`}
-                  style={{ width: '500px', height: '500px' }}
-                />
-              )
-            )}
+              {data.imageUrls.map((imageUrl, index) =>
+                imageUrl && (
+                  <img
+                    key={index}
+                    src={imageUrl}
+                    alt={`첨부이미지${index + 1}`}
+                    style={{ width: '500px', height: '500px', marginBottom: '20px', marginTop: '20px' }}
+                  />
+                )
+              )}
+            </div>
+            <br /><br />
 
-            {/* {data.imageUrl1 && (
-              <img src={data.imageUrl1} alt="첨부이미지1" style={{width: '500px', height: '500px'}} />
-            )}
-            {data.imageUrl2 && (
-              <img src={data.imageUrl2} alt="첨부이미지2" style={{width: '500px', height: '500px'}} />
-            )}
-            {data.imageUrl3 && (
-              <img src={data.imageUrl3} alt="첨부이미지3" style={{width: '500px', height: '500px'}} />
-            )} */}
-
-            <br /><br /><br />
-
-            
-            <LikeButton postId={postId} /> {/*좋아요 버튼 component 분리, prop으로 postId 전달*/}
-
-            <Button
-              variant="contained"
-              color="primary"
-              onClick={() => navigate(`/community/post/list/${data.categoryId}`)}
-              style={{ marginTop: '10px' }}
-            > 목록으로 돌아가기 </Button>
-
-            {data.postId && (  // postId 가 존재할 때만 버튼 보이기
-              <>
-              <Button
-                  variant="contained"
-                  color="primary"
-                  component={Link}
-                  to={`/community/post/update/${postId}`} // 수정 페이지 경로로 이동
-                  style={{ marginTop: '10px', marginLeft: '10px' }}
-              > 수정하기 </Button>
-
-              <Button
-                    variant="contained"
-                    color="primary"
-                    component={Link}
-                    onClick={handleDeletePost}
-                    style={{ marginTop: '10px', marginLeft: '10px' }}
-              > 삭제하기 </Button> <br /> <br />
-
-              <ReplyList 
+            <ReplyList 
                 replies={replies} 
                 onDeleteReply={handleDeleteReply}
                 onUpdateReply={handleUpdateReply} />
-              <ReplyCreate postId={postId} onReplySubmit={handleNewReply} />
+
+            <ReplyCreate postId={postId} onReplySubmit={handleNewReply} />
 
 
+            <Box display='flex' justifyContent='flex-end' mt={2}>
+              <Box mt={1.7} mr={1.5}>
+                <LikeButton postId={postId} /> {/*좋아요 버튼 component 분리, prop으로 postId 전달*/}
+              </Box>
+
+              <Button
+                variant="contained"
+                color="primary"
+                onClick={() => navigate(`/community/post/list/${data.categoryId}`)}
+                style={{ marginTop: '10px' }}
+              > 목록으로 돌아가기 </Button>
+
+              {data.postId && (  // postId 가 존재할 때만 버튼 보이기
+                <>
+                <Button
+                    variant="contained"
+                    color="primary"
+                    component={Link}
+                    to={`/community/post/update/${postId}`} // 수정 페이지 경로로 이동
+                    style={{ marginTop: '10px', marginLeft: '10px' }}
+                > 수정하기 </Button>
+
+                <Button
+                      variant="contained"
+                      color="primary"
+                      component={Link}
+                      onClick={handleDeletePost}
+                      style={{ marginTop: '10px', marginLeft: '10px' }}
+                > 삭제하기 </Button> <br /> <br />
               </>
-            )}
+              )}
+            </Box>
           
           </>
         ) : (

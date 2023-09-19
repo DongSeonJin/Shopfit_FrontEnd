@@ -3,16 +3,12 @@ import { List, ListItem, ListItemText, TextField, Button, Avatar, Typography } f
 import { makeStyles } from '@material-ui/core/styles';
 import { ClassSharp, Style } from '@material-ui/icons';
 
-
 const useStyles = makeStyles({
     whiteText: {
         color: '#fff'
     },
     whiteBorder: {
-        color: '#fff',
-        '& .MuiOutlinedInput-notchedOutline': {
-            borderColor: '#fff',
-        },
+        
     },
 });
 
