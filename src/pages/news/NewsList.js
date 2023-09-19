@@ -71,7 +71,7 @@ const NewsList = () => {
   };
   
   return (
-    <div style={{margin: ' 0 10% 150px 10%'}}>
+    <div style={{maxWidth: '1240px', width: '100%', margin: 'auto'}}>
       <div style={{ fontSize: '36px', fontWeight: 'bold', textAlign: 'center', marginBottom: '5%', width: '100%' }}>뉴스 리스트</div>
       {(searchResults.length > 0 ? searchResults : dataList).map((data) => (
         <div key={data.newsId}>

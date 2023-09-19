@@ -1,5 +1,6 @@
-import styles from "../../styles/common/HeaderSub.module.css";
 import { Link } from "react-router-dom";
+
+import styles from "../../styles/common/HeaderSub.module.css";
 
 // 임시로 설정한 userId
 const userId = 1;

@@ -1,17 +1,28 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import StarIcon from '@mui/icons-material/Star';
+import BookmarkIcon from '@mui/icons-material/Bookmark';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 
 const HomeIcons = () => {
   
   return (
-    <div style={{ display: "flex", justifyContent: "center", alignItems: "center", margin: '5% 0'}}>
-      <div style={{textAlign: 'center'}}>
+    <div style={{ display: "flex", justifyContent: "center", alignItems: "center", margin: '5% 0', textAlign: 'center'}}>
+
+      <div>
         <Link to="/shopping/wishlist">
           <StarIcon style={{ width: "60px", height: "60px", margin: "0 10px", color: 'white' }} />
+        </Link>
+        <div>
+          주문내역
+        </div>
+      </div>
+
+      <div>
+        <Link to="/shopping/wishlist">
+          <BookmarkIcon style={{ width: "60px", height: "60px", margin: "0 10px", color: 'white' }} />
         </Link>
         <div>
           찜목록
@@ -22,7 +33,7 @@ const HomeIcons = () => {
         <Link to="/shopping/cart">
           <ShoppingCartIcon style={{ width: "60px", height: "60px", margin: "0 10px", color: 'white' }} />
         </Link>
-        <div style={{textAlign: 'center'}}>
+        <div>
           장바구니
         </div>
       </div>
@@ -31,7 +42,7 @@ const HomeIcons = () => {
         <Link to="/mypage/info">
           <AccountCircleIcon style={{ width: "60px", height: "60px", margin: "0 10px", color: 'white' }} />
         </Link>
-        <div style={{textAlign: 'center'}}>
+        <div>
           내정보
         </div>
       </div>

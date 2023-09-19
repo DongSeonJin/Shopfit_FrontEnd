@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { useEffect } from "react";
 import { useNavigate } from "react-router";
 import HeaderSubMyPage from "../../components/common/HeaderSubMypage";
+import { Button } from "@mui/material";
 
 const UserInfoUpdate = () => {
   const [nickname, setNickname] = useState("");
@@ -110,32 +111,43 @@ const UserInfoUpdate = () => {
   };
 
   return (
-    <div>
-      <HeaderSubMyPage></HeaderSubMyPage>
-      <div>다른 유저와 겹치지 않도록 입력해 주세요</div>
-      <div>
-        <label>닉네임</label>
-        <input type="text" value={nickname} onChange={handleNicknameChange} placeholder="닉네임" />
-      </div>
-      {!isNicknameAvailable && (
-        <div style={{ color: "red" }}>이미 사용 중인 닉네임입니다. 다른 닉네임을 입력해주세요.</div>
-      )}
-      <div>
-        <label>프로필이미지</label>
+    <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center',  width:'100%', minHeight: `calc(100vh - 720px)`}}>
+      <HeaderSubMyPage />
+      <div style={{width: '720px'}}>
+        <div style={{fontSize: '24px', fontWeight: 'bold', marginBottom: '20px'}}>회원정보 수정</div>
         <div>
-          {profileImage ? (
-            <img
-              src={profileImage}
-              alt="Profile Preview"
-              style={{ width: "200px", height: "200px", borderRadius: "50%" }}
-            />
-          ) : (
-            <div style={{ width: "200px", height: "200px", backgroundColor: "lightgray", borderRadius: "50%" }}></div>
+          <div style={{color: "lightgray", marginBottom: '10px', marginLeft: '50%'}}>다른 유저와 겹치지 않도록 입력해 주세요.</div>
+          <div style={{marginBottom: '20px'}}>
+            <label style={{ width: '50%', fontSize: '20px', fontWeight: 'bold'}}>닉네임</label>
+            <input type="text" value={nickname} onChange={handleNicknameChange} placeholder="닉네임" style={{ width: '50%', paddingLeft: '10px', fontSize: '20px'}} />
+          </div>
+          {!isNicknameAvailable && (
+            <div style={{ color: "red" }}>이미 사용 중인 닉네임입니다. 다른 닉네임을 입력해주세요.</div>
           )}
-          <input type="file" accept="image/*" onChange={handleProfileImageUpload} />
+        </div>
+        
+        <div>
+          <div style={{marginBottom: '20px'}}>
+            <label style={{ width: '50%', fontSize: '20px', fontWeight: 'bold'}}>프로필이미지</label>
+            <input type="file" accept="image/*" onChange={handleProfileImageUpload} style={{ width: '50%'}}/>
+          </div>
+          <div style={{margin: '50px 0', textAlign: 'center'}}>
+            {profileImage ? (
+              <img
+                src={profileImage}
+                alt="Profile Preview"
+                style={{ width: "240px", height: "240px", borderRadius: "50%", border: '1px white solid' }}
+              />
+            ) : (
+              <div style={{ width: "200px", height: "200px", backgroundColor: "lightgray", borderRadius: "50%" }}></div>
+            )}
+          </div>
+        </div>
+
+        <div style={{textAlign: 'center'}}>
+          <Button onClick={handleUpdateProfile} variant="outlined" style={{width: '360px', height: '60px', textAlign: 'center', margin: '20px 0', borderRadius: '10px', fontSize: '24px'}}>회원정보 수정</Button>
         </div>
       </div>
-      <button onClick={handleUpdateProfile}>회원정보 수정</button>
     </div>
   );
 };

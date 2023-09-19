@@ -97,9 +97,6 @@ const HeaderMain = ({ isCommunityHovered, isShoppingHovered }) => {
                 <div style={{textAlign: 'center',display: 'inline-block', width: 'auto', margin: '0 5%'}}>
                     <Link to="/signup" style={{ textDecoration: 'none', color: 'inherit'}}>회원가입</Link>
                 </div>
-                <div style={{textAlign: 'center',display: 'inline-block', width: 'auto', margin: '0 5%'}}>
-                    <Link to="/chatbot" style={{ textDecoration: 'none', color: 'inherit'}}>챗봇</Link>
-                </div>
             </div>
 
 
