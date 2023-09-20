@@ -34,7 +34,7 @@ const OrderHistoryProducts = ({ orders }) => {
             ]);
 
             if (productIds.length > 0) {
-              const productResponse = await fetch(`/shopping/products/${productIds[0]}`);
+              const productResponse = await fetch(`/shopping/detail/${productIds[0]}`);
               const productData = await productResponse.json();
               return productData;
             }
@@ -60,26 +60,28 @@ const OrderHistoryProducts = ({ orders }) => {
       {sortedOrders.length > 0 ? (
         sortedOrders.map((order, index) => (
           <div style={{ margin: "10px 0" }} key={order.orderId}>
-            <div style={{paddingLeft: '10px', marginTop: '30px'}}>주문날짜:</div>
-            <div style={{marginBottom: '15px', paddingLeft: '10px'}}>{formatDateTime(order.orderDate)}</div>
+            <div style={{ paddingLeft: "10px", marginTop: "30px" }}>주문날짜:</div>
+            <div style={{ marginBottom: "15px", paddingLeft: "10px" }}>{formatDateTime(order.orderDate)}</div>
 
             {productDetails[index] ? (
-              <div style={{ display: "flex", alignItems: "center", textAlign: "center", marginBottom: '50px' }}>
-                <div style={{textAlign: "left" }}>
+              <div style={{ display: "flex", alignItems: "center", textAlign: "center", marginBottom: "50px" }}>
+                <div style={{ textAlign: "left" }}>
                   <Link to={`/orderhistory/${order.orderId}`} style={{ textDecoration: "none", color: "inherit" }}>
                     <img
                       src={productDetails[index].thumbnailUrl}
                       alt="상품 이미지"
-                      style={{ width: "180px", height: "180px", border: '1px solid white', borderRadius: '10px' }}
+                      style={{ width: "180px", height: "180px", border: "1px solid white", borderRadius: "10px" }}
                     />
                   </Link>
                 </div>
                 <div style={{ flex: "6", textAlign: "left" }}>
                   <Link to={`/orderhistory/${order.orderId}`} style={{ textDecoration: "none", color: "inherit" }}>
                     {numberOfProducts[index] > 1 ? (
-                      <div style={{padding: '0 20px'}}>
-                        <div style={{fontSize: '20px', marginBottom: '20px'}}>{productDetails[index].productName}</div>
-                        <div style={{textAlign: 'right'}}>외 {numberOfProducts[index] - 1}건</div>
+                      <div style={{ padding: "0 20px" }}>
+                        <div style={{ fontSize: "20px", marginBottom: "20px" }}>
+                          {productDetails[index].productName}
+                        </div>
+                        <div style={{ textAlign: "right" }}>외 {numberOfProducts[index] - 1}건</div>
                       </div>
                     ) : (
                       <div>{productDetails[index].productName}</div>
@@ -88,25 +90,31 @@ const OrderHistoryProducts = ({ orders }) => {
                 </div>
                 <div style={{ flex: "2" }}>{order.totalPrice.toLocaleString()} 원</div>
 
-                <div style={{ flex: "1", display: 'flex', flexDirection: 'column' }}>
-                  <div style={{height: '90px', display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
-                  주문상태
+                <div style={{ flex: "1", display: "flex", flexDirection: "column" }}>
+                  <div style={{ height: "90px", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                    주문상태
                     <br />
                     {orderStatusMapping[order.orderStatus]}
                   </div>
-                  <div style={{height: '90px', display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
+                  <div style={{ height: "90px", display: "flex", alignItems: "center", justifyContent: "center" }}>
                     {/* 결제완료 : 파란색(확정 가능) / 구매확정 : 흰색, 그 외 : 빨간색 */}
-                    {order.orderStatus == "결제완료" ? (
-                      <Button variant='outlined' onClick={() => {OrderStatusUpdater(order.orderId, 5); window.location.reload();}} style={{width: '100px', height: '40px'}}>
+                    {order.orderStatus == "2" ? (
+                      <Button
+                        variant="outlined"
+                        onClick={() => {
+                          OrderStatusUpdater(order.orderId, 5);
+                          window.location.reload();
+                        }}
+                        style={{ width: "100px", height: "40px" }}
+                      >
                         구매확정
                       </Button>
-                    ) : order.orderStatus == "5" ? 
-                    (
-                      <Button variant='outlined' color="inherit" disable style={{width: '100px', height: '40px'}}>
+                    ) : order.orderStatus == "5" ? (
+                      <Button variant="outlined" color="inherit" disable style={{ width: "100px", height: "40px" }}>
                         구매확정
                       </Button>
                     ) : (
-                      <Button variant='outlined' color="error" disable style={{width: '100px', height: '40px'}}>
+                      <Button variant="outlined" color="error" disable style={{ width: "100px", height: "40px" }}>
                         구매확정
                       </Button>
                     )}
