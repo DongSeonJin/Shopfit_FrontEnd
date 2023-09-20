@@ -28,20 +28,22 @@ const HomeNews = () => {
     });
   };
 
-  // 최신 4개의 기사만 추출하여 표시 -> 랜덤 추출로 바꿀까?
   const latestNews = dataList.slice(0, 4);
 
   return (
-    <div style={{margin: '5% 0'}}>
-      <div style={{fontWeight: 'bold', margin: '2% 0', fontSize: '24px'}}>최신 뉴스</div>
-      <div style={{display: 'flex', justifyContent: 'space-between'}}>
+    <div style={{maxWidth: '1080px', width: '90%', margin: '0 auto 100px'}}>
+      
+      <div style={{fontWeight: 'bold', margin: '25px 0', fontSize: '24px'}}>최신 뉴스</div>
+
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '20px'}}>
         {latestNews.map(news => (
-          <div style={{width: '240px'}}>
+          <div>
             <a href={news.newsUrl} target="_blank" rel="noopener noreferrer">
-              <div style={{ backgroundImage: `url(${news.imageUrl})`, backgroundSize: 'cover', backgroundPosition: 'center', width: '240px', height: '150px', cursor: 'pointer', position: 'relative', border: '1px solid white', borderRadius: '5%'}} />
+              <div style={{backgroundImage: `url(${news.imageUrl})`, backgroundSize: 'cover', backgroundPosition: 'center', width: '100%', height: '0', paddingBottom: '75%', cursor: 'pointer', objectFit: 'cover', border: '1px solid white', borderRadius: '10px', marginBottom: '10px'}}/>
             </a>
-            <div style={{display: '-webkit-box', WebkitBoxOrient: 'vertical', WebkitLineClamp: 2, overflow: 'hidden', textOverflow: 'ellipsis', fontWeight: 'bold', fontSize: '16px'}}>{news.title}</div>
-            <div style={{display: '-webkit-box', WebkitBoxOrient: 'vertical', WebkitLineClamp: 2, overflow: 'hidden', textOverflow: 'ellipsis', fontSize: '12px'}}>{news.content}</div>
+            <div style={{display: '-webkit-box', WebkitBoxOrient: 'vertical', WebkitLineClamp: 2, overflow: 'hidden', textOverflow: 'ellipsis', fontWeight: 'bold', fontSize: '16px', padding: '0 5px', height: '36px', lineHeight: '18px', marginBottom: '10px'}}>{news.title}</div>
+            
+            <div style={{display: '-webkit-box', WebkitBoxOrient: 'vertical', WebkitLineClamp: 2, overflow: 'hidden', textOverflow: 'ellipsis', fontSize: '14px', padding: '0 5px', height: '32px', lineHeight: '16px'}}>{news.content}</div>
           </div>
         ))}
       </div>

@@ -3,6 +3,8 @@ import axios from 'axios';
 import { Link, useParams } from 'react-router-dom';
 import { Button } from '@material-ui/core'
 import LikeButton from './../../components/community/LikeButton';
+import UTurnRightRoundedIcon from '@mui/icons-material/UTurnRightRounded';
+
 // import styles from '../../styles/community/PostList.module.css'
 
 
@@ -61,42 +63,44 @@ const PostList = () => {
     return () => observer.disconnect();
   }, [handleObserver, isObserverActive]); // handleObserver의 변경에 따라 새로운 observer 생성
 
-  
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
   return (
-    <div>
-      <div style={{ margin: "3%", textAlign: 'right' }}>
-        <Button component={Link} to="/community/post/create" variant="contained" color="primary">
-          글 작성
-        </Button>
+    <div style={{maxWidth: '1420px', width: '100%', margin: 'auto'}}>
+      <UTurnRightRoundedIcon onClick={scrollToTop} style={{ position: 'fixed', bottom: '20px', right: '20px', zIndex: '9999', transform: 'rotate(180deg)', cursor: 'pointer'}} />
+
+      <div>
+        <div>
+          {categoryId}
+          {categoryId === 1 ? "오운완" : categoryId === 2 ? "식단" : ""}
+        </div>
+        <div style={{textAlign: 'right', marginBottom: '20px' }}>
+          <Link to="/community/post/create">
+              <Button variant="outlined" style={{color: 'white', width: '120px'}}>글작성</Button>
+          </Link>
+        </div>
       </div>
       <div>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '1%', width: '100%' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '10px', width: '100%' }}>
           {posts.map((post) => (
-            <div key={post.id} style={{width: '100%'}}>
+            <div key={post.id} style={{width: '100%', marginBottom: '20px'}}>
               <Link to={`/community/post/${post.postId}`}>
-                <img
-                    src={post.imageUrl1}
-                    alt={post.title}
-                    style={{ width: '300px', height: '300px', objectFit: 'cover', border: '1px solid white', borderRadius: '5%'}}
-                />
-{/* //                 <div alt={post.title} style={{ */}
- {/* backgroundImage: `url(${post.imageUrl1})`, backgroundSize: 'cover', backgroundPosition: 'center', paddingTop: '100%',
-width: '100%', height: '0', objectFit: 'cover', border: '1px solid white', borderRadius: '5%'}} /> */}
+                <div alt={post.title} style={{backgroundImage: `url(${post.imageUrl1})`, backgroundSize: 'cover', backgroundPosition: 'center', paddingTop: '100%', width: '100%', height: '0', objectFit: 'cover', border: '1px solid white', borderRadius: '5%'}} />
               </Link>
-              <div style={{ display: 'flex', alignItems: 'center', marginTop: '10px' }}>
-                <LikeButton postId={post.postId} />
-                <span>{`,조회수: ${post.viewCount}, `}</span>
-                <span>{`댓글수: ${post.replyCnt}`}</span>
+
+              <div style={{margin: '10px 0', padding: '5px'}}>
+                <div style={{display: 'flex', marginBottom: '10px'}}>
+                  <div style={{flex: '2', fontSize: '1vw'}}>
+                    <LikeButton postId={post.postId} />
+                  </div>
+                  <div style={{flex: '3', fontSize: '1vw'}}>{`조회수 : ${post.viewCount}`}</div>
+                  <div style={{flex: '3', fontSize: '1vw'}}>{`댓글수 : ${post.replyCnt}`}</div>
+                </div>
+                <div style={{display: '-webkit-box', WebkitBoxOrient: 'vertical', WebkitLineClamp: 2, overflow: 'hidden', textOverflow: 'ellipsis', fontWeight: 'bold', fontSize: '1vw', height: '2vw', lineHeight: '1vw', marginBottom: '2px'}}>{post.title}</div>
+                <div style={{display: '-webkit-box', WebkitBoxOrient: 'vertical', WebkitLineClamp: 2, overflow: 'hidden', textOverflow: 'ellipsis', fontSize: '1vw', height: '1vw', lineHeight: '1vw', textAlign: 'right', paddingRight: '5px'}}>{post.nickname}</div>
               </div>
-              <div style={{
-                  fontSize: 'calc(1vw + 1vh)',
-                  // whiteSpace: 'nowrap',
-                  // overflow: 'hidden',
-                  textOverflow: 'ellipsis'
-              }}>
-                  {post.title}
-              </div>
-              <div>{`작성자: ${post.nickname}`}</div>
             </div>
           ))}
         </div>
@@ -107,4 +111,5 @@ width: '100%', height: '0', objectFit: 'cover', border: '1px solid white', borde
     </div>
   );
 };
+
 export default PostList;

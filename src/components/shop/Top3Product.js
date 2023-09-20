@@ -76,8 +76,8 @@ const Top3Product = ({ data }) => {
   };
 
   return (
-    <div style={{width: '300px'}}>
-      <div style={{ backgroundImage: `url(${data.thumbnailUrl})`, backgroundSize: 'cover', backgroundPosition: 'center', width: '300px', height: '300px', cursor: 'pointer', position: 'relative', border: '1px solid white', borderRadius: '5%', filter: data.stockQuantity === 0 ? "grayscale(100%)" : "none"}} onClick={handleClick}>
+    <div style={{width: '100%'}}>
+      <div style={{ backgroundImage: `url(${data.thumbnailUrl})`, backgroundSize: 'cover', backgroundPosition: 'center', width: '100%', height: '', paddingBottom: '100%', cursor: 'pointer', position: 'relative', border: '1px solid white', borderRadius: '10px', marginBottom: '10px', filter: data.stockQuantity === 0 ? "grayscale(100%)" : "none"}} onClick={handleClick}>
           {data.stockQuantity === 0 && <div style={{
             position: 'absolute',
             top: '50%',
@@ -88,9 +88,9 @@ const Top3Product = ({ data }) => {
             color: "white",
             zIndex: 1,}}>품절</div>}
           <BookmarkIcon style={{
-            position: 'relative', 
-            top: '250px', 
-            left: '250px',
+            position: 'absolute', 
+            bottom: '10px', 
+            right: '10px',
             width: '30px', 
             height: '30px', 
             cursor: 'pointer',
@@ -98,8 +98,8 @@ const Top3Product = ({ data }) => {
             onClick={toggleFavorite}
           />
       </div>
-      <div>{data.productName}</div>
-      <div style={{textAlign: 'right'}}>{data.price.toLocaleString()} 원</div>
+      <div style={{padding: '0 5px'}}>{data.productName}</div>
+      <div style={{padding: '0 5px', textAlign: 'right'}}>{data.price.toLocaleString()} 원</div>
     </div>
   );
 };

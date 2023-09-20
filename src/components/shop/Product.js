@@ -76,8 +76,8 @@ const [isFavorite, setIsFavorite] = useState();
   };
 
   return (
-    <div style={{ marginBottom: "5%", alignItems: "center", width: '100%' }}>
-      <div style={{ cursor: "pointer", width: "100%", height: '0', paddingBottom: '100%', marginBottom: "10px", border: '1px solid white', borderRadius: '5%',
+    <div style={{ marginBottom: "50px", alignItems: "center", width: '100%' }}>
+      <div style={{ cursor: "pointer", width: "100%", height: '0', paddingBottom: '100%', marginBottom: "10px", border: '1px solid white', borderRadius: '10px',
       backgroundImage: `url(${data.thumbnailUrl})`, backgroundSize: "cover", position: "relative", 
       filter: data.stockQuantity === 0 ? "grayscale(100%)" : "none", }} onClick={handleClick}>
 
