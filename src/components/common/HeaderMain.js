@@ -1,9 +1,11 @@
 /* eslint-disable eqeqeq */
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
+import axios from "axios";
 // import { connect } from 'react-redux';
 
 // import styles from "../../styles/common/HeaderMain.module.css";
+
 
 const HeaderMain = ({ isCommunityHovered, isShoppingHovered }) => {
     const navigate = useNavigate();
@@ -27,13 +29,29 @@ const HeaderMain = ({ isCommunityHovered, isShoppingHovered }) => {
     };
 
 
+    // 로그아웃
+    const handleLogout = () => {
+        axios
+          .get("/logout") // 로그아웃 요청을 서버에 보냅니다.
+          .then((response) => {
+            if (response.status === 200) {
+              // 로그아웃이 성공하면 로그인 페이지로 리디렉션합니다.
+              window.location.href = "/login";
+            }
+          })
+          .catch((error) => {
+            console.error("로그아웃 오류:", error);
+          });
+    };
+
+
     return (
-        <div style={{display: 'flex', height: '90px', alignItems: 'center', marginTop: '30px'}}>
+        <div style={{display: 'flex', height: '90px', alignItems: 'center', marginTop: '30px', justifyContent: 'space-between', width: `calc(100% - 200px)`}}>
 
             
-            <div style={{flex: '2',display: 'flex', fontWeight: 'bold', fontSize: '1.5vw', paddingLeft: '20px'}}>
+            <div style={{display: 'flex', fontWeight: 'bold', fontSize: '24px'}}>
                 <div
-                    style={{display: 'inline-block', width: 'auto', textAlign: 'center', margin: '0 1.5vw',
+                    style={{display: 'inline-block', width: '96px', textAlign: 'center', margin: '0 36px',
                         color: isHoveredCommunity ? 'red' : 'white',
                     }}
                     onMouseEnter={() => {
@@ -48,7 +66,7 @@ const HeaderMain = ({ isCommunityHovered, isShoppingHovered }) => {
                     <Link to="/community" style={{ textDecoration: 'none', color: 'inherit' }}>커뮤니티</Link>
                 </div>
                 <div
-                    style={{display: 'inline-block', width: 'auto', textAlign: 'center', margin: '0 1.5vw',
+                    style={{display: 'inline-block', width: '48px', textAlign: 'center', margin: '0 36px',
                         color: isHoveredShopping ? 'red' : 'white',
                     }}
                     onMouseEnter={() => {
@@ -63,7 +81,7 @@ const HeaderMain = ({ isCommunityHovered, isShoppingHovered }) => {
                     <Link to="/shopping/1" style={{ textDecoration: 'none', color: 'inherit' }}>쇼핑</Link>
                 </div>
                 <div
-                    style={{display: 'inline-block', width: 'auto', textAlign: 'center', margin: '0 1.5vw',
+                    style={{display: 'inline-block', width: '48px', textAlign: 'center', margin: '0 36px',
                         color: isHoveredNews ? 'red' : 'white',
                     }}
                     onMouseEnter={() => {
@@ -78,7 +96,7 @@ const HeaderMain = ({ isCommunityHovered, isShoppingHovered }) => {
             </div>
 
 
-            <div style={{flex: '2', display: 'flex', height: '40px'}}>
+            <div style={{display: 'flex', height: '40px', maxWidth: '600px', width: '40%'}}>
                 <input
                     type="text"
                     value={searchText}
@@ -90,14 +108,22 @@ const HeaderMain = ({ isCommunityHovered, isShoppingHovered }) => {
             </div>
 
 
-            <div style={{flex: '1', display: 'flex', fontWeight: 'bold', paddingRight: '200px', justifyContent: 'right', fontSize: '1vw'}}>
+            <div style={{display: 'flex', fontWeight: 'bold', justifyContent: 'right', fontSize: '20px'}}>
 
-                <div style={{display: 'inline-block', width: 'auto', textAlign: 'center', margin: '0 1vw',}}>
+                <div style={{display: 'inline-block', width: '60px', textAlign: 'center', margin: '0 30px'}}>
                     <Link to="/login" style={{ textDecoration: 'none', color: 'inherit'}}>로그인</Link>
                 </div>
 
-                <div style={{display: 'inline-block', width: 'auto', textAlign: 'center', margin: '0 1vw',}}>
+                <div style={{display: 'inline-block', width: '80px', textAlign: 'center', margin: '0 30px',}}>
                     <Link to="/signup" style={{ textDecoration: 'none', color: 'inherit'}}>회원가입</Link>
+                </div>
+
+
+                {/* 로그아웃 버튼 */}
+                <div style={{ display: "inline-block", width: "80px", textAlign: "center", margin: "0 30px", color: 'white', }}>
+                    <div onClick={handleLogout} style={{ border: "none", background: "none", textDecoration: "underline", cursor: "pointer" }}>
+                        로그아웃
+                    </div>
                 </div>
             </div>
 
