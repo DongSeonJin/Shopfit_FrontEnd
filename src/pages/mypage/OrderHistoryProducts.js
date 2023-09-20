@@ -9,6 +9,14 @@ const OrderHistoryProducts = ({ orders }) => {
   const [productDetails, setProductDetails] = useState([]);
   const [numberOfProducts, setNumberOfProducts] = useState([]);
 
+  const orderStatusMapping = {
+    1: "결제대기",
+    2: "결제완료",
+    3: "배송중",
+    4: "배송완료",
+    5: "구매확정",
+  };
+
   useEffect(() => {
     const fetchProductDetails = async () => {
       try {
@@ -33,8 +41,6 @@ const OrderHistoryProducts = ({ orders }) => {
           })
         );
 
-
-
         setProductDetails(details);
       } catch (error) {
         console.error("상품 정보를 가져오는 중 오류가 발생했습니다.", error);
@@ -44,7 +50,6 @@ const OrderHistoryProducts = ({ orders }) => {
     const sortedOrders = orders.slice().sort((a, b) => new Date(b.orderDate) - new Date(a.orderDate));
     fetchProductDetails();
   }, [orders]);
-
 
   // 주문을 orderDate를 기준으로 역순으로 정렬
   const sortedOrders = orders.slice().sort((a, b) => new Date(b.orderDate) - new Date(a.orderDate));
@@ -86,7 +91,7 @@ const OrderHistoryProducts = ({ orders }) => {
                   <div>
                     주문상태
                     <br />
-                    {order.orderStatus}
+                    {orderStatusMapping[order.orderStatus]}
                   </div>
                   {order.orderStatus == 2 ? (
                     <button
@@ -108,7 +113,18 @@ const OrderHistoryProducts = ({ orders }) => {
           </div>
         ))
       ) : (
-        <div style={{ height: '200px', textAlign: 'center', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '24px' }}>주문 내역이 없습니다.</div>
+        <div
+          style={{
+            height: "200px",
+            textAlign: "center",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            fontSize: "24px",
+          }}
+        >
+          주문 내역이 없습니다.
+        </div>
       )}
     </div>
   );
