@@ -2,7 +2,7 @@
 
 const Footer = () => {
   return (
-    <div style={{display: 'flex', margin: '50px 12% 0 12%'}}>
+    <div style={{display: 'flex', padding: '0 200px', width: '100%', minWidth: '1900px'}}>
 
       <div style={{flex: "2"}}>
         <div>

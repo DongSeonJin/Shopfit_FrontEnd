@@ -72,7 +72,7 @@ const NewsList = () => {
   
   return (
     <div style={{maxWidth: '1240px', width: '100%', margin: 'auto'}}>
-      <div style={{ fontSize: '36px', fontWeight: 'bold', textAlign: 'center', marginBottom: '5%', width: '100%' }}>뉴스 리스트</div>
+      <div style={{ fontSize: '36px', fontWeight: 'bold', textAlign: 'center', marginBottom: '50px', width: '100%' }}>뉴스 리스트</div>
       {(searchResults.length > 0 ? searchResults : dataList).map((data) => (
         <div key={data.newsId}>
           <Article data={data} />

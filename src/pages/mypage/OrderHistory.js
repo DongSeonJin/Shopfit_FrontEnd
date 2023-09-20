@@ -24,7 +24,7 @@ const OrderHistory = () => {
   }, []);
 
   return (
-    <div style={{ maxWidth: '1080px', width: '100%', margin: '0 auto 150px'}}>
+    <div style={{width: '1080px', margin: '0 auto 150px'}}>
       <HeaderSubMyPage />
       <div style={{ fontSize: '36px', fontWeight: 'bold', textAlign: 'center', marginBottom: '50px', width: '100%' }}>주문 내역</div>
 

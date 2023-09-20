@@ -1,6 +1,7 @@
 import React from 'react';
 
 import styles from '../../../styles/common/modal/Modal.module.css';
+import { Button } from '@material-ui/core';
 
 
 const Modal = ({ errorMessage, onClose }) => {
@@ -8,7 +9,9 @@ const Modal = ({ errorMessage, onClose }) => {
         <div className={styles.modal}>
             <div className={styles.modalContent}>
                 <p>{errorMessage}</p>
-                <button onClick={onClose}>닫기</button>
+                <div style={{textAlign: 'right'}}>
+                    <Button variant='outlined' color='secondary' onClick={onClose} style={{width: '80px', height: '40px'}}>닫기</Button>
+                </div>
             </div>
         </div>
     );

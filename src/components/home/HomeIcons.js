@@ -9,10 +9,10 @@ import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 const HomeIcons = () => {
   
   return (
-    <div style={{ display: "flex", justifyContent: "center", alignItems: "center", margin: '5% 0', textAlign: 'center'}}>
+    <div style={{ display: "flex", justifyContent: "center", alignItems: "center", margin: '60px 0 0', textAlign: 'center'}}>
 
       <div>
-        <Link to="/shopping/wishlist">
+        <Link to="/orderhistory">
           <StarIcon style={{ width: "60px", height: "60px", margin: "0 10px", color: 'white' }} />
         </Link>
         <div>
