@@ -4,6 +4,7 @@ import Modal from "react-modal";
 import { Button, TextField, Paper, List, ListItem, Typography, Box } from "@mui/material";
 import { Send } from "@mui/icons-material";
 
+
 // import styles from "../../styles/mypage/ChatBot.module.css";
 
 const ChatBot = ({ closeModal }) => {
@@ -95,6 +96,8 @@ const ChatBot = ({ closeModal }) => {
       messageEndRef.current.scrollIntoView({ behavior: "smooth" });
     }
   }, [messages]);
+
+  
   return (
 
     <div style={{ zIndex: "9999" }}>

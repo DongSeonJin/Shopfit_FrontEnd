@@ -2,11 +2,11 @@ import React, { useState, useEffect, useRef, useCallback } from 'react';
 import axios from 'axios';
 import { Link, useParams } from 'react-router-dom';
 import { Button } from '@material-ui/core'
-
 import LikeButton from './../../components/community/LikeButton';
 import UTurnRightRoundedIcon from '@mui/icons-material/UTurnRightRounded';
 
 // import styles from '../../styles/community/PostList.module.css'
+
 
 const PostList = () => {
   const [posts, setPosts] = useState([]);
@@ -15,7 +15,6 @@ const PostList = () => {
   const loader = useRef(null);
   const [prevCategoryId, setPrevCategoryId] = useState(categoryId);
   const [isObserverActive, setIsObserverActive] = useState(false);
-  
 
   // categoryId 변화 감지하여 prevCategoryId 업데이트
   useEffect(() => {
@@ -24,12 +23,9 @@ const PostList = () => {
     setIsObserverActive(false);
   }, [categoryId]);
 
-
-
   // loader(ref) 가 화면에 나타났다 사라졌다 할 때 호출되는 함수입니다.
   const handleObserver = useCallback((entities) => {
     const target = entities[0];
-
     if (target.isIntersecting) {
       if (prevCategoryId === categoryId) {
         setPageNumb((prevPageNumber) => prevPageNumber + 1)
@@ -40,18 +36,15 @@ const PostList = () => {
     }
   }, [prevCategoryId, categoryId]); // prevCategoryId와 categoryId에 따라 함수 재생성
 
-
-
   useEffect(() => {
     axios.get(`/post/list/${categoryId}/${pageNumb}`)
       .then(response => {
-        setPosts(prevPosts => [...prevPosts, ...response.data.content]); 
+        setPosts(prevPosts => [...prevPosts, ...response.data.content]);
         setIsObserverActive(true); // 데이터 로드 후 observer 활성화
       })
       .catch((error) => {
         console.error("Error fetching data:", error);
       });
-
   }, [categoryId, pageNumb]);
 
   useEffect(() => {
@@ -98,7 +91,6 @@ const PostList = () => {
               </Link>
 
               <div style={{margin: '10px 0', padding: '5px'}}>
-
                 <div style={{display: 'flex', marginBottom: '10px'}}>
                   <div style={{flex: '2', fontSize: '1vw'}}>
                     <LikeButton postId={post.postId} />
