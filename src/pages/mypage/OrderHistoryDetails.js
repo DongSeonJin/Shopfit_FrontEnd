@@ -99,7 +99,7 @@ const OrderHistoryDetails = () => {
                     </Link>
                   </div>
                   <div style={{ flex: "8", textAlign: "left", padding: '0 20px' }}>
-                    <div style={{fontSize: '20px'}}>{orderProduct.productInfo.productName}</div>
+                    <div style={{fontSize: '20px', marginBottom: '20px'}}>{orderProduct.productInfo.productName}</div>
                     <div style={{textAlign: 'right'}}>{orderProduct.quantity} 개</div>
                   </div>
                   <div style={{ flex: "2" }}>{orderProduct.productInfo.price.toLocaleString()} 원</div>

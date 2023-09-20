@@ -5,10 +5,12 @@ import HomeNews from '../../components/home/HomeNews';
 import HomeShopping from '../../components/home/HomeShopping';
 import HomeIcons from '../../components/home/HomeIcons';
 import HomeImageSlide from '../../components/home/HomeImageSlide';
+import HanTest from './HanTest';
 
 const HomeContent = () => {
     return (
         <div>
+            <HanTest />
             <HomeImageSlide />
             <HomeIcons />
             <HomeCommunity />

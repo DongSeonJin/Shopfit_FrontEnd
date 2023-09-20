@@ -2,7 +2,7 @@
 import axios from "axios";
 import { useState } from "react";
 import { useNavigate } from "react-router";
-import FileUploadComponent from '../../components/shop/FileUploadComponent';
+import CreateFileUploadComponent from '../../components/shop/CreateFileUploadComponent';
 import FilesUploadComponent from '../../components/shop/FilesUploadComponent';
 
 // import styles from '../../styles/shop/ProductCreate.module.css';
@@ -116,7 +116,7 @@ const ProductCreate = () => {
           <div style={{flex: '1', paddingLeft: '20%'}}>상품 카테고리:</div>
 
           <div style={{flex: '1'}}>
-            <select value={ProductCategory} onChange={handleProductCategoryChange} style={{width: '50%'}}>
+            <select value={ProductCategory} onChange={handleProductCategoryChange} style={{width: '50%', height: '30px'}}>
               <option value="">카테고리를 선택하세요</option>
               {productCategories.map((category) => (
                 <option key={category.id} value={category.id}>
@@ -156,7 +156,7 @@ const ProductCreate = () => {
         <div style={{margin: '2% 0', paddingLeft: '20%'}}>
           <div>썸네일:</div>
           <div style={{width: '100%'}}>
-            <FileUploadComponent onUploadSuccess={handleUploadSuccess} />
+            <CreateFileUploadComponent onUploadSuccess={handleUploadSuccess} />
           </div>
         </div>
 

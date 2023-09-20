@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router";
-import FileUploadComponent from "../../components/shop/FileUploadComponent";
+import UpdateFileUploadComponent from "../../components/shop/UpdateFileUploadComponent";
 import FilesUploadComponent from "../../components/shop/FilesUploadComponent";
 import { Button } from "@mui/material";
 import { Link } from "react-router-dom";
@@ -191,7 +191,7 @@ const ProductUpdate = () => {
           <div style={{display: 'flex'}}>
             <label style={{width: '50%'}}>썸네일: </label>
             <div style={{width: '50%'}}>
-              <FileUploadComponent onUploadSuccess={handleUploadSuccess} />
+              <UpdateFileUploadComponent onUploadSuccess={handleUploadSuccess} />
             </div>
           </div>
           <div>

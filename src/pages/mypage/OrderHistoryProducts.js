@@ -33,9 +33,7 @@ const OrderHistoryProducts = ({ orders }) => {
             return null;
           })
         );
-
-
-
+        
         setProductDetails(details);
       } catch (error) {
         console.error("상품 정보를 가져오는 중 오류가 발생했습니다.", error);
@@ -77,7 +75,7 @@ const OrderHistoryProducts = ({ orders }) => {
                         <div style={{textAlign: 'right'}}>외 {numberOfProducts[index] - 1}건</div>
                       </div>
                     ) : (
-                      <div>{productDetails[index].productName}</div>
+                      <div style={{padding: '0 20px', fontSize: '20px', marginBottom: '20px'}}>{productDetails[index].productName}</div>
                     )}
                   </Link>
                 </div>

@@ -1,7 +1,7 @@
 /* eslint-disable eqeqeq */
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
-import axios from "axios";
+import logout from "../../lib/api/Logout";
 // import { connect } from 'react-redux';
 
 // import styles from "../../styles/common/HeaderMain.module.css";
@@ -27,23 +27,7 @@ const HeaderMain = ({ isCommunityHovered, isShoppingHovered }) => {
             console.log("검색어:", searchText);
         }
     };
-
-
-    // 로그아웃
-    const handleLogout = () => {
-        axios
-          .get("/logout") // 로그아웃 요청을 서버에 보냅니다.
-          .then((response) => {
-            if (response.status === 200) {
-              // 로그아웃이 성공하면 로그인 페이지로 리디렉션합니다.
-              window.location.href = "/login";
-            }
-          })
-          .catch((error) => {
-            console.error("로그아웃 오류:", error);
-          });
-    };
-
+    
 
     return (
         <div style={{display: 'flex', height: '90px', alignItems: 'center', marginTop: '30px', justifyContent: 'space-between', width: `calc(100% - 200px)`}}>
@@ -63,7 +47,7 @@ const HeaderMain = ({ isCommunityHovered, isShoppingHovered }) => {
                         setIsHoveredCommunity(false);  
                     }}
                 >
-                    <Link to="/community" style={{ textDecoration: 'none', color: 'inherit' }}>커뮤니티</Link>
+                    <Link to="/community/post/list/1" style={{ textDecoration: 'none', color: 'inherit' }}>커뮤니티</Link>
                 </div>
                 <div
                     style={{display: 'inline-block', width: '48px', textAlign: 'center', margin: '0 36px',
@@ -121,7 +105,7 @@ const HeaderMain = ({ isCommunityHovered, isShoppingHovered }) => {
 
                 {/* 로그아웃 버튼 */}
                 <div style={{ display: "inline-block", width: "80px", textAlign: "center", margin: "0 30px", color: 'white', }}>
-                    <div onClick={handleLogout} style={{ border: "none", background: "none", textDecoration: "underline", cursor: "pointer" }}>
+                    <div onClick={logout} style={{ border: "none", background: "none", textDecoration: "underline", cursor: "pointer" }}>
                         로그아웃
                     </div>
                 </div>
