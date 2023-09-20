@@ -1,14 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import LikeIcon from '@material-ui/icons/Favorite';
 import { HeartOutlined, HeartFilled } from '@ant-design/icons';
 import styles from '../../styles/community/LikeButton.module.css'
+import { useSelector } from 'react-redux';
 
 
 const LikeButton = ({ postId }) => {
     const [likeCount, setLikeCount] = useState(0);
     const [isLiked, setIsLiked] = useState(false);
-    const userId = 1; // 시큐리티 적용 전 테스트용 userId 1
+    
+     const user = useSelector(state => state.authUser.user); //리덕스에서 가져온 user정보
+
+     let userId = user ? user.userId : 0;
+    
 
     useEffect(() => {
         const fetchData = async () => {
@@ -66,15 +70,13 @@ const LikeButton = ({ postId }) => {
 
 
     return (
-        <>
-            <div className="icons-list">
+        <div className="icons-list">
             {isLiked ? 
-                <HeartFilled onClick={handleLike} className={styles['redButton']} /> : // 좋아요를 누른 경우
+                <HeartFilled onClick={handleLike} className={styles['redButton']} /> :   // 좋아요를 누른 경우
                 <HeartOutlined onClick={handleLike} className={styles['button']} /> // 좋아요를 누르지 않은 경우
             }
-            <span>{likeCount}</span>
-            </div>
-        </>
+            <span> {likeCount}</span>
+        </div>
     );
 };
 

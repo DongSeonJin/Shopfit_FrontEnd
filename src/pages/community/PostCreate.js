@@ -1,25 +1,22 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router';
-// import { useForm, Controller } from 'react-hook-form'
 import PostFileUploadComponent from "../../components/community/PostFileUploadComponent";
-import styles from '../../styles/community/PostCreate.module.css';
-import { ButtonGroup } from 'react-bootstrap';
-import { Button } from 'bootstrap';
-import { Category } from '@material-ui/icons';
-import { el } from 'date-fns/locale';
-
+import { Button, TextField, Select, MenuItem, FormControl, InputLabel } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
+// import styles from '../../styles/community/PostCreate.module.css';
+// import { useForm, Controller } from 'react-hook-form'
 
 const PostCreate = () => {
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
     const [category, setCategory] = useState('');
     const [nickname, setNickname] = useState('');
-    // const [file, setFile] = useState(null);
     const userId = 1;
     const [imageUrl1, setImageUrl1] = useState('');
     const [imageUrl2, setImageUrl2] = useState('');
     const [imageUrl3, setImageUrl3] = useState('');
+
     
     const categories = [
         { id: 1, name: '오운완' },
@@ -69,8 +66,6 @@ const PostCreate = () => {
     
     const handleSubmit = async (e) => {
         e.preventDefault();
-    
-
 
         // 서버로 보낼 데이터 구성
         const postData = {
@@ -83,8 +78,6 @@ const PostCreate = () => {
             imageUrl2: imageUrl2,
             imageUrl3: imageUrl3
         };
-
-
 
         if (!title && !content) {
             alert("제목, 내용을 입력해주세요.");
@@ -125,82 +118,79 @@ const PostCreate = () => {
     }; 
 
     return (
-        <div>
-            <h2 style={{textAlign:"center"}}>글 작성 페이지</h2>
-            <div className={styles['post-create-container']}> {/* 클래스 이름을 가져옴 */}
-                <form onSubmit={handleSubmit} className={styles['post-form']}> {/* 클래스 이름을 가져옴 */}
-                    <div className={styles['form-row']}>
-                    <label className={styles['form-label']}>
-                        작성자:
-                        <input
-                            type="text"
-                            value={nickname}
-                            onChange={handleNicknameChange}
-                            className={styles['input-field']}
-                        />
-                    </label>
+        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
+            <h2>글 작성 페이지</h2>
+            <form onSubmit={handleSubmit} style={{ width: '80%', marginTop: 20 }}>
 
-                    <label className={styles['form-label']}>
-                        카테고리:
-                        <select
-                            value={category}
-                            onChange={handleCategoryChange}
-                            className={styles['input-field']}
-                        >
-                            <option value="">카테고리를 선택하세요</option>
-                            {categories.map((category) => (
-                                <option key={category.id} value={category.id}>
-                                    {category.name}
-                                </option>
-                            ))}
-                        </select>
-                    </label>
-                        
-                    </div> <br />
 
-                    <label>
-                        제목: 
-                        <input
-                            type="text"
-                            value={title}
-                            onChange={handleTitleChange}
-                            className={styles['input-field']} // 클래스 이름을 가져옴
-                            style={{width: '100%'}}
-                        />
-                    </label>
-                    <br />
+                <div style={{fontWeight: 'bold', marginBottom: '5px'}}>작성자</div>
+                <TextField
+                    label="작성자"
+                    value={nickname}
+                    onChange={handleNicknameChange}
+                    fullWidth
+                    variant='outlined'
+                    style={{backgroundColor: 'white', borderRadius: '5px', marginBottom: '20px', width: '100%'}}
+                />
 
-                    <label>
-                        내용: 
-                        <textarea
-                            value={content}
-                            onChange={handleContentChange}
-                            className={styles['input-field']} // 클래스 이름을 가져옴
-                            style={{width: '100%', height: '200px'}}
-                        />
-                    </label>
-                    <br />
-                    <div>
-                        <PostFileUploadComponent onUploadSuccess={(url) => setImageUrl1(url)} />
-                        <PostFileUploadComponent onUploadSuccess={(url) => setImageUrl2(url)} />
-                        <PostFileUploadComponent onUploadSuccess={(url) => setImageUrl3(url)} />
-                    </div>
+                <div style={{fontWeight: 'bold', marginBottom: '5px'}}>카테고리</div>
+                {/* <FormControl fullWidth style={{ marginTop: 20 }}> */}
+                <Select
+                    labelId="category-label"
+                    value={category}
+                    onChange={handleCategoryChange}
+                    style={{backgroundColor: 'white', borderRadius: '5px', marginBottom: '20px', width: '100%'}}
+                >
+                    {categories.map((category) => (
+                        <MenuItem key={category.id} value={category.id}>
+                            {category.name}
+                        </MenuItem>
+                    ))}
+                </Select>
+                {/* </FormControl> */}
 
-                    <input
-                        type="submit"
-                        value="등록"
-                        className={styles['submit-button']} // 클래스 이름을 가져옴
-                    />
-                    
-                    <input 
-                        type='hidden'
-                        value={userId} 
-                     />
-                   
-                </form>
-            </div>
+                {/* 제목 입력 필드 */}
+                <div style={{fontWeight: 'bold', marginBottom: '5px'}}>제목</div>
+                <TextField 
+                  label="제목" 
+                  value={title} 
+                  onChange={handleTitleChange} 
+                  fullWidth 
+                  variant='outlined'
+                  style={{backgroundColor: 'white', borderRadius: '5px', marginBottom: '20px', width: '100%'}} />
+
+                {/* 내용 입력 필드 */}
+                <div style={{fontWeight: 'bold', marginBottom: '5px'}}>내용</div>
+                <TextField
+                  label="내용"
+                  multiline
+                  rows={7}
+                  value={content} 
+                  onChange= {handleContentChange}  
+                  fullWidth
+
+                  variant='outlined'
+                  style={{backgroundColor: 'white', borderRadius: '5px', marginBottom: '20px', width: '100%'}} />
+
+               {/* 이미지 업로드*/}
+               <div style={{ display:'flex', justifyContent:'space-between', marginTop: 20}}>
+                   {[1,2,3].map((item) => (
+                      
+                       <>
+                           <PostFileUploadComponent onUploadSuccess={(url) => handleUploadSuccess(url,item)} />
+                           {/*<button onClick={() => handleDeleteImage(item)}>Delete Image{item}</button>*/}
+                       </>
+                   ))}
+               </div>
+
+               {/* 등록 버튼 */}
+               <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: '20px'}}>
+                <Button variant="contained" color="primary" type='submit' style={{marginTop:'20px'}}>
+                    등록
+                </Button>
+               </div>
+            </form>
         </div>
-        
     );
 
 };

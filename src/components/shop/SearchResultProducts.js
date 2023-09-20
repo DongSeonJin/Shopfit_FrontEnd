@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { useNavigate } from "react-router-dom";
 
 import BookmarkIcon from "@mui/icons-material/Bookmark";
+import { styled } from 'styled-components';
 
 const SearchResultProducts = ({ data }) => {
   const navigate = useNavigate();
@@ -76,10 +77,15 @@ const SearchResultProducts = ({ data }) => {
   };
 
   const imageStyle = {
-    width: "240px",
-    height: "240px",
-    backgroundImage: `url(${data.thumbnailUrl})`,
-    backgroundSize: "cover",
+    width: "100%",//
+    height: "0",//
+    paddingBottom: '100%', //
+    backgroundImage: `url(${data.thumbnailUrl})`, //
+    backgroundSize: "cover", //
+    backgroundPosition: 'center', //
+    border: '1px solid white',
+    borderRadius: '10px',
+    marginBottom: '10px',
     cursor: "pointer",
     position: "relative",
     filter: data.stockQuantity === 0 ? "grayscale(100%)" : "none",
@@ -115,7 +121,7 @@ const SearchResultProducts = ({ data }) => {
   };
 
   return (
-    <div className={`${styles.articleRow} ${styles.productWrapper} ${styles.gridContainer}`}>
+    <div className={`${styles.articleRow} ${styles.productWrapper} ${styles.gridContainer}`} style={{padding: '10px'}}>
       <div className={styles.img_item} style={imageStyle} onClick={handleClick}>
         {data.stockQuantity === 0 && <div style={soldOutTextStyle}>품절</div>}
         <button className="favorite-button" onClick={toggleFavorite} style={favoriteButtonStyle}>
@@ -123,8 +129,8 @@ const SearchResultProducts = ({ data }) => {
         </button>
       </div>
       <div className={styles.table_content}>
-        <div className="text-align-left">{data.productName}</div>
-        <div style={{ textAlign: "right" }}>{data.price.toLocaleString()} 원</div>
+        <div className="text-align-left" style={{fontSize: '0.8vw', lineHeight: '0.9vw', height: '1.8vw'}}>{data.productName}</div>
+        <div style={{ textAlign: "right", fontSize: '1vw', paddingRight: '5px' }}>{data.price.toLocaleString()} 원</div>
       </div>
     </div>
   );

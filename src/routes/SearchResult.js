@@ -7,12 +7,10 @@ import { Route, Routes } from 'react-router-dom';
 
 const SearchResult = () => {
     return (
-        <div style={{margin: '0 10%'}}>
-            <Routes>
-                <Route path="/searchresult" element={<><SearchCommunity /><SearchShop /><SearchNews /></>} />
-                <Route path="/searchresult/:text" element={<><SearchCommunity /><SearchShop /><SearchNews /></>} />
-            </Routes>
-        </div>
+        <Routes>
+            <Route path="/searchresult" element={<><SearchCommunity /><SearchShop /><SearchNews /></>} />
+            <Route path="/searchresult/:text" element={<><SearchCommunity /><SearchShop /><SearchNews /></>} />
+        </Routes>
     );
 };
 

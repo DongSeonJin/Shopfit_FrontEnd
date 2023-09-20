@@ -10,12 +10,10 @@ const HomeContent = () => {
     return (
         <div>
             <HomeImageSlide />
-            <div style={{margin: '0 20%'}}>
-                <HomeIcons />
-                <HomeCommunity />
-                <HomeNews />
-                <HomeShopping />
-            </div>
+            <HomeIcons />
+            <HomeCommunity />
+            <HomeNews />
+            <HomeShopping />
         </div>
     );
 };

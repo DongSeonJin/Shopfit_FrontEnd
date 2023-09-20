@@ -23,6 +23,7 @@ const Article = ({ data }) => {
         <div className={styles.content}>{data.content}</div>
       </div>
       <div className={styles.date}>{data.createdAt}</div>
+      {/* 관리자 권한 */}
       <div className={styles.delButton}>
         <DeleteNews newsId={data.newsId} />
       </div>

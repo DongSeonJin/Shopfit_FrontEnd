@@ -92,7 +92,7 @@ const UserInfo = () => {
         <div style={{marginBottom: '20px'}}>
           <Button onClick={handleChangePassword}>비밀번호 변경하기</Button>
         </div>
-        <div style={{marginBottom: '20px'}}>
+        <div style={{marginBottom: '100px'}}>
           <Button color="error">탈퇴하기</Button>
         </div>
 
