@@ -80,11 +80,12 @@ authApi.interceptors.response.use(
       response: { status },
     } = error;
 
-    //토큰이 만료되을 때
+    //토큰이 만료되었을 때
     if (status === 401) {
         const newAccessToken = await refreshTokenApi(); // 리프레시 토큰 검증 함수 api
         config.headers.Authorization = `Bearer ${newAccessToken}`;
         // 응답interceptor 로직이 끝나면 이어받은 config 헤더에 토큰을 담아 원래의 요청을 이어간다.
+        authApi.defaults.headers.common['Authorization'] = `Bearer ${newAccessToken}`;
       return axios(config);
       
     }
