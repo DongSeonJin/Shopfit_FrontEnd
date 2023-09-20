@@ -27,7 +27,7 @@ const OrderHistoryDetails = () => {
 
         // 각 주문 상품에 대한 상품 정보를 조회합니다.
         const productPromises = orderProductsData.map(async (orderProduct) => {
-          const productResponse = await fetch(`/shopping/products/${orderProduct.productId}`);
+          const productResponse = await fetch(`/shopping/detail/${orderProduct.productId}`);
           const productData = await productResponse.json();
           return { ...orderProduct, productInfo: productData };
         });
@@ -59,26 +59,37 @@ const OrderHistoryDetails = () => {
   };
 
   return (
-    <div style={{width: '1080px', margin: '0 auto 150px'}}>
+    <div style={{ width: "1080px", margin: "0 auto 150px" }}>
       <HeaderSubMyPage />
-      <div style={{ fontSize: '36px', fontWeight: 'bold', textAlign: 'center', marginBottom: '50px', width: '100%' }}>주문 상세 내역</div>
+      <div style={{ fontSize: "36px", fontWeight: "bold", textAlign: "center", marginBottom: "50px", width: "100%" }}>
+        주문 상세 내역
+      </div>
 
-      <div style={{ minHeight: '240px', borderTop: '1px solid lightgray', borderBottom: '1px solid lightgray', padding: '20px 20px 50px 20px', width: '90%', margin: 'auto'}}>  
+      <div
+        style={{
+          minHeight: "240px",
+          borderTop: "1px solid lightgray",
+          borderBottom: "1px solid lightgray",
+          padding: "20px 20px 50px 20px",
+          width: "90%",
+          margin: "auto",
+        }}
+      >
         {order ? (
           <div>
-            <div style={{ margin: "20px 0", padding: '10px', display: 'flex' }}>
-              <div style={{flex: '1'}}>
+            <div style={{ margin: "20px 0", padding: "10px", display: "flex" }}>
+              <div style={{ flex: "1" }}>
                 <div>주문 날짜: {formatDateTime(order.orderDate)}</div>
                 <div>결제 합계: {order.totalPrice.toLocaleString()} 원</div>
               </div>
-              <div style={{flex: '1'}}>
+              <div style={{ flex: "1" }}>
                 <div>주문 번호: {order.orderId}</div>
                 <div>주문 상태: {order.orderStatus}</div>
               </div>
             </div>
 
             <div style={{ width: "100%" }}>
-              <div style={{paddingLeft: '10px', fontSize: '20px', fontWeight: 'bold'}}>주문 상품 목록</div>
+              <div style={{ paddingLeft: "10px", fontSize: "20px", fontWeight: "bold" }}>주문 상품 목록</div>
               {orderProducts.map((orderProduct, index) => (
                 <div
                   style={{
@@ -92,27 +103,40 @@ const OrderHistoryDetails = () => {
                   <div style={{ flex: "4" }}>
                     <Link to={`/shopping/products/${orderProduct.productInfo.productId}`}>
                       <img
-                        style={{ width: "180px", height: "180px", border: '1px white solid', borderRadius: '10px' }}
+                        style={{ width: "180px", height: "180px", border: "1px white solid", borderRadius: "10px" }}
                         src={orderProduct.productInfo.thumbnailUrl}
                         alt="상품 이미지"
                       />
                     </Link>
                   </div>
-                  <div style={{ flex: "8", textAlign: "left", padding: '0 20px' }}>
-                    <div style={{fontSize: '20px'}}>{orderProduct.productInfo.productName}</div>
-                    <div style={{textAlign: 'right'}}>{orderProduct.quantity} 개</div>
+                  <div style={{ flex: "8", textAlign: "left", padding: "0 20px" }}>
+                    <div style={{ fontSize: "20px" }}>{orderProduct.productInfo.productName}</div>
+                    <div style={{ textAlign: "right" }}>{orderProduct.quantity} 개</div>
                   </div>
                   <div style={{ flex: "2" }}>{orderProduct.productInfo.price.toLocaleString()} 원</div>
-                  <div style={{ flex: "2" }}>{(orderProduct.productInfo.price * orderProduct.quantity).toLocaleString()} 원</div>
                   <div style={{ flex: "2" }}>
-                    <div style={{height: '90px', display: 'flex', alignItems: 'center', justifyContent: 'center'}}>{order.orderStatus}</div>
-                    <div style={{height: '90px', display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
+                    {(orderProduct.productInfo.price * orderProduct.quantity).toLocaleString()} 원
+                  </div>
+                  <div style={{ flex: "2" }}>
+                    <div style={{ height: "90px", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                      {order.orderStatus}
+                    </div>
+                    <div style={{ height: "90px", display: "flex", alignItems: "center", justifyContent: "center" }}>
                       {order.orderStatus != 5 ? (
-                        <Button variant='outlined' color='error' onClick={() => alert("구매확정 후 리뷰를 남겨주세요.")} style={{width: '100px', height: '40px'}}>
+                        <Button
+                          variant="outlined"
+                          color="error"
+                          onClick={() => alert("구매확정 후 리뷰를 남겨주세요.")}
+                          style={{ width: "100px", height: "40px" }}
+                        >
                           리뷰 작성
                         </Button>
                       ) : (
-                        <Button variant='outlined' onClick={() => openReviewModal(orderProduct.productInfo.productId)} style={{width: '100px', height: '40px'}}>
+                        <Button
+                          variant="outlined"
+                          onClick={() => openReviewModal(orderProduct.productInfo.productId)}
+                          style={{ width: "100px", height: "40px" }}
+                        >
                           리뷰 작성
                         </Button>
                       )}
@@ -130,8 +154,8 @@ const OrderHistoryDetails = () => {
         )}
       </div>
 
-      <div style={{ textAlign: "center", marginTop: '50px' }}>
-          <Link to="/orderhistory">목록으로</Link>
+      <div style={{ textAlign: "center", marginTop: "50px" }}>
+        <Link to="/orderhistory">목록으로</Link>
       </div>
     </div>
   );

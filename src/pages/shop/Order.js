@@ -198,7 +198,7 @@ const Order = () => {
     const productId = selectedItems[0].productId; // 선택한 첫 번째 상품의 productId
 
     try {
-      const productResponse = await axios.get(`/shopping/products/${productId}`); // 제품 정보 요청
+      const productResponse = await axios.get(`/shopping/detail/${productId}`); // 제품 정보 요청
       const IMP = window.IMP;
       IMP.init(IAMPORT_API_KEY);
 
