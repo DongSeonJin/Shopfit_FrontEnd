@@ -3,6 +3,8 @@ import axios from 'axios';
 import { Form, useNavigate, useParams } from 'react-router-dom';
 import styles from '../../styles/community/PostCreate.module.css';
 import PostFileUploadComponent from "../../components/community/PostFileUploadComponent";
+import { Button, TextField, Select, MenuItem, FormControl, InputLabel } from '@material-ui/core';
+
 
 const PostUpdate = () => {
     const [title, setTitle] = useState('');
@@ -13,6 +15,7 @@ const PostUpdate = () => {
     const [imageUrl1, setImageUrl1] = useState('');
     const [imageUrl2, setImageUrl2] = useState('');
     const [imageUrl3, setImageUrl3] = useState('');
+    const [imageUrls, setImageUrls] = useState({1:"", 2:"", 3:""})
     
     const { postId } = useParams();
     
@@ -26,7 +29,6 @@ const PostUpdate = () => {
       setImageUrl2(url);
       setImageUrl3(url);
     }
-
     
     const navigate = useNavigate();
 
@@ -107,91 +109,99 @@ const PostUpdate = () => {
      }
 
      return (
-       <div>
-          <h2 style={{textAlign:"center"}}>글 수정 페이지</h2>
-          <form onSubmit={handleSubmit} className={styles['post-form']}>
+      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
+         <h2 style={{textAlign:"center"}}>글 수정 페이지</h2>
+         <form onSubmit={handleSubmit} style={{ width: '80%', marginTop: 20 }}>
+          {/* 카테고리 선택 필드 */}
+           {/* <FormControl fullWidth variant="outlined" margin="normal"> */}
+           <div style={{fontWeight: 'bold', marginBottom: '5px'}}>카테고리</div>
+            <InputLabel id="category-label">카테고리</InputLabel>
+            <Select
+                labelId="category-label"
+                value={category}
+                onChange={(e) => setCategory(e.target.value)}
+                style={{backgroundColor: 'white', borderRadius: '5px', marginBottom: '20px', width: '100%'}}
+                label="카테고리">
+                    <MenuItem value="">
+                        카테고리를 선택하세요
+                    </MenuItem>
+                    {categories.map((category) => (
+                        <MenuItem key={category.id} value={category.id}>
+                            {category.name}
+                        </MenuItem>
+                    ))}
+            </Select>
+           {/* </FormControl> */}
 
-            <div className={styles['form-row']}>
-                
+          {/* 제목 입력 필드 */}
+           <div style={{fontWeight: 'bold', marginBottom: '5px'}}>제목</div>
+           <TextField 
+               fullWidth 
+               variant="outlined" 
+               margin="normal"
+               label='제목' 
+               type='text'
+               value={title}
+               onChange={(e) => setTitle(e.target.value)}
+               style={{backgroundColor: 'white', borderRadius: '5px', marginBottom: '20px', width: '100%'}} />
 
-                <label className={styles['form-label']}>
-                    카테고리:
-                    <select
-                        value={category}
-                        onChange={(e) => setCategory(e.target.value)}
-                        className={styles['input-field']} >
-                        <option value="">카테고리를 선택하세요</option>
-                        {categories.map((category) => (
-                            <option key={category.id} value={category.id}>
-                                {category.name}
-                            </option>
-                        ))}
-                    </select>
-                </label>
-        
-        </div>  <br />
+           {/* 내용 입력 필드 */}
+           <div style={{fontWeight: 'bold', marginBottom: '5px'}}>내용</div>
+           <TextField
+             fullWidth
+             variant='outlined'
+             margin='normal'
+             multiline
+             rows={7}
+             label='내용'
+             value={content}
+             onChange={(e)=>setContent(e.target.value)}
+             style={{backgroundColor: 'white', borderRadius: '5px', marginBottom: '20px', width: '100%'}}
+           />
 
-                <label>
-                    제목: 
-                    <input
-                        type="text"
-                        value={title}
-                        onChange={(e) => setTitle(e.target.value)}
-                        className={`${styles['input-field']} ${styles.title}`}  />
-                </label> <br />
-
-                <label>
-                    내용: 
-                    <textarea
-                        value={content}
-                        onChange={(e)=>setContent(e.target.value)}
-                        className={`${styles['input-field']} ${styles.content}`} />
-                </label> <br />
-
-
-                {imageUrl1 ? (
+            {/* 사진 업로드 필드 */}
+            <div style={{ display:'flex', justifyContent:'space-between', marginTop: 20}}> 
+            {imageUrl1 ? (
                   <div>
                     <img src={imageUrl1} style={{ width: '200px', height: '200px' }} alt="첨부이미지" />
                     <button onClick={() => setImageUrl1('')}>삭제</button>
                   </div>
                 ) : (
                   <PostFileUploadComponent onUploadSuccess={(url) => setImageUrl1(url)} />
-                )}
+            )}
 
-                {imageUrl2 ? (
-                  <div>
-                    <img src={imageUrl2} style={{ width: '200px', height: '200px' }} alt="첨부이미지" />
-                    <button onClick={() => setImageUrl2('')}>삭제</button>
-                  </div>
-                ) : (
-                  <PostFileUploadComponent onUploadSuccess={(url) => setImageUrl2(url)} />
-                )}
+            {imageUrl2 ? (
+              <div>
+                <img src={imageUrl2} style={{ width: '200px', height: '200px' }} alt="첨부이미지" />
+                <button onClick={() => setImageUrl2('')}>삭제</button>
+              </div>
+            ) : (
+              <PostFileUploadComponent onUploadSuccess={(url) => setImageUrl2(url)} />
+            )}
 
-                {imageUrl3 ? (
-                  <div>
-                    <img src={imageUrl3} style={{ width: '200px', height: '200px' }} alt="첨부이미지" />
-                    <button onClick={() => setImageUrl3('')}>삭제</button>
-                  </div>
-                ) : (
-                  <PostFileUploadComponent onUploadSuccess={(url) => setImageUrl3(url)} />
-                )}
+            {imageUrl3 ? (
+              <div>
+                <img src={imageUrl3} style={{ width: '200px', height: '200px' }} alt="첨부이미지" />
+                <button onClick={() => setImageUrl3('')}>삭제</button>
+              </div>
+            ) : (
+              <PostFileUploadComponent onUploadSuccess={(url) => setImageUrl3(url)} />
+            )}
 
+            </div> 
 
-      
+          {/* 수정 버튼 */}
+          <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: '20px'}}>
+            <Button variant='contained' color='primary' type='submit'>
+              수정하기
+            </Button>
+          </div>
 
+       </form>
 
-          
-                <input type='submit' value="수정하기" className={styles['submit-button']} />
-
-
-
-   
-</form>
-
-          
-       </div>
-       
-     );
+         
+      </div>  
+    );
 };
 
 export default PostUpdate;
