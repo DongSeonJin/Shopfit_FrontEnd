@@ -84,7 +84,7 @@ const OrderHistoryProducts = ({ orders }) => {
                         <div style={{ textAlign: "right" }}>외 {numberOfProducts[index] - 1}건</div>
                       </div>
                     ) : (
-                      <div>{productDetails[index].productName}</div>
+                      <div style={{padding: '0 20px', fontSize: '20px', marginBottom: '20px'}}>{productDetails[index].productName}</div>
                     )}
                   </Link>
                 </div>

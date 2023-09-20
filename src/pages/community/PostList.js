@@ -67,17 +67,13 @@ const PostList = () => {
   };
 
   return (
-    <div style={{maxWidth: '1420px', width: '100%', margin: 'auto'}}>
+    <div style={{maxWidth: '1420px', width: '100%', margin: '0 auto 200px'}}>
       <UTurnRightRoundedIcon onClick={scrollToTop} style={{ position: 'fixed', bottom: '20px', right: '20px', zIndex: '9999', transform: 'rotate(180deg)', cursor: 'pointer'}} />
 
       <div>
-        <div>
-          {categoryId}
-          {categoryId === 1 ? "오운완" : categoryId === 2 ? "식단" : ""}
-        </div>
         <div style={{textAlign: 'right', marginBottom: '20px' }}>
           <Link to="/community/post/create">
-              <Button variant="outlined" style={{color: 'white', width: '120px'}}>글작성</Button>
+              <Button variant="outlined" color='primary' style={{color: 'white', width: '160px', fontSize: '20px'}}>글작성</Button>
           </Link>
         </div>
       </div>
@@ -86,7 +82,7 @@ const PostList = () => {
           {posts.map((post) => (
             <div key={post.id} style={{width: '100%', marginBottom: '20px'}}>
               <Link to={`/community/post/${post.postId}`}>
-                <div alt={post.title} style={{backgroundImage: `url(${post.imageUrl1})`, backgroundSize: 'cover', backgroundPosition: 'center', paddingTop: '100%', width: '100%', height: '0', objectFit: 'cover', border: '1px solid white', borderRadius: '5%'}} />
+                <div alt={post.title} style={{backgroundImage: `url(${post.imageUrl1})`, backgroundSize: 'cover', backgroundPosition: 'center', paddingTop: '100%', width: '100%', height: '0', objectFit: 'cover', border: '1px solid white', borderRadius: '10px'}} />
               </Link>
 
               <div style={{margin: '10px 0', padding: '5px'}}>
@@ -97,8 +93,8 @@ const PostList = () => {
                   <div style={{flex: '3', fontSize: '1vw'}}>{`조회수 : ${post.viewCount}`}</div>
                   <div style={{flex: '3', fontSize: '1vw'}}>{`댓글수 : ${post.replyCnt}`}</div>
                 </div>
-                <div style={{display: '-webkit-box', WebkitBoxOrient: 'vertical', WebkitLineClamp: 2, overflow: 'hidden', textOverflow: 'ellipsis', fontWeight: 'bold', fontSize: '1vw', height: '2vw', lineHeight: '1vw', marginBottom: '2px'}}>{post.title}</div>
-                <div style={{display: '-webkit-box', WebkitBoxOrient: 'vertical', WebkitLineClamp: 2, overflow: 'hidden', textOverflow: 'ellipsis', fontSize: '1vw', height: '1vw', lineHeight: '1vw', textAlign: 'right', paddingRight: '5px'}}>{post.nickname}</div>
+                <div style={{display: '-webkit-box', WebkitBoxOrient: 'vertical', WebkitLineClamp: 2, overflow: 'hidden', textOverflow: 'ellipsis', fontWeight: 'bold', fontSize: '0.8vw', height: '2vw', lineHeight: '1vw', marginBottom: '2px'}}>{post.title}</div>
+                <div style={{display: '-webkit-box', WebkitBoxOrient: 'vertical', WebkitLineClamp: 2, overflow: 'hidden', textOverflow: 'ellipsis', fontSize: '0.7vw', height: '1vw', lineHeight: '1vw', textAlign: 'right', paddingRight: '5px'}}>{post.nickname}</div>
               </div>
             </div>
           ))}

@@ -86,7 +86,7 @@ const ProductListPage = () => {
         {/* 관리자 권한 */}
         <div style={{ flex: '1', textAlign: 'right', margin: '0 20px' }}>
           <Link to="/shopping/create">
-            <Button variant="outlined" style={{color: 'white', width: '120px'}}>상품 등록</Button>
+            <Button variant="outlined" color="primary" style={{color: 'white', width: '160px', fontSize: '20px'}}>상품 등록</Button>
           </Link>
         </div>
       </div>

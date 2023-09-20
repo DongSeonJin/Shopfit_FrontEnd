@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { login } from '../../lib/api/authApi'
 import axios from 'axios';
 import { useDispatch } from 'react-redux';
 
+import { Button } from '@mui/material';
 import Modal from './../../components/common/modal/Modal';
 
 import { setRefreshToken } from '../../store/Cookie';
@@ -56,9 +57,7 @@ const UserLogin = () => {
             return;
         }
 
-        try {
-            
-
+        try { 
             const response = await login(values);
 
             console.log('Response:', response); // Add this line to debug the response
@@ -90,35 +89,57 @@ const UserLogin = () => {
     };
 
     return (
-        <div style={{ textAlign: 'center', margin: '10% 20%' }}>
-            <h2>로그인 페이지</h2>
-            <div>
-                <input
-                    type="text"
-                    placeholder="이메일"
-                    value={values.email}
-                    id="email"
-                    onChange={handleChange}
-                />
-            </div>
-            <div>
-                <input
-                    type="password"
-                    placeholder="비밀번호"
-                    value={values.password}
-                    id="password"
-                    onChange={handleChange}
-                />
-            </div>
-            <button onClick={handleLogin}>로그인</button>
-            <button onClick={handleHome}>홈으로</button>
+        <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', maxWidth: '1420px', width:'100%', minHeight: `calc(100vh - 720px)`, margin: '0 auto 150px'}}>
 
-            {errorModalOpen && (
-                <Modal
-                    errorMessage={errorMessage}
-                    onClose={handleCloseModal}
-                />
-            )}
+            <div style={{width: '360px', alignContent: 'center'}}>
+
+                <div style={{display: 'flex', width: '240px', cursor: 'pointer', marginLeft: '20px'}} onClick={handleHome}>
+                    <div style={{flex: "1"}}>
+                        <img src="https://kr.object.ncloudstorage.com/post-bucket/imageslide/%23fit%20%281%29.gif" alt="slide_img" style={{width:"120px", height:"120px"}}/>
+                    </div>
+                    <div style={{flex: '2', fontSize: '36px', fontWeight: 'bold', textAlign: 'center', lineHeight: '120px' }}>샵피트</div>
+                </div>
+
+                
+                <div>
+                    <input
+                        type="text"
+                        placeholder="이메일"
+                        value={values.email}
+                        id="email"
+                        onChange={handleChange}
+                        style={{paddingLeft: '10px',width: '360px', height: '60px', margin: '5px 0', borderRadius: '10px'}}
+                    />
+                </div>
+                <div>
+                    <input
+                        type="password"
+                        placeholder="비밀번호"
+                        value={values.password}
+                        id="password"
+                        onChange={handleChange}
+                        style={{paddingLeft: '10px', width: '360px', height: '60px', margin: '5px 0', borderRadius: '10px'}}
+                    />
+                </div>
+                <Button onClick={handleLogin} variant="outlined" style={{width: '360px', height: '60px', textAlign: 'center', margin: '20px 0', borderRadius: '10px', fontSize: '24px'}}>로그인</Button>
+
+                <div style={{display: 'flex'}}>
+                    <div style={{flex: '1', textAlign: 'center'}}>
+                        <Link to='http://localhost:3000/mypage/edit/password' style={{textDecoration: 'none', color: 'white'}}>비밀번호 재설정</Link>
+                    </div>
+                    <div style={{flex: '1', textAlign: 'center', borderLeft: '1px solid white'}}>
+                        <Link to='http://localhost:3000/signup' style={{textDecoration: 'none', color: 'white'}}>회원가입</Link>
+                    </div>
+                </div>
+
+
+                {errorModalOpen && (
+                    <Modal
+                        errorMessage={errorMessage}
+                        onClose={handleCloseModal}
+                    />
+                )}
+            </div>        
         </div>
     );
 };

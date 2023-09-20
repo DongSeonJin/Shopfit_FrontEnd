@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { Button } from "@material-ui/core";
 
 function FileUploadComponent({ onUploadSuccess }) {
   const [previewImage, setPreviewImage] = useState(null);
@@ -61,11 +62,13 @@ function FileUploadComponent({ onUploadSuccess }) {
 
   return (
     <div>
-      <input type="file" onChange={handleFileChange} />
+      <input type="file" onChange={handleFileChange} style={{width: '100%', marginBottom: '10px'}} />
       {previewImage && (
         <div>
-          <img src={previewImage} alt="Preview" />
-          <button onClick={handleDeleteImage}>삭제</button>
+          <div style={{backgroundImage: `url(${previewImage})`, backgroundSize: 'cover', backgroundPosition: 'center', width: '100%', height: '0', paddingBottom: '100%', objectFit: 'cover', border: '1px solid white', borderRadius: '10px', marginBottom: '20px'}}/>
+          <div style={{ textAlign: 'center'}}>
+            <Button variant='outlined' color='secondary' onClick={handleDeleteImage} style={{ width: '80px'}}>삭제</Button>
+          </div>
         </div>
       )}
     </div>

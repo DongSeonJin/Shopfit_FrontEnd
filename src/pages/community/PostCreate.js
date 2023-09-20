@@ -1,9 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router';
 import PostFileUploadComponent from "../../components/community/PostFileUploadComponent";
-import { Button, TextField, Select, MenuItem, FormControl, InputLabel } from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
+import { Button, TextField } from '@material-ui/core';
 // import styles from '../../styles/community/PostCreate.module.css';
 // import { useForm, Controller } from 'react-hook-form'
 
@@ -33,36 +32,10 @@ const PostCreate = () => {
         setContent(e.target.value);
     };
 
-    const handleCategoryChange = (e) => {
-        setCategory(e.target.value);
-    };
-
+    // 기본값으로 설정하면 필요 없음
     const handleNicknameChange = (e) => {
         setNickname(e.target.value);
     }
-
-    const handleUploadSuccess =(url) => {
-        setImageUrl1(url);
-        setImageUrl2(url);
-        setImageUrl3(url);
-    }
-
-    const handleDeleteImage = (imageIndex) => {
-        switch (imageIndex) {
-          case 1:
-            setImageUrl1(null);
-            break;
-          case 2:
-            setImageUrl2(null);
-            break;
-          case 3:
-            setImageUrl3(null);
-            break;
-          default:
-            break;
-        }
-      };
-
     
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -118,41 +91,45 @@ const PostCreate = () => {
     }; 
 
     return (
-        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
-            <h2>글 작성 페이지</h2>
-            <form onSubmit={handleSubmit} style={{ width: '80%', marginTop: 20 }}>
+        <div style={{maxWidth: '1080px', width: '100%', margin: '0 auto 150px'}}>
+            
+            <div style={{textAlign: 'center', height: '54px', marginBottom: '50px', fontSize: '28px', fontWeight: 'bold'}}>게시글 작성</div>
 
+            <form onSubmit={handleSubmit} style={{ width: '80%', minWidth: '720px', margin: '0 auto'}}>
 
-                <div style={{fontWeight: 'bold', marginBottom: '5px'}}>작성자</div>
-                <TextField
-                    label="작성자"
-                    value={nickname}
-                    onChange={handleNicknameChange}
-                    fullWidth
-                    variant='outlined'
-                    style={{backgroundColor: 'white', borderRadius: '5px', marginBottom: '20px', width: '100%'}}
-                />
-
-                <div style={{fontWeight: 'bold', marginBottom: '5px'}}>카테고리</div>
-                {/* <FormControl fullWidth style={{ marginTop: 20 }}> */}
-                <Select
-                    labelId="category-label"
-                    value={category}
-                    onChange={handleCategoryChange}
-                    style={{backgroundColor: 'white', borderRadius: '5px', marginBottom: '20px', width: '100%'}}
-                >
-                    {categories.map((category) => (
-                        <MenuItem key={category.id} value={category.id}>
-                            {category.name}
-                        </MenuItem>
-                    ))}
-                </Select>
+                <div style={{display: 'flex'}}>
+                    <div style={{flex: '1', paddingRight: '5px'}}>
+                        <div style={{fontWeight: 'bold', marginBottom: '10px'}}>카테고리</div>
+                        {/* <FormControl fullWidth style={{ marginTop: 20 }}> */}
+                        <select
+                            labelId="category-label"
+                            value={category}
+                            onChange={(e) => setCategory(e.target.value)}
+                            style={{backgroundColor: 'white', borderRadius: '5px', marginBottom: '20px', width: '100%', padding: '0 20px', height: '56px'}}
+                            >
+                            <option value="">카테고리를 선택하세요</option>
+                            {categories.map((category) => (
+                                <option key={category.id} value={category.id}>{category.name}</option>
+                            ))}
+                        </select>
+                    </div>
+                    <div style={{flex: '1', paddingLeft: '5px'}}>
+                        <div style={{fontWeight: 'bold', marginBottom: '10px'}}>작성자</div>
+                        {/* 작성자 닉네임 고정 */}
+                        <TextField
+                            value={nickname}
+                            onChange={handleNicknameChange}
+                            fullWidth
+                            variant='outlined'
+                            style={{backgroundColor: 'white', borderRadius: '5px', marginBottom: '20px', width: '100%'}}
+                        />
+                    </div>
+                </div>
                 {/* </FormControl> */}
 
                 {/* 제목 입력 필드 */}
-                <div style={{fontWeight: 'bold', marginBottom: '5px'}}>제목</div>
+                <div style={{fontWeight: 'bold', marginBottom: '10px'}}>제목</div>
                 <TextField 
-                  label="제목" 
                   value={title} 
                   onChange={handleTitleChange} 
                   fullWidth 
@@ -160,32 +137,33 @@ const PostCreate = () => {
                   style={{backgroundColor: 'white', borderRadius: '5px', marginBottom: '20px', width: '100%'}} />
 
                 {/* 내용 입력 필드 */}
-                <div style={{fontWeight: 'bold', marginBottom: '5px'}}>내용</div>
+                <div style={{fontWeight: 'bold', marginBottom: '10px'}}>내용</div>
                 <TextField
-                  label="내용"
                   multiline
-                  rows={7}
+                  rows={10}
                   value={content} 
                   onChange= {handleContentChange}  
                   fullWidth
 
                   variant='outlined'
-                  style={{backgroundColor: 'white', borderRadius: '5px', marginBottom: '20px', width: '100%'}} />
+                  style={{backgroundColor: 'white', borderRadius: '10px', marginBottom: '20px', width: '100%'}} />
 
                {/* 이미지 업로드*/}
-               <div style={{ display:'flex', justifyContent:'space-between', marginTop: 20}}>
-                   {[1,2,3].map((item) => (
-                      
-                       <>
-                           <PostFileUploadComponent onUploadSuccess={(url) => handleUploadSuccess(url,item)} />
-                           {/*<button onClick={() => handleDeleteImage(item)}>Delete Image{item}</button>*/}
-                       </>
-                   ))}
+               <div style={{ display:'flex', justifyContent:'space-between'}}>
+                    <div style={{width: '30%'}}>
+                        <PostFileUploadComponent onUploadSuccess={(url) => setImageUrl1(url)} />
+                    </div>
+                    <div style={{width: '30%'}}>
+                        <PostFileUploadComponent onUploadSuccess={(url) => setImageUrl2(url)} />
+                    </div>
+                    <div style={{width: '30%'}}>
+                        <PostFileUploadComponent onUploadSuccess={(url) => setImageUrl3(url)} />
+                    </div>
                </div>
 
                {/* 등록 버튼 */}
                <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: '20px'}}>
-                <Button variant="contained" color="primary" type='submit' style={{marginTop:'20px'}}>
+                <Button variant="contained" color="primary" type='submit' style={{marginTop:'20px', width: '120px', height: '40px'}}>
                     등록
                 </Button>
                </div>
