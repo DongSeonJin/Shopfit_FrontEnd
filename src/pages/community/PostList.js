@@ -23,6 +23,7 @@ const PostList = () => {
     setIsObserverActive(false);
   }, [categoryId]);
 
+
   // loader(ref) 가 화면에 나타났다 사라졌다 할 때 호출되는 함수입니다.
   const handleObserver = useCallback((entities) => {
     const target = entities[0];
@@ -46,23 +47,21 @@ const PostList = () => {
         console.error("Error fetching data:", error);
       });
   }, [categoryId, pageNumb]);
-
   useEffect(() => {
     if (!isObserverActive) return; // isObserverActive가 false일 경우 observer 생성하지 않음
     var options = {
       root: null,
       rootMargin: "20px",
-      threshold: 1.0
+      threshold: 1.0,
     };
     // Intersection Observer를 생성하고 시작합니다.
     const observer = new IntersectionObserver(handleObserver, options);
     if (loader.current) {
-      observer.observe(loader.current)
+      observer.observe(loader.current);
     }
     // cleanup function을 추가하여 이전의 observer를 해제합니다.
     return () => observer.disconnect();
   }, [handleObserver, isObserverActive]); // handleObserver의 변경에 따라 새로운 observer 생성
-
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
@@ -100,12 +99,11 @@ const PostList = () => {
             </div>
           ))}
         </div>
-        <div ref={loader}>
-          Loading...
-        </div>
+        <div ref={loader}>Loading...</div>
       </div>
     </div>
   );
 };
+
 
 export default PostList;
