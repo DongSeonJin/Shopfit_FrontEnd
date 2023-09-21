@@ -13,10 +13,10 @@ import ChatbotButton from './components/common/ChatbotButton';
 
 
 const App = () => {
-  const user = useSelector(state => state.authUser.user); //리덕스에서 가져온 user정보
+  const userId = useSelector(state => state.authUser.userId); //리덕스에서 가져온 user정보
   useEffect(() => {
 
-    if (user) {
+    if (!userId === 0) {
       refreshTokenApi(); // 유저정보가 존재하는 경우에만 리프레시 토큰 검증 및 액세스 토큰 갱신 시도
     }
   }, []);

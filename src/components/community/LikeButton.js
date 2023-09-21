@@ -3,15 +3,14 @@ import axios from 'axios';
 import { HeartOutlined, HeartFilled } from '@ant-design/icons';
 import styles from '../../styles/community/LikeButton.module.css'
 import { useSelector } from 'react-redux';
+import { authApi } from '../../lib/api/authApi';
 
 
 const LikeButton = ({ postId }) => {
     const [likeCount, setLikeCount] = useState(0);
     const [isLiked, setIsLiked] = useState(false);
     
-     const user = useSelector(state => state.authUser.user); //리덕스에서 가져온 user정보
-
-     let userId = user ? user.userId : 0;
+     const userId = useSelector(state => state.authUser.userId); //리덕스에서 가져온 user정보
     
 
     useEffect(() => {
@@ -19,7 +18,7 @@ const LikeButton = ({ postId }) => {
             try {
                 // 서버에서 좋아요 상태 가져오기
                 const [likeResponse] = await Promise.all([
-                    axios.post(`/post/like`, { postId: postId, userId })
+                    authApi.post(`/post/isLiked`, { postId: postId, userId })
                 ]);
 
                 setLikeCount(likeResponse.data.likeCnt);
@@ -37,16 +36,16 @@ const LikeButton = ({ postId }) => {
 
             if (!isLiked) {
                 // 서버로 좋아요 요청 보내기
-                await axios.post('/post/like/add', { postId: postId, userId });
+                await authApi.post('/post/like/add', { postId: postId, userId });
 
             } else {
                 // 이미 누른거면 좋아요 취소 요청
-                await axios.post('/post/like/delete', { postId: postId, userId });
+                await authApi.post('/post/like/delete', { postId: postId, userId });
 
             }
 
             // 좋아요 성공 후 해당 포스트 정보 다시 가져오기
-            const response = await axios.post(`/post/like`, { postId: postId, userId });
+            const response = await authApi.post(`/post/isLiked`, { postId: postId, userId });
             
             setLikeCount(response.data.likeCnt);
             setIsLiked(!isLiked);
