@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 
+import { Button } from '@material-ui/core';
+
 import styles from '../../../styles/common/modal/ReviewModal.module.css';
+
 
 const ReviewModal = ({ onClose, productId, userId }) => {
     const [rating, setRating] = useState(0);
@@ -47,28 +50,39 @@ const ReviewModal = ({ onClose, productId, userId }) => {
     return (
         <div className={styles.modal}>
             <div className={styles.modalContent}>
-                <h2>리뷰 작성</h2>
-                <label>평점: </label>
-                <input
-                    type="number"
-                    min="1"
-                    max="5"
-                    value={rating}
-                    onChange={(e) => setRating(Number(e.target.value))}
-                />
-                <br />
-                <label>리뷰 내용: </label>
+                <div style={{fontSize: '20px', fontWeight: 'bold'}}>리뷰 작성</div>
+                <div style={{display: 'flex', justifyContent: 'space-between', marginBottom: '5px', padding: '0 5px'}}>
+                    <div>리뷰 내용: </div>
+                    <div>
+                        <label>평점: </label>
+                        <input
+                            type="number"
+                            min="0"
+                            max="5"
+                            value={rating}
+                            style={{border: 'none', textAlign: 'right'}}
+                            onChange={(e) => setRating(Number(e.target.value))}
+                        />
+                    </div>
+                </div>
                 <textarea
-                    rows="4"
+                    rows="10"
                     cols="50"
                     value={comment}
+                    style={{width: '100%', padding: '10px'}}
                     onChange={(e) => setComment(e.target.value)}
-                ></textarea>
-                <br />
-                <button onClick={handleReviewSubmit} disabled={isSubmitting}>
-                    {isSubmitting ? '작성 중...' : '작성 완료'}
-                </button>
-                <button onClick={onClose}>취소</button>
+                />
+                
+                <div style={{display:'flex'}}>
+                    <div style={{flex: '1', textAlign: 'right', padding: '0 10px'}}>
+                        <Button variant='outlined' color='primary' style={{width: '120px'}} onClick={handleReviewSubmit} disabled={isSubmitting}>
+                            {isSubmitting ? '작성 중...' : '작성 완료'}
+                        </Button>
+                    </div>
+                    <div style={{flex: '1', textAlign: 'left', padding: '0 10px'}}>
+                        <Button variant='outlined' color='secondary' style={{width: '120px'}} onClick={onClose}>취소</Button>
+                    </div>
+                </div>
             </div>
         </div>
     );

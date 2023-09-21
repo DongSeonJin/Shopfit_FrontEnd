@@ -14,6 +14,14 @@ const OrderHistoryDetails = () => {
   const [isReviewModalOpen, setIsReviewModalOpen] = useState(false);
   const [selectedProductId, setSelectedProductId] = useState();
 
+  const orderStatusMapping = {
+    1: "결제대기",
+    2: "결제완료",
+    3: "배송중",
+    4: "배송완료",
+    5: "구매확정",
+  };
+
   useEffect(() => {
     const fetchOrderDetails = async () => {
       try {
@@ -78,18 +86,18 @@ const OrderHistoryDetails = () => {
         {order ? (
           <div>
             <div style={{ margin: "20px 0", padding: "10px", display: "flex" }}>
-              <div style={{ flex: "1" }}>
+              <div style={{ flex: "2" }}>
                 <div>주문 날짜: {formatDateTime(order.orderDate)}</div>
                 <div>결제 합계: {order.totalPrice.toLocaleString()} 원</div>
               </div>
               <div style={{ flex: "1" }}>
                 <div>주문 번호: {order.orderId}</div>
-                <div>주문 상태: {order.orderStatus}</div>
+                <div>주문 상태: {orderStatusMapping[order.orderStatus]}</div>
               </div>
             </div>
 
             <div style={{ width: "100%" }}>
-              <div style={{ paddingLeft: "10px", fontSize: "20px", fontWeight: "bold" }}>주문 상품 목록</div>
+              <div style={{ paddingLeft: "10px", fontSize: "20px", fontWeight: "bold", marginBottom: '10px'}}>주문 상품 목록</div>
               {orderProducts.map((orderProduct, index) => (
                 <div
                   style={{
@@ -100,7 +108,7 @@ const OrderHistoryDetails = () => {
                     textAlign: "center",
                   }}
                 >
-                  <div style={{ flex: "4" }}>
+                  <div style={{ flex: "2" }}>
                     <Link to={`/shopping/products/${orderProduct.productInfo.productId}`}>
                       <img
                         style={{ width: "180px", height: "180px", border: "1px white solid", borderRadius: "10px" }}
@@ -110,17 +118,17 @@ const OrderHistoryDetails = () => {
                     </Link>
                   </div>
                   
-                  <div style={{ flex: "8", textAlign: "left", padding: '0 20px' }}>
+                  <div style={{ flex: "4", textAlign: "left", padding: '0 20px' }}>
                     <div style={{fontSize: '20px', marginBottom: '20px'}}>{orderProduct.productInfo.productName}</div>
                     <div style={{textAlign: 'right'}}>{orderProduct.quantity} 개</div>
                   </div>
-                  <div style={{ flex: "2" }}>{orderProduct.productInfo.price.toLocaleString()} 원</div>
-                  <div style={{ flex: "2" }}>
+                  <div style={{ flex: "1" }}>{orderProduct.productInfo.price.toLocaleString()} 원</div>
+                  <div style={{ flex: "1" }}>
                     {(orderProduct.productInfo.price * orderProduct.quantity).toLocaleString()} 원
                   </div>
-                  <div style={{ flex: "2" }}>
+                  <div style={{ flex: "1" }}>
                     <div style={{ height: "90px", display: "flex", alignItems: "center", justifyContent: "center" }}>
-                      {order.orderStatus}
+                      {orderStatusMapping[order.orderStatus]}
                     </div>
                     <div style={{ height: "90px", display: "flex", alignItems: "center", justifyContent: "center" }}>
                       {order.orderStatus != 5 ? (
@@ -155,7 +163,7 @@ const OrderHistoryDetails = () => {
         )}
       </div>
 
-      <div style={{ textAlign: "center", marginTop: "50px" }}>
+      <div style={{ textAlign: "right", margin: "50px 60px 0 0" }}>
         <Link to="/orderhistory">목록으로</Link>
       </div>
     </div>

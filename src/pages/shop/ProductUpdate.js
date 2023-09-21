@@ -1,12 +1,15 @@
 import axios from "axios";
+import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router";
-import UpdateFileUploadComponent from "../../components/shop/UpdateFileUploadComponent";
+
+import CreateFileUploadComponent from "../../components/shop/CreateFileUploadComponent";
 import FilesUploadComponent from "../../components/shop/FilesUploadComponent";
 import { Button } from "@mui/material";
-import { Link } from "react-router-dom";
+import CloseIcon from '@mui/icons-material/Close';
 
 // import styles from "../../styles/shop/ProductUpdate.module.css";
+
 
 const ProductUpdate = () => {
   const [ProductCategory, setProductCategory] = useState("");
@@ -157,103 +160,98 @@ const ProductUpdate = () => {
   };
 
   return (
-    <div style={{ margin: "0 10%" }}>
-      <div style={{ fontSize: "36px", fontWeight: "bold", textAlign: "center", marginBottom: "5%" }}>상품 수정</div>
-      <form onSubmit={handleSubmit} style={{ fontSize: "20px" }}>
-        <div style={{ margin: "2% 0" }}>
-          <label style={{ width: "50%" }}>상품 카테고리: </label>
-          <select
-            value={ProductCategory}
-            onChange={handleProductCategoryChange}
-            style={{ width: "50%", height: "36px" }}
-          >
-            <option value="">카테고리를 선택하세요</option>
-            {productCategories.map((category) => (
-              <option key={category.id} value={category.id}>
-                {category.name}
-              </option>
-            ))}
-          </select>
-        </div>
+    <div style={{maxWidth: '720px', width: '100%', textAlign: 'center', margin: '0 auto 200px'}}>
 
-        <div style={{ margin: "2% 0", display: "flex" }}>
-          <label style={{ width: "50%" }}>상품명:</label>
-          <input type="text" value={productName} onChange={handleProductNameChange} style={{ width: "50%" }} />
-        </div>
+      <div style={{fontSize: '36px', fontWeight: 'bold', textAlign: 'center', marginBottom: '50px'}}>
+        상 품 수 정
+      </div>
 
-        <div style={{ margin: "2% 0", display: "flex" }}>
-          <label style={{ width: "50%" }}>가격:</label>
-          <input type="number" value={price} onChange={handlePriceChange} style={{ width: "50%" }} />
-        </div>
 
-        <div style={{ margin: "2% 0", display: "flex" }}>
-          <label style={{ width: "50%" }}>재고 수량:</label>
-          <input type="number" value={stockQuantity} onChange={handleStockQuantityChange} style={{ width: "50%" }} />
-        </div>
+      <form onSubmit={handleSubmit}>
+        <div style={{borderTop: '1px white solid', borderBottom: '1px white solid', padding: '20px 10px'}}>
 
-        <div style={{margin: '2% 0'}}>
-          <div style={{display: 'flex'}}>
-            <label style={{width: '50%'}}>썸네일: </label>
-            <div style={{width: '50%'}}>
-              <UpdateFileUploadComponent onUploadSuccess={handleUploadSuccess} />
+          <div style={{display: 'flex', margin: '10px 0'}}>
+            <div style={{flex: '1', textAlign: 'left', height: '30px'}}>상품 카테고리:</div>
+            <div style={{flex: '1'}}>
+              <select value={ProductCategory} onChange={handleProductCategoryChange} style={{width: '100%', height: '35px', padding: '0 10px'}}>
+                <option value="">카테고리를 선택하세요</option>
+                {productCategories.map((category) => (
+                  <option key={category.id} value={category.id}>
+                    {category.name}
+                  </option>
+                ))}
+              </select>
             </div>
           </div>
-          <div>
-            {thumbnailUrl && (
-              <div style={{ margin: "3% 0", display: "flex" }}>
-                <div style={{ width: "50%", textAlign: "center" }}>
-                  <img src={thumbnailUrl} alt="Preview" style={{ maxWidth: "80%", height: "auto" }} />
-                </div>
-                <div style={{ width: "50%", display: "flex", alignItems: "center", justifyContent: "left" }}>
-                  <Button variant="outlined" color="error" onClick={() => handleDeleteThumbnail(thumbnailUrl)}>
-                    삭제
-                  </Button>
-                </div>
-              </div>
-            )}
-          </div>
-        </div>
 
-        <div style={{ margin: "2% 0" }}>
-          <div style={{ display: "flex" }}>
-            <label style={{ width: "50%" }}>상세 이미지 :</label>
-            <div style={{ width: "50%" }}>
-              <FilesUploadComponent onUploadSuccess={handleAddImage} />
+          <div style={{display: 'flex', marginBottom: '10px'}}>
+            <div style={{flex: '1', textAlign: 'left', height: '30px'}}>상품명: </div>
+            <div style={{flex: '1'}}>
+              <input type="text" value={productName} onChange={handleProductNameChange} style={{width: '100%', height: '35px', padding: '0 10px'}} />
             </div>
           </div>
-          <div>
-            {productImageUrls.map((imageUrl, index) => (
-              <div style={{ margin: "3% 0", display: "flex" }}>
-                <div style={{ width: "50%", textAlign: "center" }}>
-                  <img src={imageUrl} alt="Preview" style={{ maxWidth: "80%", height: "auto" }} />
-                </div>
-                <div style={{ width: "50%", display: "flex", alignItems: "center", justifyContent: "left" }}>
-                  <Button
-                    variant="outlined"
-                    color="error"
-                    onClick={() => handleDeleteImages(imageUrl, productImageIds[index])}
-                  >
-                    삭제
-                  </Button>
-                </div>
-              </div>
-            ))}
+
+          <div style={{display: 'flex', marginBottom: '10px'}}>
+            <div style={{flex: '1', textAlign: 'left', height: '30px'}}>가격:</div>
+            <div style={{flex: '1'}}>
+              <input type="number" value={price} onChange={handlePriceChange} style={{width: '100%', height: '35px', padding: '0 10px'}} />
+            </div>
+          </div>
+
+          <div style={{display: 'flex', marginBottom: '10px'}}>
+            <div style={{flex: '1', textAlign: 'left', height: '30px'}}>재고 수량:</div>
+            <div style={{flex: '1'}}>
+              <input type="number" value={stockQuantity} onChange={handleStockQuantityChange} style={{width: '100%', height: '35px', padding: '0 10px'}} />
+            </div>
           </div>
         </div>
 
-        <div style={{ textAlign: "center", margin: "5% 0" }}>
+        <div style={{margin: '30px 0', borderBottom: '1px solid white', padding: '0 10px'}}>
+          <div style={{textAlign: 'left', marginBottom: '10px'}}>썸네일: </div>
+
+          <div>
+            <CreateFileUploadComponent onUploadSuccess={handleUploadSuccess} />
+          </div>
+        </div>
+
+        <div style={{margin: '30px 0', borderBottom: '1px solid white', padding: '0 10px 30px'}}>
+          <div style={{textAlign: 'left', marginBottom: '10px'}}>상세 이미지 :</div>
+
+          <div>
+            <FilesUploadComponent onUploadSuccess={handleAddImage} />
+          </div>
+
+          {productImageUrls.map((imageUrl, index) => (
+          <div key={index} style={{display: 'flex', margin: '20px 0'}}>
+            <div style={{flex: '4'}}>
+              <img src={imageUrl} alt="productImages" style={{border: '1px solid white', borderRadius: '10px', width: '80%'}} />
+            </div>
+            <div style={{flex: '1', display: 'flex', alignItems: 'center'}}>
+              <CloseIcon
+                variant="outlined"
+                color="error"
+                onClick={() => handleDeleteImages(imageUrl, productImageIds[index])}
+                style={{width: '60px', height: '60px', cursor:'pointer', color: 'white'}}
+              />
+            </div>
+          </div>
+          ))}
+        </div>
+
+        <div style={{margin: '100px 0', textAlign: 'center'}}>
           <Button
             variant="outlined"
             type="submit"
-            style={{ width: "180px", height: "60px", fontSize: "28px", margin: "0 5px" }}
+            style={{color: 'white', width: '180px', height: '60px', fontWeight: 'bold', fontSize: '24px', marginRight: '10px'}}
           >
-            등록
+            수정
           </Button>
-          <Link to={"http://localhost:3000/shopping/1"}>
+
+          <Link to={"/shopping/1"}>
             <Button
               variant="outlined"
               color="error"
-              style={{ width: "180px", height: "60px", fontSize: "28px", margin: "0 5px" }}
+              style={{color: 'white', width: '180px', height: '60px', fontWeight: 'bold', fontSize: '24px', marginLeft: '10px'}}
             >
               취소
             </Button>

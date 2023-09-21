@@ -176,7 +176,7 @@ function SignupForm() {
               <div>
                 이미 아이디가 있으신가요? 
               </div>
-              <Link to='http://localhost:3000/login' style={{color: 'white', fontWeight: 'bold', paddingLeft: '20px'}}> 로그인</Link>
+              <Link to='/login' style={{color: 'white', fontWeight: 'bold', paddingLeft: '20px'}}> 로그인</Link>
             </div>
           </div>
         </form>

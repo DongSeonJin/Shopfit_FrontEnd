@@ -27,8 +27,8 @@ const Article = ({ data }) => {
       <div className={styles.textContainer}>
         <div className={styles.title}>{data.title}</div>
         <div className={styles.content}>{data.content}</div>
+        <div className={styles.date}>{data.createdAt}</div>
       </div>
-      <div className={styles.date}>{data.createdAt}</div>
 
       <div className={styles.delButton}>
         {userAuthority === 'ADMIN' ? <DeleteNews newsId={data.newsId} /> : ''}        

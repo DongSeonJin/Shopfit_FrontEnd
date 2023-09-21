@@ -323,7 +323,9 @@ const ProductDetail = () => {
           <div style={{ fontSize: "24px", fontWeight: "bold", marginBottom: "20px" }}>상세정보</div>
           <div style={{ minHeight: "200px", padding: "20px" }}>
             <div>
-              {data.productImageUrls.map((imageUrl, index) => (
+              {data.productImageUrls.length === 0 ?
+              <div style={{width: '100%', height: '200px', display: 'flex', fontSize: '24px', alignItems: 'center', justifyContent: 'center'}}>작성 된 상세정보가 없습니다</div> :
+              data.productImageUrls.map((imageUrl, index) => (
                 <div>
                   <img key={index} src={imageUrl} alt={`Product ${index}`} style={{ width: "100%" }} />
                 </div>
@@ -336,7 +338,7 @@ const ProductDetail = () => {
             <div style={{ width: "100%", minHeight: "200px" }}>
               <div>
                 {formattedReviews.length === 0 ? 
-                <div style={{width: '100%', height: '200px', display: 'flex', fontSize: '24px', alignItems: 'center', justifyContent: 'center'}}>작성 된 후기가 없습니다</div> :
+                <div style={{width: '100%', height: '200px', display: 'flex', fontSize: '24px', alignItems: 'center', justifyContent: 'center'}}>작성 된 구매후기가 없습니다</div> :
                 formattedReviews.map((review) => (
                   <div
                     key={review.reviewId}
