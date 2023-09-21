@@ -1,6 +1,7 @@
 /* eslint-disable eqeqeq */
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
+import { useSelector } from "react-redux";
 import logout from "../../lib/api/Logout";
 // import { connect } from 'react-redux';
 
@@ -12,7 +13,9 @@ const HeaderMain = ({ isCommunityHovered, isShoppingHovered }) => {
     const [isHoveredCommunity, setIsHoveredCommunity] = useState(false);
     const [isHoveredShopping, setIsHoveredShopping] = useState(false);
     const [isHoveredNews, setIsHoveredNews] = useState(false);
-    const [searchText, setSearchText] = useState(""); // 1. searchText 상태 변수 추가
+    const [searchText, setSearchText] = useState("");
+
+    const userId = useSelector(state => state.authUser.userId);
 
     const handleSearchTextChange = (e) => {
         // 2. 검색어 입력 필드의 변경 이벤트 처리 함수
@@ -27,12 +30,10 @@ const HeaderMain = ({ isCommunityHovered, isShoppingHovered }) => {
             console.log("검색어:", searchText);
         }
     };
-    
+   
 
     return (
         <div style={{display: 'flex', height: '90px', alignItems: 'center', marginTop: '30px', justifyContent: 'space-between', width: `calc(100% - 200px)`}}>
-
-            
             <div style={{display: 'flex', fontWeight: 'bold', fontSize: '24px'}}>
                 <div
                     style={{display: 'inline-block', width: '96px', textAlign: 'center', margin: '0 36px',
@@ -94,21 +95,20 @@ const HeaderMain = ({ isCommunityHovered, isShoppingHovered }) => {
 
             <div style={{display: 'flex', fontWeight: 'bold', justifyContent: 'right', fontSize: '20px'}}>
 
-                <div style={{display: 'inline-block', width: '60px', textAlign: 'center', margin: '0 30px'}}>
-                    <Link to="/login" style={{ textDecoration: 'none', color: 'inherit'}}>로그인</Link>
+                <div style={{display: 'inline-block', width: '80px', textAlign: 'center', margin: '0 30px'}}>
+                    {userId !== null ? 
+                        <Link to="/" style={{ textDecoration: 'none', color: 'inherit'}} onClick={logout}>로그아웃</Link> :
+                        <Link to="/login" style={{ textDecoration: 'none', color: 'inherit'}}>로그인</Link>
+                    }                    
                 </div>
 
-                <div style={{display: 'inline-block', width: '80px', textAlign: 'center', margin: '0 30px',}}>
-                    <Link to="/signup" style={{ textDecoration: 'none', color: 'inherit'}}>회원가입</Link>
+                <div style={{display: 'inline-block', width: '100px', textAlign: 'center', margin: '0 30px',}}>
+                    {userId !== null ?
+                        <Link to="/mypage/info" style={{ textDecoration: 'none', color: 'inherit'}}>마이페이지</Link> :
+                        <Link to="/signup" style={{ textDecoration: 'none', color: 'inherit'}}>회원가입</Link>
+                    }
                 </div>
 
-
-                {/* 로그아웃 버튼 */}
-                <div style={{ display: "inline-block", width: "80px", textAlign: "center", margin: "0 30px", color: 'white', }}>
-                    <div onClick={logout} style={{ border: "none", background: "none", textDecoration: "underline", cursor: "pointer" }}>
-                        로그아웃
-                    </div>
-                </div>
             </div>
 
 

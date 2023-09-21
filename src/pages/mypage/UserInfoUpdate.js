@@ -2,15 +2,18 @@ import axios from "axios";
 import React, { useState } from "react";
 import { useEffect } from "react";
 import { useNavigate } from "react-router";
+import { useSelector } from "react-redux";
+
 import HeaderSubMyPage from "../../components/common/HeaderSubMypage";
 import { Button } from "@mui/material";
 
+
 const UserInfoUpdate = () => {
-  const [nickname, setNickname] = useState("");
-  const [profileImage, setProfileImage] = useState(null);
-  const userId = 1; // 임시로 설정한 userId 변수 -> 추후 수정해야 함
-  const [user, setUser] = useState({});
   const navigate = useNavigate();
+  const userId = useSelector(state => state.authUser.userId);
+  const [user, setUser] = useState({});
+  const [nickname, setNickname] = useState("");
+  const [profileImage, setProfileImage] = useState(null);  
   const [isNicknameAvailable, setIsNicknameAvailable] = useState(true); // 닉네임 중복 여부 상태
 
   // 서버로 보낼 데이터
@@ -111,10 +114,10 @@ const UserInfoUpdate = () => {
   };
 
   return (
-    <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center',  width:'100%', minHeight: `calc(100vh - 720px)`}}>
+    <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center',  width:'100%', minHeight: `calc(100vh - 720px)`, marginBottom: '150px'}}>
       <HeaderSubMyPage />
       <div style={{width: '720px'}}>
-        <div style={{fontSize: '24px', fontWeight: 'bold', marginBottom: '20px'}}>회원정보 수정</div>
+        <div style={{fontSize: '28px', fontWeight: 'bold', marginBottom: '50px', textAlign: 'center'}}>회원정보 수정</div>
         <div>
           <div style={{color: "lightgray", marginBottom: '10px', marginLeft: '50%'}}>다른 유저와 겹치지 않도록 입력해 주세요.</div>
           <div style={{marginBottom: '20px'}}>
@@ -131,7 +134,7 @@ const UserInfoUpdate = () => {
             <label style={{ width: '50%', fontSize: '20px', fontWeight: 'bold'}}>프로필이미지</label>
             <input type="file" accept="image/*" onChange={handleProfileImageUpload} style={{ width: '50%'}}/>
           </div>
-          <div style={{margin: '50px 0', textAlign: 'center'}}>
+          <div style={{margin: '50px 0', justifyContent: 'center', display: 'flex'}}>
             {profileImage ? (
               <img
                 src={profileImage}
@@ -139,13 +142,13 @@ const UserInfoUpdate = () => {
                 style={{ width: "240px", height: "240px", borderRadius: "50%", border: '1px white solid' }}
               />
             ) : (
-              <div style={{ width: "200px", height: "200px", backgroundColor: "lightgray", borderRadius: "50%" }}></div>
+              <div style={{ width: "240px", height: "240px", backgroundColor: "lightgray", borderRadius: "50%" }} />
             )}
           </div>
         </div>
 
         <div style={{textAlign: 'center'}}>
-          <Button onClick={handleUpdateProfile} variant="outlined" style={{width: '360px', height: '60px', textAlign: 'center', margin: '20px 0', borderRadius: '10px', fontSize: '24px'}}>회원정보 수정</Button>
+          <Button onClick={handleUpdateProfile} variant="outlined" style={{width: '300px', height: '60px', textAlign: 'center', margin: '20px 0', borderRadius: '10px', fontSize: '24px'}}>회원정보 수정</Button>
         </div>
       </div>
     </div>

@@ -129,7 +129,7 @@ const OrderHistoryProducts = ({ orders }) => {
       ) : (
         <div
           style={{
-            height: "200px",
+            height: "240px",
             textAlign: "center",
             display: "flex",
             alignItems: "center",

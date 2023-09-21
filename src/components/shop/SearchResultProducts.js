@@ -1,15 +1,16 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 import BookmarkIcon from "@mui/icons-material/Bookmark";
-import { styled } from 'styled-components';
+
 
 const SearchResultProducts = ({ data }) => {
   const navigate = useNavigate();
   const [isFavorite, setIsFavorite] = useState();
 
-  const userId = 1; // 사용자 ID
+  const userId = useSelector(state => state.authUser.userId);
   const productId = data.productId; // 상품 ID
 
   const handleClick = () => {

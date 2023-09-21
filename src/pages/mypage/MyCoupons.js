@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from "react";
 import HeaderSubMyPage from "../../components/common/HeaderSubMypage";
 import { Link } from 'react-router-dom';
+import { useSelector } from "react-redux";
+
 
 const MyCoupons = () => {
+  const userId = useSelector(state => state.authUser.userId);
   const [coupons, setCoupons] = useState([]);
 
   useEffect(() => {
-    // userId 추후 수정하기
-    const userId = 1;
-
     fetch(`/coupon/${userId}`)
       .then((response) => response.json())
       .then((data) => setCoupons(data))
@@ -16,11 +16,13 @@ const MyCoupons = () => {
   }, []);
 
   return (
-    <div style={{maxWidth: '720px', width: '100%', margin: 'auto'}}>
+    <div style={{maxWidth: '720px', width: '100%', margin: 'auto', marginBottom: '150px'}}>
       <HeaderSubMyPage />
-      <div>
+      <div style={{ fontSize: '36px', fontWeight: 'bold', textAlign: 'center', marginBottom: '50px', width: '100%' }}>쿠폰함</div>
+
+      <div style={{ borderTop: '1px solid lightgray', borderBottom: '1px solid lightgray', minHeight: '240px', padding: '20px', marginBottom: '50px'}}>
         {coupons.length === 0 ? (
-            <div style={{textAlign: 'center', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '24px', fontWeight: 'bold', height: '360px', }}>
+            <div style={{textAlign: 'center', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '24px', fontWeight: 'bold', height: '240px'}}>
               보유하신 쿠폰이 없습니다.
             </div>
           ) : (
@@ -35,7 +37,7 @@ const MyCoupons = () => {
             </div>
         )))}
       </div>
-      <div style={{ marginBottom: '150px', textAlign: 'right'}}>
+      <div style={{ textAlign: 'right'}}>
         <Link to='http://localhost:3000/mypage/info' style={{textDecoration: 'none'}}>이전으로</Link>
       </div>
     </div>

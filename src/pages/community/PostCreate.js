@@ -1,17 +1,20 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router';
+import { useSelector } from 'react-redux';
+
 import PostFileUploadComponent from "../../components/community/PostFileUploadComponent";
 import { Button, TextField } from '@material-ui/core';
+
 // import styles from '../../styles/community/PostCreate.module.css';
-// import { useForm, Controller } from 'react-hook-form'
+
 
 const PostCreate = () => {
+    const userId = useSelector(state => state.authUser.userId);
+    const nickname = useSelector(state => state.authUser.nickname);
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
     const [category, setCategory] = useState('');
-    const [nickname, setNickname] = useState('');
-    const userId = 1;
     const [imageUrl1, setImageUrl1] = useState('');
     const [imageUrl2, setImageUrl2] = useState('');
     const [imageUrl3, setImageUrl3] = useState('');
@@ -31,11 +34,6 @@ const PostCreate = () => {
     const handleContentChange = (e) => {
         setContent(e.target.value);
     };
-
-    // 기본값으로 설정하면 필요 없음
-    const handleNicknameChange = (e) => {
-        setNickname(e.target.value);
-    }
     
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -75,7 +73,6 @@ const PostCreate = () => {
                 // 입력 필드 초기화
                 setTitle('');
                 setContent('');
-                setNickname('');
                 setImageUrl1('');
                 setImageUrl2('');
                 setImageUrl3('');
@@ -118,7 +115,6 @@ const PostCreate = () => {
                         {/* 작성자 닉네임 고정 */}
                         <TextField
                             value={nickname}
-                            onChange={handleNicknameChange}
                             fullWidth
                             variant='outlined'
                             style={{backgroundColor: 'white', borderRadius: '5px', marginBottom: '20px', width: '100%'}}
