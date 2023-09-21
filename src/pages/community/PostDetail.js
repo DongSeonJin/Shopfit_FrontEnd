@@ -8,6 +8,7 @@ import ReplyList from './../../components/community/ReplyList';
 import ReplyCreate from './../../components/community/ReplyCreate';
 import { makeStyles } from '@material-ui/core/styles';
 // import styles from '../../styles/community/PostDetail.module.css';
+import { formatDateTime } from './../../components/common/DateUtils';
 
 const useStyles = makeStyles({
   whiteText: {
@@ -101,12 +102,36 @@ const PostDetail = () => {
 
 
   return (
-    <>
-      <h2 align="center">게시글 상세정보</h2>
+    <div style={{maxWidth: '1080px', width: '100%', margin: '0 auto 150px'}}>
 
-      <div className="post-view-wrapper" style={{ width: '80%', margin: '0 auto'}}>
+      <div style={{textAlign: 'center', height: '54px', marginBottom: '50px', fontSize: '28px', fontWeight: 'bold'}}>게시글 상세정보</div>
+
+      <div className="post-view-wrapper" style={{ width: '80%', minWidth: '720px', margin: '0 auto'}}>
+
+        <Box display='flex' justifyContent='flex-end' mt={10}>
+          {data.postId && (  // postId 가 존재할 때만 버튼 보이기
+            <div>
+              <Button
+                  variant='outlined'
+                  color='primary'
+                  component={Link}
+                  to={`/community/post/update/${postId}`} // 수정 페이지 경로로 이동
+                  style={{height: '40px', margin: '0 5px'}}
+              > 수정하기 </Button>
+
+              <Button
+                    variant="outlined"
+                    color="secondary"
+                    component={Link}
+                    onClick={handleDeletePost}
+                    style={{height: '40px', margin: '0 5px'}}
+              > 삭제하기 </Button>
+            </div>
+          )}
+        </Box>
+
         {data.postId ? (
-          <>
+          <div>
             <Table>
               <TableBody>
                 <TableRow >
@@ -125,7 +150,7 @@ const PostDetail = () => {
               <TableBody>
                 <TableRow>
                   <TableCell className={classes.whiteText}>작성일</TableCell>
-                  <TableCell className={classes.whiteText}>{data.createdAt}</TableCell>
+                  <TableCell className={classes.whiteText}>{formatDateTime(data.createdAt)}</TableCell>
                 </TableRow>
               </TableBody>
 
@@ -158,7 +183,7 @@ const PostDetail = () => {
               </TableBody>
               
             </Table>
-            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
+            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '20px', borderBottom: '1px solid white', marginBottom: '20px'}}>
 
               {data.imageUrls.map((imageUrl, index) =>
                 imageUrl && (
@@ -166,23 +191,15 @@ const PostDetail = () => {
                     key={index}
                     src={imageUrl}
                     alt={`첨부이미지${index + 1}`}
-                    style={{ width: '500px', height: '500px', marginBottom: '20px', marginTop: '20px' }}
+                    style={{ width: '500px', height: 'auto', marginBottom: '20px', marginTop: '20px', border: '1px solid white', borderRadius: '10px' }}
                   />
                 )
               )}
             </div>
-            <br /><br />
 
-            <ReplyList 
-                replies={replies} 
-                onDeleteReply={handleDeleteReply}
-                onUpdateReply={handleUpdateReply} />
-
-            <ReplyCreate postId={postId} onReplySubmit={handleNewReply} />
-
-
-            <Box display='flex' justifyContent='flex-end' mt={2}>
-              <Box mt={1.7} mr={1.5}>
+            <div style={{display: 'flex', justifyContent: 'space-between', marginBottom: '20px'}}>
+              <Box style={{ height: '40px', display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '0 5px'}}>
+                {/* userId 전달 필요 */}
                 <LikeButton postId={postId} /> {/*좋아요 버튼 component 분리, prop으로 postId 전달*/}
               </Box>
 
@@ -190,44 +207,23 @@ const PostDetail = () => {
                 variant="contained"
                 color="primary"
                 onClick={() => navigate(`/community/post/list/${data.categoryId}`)}
-                style={{ marginTop: '10px' }}
+                style={{height: '40px', margin: '0 21px'}}
               > 목록으로 돌아가기 </Button>
+            </div>
 
-              {data.postId && (  // postId 가 존재할 때만 버튼 보이기
-                <>
-                <Button
-                    variant="contained"
-                    color="primary"
-                    component={Link}
-                    to={`/community/post/update/${postId}`} // 수정 페이지 경로로 이동
-                    style={{ marginTop: '10px', marginLeft: '10px' }}
-                > 수정하기 </Button>
+            <div style={{fontSize: '24px'}}>
+              댓글
+            </div>
 
-                <Button
-                      variant="contained"
-                      color="primary"
-                      component={Link}
-                      onClick={handleDeletePost}
-                      style={{ marginTop: '10px', marginLeft: '10px' }}
-                > 삭제하기 </Button> <br /> <br />
-              </>
-              )}
-            </Box>
+            <ReplyList replies={replies} onDeleteReply={handleDeleteReply} onUpdateReply={handleUpdateReply} />
+            <ReplyCreate postId={postId} onReplySubmit={handleNewReply} />
           
-          </>
+          </div>
         ) : (
           '' // 해당 게시글을 찾을 수 없습니다.
         )}
-
-      
-        
-
-        
-
-    
-
       </div>
-    </>
+    </div>
   );
 };
 

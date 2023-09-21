@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-// import FileUploadComponent from "../../components/shop/FileUploadComponent";
 
 import { TextField, Button } from "@mui/material";
-// import userEvent from "@testing-library/user-event";
 import { useNavigate } from "react-router";
 import { Link } from "react-router-dom";
+import { signUp } from "../../lib/api/authApi";
+
 
 function SignupForm() {
   const [email, setEmail] = useState("");
@@ -36,19 +36,20 @@ function SignupForm() {
     };
 
     try {
-      const response = await axios.post("/signup", formData);
+      // const response = await axios.post("/signup", formData);
+      const response = await signUp(formData);
       console.log("회원가입 성공", response.data);
       if (window.confirm("회원가입이 완료되었습니다.")) {
         navigate("/login");
       }
-    } catch (error) {
-      console.error("회원가입 실패", error);
+    } catch (error) {       // 서버로부터의 에러 메시지를 받아 alert 띄우기
+      if(error.response && error.response.data){
+       alert(error.response.data.message); 
+    } else{
+       alert('회원가입 실패');
+    }
     }
   };
-
-  // const handleUploadSuccess = (imageUrl) => {
-  //   setImageUrl(imageUrl);
-  // };
 
   // 비밀번호 또는 확인 비밀번호가 변경 될 때마다 실행되는 useEffect
   useEffect(() => {
@@ -56,6 +57,7 @@ function SignupForm() {
       setIsMatching(password === confirmPassword);
     }
   }, [password, confirmPassword]);
+  
 
   const handleProfileImageUpload = async (event) => {
     const file = event.target.files[0];
@@ -78,12 +80,11 @@ function SignupForm() {
   };
 
   return (
-    <div style={{ display: "flex", justifyContent: "center" }}>
-      <div style={{ width: "480px" }}>
-        {/* <Typography variant="h4" component="h1">
-          회원가입
-        </Typography>{" "} */}
-        <div style={{ fontSize: "36px", fontWeight: "bold", textAlign: "center", marginBottom: "50px" }}>회원가입</div>
+
+    <div style={{display: 'flex', justifyContent: 'center', marginBottom: '100px'}}>
+      <div style={{width: '480px'}}>
+        <div style={{fontSize: '36px', fontWeight: 'bold', textAlign: 'center', marginBottom: '50px'}}>회원가입</div>
+
 
         <form onSubmit={handleSubmit}>
           <div style={{ fontWeight: "bold", marginBottom: "5px" }}>이메일</div>
@@ -136,7 +137,8 @@ function SignupForm() {
             onChange={(e) => setNickname(e.target.value)}
           />
           <div>
-            {/* <Typography variant="body1">프로필 이미지 업로드</Typography> */}
+
+            
             <div style={{ display: "flex", height: "30px" }}>
               <div style={{ flex: "1", fontWeight: "bold", lineHeight: "30px" }}>프로필 이미지</div>
               <input
@@ -145,6 +147,8 @@ function SignupForm() {
                 onChange={handleProfileImageUpload}
                 style={{ flex: "3", lineHeight: "30px" }}
               />
+
+
             </div>
             <div style={{ textAlign: "center" }}>
               <div style={{ margin: "50px 0", display: "flex", justifyContent: "center" }}>
@@ -152,47 +156,27 @@ function SignupForm() {
                   <img
                     src={imageUrl}
                     alt="Profile Preview"
-                    style={{ width: "360px", height: "360px", border: "1px white solid", borderRadius: "50%" }}
+
+                    style={{ width: "240px", height: "240px", border: '1px white solid', borderRadius: "50%" }}
                   />
                 ) : (
                   <div
-                    style={{
-                      width: "360px",
-                      height: "360px",
-                      backgroundColor: "gray",
-                      border: "1px white solid",
-                      borderRadius: "50%",
-                    }}
+                    style={{ width: "240px", height: "240px", backgroundColor: 'gray' ,border: '1px white solid', borderRadius: "50%" }}
                   />
                 )}
               </div>
             </div>
           </div>
+          <div style={{textAlign: 'center', marginBottom: '100px'}}>
+            <div style={{marginBottom: '20px'}}>
+              <Button variant="outlined" type="submit" style={{width: '300px', height: '60px', textAlign: 'center', borderRadius: '10px', fontSize: '24px', marginBottom: '20px'}} onClick={handleSubmit}>회원가입하기</Button>
+            </div>
 
-          <div style={{ textAlign: "center", marginBottom: "100px" }}>
-            <Button
-              variant="outlined"
-              type="submit"
-              style={{
-                width: "360px",
-                height: "60px",
-                textAlign: "center",
-                borderRadius: "10px",
-                fontSize: "24px",
-                marginBottom: "20px",
-              }}
-            >
-              회원가입하기
-            </Button>
-            <div style={{ display: "flex", justifyContent: "center" }}>
-              <div>이미 아이디가 있으신가요?</div>
-              <Link
-                to="http://localhost:3000/login"
-                style={{ color: "white", fontWeight: "bold", paddingLeft: "20px" }}
-              >
-                {" "}
-                로그인
-              </Link>
+            <div style={{display: 'flex', justifyContent: 'center'}}>
+              <div>
+                이미 아이디가 있으신가요? 
+              </div>
+              <Link to='http://localhost:3000/login' style={{color: 'white', fontWeight: 'bold', paddingLeft: '20px'}}> 로그인</Link>
             </div>
           </div>
         </form>

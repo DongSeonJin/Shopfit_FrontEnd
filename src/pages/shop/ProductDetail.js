@@ -144,23 +144,9 @@ const ProductDetail = () => {
       />
 
       {/* 관리자 권한 */}
-      <div style={{ textAlign: "right" }}>
-        <Button
-          variant="outlined"
-          color="info"
-          onClick={() => handleProductUpdate(data.productId, navigate)}
-          style={{ margin: "0 10px" }}
-        >
-          상품 수정
-        </Button>
-        <Button
-          variant="outlined"
-          color="error"
-          onClick={() => handleDeleteProduct(data.productId, data.thumbnailUrl, data.productImageUrls, navigate)}
-          style={{ margin: "0 10px" }}
-        >
-          상품 삭제
-        </Button>
+      <div style={{textAlign: 'right'}}>
+        <Button variant="outlined" color='info' onClick={() => handleProductUpdate(data.productId, navigate)} style={{margin: '0 10px'}}>상품 수정</Button>
+        <Button variant="outlined" color="error" onClick={() => handleDeleteProduct(data.productId, data.thumbnailUrl, data.productImageUrls, navigate)} style={{margin: '0 10px'}}>상품 삭제</Button>
       </div>
 
       <div style={{ display: "flex" }}>
