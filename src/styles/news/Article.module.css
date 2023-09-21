@@ -14,29 +14,28 @@
 }
 
 .textContainer {
-  width: 80%;
-  padding: 0 10px;
+  width: 90%;
+  padding: 0 20px;
 }
 
 .title {
   font-size: 24px;
   font-weight: bold;
   line-height: 27px;
-  height: 54px;
+  height: 60px;
   margin-bottom: 10px;
 }
 
 .content {
   font-size: 20px;
-  font-weight: bold;
-  line-height: 27px;
-  height: 54px;
-  margin-top: 10px;
+  line-height: 23px;
+  height: 46px;
+  margin-bottom: 10px;
 }
 
 .date {
+  text-align: right;
   font-size: 16px;
-  width: 10%;
 }
 
 .delButton{

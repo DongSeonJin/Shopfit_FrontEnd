@@ -22,7 +22,7 @@ const PurchasedProduct = ({ products }) => {
 
   return (
     <div>
-      <div style={{ display: "flex", flexDirection: "column", width: "90%" }}>
+      <div style={{ display: "flex", flexDirection: "column"}}>
         {productData.map((product, index) => (
           <div style={{ display: "flex", margin: "5px 0", height: "120px", width: "100%" }}>
             <img

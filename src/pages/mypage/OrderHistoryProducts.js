@@ -94,6 +94,7 @@ const OrderHistoryProducts = ({ orders }) => {
                   <div style={{ height: "90px", display: "flex", alignItems: "center", justifyContent: "center" }}>
                     주문상태
                     <br />
+                    <br />
                     {orderStatusMapping[order.orderStatus]}
                   </div>
                   <div style={{ height: "90px", display: "flex", alignItems: "center", justifyContent: "center" }}>

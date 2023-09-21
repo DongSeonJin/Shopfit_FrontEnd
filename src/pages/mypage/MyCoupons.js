@@ -38,7 +38,7 @@ const MyCoupons = () => {
         )))}
       </div>
       <div style={{ textAlign: 'right'}}>
-        <Link to='http://localhost:3000/mypage/info' style={{textDecoration: 'none'}}>이전으로</Link>
+        <Link to='/mypage/info' style={{textDecoration: 'none'}}>이전으로</Link>
       </div>
     </div>
   );

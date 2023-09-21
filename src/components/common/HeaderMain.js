@@ -3,7 +3,6 @@ import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { useSelector } from "react-redux";
 import logout from "../../lib/api/Logout";
-// import { connect } from 'react-redux';
 
 // import styles from "../../styles/common/HeaderMain.module.css";
 
@@ -87,9 +86,9 @@ const HeaderMain = ({ isCommunityHovered, isShoppingHovered }) => {
                     value={searchText}
                     onChange={handleSearchTextChange}
                     placeholder="검색어를 입력하세요"
-                    style={{width: '80%'}}
+                    style={{width: '80%', padding: '0 10px', marginRight: '5px', borderRadius: '10px', border: 'none'}}
                 />
-                <button style={{width: '100px', backgroundColor: 'white'}} onClick={() => performSearch(searchText)}>검색</button>
+                <button style={{width: '100px', backgroundColor: 'white', borderRadius: '10px', fontSize: '20px', fontWeight: 'bold', border: 'none'}} onClick={() => performSearch(searchText)}>검색</button>
             </div>
 
 

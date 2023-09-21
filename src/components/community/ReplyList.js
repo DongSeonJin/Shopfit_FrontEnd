@@ -16,6 +16,7 @@ const useStyles = makeStyles({
 
 const ReplyList = ({ replies, onDeleteReply, onUpdateReply }) => {
     const userNickname = useSelector(state => state.authUser.nickname);
+    const userAuthority = useSelector(state => state.authUser.authority);
     const [editingReplyId, setEditingReplyId] = useState(null);
     const [updateReply, setUpdateReply] = useState(''); // updatedContent 상태 추가
     const classes = useStyles();
@@ -89,25 +90,33 @@ const ReplyList = ({ replies, onDeleteReply, onUpdateReply }) => {
                                 </div>
                             </div>
                         ) : (
-                            <Button 
-                                color='primary' 
-                                variant="outlined"                             
-                                onClick={() => {
-                                    if (userNickname === reply.nickname) {
-                                        handleEditClick(reply.replyId, reply.content);
-                                    }
-                            }}>수정</Button>
-                        )}
-                        <Button 
-                            color='secondary' 
-                            variant="outlined" 
-                            style={{margin: '0 5px'}}
-                            onClick={() => {
-                                if (userNickname === reply.nickname) {
-                                    handleDeleteReply(reply.replyId);
+                            <div style={{width: '64px'}}>
+                                {userNickname === reply.nickname ? 
+                                <Button 
+                                    color='primary' 
+                                    variant="outlined"                             
+                                    onClick={() => {
+                                        if (userNickname === reply.nickname) {
+                                            handleEditClick(reply.replyId, reply.content);
+                                        }
+                                }}>수정</Button> : ''
                                 }
-                            }}
-                        >삭제</Button>
+                            </div>
+                        )}
+                        <div>
+                            {userNickname === reply.nickname || userAuthority === 'ADMIN' ? 
+                                <Button 
+                                    color='secondary' 
+                                    variant="outlined" 
+                                    style={{margin: '0 5px'}}
+                                    onClick={() => {
+                                        if (userNickname === reply.nickname) {
+                                            handleDeleteReply(reply.replyId);
+                                        }
+                                    }}
+                                >삭제</Button> : ''
+                            }
+                        </div>
                     </ListItem>
                 ))}
             </List>
