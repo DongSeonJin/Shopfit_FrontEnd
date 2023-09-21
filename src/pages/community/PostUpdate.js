@@ -1,16 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
+
 import PostFileUploadComponent from "../../components/community/PostFileUploadComponent";
 import { Button, TextField, } from '@material-ui/core';
 
 // import styles from '../../styles/community/PostCreate.module.css';
 
+
 const PostUpdate = () => {
+  const nickname = useSelector(state => state.authUser.nickname);
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
   const [category, setCategory] = useState('');
-  const [nickname, setNickname] = useState('');
   const [imageUrl1, setImageUrl1] = useState('');
   const [imageUrl2, setImageUrl2] = useState('');
   const [imageUrl3, setImageUrl3] = useState('');
@@ -35,7 +38,6 @@ const PostUpdate = () => {
         setTitle(response.data.title);
         setContent(response.data.content);
         setCategory(response.data.category);
-        setNickname(response.data.nickname);
         setImageUrl1(response.data.imageUrl1);
         setImageUrl2(response.data.imageUrl2);
         setImageUrl3(response.data.imageUrl3);
@@ -76,7 +78,6 @@ const PostUpdate = () => {
       // 입력 필드 초기화
       setTitle('');
       setContent('');
-      setNickname('');
       setImageUrl1('');
       setImageUrl2('');
       setImageUrl3('');

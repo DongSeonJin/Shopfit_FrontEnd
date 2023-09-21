@@ -1,12 +1,16 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
+import { fetchData } from "../../components/shop/FetchProductData";
+import { useSelector } from "react-redux";
+
 import Page from "../../components/common/Page";
 import Search from "../../components/common/Search";
 import Product from "../../components/shop/Product";
 import { Button } from "@mui/material";
-import { fetchData } from "../../components/shop/FetchProductData";
+
 
 const ProductListPage = () => {
+  const userAuthority = useSelector(state => state.authUser.authority);
   const { categoryId, pageNum } = useParams();
   const navigate = useNavigate();
   const [dataList, setDataList] = useState([]);
@@ -84,10 +88,11 @@ const ProductListPage = () => {
           쇼핑리스트 - {categoryId === "1" ? "닭가슴살" : categoryId === "2" ? "음료/보충제" : categoryId === "3" ? "운동용품" : "전체"}
         </div>
         {/* 관리자 권한 */}
-        <div style={{ flex: '1', textAlign: 'right', margin: '0 20px' }}>
-          <Link to="/shopping/create">
-            <Button variant="outlined" color="primary" style={{color: 'white', width: '160px', fontSize: '20px'}}>상품 등록</Button>
-          </Link>
+        <div style={{ flex: '1', textAlign: 'right', margin: '0 20px', height: '62px' }}>
+          {userAuthority === 'ADMIN' ? 
+            <Link to="/shopping/create">
+              <Button variant="outlined" color="primary" style={{color: 'white', width: '160px', fontSize: '20px'}}>상품 등록</Button>
+            </Link> : ''}
         </div>
       </div>
 

@@ -2,16 +2,20 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import addDays from "date-fns/addDays";
 import { useLocation, useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 import PurchasedProduct from "../../components/shop/PurchasedProduct";
 import SearchAddress from "../../components/shop/SearchAddress";
-
-import { IAMPORT_API_KEY, KAKAOPAY_PG, TOSSPAY_PG } from "../../config";
-import { OrderStatusUpdater } from "../../components/shop/OrderStatusUpdater";
 import UserPoint from "../../components/shop/UserPoint";
 import CouponSelectModal from "../../components/common/modal/CouponSelectModal";
+import { OrderStatusUpdater } from "../../components/shop/OrderStatusUpdater";
+import { IAMPORT_API_KEY, KAKAOPAY_PG, TOSSPAY_PG } from "../../config";
+import { authApi } from "../../lib/api/authApi";
+
 
 const Order = () => {
+  const userId = useSelector(state => state.authUser.userId);
+  const userEmail = useSelector(state => state.authUser.email);
   const now = new Date();
   now.setHours(now.getHours() + 9);
   const navigate = useNavigate();
@@ -32,7 +36,7 @@ const Order = () => {
   const selectedItems = location.state.selectedItems;
 
   const initialOrderData = {
-    userId: selectedItems[0].userId,
+    userId: userId,
     totalPrice: selectedItems.reduce((total, item) => total + item.price * item.quantity, 0),
     deliveryDate: addDays(now, 3),
     address: "",
@@ -68,7 +72,6 @@ const Order = () => {
   const updateOrderStatus = async (orderId) => {
     try {
       await OrderStatusUpdater(orderId, "2");
-
       console.error("주문 상태 업데이트 성공");
     } catch (error) {
       console.error("주문 상태 업데이트 중 오류 발생", error);
@@ -79,7 +82,7 @@ const Order = () => {
     // userId를 이용하여 장바구니 정보를 가져오고, 가져온 정보로 cart 상태를 업데이트
     const fetchUserCart = async () => {
       try {
-        const response = await axios.get(`/cart/${orderData.userId}`);
+        const response = await authApi.get(`/cart/${orderData.userId}`);
         setCart(response.data);
       } catch (error) {
         console.error("Error fetching user cart:", error);
@@ -176,7 +179,7 @@ const Order = () => {
   // 함수 추가: 포인트 사용 업데이트
   const updateUsedPoints = async (usedPoints) => {
     try {
-      await axios.patch(`/${orderData.userId}/usePoints/${usedPoints}`);
+      await authApi.patch(`/${orderData.userId}/usePoints/${usedPoints}`);
       console.log(`포인트 사용 업데이트 완료: ${usedPoints}`);
     } catch (error) {
       console.error("포인트 사용 업데이트 중 오류 발생", error);
@@ -313,16 +316,16 @@ const Order = () => {
             <div style={{ fontSize: "20px", marginBottom: "2%" }}>배송정보</div>
             <div style={{ margin: "5px 0" }}>
               <label style={{ width: "80px" }}>이름</label>
-              <input style={{ width: `calc(72% - 80px)` }} type="text" name="name" value={orderData.userId} readOnly />
+              <input style={{ width: `calc(72% - 80px)`, padding: '0 10px', height: '30px' }} type="text" name="name" placeholder="이름을 입력하세요" />
             </div>
             <div style={{ margin: "5px 0" }}>
               <label style={{ width: "80px" }}>이메일</label>
               <input
-                style={{ width: `calc(72% - 80px)` }}
+                style={{ width: `calc(72% - 80px)`, padding: '0 10px', height: '30px' }}
                 type="email"
                 name="email"
-                value={orderData.userId}
-                readOnly
+                defaultValue={userEmail}
+                placeholder="이메일 주소를 입력하세요"
               />
             </div>
             <div style={{ margin: "5px 0", display: "flex" }}>

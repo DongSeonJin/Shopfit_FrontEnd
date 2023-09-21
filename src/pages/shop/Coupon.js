@@ -1,8 +1,9 @@
 import React from "react";
+import { useSelector } from "react-redux";
 import { useNavigate } from "react-router";
 
 const Coupon = () => {
-  const userId = 1; // 추후 수정하기
+  const userId = useSelector(state => state.authUser.userId);
   const couponCode = "10000COUPON";
   const navigate = useNavigate();
 

@@ -5,7 +5,7 @@ import { Button } from "@mui/material";
 
 const CouponSelectModal = ({ userId, onClose, onSelectCoupon, orderData }) => {
   const [coupons, setCoupons] = useState([]);
-  const [selectedCoupon, setSelectedCoupon] = useState(null); // 선택한 쿠폰
+  const [, setSelectedCoupon] = useState(null); // 선택한 쿠폰
 
   useEffect(() => {
     fetch(`/coupon/${userId}`)

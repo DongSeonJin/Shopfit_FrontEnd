@@ -1,14 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios'; // axios 추가
+import { useSelector } from 'react-redux';
 import { useParams, useNavigate, Link } from 'react-router-dom'; // useParams와 useHistory 추가
-import { Table, TableBody, TableCell, TableRow, Box } from '@material-ui/core';
-import { Button } from '@material-ui/core'
+
 import LikeButton from './../../components/community/LikeButton';
 import ReplyList from './../../components/community/ReplyList';
 import ReplyCreate from './../../components/community/ReplyCreate';
-import { makeStyles } from '@material-ui/core/styles';
-// import styles from '../../styles/community/PostDetail.module.css';
 import { formatDateTime } from './../../components/common/DateUtils';
+import { Button } from '@material-ui/core'
+import { makeStyles } from '@material-ui/core/styles';
+import { Table, TableBody, TableCell, TableRow, Box } from '@material-ui/core';
+
+// import styles from '../../styles/community/PostDetail.module.css';
+
 
 const useStyles = makeStyles({
   whiteText: {
@@ -20,6 +24,8 @@ const useStyles = makeStyles({
 });
 
 const PostDetail = () => {
+  const userNickname = useSelector(state => state.authUser.nickname);
+  const userAuthority = useSelector(state => state.authUser.authority);
   const navigate = useNavigate(); 
   const [data, setData] = useState({});
   const { postId } = useParams(); // postId를 URL 파라미터로 가져옴
@@ -103,7 +109,6 @@ const PostDetail = () => {
 
   return (
     <div style={{maxWidth: '1080px', width: '100%', margin: '0 auto 150px'}}>
-
       <div style={{textAlign: 'center', height: '54px', marginBottom: '50px', fontSize: '28px', fontWeight: 'bold'}}>게시글 상세정보</div>
 
       <div className="post-view-wrapper" style={{ width: '80%', minWidth: '720px', margin: '0 auto'}}>
@@ -115,7 +120,7 @@ const PostDetail = () => {
                   variant='outlined'
                   color='primary'
                   component={Link}
-                  to={`/community/post/update/${postId}`} // 수정 페이지 경로로 이동
+                  to={userNickname === data.nickname ? `/community/post/update/${postId}` : undefined} // 수정 페이지 경로로 이동
                   style={{height: '40px', margin: '0 5px'}}
               > 수정하기 </Button>
 
@@ -123,7 +128,7 @@ const PostDetail = () => {
                     variant="outlined"
                     color="secondary"
                     component={Link}
-                    onClick={handleDeletePost}
+                    onClick={() => {if(userNickname === data.nickname || userAuthority === 'ADMIN') {handleDeletePost();}}}
                     style={{height: '40px', margin: '0 5px'}}
               > 삭제하기 </Button>
             </div>
@@ -199,7 +204,6 @@ const PostDetail = () => {
 
             <div style={{display: 'flex', justifyContent: 'space-between', marginBottom: '20px'}}>
               <Box style={{ height: '40px', display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '0 5px'}}>
-                {/* userId 전달 필요 */}
                 <LikeButton postId={postId} /> {/*좋아요 버튼 component 분리, prop으로 postId 전달*/}
               </Box>
 
