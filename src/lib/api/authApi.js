@@ -3,6 +3,7 @@ import store from '../../store/ReduxStore'
 import { SET_TOKEN } from '../../redux/AuthReducer';
 import { getCookieToken, setRefreshToken } from "../../store/Cookie";
 import logout from './Logout';
+import { useSelector } from "react-redux";
 
 const dispatch = store.dispatch;
 
@@ -15,12 +16,19 @@ export const authApi = axios.create({
 });
 
 // 리프레시 토큰 검증 및 액세스 토큰 갱신 함수
-export async function refreshTokenApi() {
+  export async function refreshTokenApi() {
+    const state = store.getState();
+    const userId = state.authUser.userId; // 리덕스 스토어에서 가져온 user정보
+  
+    if(userId === '0'){
+      return;
+    }
+
   try {
     const refreshToken = getCookieToken();
     // Request new tokens with refresh token
     const { data } = await axios.post(
-      `/api/token`, // token refresh api
+      `/api/token`, //  token refresh api
       {},
       { headers: { Authorization: `${refreshToken}`}
                  }
@@ -85,7 +93,7 @@ authApi.interceptors.response.use(
         const newAccessToken = await refreshTokenApi(); // 리프레시 토큰 검증 함수 api
         config.headers.Authorization = `Bearer ${newAccessToken}`;
         // 응답interceptor 로직이 끝나면 이어받은 config 헤더에 토큰을 담아 원래의 요청을 이어간다.
-        authApi.defaults.headers.common['Authorization'] = `Bearer ${newAccessToken}`;
+        // authApi.defaults.headers.common['Authorization'] = `Bearer ${newAccessToken}`;
       return axios(config);
       
     }

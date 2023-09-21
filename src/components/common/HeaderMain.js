@@ -2,6 +2,7 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import logout from "../../lib/api/Logout";
+import { useDispatch } from "react-redux";
 // import { connect } from 'react-redux';
 
 // import styles from "../../styles/common/HeaderMain.module.css";
@@ -13,6 +14,8 @@ const HeaderMain = ({ isCommunityHovered, isShoppingHovered }) => {
     const [isHoveredShopping, setIsHoveredShopping] = useState(false);
     const [isHoveredNews, setIsHoveredNews] = useState(false);
     const [searchText, setSearchText] = useState(""); // 1. searchText 상태 변수 추가
+    
+    const dispatch = useDispatch();
 
     const handleSearchTextChange = (e) => {
         // 2. 검색어 입력 필드의 변경 이벤트 처리 함수
@@ -105,7 +108,7 @@ const HeaderMain = ({ isCommunityHovered, isShoppingHovered }) => {
 
                 {/* 로그아웃 버튼 */}
                 <div style={{ display: "inline-block", width: "80px", textAlign: "center", margin: "0 30px", color: 'white', }}>
-                    <div onClick={logout} style={{ border: "none", background: "none", textDecoration: "underline", cursor: "pointer" }}>
+                    <div onClick={() => dispatch(logout())} style={{ border: "none", background: "none", textDecoration: "underline", cursor: "pointer" }}>
                         로그아웃
                     </div>
                 </div>

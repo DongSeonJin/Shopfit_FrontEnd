@@ -5,8 +5,7 @@ import { getCookieToken, removeCookieToken } from '../../store/Cookie';
 import { LOGOUT_USER } from '../../redux/UserReducer';
 
 
-export const logout = async () => {
-    return async (dispatch, getState) => {
+const logout = () => async (dispatch, getState) => {
         // store에 저장된 Access Token 정보를 받아 온다
         const accessToken = getState().authToken.accessToken;
     
@@ -16,7 +15,7 @@ export const logout = async () => {
         try {
             // 백으로부터 받은 응답
             const response = await axios.post('/logout', 
-                { refreshToken }, 
+                 refreshToken, 
                 {
                     headers: {
                         Authorization: `${accessToken}`,
@@ -35,11 +34,14 @@ export const logout = async () => {
 
             }
         } catch (error) {
-            console.error(error.response.data.message);
+            if (error.response) {
+                console.error(error.response.data.message);
+            } else {
+                console.error(error);
+            }
         }
-    
 
-    }
+    
 };
 
 export default logout;
