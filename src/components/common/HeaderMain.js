@@ -2,11 +2,8 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { useSelector } from "react-redux";
-import logout from "../../lib/api/Logout";
-
 import { useDispatch } from "react-redux";
-import { useHistory } from 'react-router-dom';
-
+import logout from "../../lib/api/Logout";
 
 
 const HeaderMain = ({ isCommunityHovered, isShoppingHovered }) => {
@@ -100,17 +97,11 @@ const HeaderMain = ({ isCommunityHovered, isShoppingHovered }) => {
 
 
             <div style={{display: 'flex', fontWeight: 'bold', justifyContent: 'right', fontSize: '20px'}}>
-
                 <div style={{display: 'inline-block', width: '80px', textAlign: 'center', margin: '0 30px'}}>
-                    {userId !== null ? 
-                {/* 로그아웃 버튼 */}
-                <div style={{ display: "inline-block", width: "80px", textAlign: "center", margin: "0 30px", color: 'white', }}>
-                    <div onClick={() => {dispatch(logout()); navigate('/');}} style={{ border: "none", background: "none", textDecoration: "underline", cursor: "pointer" }}>
-                        로그아웃
-                    </div>
-                </div> :
+                    {userId != 0 ? 
+                        <Link onClick={() => {dispatch(logout()); navigate('/');}} style={{ textDecoration: 'none', color: 'inherit'}}>로그아웃</Link> :
                         <Link to="/login" style={{ textDecoration: 'none', color: 'inherit'}}>로그인</Link>
-                    }                    
+                    }
                 </div>
 
                 <div style={{display: 'inline-block', width: '100px', textAlign: 'center', margin: '0 30px',}}>
@@ -119,13 +110,7 @@ const HeaderMain = ({ isCommunityHovered, isShoppingHovered }) => {
                         <Link to="/signup" style={{ textDecoration: 'none', color: 'inherit'}}>회원가입</Link>
                     }
                 </div>
-
-
-
-
             </div>
-
-
         </div>
     );
 };
