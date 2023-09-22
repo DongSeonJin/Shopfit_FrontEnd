@@ -1,11 +1,12 @@
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 import styles from "../../styles/common/HeaderSub.module.css";
 
-// 임시로 설정한 userId
-const userId = 1;
 
 const HeaderSubMyPage = () => {
+  const userId = useSelector(state => state.authUser.userId);
+
   return (
     <div className={styles.linkContainer}>
       <Link to="/mypage/info" className={styles.link}>

@@ -125,10 +125,10 @@ const UserLogin = () => {
 
                 <div style={{display: 'flex'}}>
                     <div style={{flex: '1', textAlign: 'center'}}>
-                        <Link to='http://localhost:3000/mypage/edit/password' style={{textDecoration: 'none', color: 'white'}}>비밀번호 재설정</Link>
+                        <Link to='/mypage/edit/password' style={{textDecoration: 'none', color: 'white'}}>비밀번호 재설정</Link>
                     </div>
                     <div style={{flex: '1', textAlign: 'center', borderLeft: '1px solid white'}}>
-                        <Link to='http://localhost:3000/signup' style={{textDecoration: 'none', color: 'white'}}>회원가입</Link>
+                        <Link to='/signup' style={{textDecoration: 'none', color: 'white'}}>회원가입</Link>
                     </div>
                 </div>
 

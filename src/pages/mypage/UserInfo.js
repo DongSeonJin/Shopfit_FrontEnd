@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import axios from "axios";
+import { useSelector } from "react-redux";
 
 import { Button } from "@mui/material";
 import StarIcon from '@mui/icons-material/Star';
@@ -8,14 +8,16 @@ import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import BookmarkIcon from '@mui/icons-material/Bookmark';
 import HeaderSubMyPage from "../../components/common/HeaderSubMypage";
 
+import { authApi } from "../../lib/api/authApi";
+
 const UserInfo = () => {
-  const userId = 1; // 임시로 설정한 userId 변수 -> 추후 수정해야 함
+  const userId = useSelector(state => state.authUser.userId);
   const [user, setUser] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
     // 서버로부터 사용자 데이터를 가져옵니다.
-    axios
+    authApi
       .get(`/mypage/${userId}`)
       .then((response) => {
         setUser(response.data);
@@ -44,7 +46,6 @@ const UserInfo = () => {
       <HeaderSubMyPage />
       <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center',  width:'100%', minHeight: `calc(100vh - 720px)`}}>
         
-
         <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', borderBottom: '1px solid lightgray', margin: '20px 0', width: '300px'}}>
           <img src={user.imageUrl} alt="프로필사진" style={{width: '240px', height: '240px', border: '1px solid white', borderRadius: '50%', objectFit: 'cover', marginBottom: '10px'}} />
           <div style={{ fontSize: '28px', fontWeight: 'bold', width: '240px', marginBottom: '20px', textAlign: 'center'}}>{user.nickname}</div>

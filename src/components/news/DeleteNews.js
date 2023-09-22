@@ -1,13 +1,17 @@
 import React, { useCallback } from "react";
-import { Button, Dialog, DialogActions, DialogTitle } from "@mui/material";
 import axios from "axios";
+import { useSelector } from "react-redux";
+
+import { Button, Dialog, DialogActions, DialogTitle } from "@mui/material";
 
 // import styles from "../../styles/news/DeleteNews.module.css";
 
 // 부모 컴포넌트로부터 newsId 값을 전달받기
 // 부모 컴포넌트의 리턴문에 <DeleteNews newsId={newsId} /> 형식으로 작성하기
 const DeleteNews = (props) => {
+  const userAuthority = useSelector(state => state.authUser.authority);
   const [open, setOpen] = React.useState(false);
+
   const handleClose = () => {
     setOpen(false);
   };
@@ -34,13 +38,9 @@ const DeleteNews = (props) => {
     [props.newsId]
   );
 
-  // const handleClick = () => {
-  //   window.location.reload();
-  // };
-
   return (
     <div>
-      <Button variant="outlined" color="error" onClick={() => setOpen(true)}>
+      <Button variant="outlined" color="error" onClick={() => {if(userAuthority === 'ADMIN') {setOpen(true);}}}>
         삭제
       </Button>
       <Dialog open={open} onClose={handleClose}>

@@ -2,22 +2,23 @@ import axios from "axios";
 import React from "react";
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useProductDetail } from "../../context/ProductDetailContext";
 
-import { addToWishlist, removeFromWishlist } from "../../components/shop/ActionWishlist";
 import { handleDeleteProduct, handleProductUpdate } from "../../components/shop/HandleProduct";
+import { addToWishlist, removeFromWishlist } from "../../components/shop/ActionWishlist";
 import { formatDate } from "../../components/common/DateUtils";
 import { addCart } from "./../../components/shop/AddCart";
-
 import { Button, Rating } from "@mui/material";
 import BookmarkIcon from "@mui/icons-material/Bookmark";
 import UTurnRightRoundedIcon from "@mui/icons-material/UTurnRightRounded";
 
 // import styles from "../../styles/shop/ProductDetail.module.css";
 
+
 const ProductDetail = () => {
-  const userId = 1; // 임시로 설정한 userId 변수 -> 추후 수정해야 함
+  const userId = useSelector(state => state.authUser.userId);
+  const userAuthority = useSelector(state => state.authUser.authority);
 
   const { productNum } = useParams();
 
@@ -144,9 +145,12 @@ const ProductDetail = () => {
       />
 
       {/* 관리자 권한 */}
-      <div style={{textAlign: 'right'}}>
-        <Button variant="outlined" color='info' onClick={() => handleProductUpdate(data.productId, navigate)} style={{margin: '0 10px'}}>상품 수정</Button>
-        <Button variant="outlined" color="error" onClick={() => handleDeleteProduct(data.productId, data.thumbnailUrl, data.productImageUrls, navigate)} style={{margin: '0 10px'}}>상품 삭제</Button>
+      <div style={{textAlign: 'right', height: '40px'}}>
+        {userAuthority === 'ADMIN' ? 
+        <div>
+          <Button variant="outlined" color='info' onClick={() => handleProductUpdate(data.productId, navigate)} style={{margin: '0 10px'}}>상품 수정</Button>
+          <Button variant="outlined" color="error" onClick={() => handleDeleteProduct(data.productId, data.thumbnailUrl, data.productImageUrls, navigate)} style={{margin: '0 10px'}}>상품 삭제</Button>
+        </div> : ''}
       </div>
 
       <div style={{ display: "flex" }}>
@@ -319,7 +323,9 @@ const ProductDetail = () => {
           <div style={{ fontSize: "24px", fontWeight: "bold", marginBottom: "20px" }}>상세정보</div>
           <div style={{ minHeight: "200px", padding: "20px" }}>
             <div>
-              {data.productImageUrls.map((imageUrl, index) => (
+              {data.productImageUrls.length === 0 ?
+              <div style={{width: '100%', height: '200px', display: 'flex', fontSize: '24px', alignItems: 'center', justifyContent: 'center'}}>작성 된 상세정보가 없습니다</div> :
+              data.productImageUrls.map((imageUrl, index) => (
                 <div>
                   <img key={index} src={imageUrl} alt={`Product ${index}`} style={{ width: "100%" }} />
                 </div>
@@ -327,21 +333,23 @@ const ProductDetail = () => {
             </div>
           </div>
 
-          <div style={{ marginBottom: "150px" }}>
+          <div style={{ margin: "100px 0" }}>
             <div style={{ fontSize: "24px", fontWeight: "bold", marginBottom: "20px" }}>구매후기</div>
             <div style={{ width: "100%", minHeight: "200px" }}>
               <div>
-                {formattedReviews.map((review) => (
+                {formattedReviews.length === 0 ? 
+                <div style={{width: '100%', height: '200px', display: 'flex', fontSize: '24px', alignItems: 'center', justifyContent: 'center'}}>작성 된 구매후기가 없습니다</div> :
+                formattedReviews.map((review) => (
                   <div
                     key={review.reviewId}
                     style={{
-                      margin: "3% 0",
+                      margin: "5px 0",
                       display: "flex",
                       border: "1px solid white",
                       borderRadius: "5px",
                       height: "60px",
                       placeItems: "center",
-                      padding: "1%",
+                      padding: "5px",
                     }}
                   >
                     <div style={{ flex: "1" }}>

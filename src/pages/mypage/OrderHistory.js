@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
 
 import OrderHistoryProducts from "./OrderHistoryProducts";
 import HeaderSubMyPage from "../../components/common/HeaderSubMypage";
 
 const OrderHistory = () => {
-  const userId = 1;
+  const userId = useSelector(state => state.authUser.userId);
   const [orders, setOrders] = useState([]);
 
   useEffect(() => {
@@ -24,10 +25,9 @@ const OrderHistory = () => {
   }, []);
 
   return (
-    <div style={{width: '1080px', margin: '0 auto 150px'}}>
+    <div style={{width: '1080px', margin: '0 auto 200px'}}>
       <HeaderSubMyPage />
       <div style={{ fontSize: '36px', fontWeight: 'bold', textAlign: 'center', marginBottom: '50px', width: '100%' }}>주문 내역</div>
-
       <div style={{ minHeight: '240px', borderTop: '1px solid lightgray', borderBottom: '1px solid lightgray', padding: '20px', width: '90%', margin: 'auto'}}>  
         <OrderHistoryProducts orders={orders} />
       </div>

@@ -1,7 +1,7 @@
-import axios from 'axios';
+import { authApi } from '../../lib/api/authApi';
 
 export const addCart = (userId, productNum, count) => {
-    axios
+    authApi
         .get("/cart/checkCart", {
             params: {
                 userId: userId,
@@ -12,7 +12,7 @@ export const addCart = (userId, productNum, count) => {
             console.log(response.data);
         if (response.data === false) {
 
-        axios
+        authApi
         .post("/cart", {
             userId: userId,
             productId: productNum,
