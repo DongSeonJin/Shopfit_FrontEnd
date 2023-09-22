@@ -1,20 +1,40 @@
-import {GoogleLogin} from "@react-oauth/google";
-import {GoogleOAuthProvider} from "@react-oauth/google";
+import { GoogleLogin } from "@react-oauth/google";
+import jwtDecode from "jwt-decode";
+import { setRefreshToken } from "../../store/Cookie";
+import { SET_USER } from "../../redux/UserReducer";
+import { SET_TOKEN } from "../../redux/AuthReducer";
+import axios from 'axios';
+import { useDispatch } from 'react-redux';
 
 const GoogleLoginButton = () => {
-    const clientId = '711393533645-css3t7bs3k4e5fhl3pnmgqn6nj6or42s.apps.googleusercontent.com'
+    const dispatch = useDispatch;
+
     return (
+        
         <>
-            <GoogleOAuthProvider clientId={clientId}>
-                <GoogleLogin
-                    onSuccess={(res) => {
-                        console.log(res);
-                    }}
-                    onFailure={(err) => {
-                        console.log(err);
-                    }}
-                />
-            </GoogleOAuthProvider>
+            <GoogleLogin
+                onSuccess={(credentialResponse) => {
+                    console.log(jwtDecode(credentialResponse.credential));
+
+                    
+
+                    // Google ID 토큰을 백엔드 서버로 전송
+                    axios.post('/login/google', credentialResponse.credential)
+                        .then(response => {
+                            console.log(response);
+                            dispatch(SET_USER(response.data)); // 로그인 성공 시 사용자 정보 업데이트
+                            // 쿠키에 Refresh Token, store에 Access Token 저장
+                            setRefreshToken(response.data.refreshToken);
+                            dispatch(SET_TOKEN(response.date.accessToken));
+                        })
+                        .catch(error => {
+                            console.error(error);
+                        });
+                }}
+                onFailure={(err) => {
+                    console.log(err);
+                }}
+            />
         </>
     );
 };
