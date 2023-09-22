@@ -4,11 +4,14 @@ import { HeartOutlined, HeartFilled } from '@ant-design/icons';
 import styles from '../../styles/community/LikeButton.module.css'
 import { useSelector } from 'react-redux';
 import { authApi } from '../../lib/api/authApi';
+import { useNavigate } from 'react-router';
 
 
 const LikeButton = ({ postId }) => {
     const [likeCount, setLikeCount] = useState(0);
     const [isLiked, setIsLiked] = useState(false);
+
+    const navigate = useNavigate();
     
      const userId = useSelector(state => state.authUser.userId); //리덕스에서 가져온 user정보
     
@@ -52,13 +55,9 @@ const LikeButton = ({ postId }) => {
         } catch (error) {
             console.error('좋아요 실패:', error);
 
-            if (error.response && error.response.status === 404) {
+            if (error.response && error.response.status === 403) {
                 alert('로그인이 필요한 기능입니다.');
-                return;
-            }
-
-            if (error.response && error.response.status === 400) {
-                alert("이미 '좋아요'를 누른 상태입니다.");
+                navigate('/login');
                 return;
             }
 
