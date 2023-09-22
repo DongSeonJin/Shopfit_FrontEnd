@@ -191,10 +191,10 @@ const ProductUpdate = () => {
           <input type="number" value={stockQuantity} onChange={handleStockQuantityChange} style={{ width: "50%" }} />
         </div>
 
-        <div style={{margin: '2% 0'}}>
-          <div style={{display: 'flex'}}>
-            <label style={{width: '50%'}}>썸네일: </label>
-            <div style={{width: '50%'}}>
+        <div style={{ margin: "2% 0" }}>
+          <div style={{ display: "flex" }}>
+            <label style={{ width: "50%" }}>썸네일: </label>
+            <div style={{ width: "50%" }}>
               <UpdateFileUploadComponent onUploadSuccess={handleUploadSuccess} />
             </div>
           </div>
