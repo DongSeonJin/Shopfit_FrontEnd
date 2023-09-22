@@ -1,18 +1,21 @@
 import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 import axios from "axios";
 
 import HeaderSubMyPage from "../../components/common/HeaderSubMypage";
 import { Button } from "@mui/material";
-import { Link } from "react-router-dom";
+import { authApi } from "../../lib/api/authApi";
+
 
 const WishList = () => {
   const [wishlistItems, setWishlistItems] = useState([]);
   const [productDetails, setProductDetails] = useState({});
+  const userId = useSelector(state => state.authUser.userId);
 
   const fetchWishlist = async () => {
     try {
-      const userId = 1; // 하드코딩된 userId
-      const response = await axios.get(`/wishlist/${userId}`);
+      const response = await authApi.get(`/wishlist/${userId}`);
       setWishlistItems(response.data);
     } catch (error) {
       console.error("Error fetching wishlist:", error);
@@ -59,31 +62,36 @@ const WishList = () => {
       <HeaderSubMyPage />
       <div style={{ fontSize: '36px', fontWeight: 'bold', textAlign: 'center', marginBottom: '50px', width: '100%' }}>찜 목 록</div>
       <div style={{ borderTop: '1px solid lightgray', borderBottom: '1px solid lightgray', minHeight: '240px', padding: '20px'}}>
-        {wishlistItems.map((item) => (
-          <div
-            key={item.productId}
-            style={{ display: "flex", justifyContent: "space-between", margin: "20px 0", alignItems: "center" }}
-          >
-            <div>
-              <Link to={`/shopping/products/${item.productId}`}>
-                <img
-                  src={productDetails[item.productId]?.thumbnailUrl}
-                  alt={`Thumbnail for ${productDetails[item.productId]?.productName}`}
-                  style={{ width: "180px", height: "180px", cursor: "pointer", borderRadius: '10px', border: '1px solid white' }}
-                />
-              </Link>
-            </div>
-            <div style={{ width: '80%', paddingLeft: '20px' }}>
-              <div style={{ fontSize: '24px', display: 'block', flex: 1 }}>{productDetails[item.productId]?.productName}</div>
-              <div style={{ textAlign: 'right', color: '#888', flex: 1, fontSize: '20px' }}>{productDetails[item.productId]?.price.toLocaleString()} 원</div>
-            </div>
-            <div style={{ width: "20%", textAlign: "right" }}>
-              <Button variant="outlined" color="error" onClick={() => handleDelete(item.wishlistId)}>
-                찜 해제
-              </Button>
-            </div>
+        {wishlistItems.length === 0 ? (
+          <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '240px' }}>
+            <div style={{ textAlign: 'center', fontSize: '24px' }}>찜 한 제품이 없습니다.</div>
           </div>
-        ))}
+          ) : (
+          wishlistItems.map((item) => (
+            <div
+              key={item.productId}
+              style={{ display: "flex", justifyContent: "space-between", margin: "20px 0", alignItems: "center" }}
+            >
+              <div>
+                <Link to={`/shopping/products/${item.productId}`}>
+                  <img
+                    src={productDetails[item.productId]?.thumbnailUrl}
+                    alt={`Thumbnail for ${productDetails[item.productId]?.productName}`}
+                    style={{ width: "180px", height: "180px", cursor: "pointer", borderRadius: '10px', border: '1px solid white' }}
+                  />
+                </Link>
+              </div>
+              <div style={{ width: '80%', paddingLeft: '20px' }}>
+                <div style={{ fontSize: '24px', display: 'block', flex: 1 }}>{productDetails[item.productId]?.productName}</div>
+                <div style={{ textAlign: 'right', color: '#888', flex: 1, fontSize: '20px' }}>{productDetails[item.productId]?.price.toLocaleString()} 원</div>
+              </div>
+              <div style={{ width: "20%", textAlign: "right" }}>
+                <Button variant="outlined" color="error" onClick={() => handleDelete(item.wishlistId)}>
+                  찜 해제
+                </Button>
+              </div>
+            </div>
+        )))}
       </div>
     </div>
   );

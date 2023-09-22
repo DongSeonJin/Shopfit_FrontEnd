@@ -36,9 +36,9 @@ const UserPoint = ({ userPoint, totalPrice, onUpdateUserPoint, selectedCouponId 
 
   return (
     <div>
-      <div>
-        <input type="number" placeholder="포인트를 입력하세요" value={inputValue} onChange={handleInputChange} style={{width: '50%'}} />
-        <button onClick={updatePoint}>사용하기</button>
+      <div style={{marginBottom: '10px'}}>
+        <input type="number" placeholder="포인트를 입력하세요" value={inputValue} onChange={handleInputChange} style={{width: `calc(100% - 90px)`, marginRight: '10px', height: '30px'}} />
+        <button onClick={updatePoint} style={{height:'30px'}}>사용하기</button>
       </div>
       <div>
         <span>현재 포인트: {userPoint.toLocaleString()} P</span>

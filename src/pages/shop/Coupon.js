@@ -1,8 +1,10 @@
 import React from "react";
+import { useSelector } from "react-redux";
 import { useNavigate } from "react-router";
+import { Link } from "react-router-dom";
 
 const Coupon = () => {
-  const userId = 1; // 추후 수정하기
+  const userId = useSelector(state => state.authUser.userId);
   const couponCode = "10000COUPON";
   const navigate = useNavigate();
 
@@ -40,20 +42,24 @@ const Coupon = () => {
   };
 
   return (
-    <div>
-      <div style={{ margin: "10px" }}>
+    <div style={{margin: '50px auto 150px', width: '720px'}}>
+      <div style={{textAlign: 'center', fontWeight: 'bold', fontSize: '36px', marginBottom: '50px'}}>쿠폰 발급</div>
+      <div style={{marginBottom: '10px'}}>
         <img
           src="https://kr.object.ncloudstorage.com/projectbucket/1.jpg"
           alt="쿠폰발급포스터"
-          style={{ width: "720px", height: "auto", display: "block", margin: "0 auto" }}
+          style={{ width: "720px", height: "auto", display: "block", margin: "0 auto", borderRadius: '15px' }}
         />
       </div>
-      <div style={{ margin: "10px", cursor: "pointer" }} onClick={handleCouponClick}>
+      <div style={{cursor: "pointer", marginBottom: '30px' }} onClick={handleCouponClick}>
         <img
           src="https://kr.object.ncloudstorage.com/projectbucket/2.jpg"
           alt="쿠폰다운로드"
-          style={{ width: "720px", height: "auto", display: "block", margin: "0 auto" }}
+          style={{ width: "720px", height: "auto", display: "block", margin: "0 auto", borderRadius: '15px' }}
         />
+      </div>
+      <div style={{ textAlign: 'right', width: '720px', fontSize: '24px'}}>
+        <Link to='/' style={{textDecoration: 'none'}}>홈으로</Link>
       </div>
     </div>
   );

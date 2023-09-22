@@ -22,7 +22,7 @@ function FilesUploadComponent({ onUploadSuccess }) {
   };
 
   return (
-    <div>
+    <div style={{textAlign: 'left'}}>
       <input type="file" onChange={handleFileChange} />
     </div>
   );

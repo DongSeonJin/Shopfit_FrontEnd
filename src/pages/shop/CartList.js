@@ -1,19 +1,20 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
+import { useSelector } from "react-redux";
 
 import { Button } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import CartQuantity from '../../components/shop/CartQuantity';
 import HeaderSubMyPage from "../../components/common/HeaderSubMypage";
+import { authApi } from "../../lib/api/authApi";
 
 // import styles from '../../styles/shop/CartList.module.css';
 
-const CartList = () => {
-  const userId = 1; // 임시로 설정한 userId 변수 -> 추후 수정해야 함
 
+const CartList = () => {
+  const userId = useSelector(state => state.authUser.userId);
   const [cartItems, setCartItems] = useState([]); // 장바구니 아이템 상태 관리
-  // const { userId } = useParams(); // userId를 useParams로 추출 -> 제거
   const navigate = useNavigate();
 
   const [isCheckedAll, setIsCheckedAll] = useState(true); // 전체 선택 여부 상태관리
@@ -78,7 +79,7 @@ const CartList = () => {
 
   // 컴포넌트 로드 시에 장바구니 아이템 조회
   useEffect(() => {
-    axios
+    authApi
       .get(`/cart/${userId}`)
       .then((response) => {
         // 조회한 아이템에 isChecked 속성 추가하여 상태 초기화
@@ -120,7 +121,9 @@ const CartList = () => {
 
 
       <div style={{ borderTop: '1px solid lightgray', borderBottom: '1px solid lightgray', minHeight: '240px', padding: '20px', margin: '50px 0'}}>
-        {cartItems.map((item) => (
+        {cartItems.length === 0 ? 
+        <div style={{height: '240px', display: 'flex', justifyContent: 'center', alignItems: 'center', fontSize: '24px'}}>장바구니에 담긴 상품이 없습니다</div> :
+        cartItems.map((item) => (
           <div key={item.cartId} style={{ display: 'flex', alignItems: 'center', marginBottom: '10px', position: 'relative' }}>
             <div>
               <input

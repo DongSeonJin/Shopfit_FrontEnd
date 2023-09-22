@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from "react";
 
-import styles from "../../../styles/common/modal/ReviewModal.module.css";
 import { Button } from "@mui/material";
+
+import styles from "../../../styles/common/modal/ReviewModal.module.css";
+
 
 const CouponSelectModal = ({ userId, onClose, onSelectCoupon, orderData }) => {
   const [coupons, setCoupons] = useState([]);
-  const [selectedCoupon, setSelectedCoupon] = useState(null); // 선택한 쿠폰
+  const [, setSelectedCoupon] = useState(null); // 선택한 쿠폰
 
   useEffect(() => {
     fetch(`/coupon/${userId}`)
@@ -42,7 +44,7 @@ const CouponSelectModal = ({ userId, onClose, onSelectCoupon, orderData }) => {
           </div>
         ))}
         <div style={{textAlign: 'right'}}>
-          <Button onClick={onClose} variant="outlined" style={{width: '120px', height: '40px', textAlign: 'center', borderRadius: '10px', fontSize: '16px'}}>닫기</Button>
+          <Button onClick={onClose} variant="outlined" color="error" style={{width: '120px', height: '40px', textAlign: 'center', borderRadius: '10px', fontSize: '16px'}}>닫기</Button>
         </div>
       </div>
     </div>

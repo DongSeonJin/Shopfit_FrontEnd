@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
-import axios from 'axios';
+import { useSelector } from 'react-redux';
 
 import { TextField, Button, makeStyles, } from '@material-ui/core';
+import { authApi } from './../../lib/api/authApi';
+
 
 const useStyles = makeStyles({
     input: {
@@ -27,8 +29,8 @@ const useStyles = makeStyles({
 
 const ReplyCreate = ({ postId, onReplySubmit }) => {
     const [content, setContent] = useState('');
-    const nickname = 'nickname1';
-    const userId = 1;
+    const userId = useSelector(state => state.authUser.userId);
+    const nickname = useSelector(state => state.authUser.nickname);
     const classes = useStyles();
 
     const handleSubmit = async e => {
@@ -47,7 +49,7 @@ const ReplyCreate = ({ postId, onReplySubmit }) => {
         };
     
         try {
-            const response = await axios.post('/reply', replyData, {
+            const response = await authApi.post('/reply', replyData, {
                 headers: {
                     'Content-Type': 'application/json',
                 }

@@ -6,11 +6,9 @@ import HomeShopping from '../../components/home/HomeShopping';
 import HomeIcons from '../../components/home/HomeIcons';
 import HomeImageSlide from '../../components/home/HomeImageSlide';
 
-
 const HomeContent = () => {
     return (
         <div>
- 
             <HomeImageSlide />
             <HomeIcons />
             <HomeCommunity />

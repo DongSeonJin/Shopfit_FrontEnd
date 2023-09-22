@@ -33,9 +33,12 @@ const FileUploadComponent = ({ onUploadSuccess }) => {
   };
 
   return (
-    <div>
+    <div style={{textAlign: 'left'}}>
       <input type="file" onChange={handleFileChange} />
-      <img src={previewImage} alt="Preview" style={{maxWidth: '100px', height: '100px'}}/>
+      {previewImage !== null ?
+      <div style={{margin: '20px 0'}}>
+        <img src={previewImage} alt="Preview" style={{width: '64%', height: 'auto', borderRadius: '10px', border: '1px solid white', marginLeft: '8%'}}/>
+      </div> : <div style={{margin: '20px 0'}} /> }
     </div>
   );
 }

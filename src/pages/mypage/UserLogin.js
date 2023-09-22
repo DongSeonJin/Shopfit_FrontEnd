@@ -23,13 +23,6 @@ const UserLogin = () => {
         password: "",
     });
 
-    // const handleEmailChange = (e) => {
-    //     setEmail(e.target.value);
-    // };
-
-    // const handlePasswordChange = (e) => {
-    //     setPassword(e.target.value);
-    // };
 
     const handleChange = async (e) => {
         setValues({
@@ -124,12 +117,14 @@ const UserLogin = () => {
                 </div>
                 <Button onClick={handleLogin} variant="outlined" style={{ width: '360px', height: '60px', textAlign: 'center', margin: '20px 0', borderRadius: '10px', fontSize: '24px' }}>로그인</Button>
 
-                <div style={{ display: 'flex' }}>
-                    <div style={{ flex: '1', textAlign: 'center' }}>
-                        <Link to='http://localhost:3000/mypage/edit/password' style={{ textDecoration: 'none', color: 'white' }}>비밀번호 재설정</Link>
+
+                <div style={{display: 'flex'}}>
+                    <div style={{flex: '1', textAlign: 'center'}}>
+                        <Link to='/mypage/edit/password' style={{textDecoration: 'none', color: 'white'}}>비밀번호 재설정</Link>
                     </div>
-                    <div style={{ flex: '1', textAlign: 'center', borderLeft: '1px solid white' }}>
-                        <Link to='http://localhost:3000/signup' style={{ textDecoration: 'none', color: 'white' }}>회원가입</Link>
+                    <div style={{flex: '1', textAlign: 'center', borderLeft: '1px solid white'}}>
+                        <Link to='/signup' style={{textDecoration: 'none', color: 'white'}}>회원가입</Link>
+
                     </div>
                 </div>
 
