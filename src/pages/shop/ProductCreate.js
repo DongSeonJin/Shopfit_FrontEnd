@@ -2,13 +2,13 @@
 import axios from "axios";
 import { useState } from "react";
 import { useNavigate } from "react-router";
-import CreateFileUploadComponent from '../../components/shop/CreateFileUploadComponent';
-import FilesUploadComponent from '../../components/shop/FilesUploadComponent';
+import CreateFileUploadComponent from "../../components/shop/CreateFileUploadComponent";
+import FilesUploadComponent from "../../components/shop/FilesUploadComponent";
 
 // import styles from '../../styles/shop/ProductCreate.module.css';
-import CloseIcon from '@mui/icons-material/Close';
+import CloseIcon from "@mui/icons-material/Close";
 import { Button } from "@mui/material";
-
+import { authApi } from "../../lib/api/authApi";
 
 const ProductCreate = () => {
   const [ProductCategory, setProductCategory] = useState("");
@@ -79,7 +79,7 @@ const ProductCreate = () => {
     } else {
       try {
         // 백엔드 서버에 POST 요청 보내기
-        await axios.post("/shopping", data, {
+        await authApi.post("/shopping", data, {
           headers: {
             "Content-Type": "application/json",
           },
@@ -103,6 +103,7 @@ const ProductCreate = () => {
   };
 
   return (
+
     <div style={{maxWidth: '720px', width: '100%', textAlign: 'center', margin: '0 auto 200px'}}>
       <div style={{fontSize: '36px', fontWeight: 'bold', textAlign: 'center', marginBottom: '50px'}}>
         상 품 등 록
@@ -137,7 +138,9 @@ const ProductCreate = () => {
             <div style={{flex: '1'}}>
               <input type="number" value={price} onChange={handlePriceChange} style={{width: '100%', height: '35px', padding: '0 10px'}} />
             </div>
+
           </div>
+
 
           <div style={{display: 'flex', marginBottom: '10px'}}>
             <div style={{flex: '1', textAlign: 'left', height: '30px'}}>재고 수량:</div>
@@ -151,35 +154,42 @@ const ProductCreate = () => {
         <div style={{margin: '30px 0', borderBottom: '1px solid white', padding: '0 10px'}}>
           <div style={{textAlign: 'left', marginBottom: '10px'}}>썸네일:</div>
           <div>
+
             <CreateFileUploadComponent onUploadSuccess={handleUploadSuccess} />
           </div>
         </div>
+
 
 
         <div style={{margin: '30px 0', borderBottom: '1px solid white', padding: '0 10px 30px'}}>
           <div style={{textAlign: 'left', marginBottom: '10px'}}>상세 이미지 :</div>
 
           <div>
+
             <FilesUploadComponent onUploadSuccess={handleAddImage} />
           </div>
 
           {productImageUrls.map((imageUrl, index) => (
+
           <div key={index} style={{display: 'flex', margin: '20px 0'}}>
             <div style={{flex: '4'}}>
               <img src={imageUrl} alt={`Image ${index}`} style={{border: '1px solid white', borderRadius: '10px', width: '80%'}} />
             </div>
             <div style={{flex: '1', display: 'flex', alignItems: 'center'}}>
               <CloseIcon onClick={() => handleRemoveImage(index)} style={{width: '60px', height: '60px', cursor:'pointer'}} />
+
             </div>
           </div>
           ))}
         </div>
+
 
         <div style={{margin: '100px 0', textAlign: 'center'}}>
           <Button type="submit" variant="outlined" style={{color: 'white', width: '180px', height: '60px', fontWeight: 'bold', fontSize: '24px'}} onClick={handleSubmit} >등 록</Button>
         </div>
 
       </form>
+
     </div>
   );
 };

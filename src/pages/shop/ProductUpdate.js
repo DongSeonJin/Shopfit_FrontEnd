@@ -198,10 +198,12 @@ const ProductUpdate = () => {
             </div>
           </div>
 
+
           <div style={{display: 'flex', marginBottom: '10px'}}>
             <div style={{flex: '1', textAlign: 'left', height: '30px'}}>재고 수량:</div>
             <div style={{flex: '1'}}>
               <input type="number" value={stockQuantity} onChange={handleStockQuantityChange} style={{width: '100%', height: '35px', padding: '0 10px'}} />
+
             </div>
           </div>
         </div>

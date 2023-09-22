@@ -58,7 +58,7 @@ const Order = () => {
       try {
         const stockInfo = {};
         for (const selected of selectedItems) {
-          const response = await axios.get(`/shopping/products/${selected.productId}`);
+          const response = await axios.get(`/shopping/detail/${selected.productId}`);
           stockInfo[selected.productId] = response.data.stockQuantity;
         }
         setProductStocks(stockInfo);
