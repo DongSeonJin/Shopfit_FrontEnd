@@ -47,7 +47,11 @@ const UserInfo = () => {
       <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center',  width:'100%', minHeight: `calc(100vh - 720px)`}}>
         
         <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', borderBottom: '1px solid lightgray', margin: '20px 0', width: '300px'}}>
-          <img src={user.imageUrl} alt="프로필사진" style={{width: '240px', height: '240px', border: '1px solid white', borderRadius: '50%', objectFit: 'cover', marginBottom: '10px'}} />
+          {user.imageUrl !== '' ?
+            <img src={user.imageUrl} alt="프로필사진" style={{width: '240px', height: '240px', border: '1px solid white', borderRadius: '50%', objectFit: 'cover', marginBottom: '10px'}} /> :
+            <div style={{width: '240px', height: '240px', border: '1px solid white', borderRadius: '50%', objectFit: 'cover', marginBottom: '10px'}} />
+          }
+
           <div style={{ fontSize: '28px', fontWeight: 'bold', width: '240px', marginBottom: '20px', textAlign: 'center'}}>{user.nickname}</div>
           <Button onClick={handleEditProfile} variant="outlined" style={{width: '120px', height: '40px', textAlign: 'center', marginBottom: '20px', borderRadius: '10px', fontSize: '18px'}}>설정</Button>
         </div>
