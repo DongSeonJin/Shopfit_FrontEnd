@@ -5,9 +5,11 @@ import { SET_USER } from "../../redux/UserReducer";
 import { SET_TOKEN } from "../../redux/AuthReducer";
 import axios from 'axios';
 import { useDispatch } from 'react-redux';
+import { useNavigate } from "react-router";
 
 const GoogleLoginButton = () => {
-    const dispatch = useDispatch;
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     return (
         
@@ -25,7 +27,9 @@ const GoogleLoginButton = () => {
                             dispatch(SET_USER(response.data)); // 로그인 성공 시 사용자 정보 업데이트
                             // 쿠키에 Refresh Token, store에 Access Token 저장
                             setRefreshToken(response.data.refreshToken);
-                            dispatch(SET_TOKEN(response.date.accessToken));
+                            dispatch(SET_TOKEN(response.data.accessToken));
+
+                            navigate('/');
                         })
                         .catch(error => {
                             console.error(error);
@@ -33,6 +37,7 @@ const GoogleLoginButton = () => {
                 }}
                 onFailure={(err) => {
                     console.log(err);
+                    alert('로그인에 실패하였습니다.');
                 }}
             />
         </>
