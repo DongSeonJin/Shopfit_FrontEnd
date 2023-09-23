@@ -227,55 +227,96 @@ const Order = () => {
           buyer_tel: orderData.phoneNumber,
           buyer_addr: orderData.address,
         },
+
         async function (rsp) {
+
+          // rsp.paid_amount
+
           if (rsp.success) {
-            // 주문한 제품의 productId에 해당하는 row만 선택
-            const updatedCart = cart.filter((item) =>
-              selectedItems.some((selected) => selected.productId === item.productId)
-            );
-            setCart(updatedCart); // setCart 함수로 카트를 업데이트
 
-            // 주문이 성공적으로 생성되었으므로 주문 상세 페이지로 이동
-            navigate(`/shopping/order/detail`, { state: { purchasedProducts: selectedItems } });
+            // 결제 성공 시 필요한 데이터 생성
+            const paymentData = {
+              orderId: orderId,
+              paidAmount: rsp.paid_amount,
+              couponId: selectedCouponId,
+              usingPoint: usingPoint,
+            };
 
-            // 장바구니에서 구매 이용 시 해당 상품들을 삭제
-            selectedItems.forEach(async (selected) => {
-              try {
-                await axios.delete(`/cart/${selected.cartId}`);
-              } catch (error) {
-                console.error("Error removing item from cart:", error);
-              }
-            });
+            try {
+              // 결제 데이터를 백엔드로 전달
+              const response = await authApi.post("/orders/verify-payment", paymentData);
+    
+              if (response) {
+                // 결제 및 데이터 전송 성공
+                console.log("결제 및 데이터 전송이 성공하였습니다.");
+                
+                // 주문한 제품의 productId에 해당하는 row만 선택
+                const updatedCart = cart.filter((item) =>
+                  selectedItems.some((selected) => selected.productId === item.productId)
+                );
+                setCart(updatedCart); // setCart 함수로 카트를 업데이트
 
-            // 주문한 제품의 재고량 업데이트
-            for (const selected of selectedItems) {
-              const updatedStockQuantity = productStocks[selected.productId] - selected.quantity;
-              try {
-                await axios.post(`/shopping/stock/${selected.productId}`, {
-                  stockQuantity: updatedStockQuantity,
+                // 주문이 성공적으로 생성되었으므로 주문 상세 페이지로 이동
+                navigate(`/shopping/order/detail`, { state: { purchasedProducts: selectedItems } });
+
+                // 장바구니에서 구매 이용 시 해당 상품들을 삭제
+                selectedItems.forEach(async (selected) => {
+                  try {
+                    await axios.delete(`/cart/${selected.cartId}`);
+                  } catch (error) {
+                    console.error("Error removing item from cart:", error);
+                  }
                 });
-                console.log(`Stock quantity for product ${selected.productId} updated.`);
-              } catch (error) {
-                console.error(`Error updating stock quantity for product ${selected.productId}:`, error);
+
+                // 주문한 제품의 재고량 업데이트
+                for (const selected of selectedItems) {
+                  const updatedStockQuantity = productStocks[selected.productId] - selected.quantity;
+                  try {
+                    await axios.post(`/shopping/stock/${selected.productId}`, {
+                      stockQuantity: updatedStockQuantity,
+                    });
+                    console.log(`Stock quantity for product ${selected.productId} updated.`);
+                  } catch (error) {
+                    console.error(`Error updating stock quantity for product ${selected.productId}:`, error);
+                  }
+                }
+
+                // 포인트 사용 업데이트를 수행
+                await updateUsedPoints(usingPoint);
+
+                // 쿠폰 사용 업데이트를 수행
+                if (selectedCouponId) {
+                  // couponId가 유효한 경우만 실행
+                  await updateUsedCoupon(selectedCouponId);
+                }
+                // 상태(결제완료) 업데이트
+                await updateOrderStatus(orderId, "2");
+
+                // 결제 성공
+                console.log("결제가 성공적으로 완료되었습니다.");
+
+              } else {
+                // 백엔드에서 처리 실패 시 - 오더 삭제
+                console.error("백엔드에서 처리 중 오류 발생:", response.data.error);
+                try {
+                  await axios.delete(`/orders/${orderId}`);
+                  console.error(`주문 삭제 완료(${orderId})`);
+                } catch (erro) {
+                  console.error(`존재하지 않는 주문`);
+                }
+              }
+            } catch (error) {
+              // 오류 처리 또는 재시도 등을 수행 - 오더 삭제
+              console.error("결제 데이터 전송 중 오류 발생:", error);
+              try {
+                await axios.delete(`/orders/${orderId}`);
+                console.error(`주문 삭제 완료(${orderId})`);
+              } catch (erro) {
+                console.error(`존재하지 않는 주문`);
               }
             }
-
-            // 결제 성공
-            console.log("결제가 성공적으로 완료되었습니다.");
-
-            // 포인트 사용 업데이트를 수행
-            await updateUsedPoints(usingPoint);
-
-            // 쿠폰 사용 업데이트를 수행
-            if (selectedCouponId) {
-              // couponId가 유효한 경우만 실행
-              await updateUsedCoupon(selectedCouponId);
-            }
-            // 상태(결제완료) 업데이트
-            await updateOrderStatus(orderId, "2");
           } else {
-            // 결제 실패
-            console.log(rsp);
+            // 결제 실패 시 - 오더 삭제
             alert(`결제에 실패하였습니다. 에러 내용: ${rsp.error_msg}`);
             try {
               await axios.delete(`/orders/${orderId}`);

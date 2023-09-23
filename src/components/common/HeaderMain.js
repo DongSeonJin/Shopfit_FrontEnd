@@ -15,14 +15,19 @@ const HeaderMain = ({ isCommunityHovered, isShoppingHovered }) => {
 
     const userId = useSelector(state => state.authUser.userId);
 
-    
     const dispatch = useDispatch();
-    
 
     const handleSearchTextChange = (e) => {
         // 2. 검색어 입력 필드의 변경 이벤트 처리 함수
         setSearchText(e.target.value);
     };
+
+    const handleLogoutClick = async () => {
+        // 로그아웃을 수행하고 완료될 때까지 기다립니다.
+        await dispatch(logout());
+        // 로그아웃 완료 후 메인 페이지로 이동합니다.
+        navigate('/');
+      };
 
     const performSearch = (searchText) => {
         if(searchText == ""){
@@ -99,13 +104,13 @@ const HeaderMain = ({ isCommunityHovered, isShoppingHovered }) => {
             <div style={{display: 'flex', fontWeight: 'bold', justifyContent: 'right', fontSize: '20px'}}>
                 <div style={{display: 'inline-block', width: '80px', textAlign: 'center', margin: '0 30px'}}>
                     {userId != 0 ? 
-                        <Link onClick={() => {dispatch(logout()); navigate('/');}} style={{ textDecoration: 'none', color: 'inherit'}}>로그아웃</Link> :
+                        <Link onClick={handleLogoutClick} style={{ textDecoration: 'none', color: 'inherit'}}>로그아웃</Link> :
                         <Link to="/login" style={{ textDecoration: 'none', color: 'inherit'}}>로그인</Link>
                     }
                 </div>
 
                 <div style={{display: 'inline-block', width: '100px', textAlign: 'center', margin: '0 30px',}}>
-                    {userId !== null ?
+                    {userId != 0 ?
                         <Link to="/mypage/info" style={{ textDecoration: 'none', color: 'inherit'}}>마이페이지</Link> :
                         <Link to="/signup" style={{ textDecoration: 'none', color: 'inherit'}}>회원가입</Link>
                     }
