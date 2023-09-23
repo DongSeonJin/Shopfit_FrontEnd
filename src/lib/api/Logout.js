@@ -32,6 +32,8 @@ const logout = () => async (dispatch, getState) => {
                 // store에 저장된 user 데이터 초기화
                 dispatch(LOGOUT_USER());
 
+                alert('로그아웃 되었습니다.');
+
             }
         } catch (error) {
             if (error.response) {
