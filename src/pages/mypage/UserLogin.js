@@ -11,7 +11,7 @@ import Modal from './../../components/common/modal/Modal';
 import { setRefreshToken } from '../../store/Cookie';
 import { SET_TOKEN } from '../../redux/AuthReducer';
 import { SET_USER } from '../../redux/UserReducer';
-import GoogleLoginButton from '../../components/oauth2/GoogleLoginButton';
+import GoogleLogin from '../../components/oauth2/GoogleLogin';
 
 const UserLogin = () => {
     const [errorModalOpen, setErrorModalOpen] = useState(false);
@@ -129,7 +129,7 @@ const UserLogin = () => {
                 </div>
 
                 <div style={{ marginTop: '20px' }}>
-                    <GoogleLoginButton />
+                    <GoogleLogin />
                 </div>
 
 
