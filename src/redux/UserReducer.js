@@ -6,7 +6,8 @@ const initialState = {
   authority: '',
   userId: '0',
   email: '',
-  nickname: ''
+  nickname: '',
+  imageUrl:'',
 };
 
 const userSlice = createSlice({
@@ -20,6 +21,7 @@ const userSlice = createSlice({
       state.userId = action.payload.userId;
       state.email = action.payload.email;
       state.nickname = action.payload.nickname;
+      state.imageUrl = action.payload.imageUrl;
     },
     LOGOUT_USER:(state) =>{
         Object.assign(state,initialState); // 로그아웃시 모든 정보 초기화
