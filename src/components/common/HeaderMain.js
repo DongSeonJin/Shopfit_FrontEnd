@@ -121,12 +121,14 @@ const HeaderMain = ({ isCommunityHovered, isShoppingHovered }) => {
                     }
                 </div>
 
+
                 <div style={{alignItems: 'center', display: 'flex', width: '150px', textAlign: 'center', justifyContent:'center'}}>
                     {userId != 0 ?
                     <>
                         <Avatar src={profileImage} alt="프로필 이미지" style={{ width: '40px', height: '40px', borderRadius: '50%', marginRight: '15px'}} />
                         <Link to="/mypage/info" style={{ textDecoration: 'none', color: 'inherit'}}>마이페이지</Link>
                     </> :
+
                         <Link to="/signup" style={{ textDecoration: 'none', color: 'inherit'}}>회원가입</Link>
                     } 
                 </div>
