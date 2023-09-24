@@ -41,7 +41,6 @@ const HeaderMain = ({ isCommunityHovered, isShoppingHovered }) => {
             console.log("검색어:", searchText);
         }
     };
-
     
     useEffect (() => {
         if(userId && userId !== 0) {

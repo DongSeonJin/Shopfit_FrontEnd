@@ -4,6 +4,10 @@ import { Link, useParams } from 'react-router-dom';
 import { Button } from '@material-ui/core'
 import LikeButton from './../../components/community/LikeButton';
 import UTurnRightRoundedIcon from '@mui/icons-material/UTurnRightRounded';
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import CommentIcon from '@mui/icons-material/Comment';
+
+
 
 // import styles from '../../styles/community/PostList.module.css'
 
@@ -86,12 +90,20 @@ const PostList = () => {
               </Link>
 
               <div style={{margin: '10px 0', padding: '5px'}}>
-                <div style={{display: 'flex', marginBottom: '10px'}}>
-                  <div style={{flex: '2', fontSize: '1vw'}}>
+                <div style={{display: 'flex', justifyContent: 'flex-end', marginBottom:'10px'}}>
+
+                  <div style={{flex: '1.5', fontSize: '1vw', marginLeft: '10px', marginTop: '3px'}}>
                     <LikeButton postId={post.postId} />
                   </div>
-                  <div style={{flex: '3', fontSize: '1vw'}}>{`조회수 : ${post.viewCount}`}</div>
-                  <div style={{flex: '3', fontSize: '1vw'}}>{`댓글수 : ${post.replyCnt}`}</div>
+
+                  <div style={{ flex: '1.5', fontSize:'1vw', display:'flex', alignItems:'center' }}>
+                    <VisibilityIcon style={{ fontSize:'2rem', marginRight:'5px' }} /> {` ${post.viewCount}`}
+                  </div>
+
+                  <div style={{ flex: '3', fontSize:'1vw', display:'flex', alignItems:'center' }}>
+                    <CommentIcon style={{ fontSize:'2rem', marginRight: '5px' }}/> {` ${post.replyCnt}`}
+                  </div>
+
                 </div>
                 <div style={{display: '-webkit-box', WebkitBoxOrient: 'vertical', WebkitLineClamp: 2, overflow: 'hidden', textOverflow: 'ellipsis', fontWeight: 'bold', fontSize: '0.8vw', height: '2vw', lineHeight: '1vw', marginBottom: '2px'}}>{post.title}</div>
                 <div style={{display: '-webkit-box', WebkitBoxOrient: 'vertical', WebkitLineClamp: 2, overflow: 'hidden', textOverflow: 'ellipsis', fontSize: '0.7vw', height: '1vw', lineHeight: '1vw', textAlign: 'right', paddingRight: '5px'}}>{post.nickname}</div>
