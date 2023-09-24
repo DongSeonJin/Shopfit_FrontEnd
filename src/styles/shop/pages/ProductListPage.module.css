@@ -1,0 +1,53 @@
+.container {
+    width: 100%;
+    max-width: 1920px;
+    margin: 0 auto;
+}
+
+.container2 {
+    display: flex;
+}
+  
+.title {
+    flex: 1;
+    font-weight: bold;
+    font-size: 24px;
+    margin-bottom: 25px;
+    padding-left: 10px;
+}
+  
+.adminButton {
+    flex: 1;
+    text-align: right;
+    margin: 0 20px;
+    height: 62px;
+}
+  
+.buttonLink {
+    color: white;
+    width: 160px;
+    font-size: 20px;
+}
+
+.container3 {
+    display: flex;
+    justify-content: flex-end;
+    margin: 10px;
+}
+  
+.sortItem {
+    cursor: pointer;
+    margin-right: 10px;
+}
+
+.separator {
+    margin-right: 5px;
+}
+
+.container4 {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 1%;
+    margin-bottom: 100px;
+}
+

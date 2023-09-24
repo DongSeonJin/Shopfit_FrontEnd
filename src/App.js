@@ -15,6 +15,8 @@ import { useSelector } from 'react-redux';
 import ChatbotButton from './components/common/ChatbotButton';
 import { GoogleOAuthProvider } from '@react-oauth/google';
 
+import styles from './App.module.css';
+
 
 const App = () => {
   const clientId = '711393533645-css3t7bs3k4e5fhl3pnmgqn6nj6or42s.apps.googleusercontent.com';
@@ -26,7 +28,7 @@ const App = () => {
   }, []);
 
   return (
-    <div style={{ background: 'black', color: 'white' }}>
+    <div className={styles.background}> {/* 모듈 스타일 적용 */}
       <GoogleOAuthProvider clientId={clientId}>
         <Header />
         <Home />

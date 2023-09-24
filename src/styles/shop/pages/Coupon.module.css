@@ -1,0 +1,46 @@
+.container {
+    margin: 50px auto 150px;
+    width: 720px;
+}
+
+.title {
+    text-align: center;
+    font-weight: bold;
+    font-size: 36px;
+    margin-bottom: 50px;
+}
+  
+.subtitle {
+    margin-bottom: 10px;
+}
+
+.image {
+    width: 720px;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+    border-radius: 15px;
+}
+
+.clickable {
+    cursor: pointer;
+    margin-bottom: 30px;
+}
+
+.image2 {
+    width: 720px;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+    border-radius: 15px;
+}
+
+.link-container {
+    text-align: right;
+    width: 720px;
+    font-size: 24px;
+}
+
+.link {
+    text-decoration: none;
+}

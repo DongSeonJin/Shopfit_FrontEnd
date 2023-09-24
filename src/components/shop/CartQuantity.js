@@ -1,5 +1,7 @@
 import { useState } from "react";
-import styles from "../../styles/shop/CartQuantity.module.css";
+
+import styles from "../../styles/shop/components/CartQuantity.module.css";
+
 
 const CartQuantity = (props) => {
   const [count, setCount] = useState(props.count);

@@ -5,10 +5,12 @@ import { useNavigate } from "react-router";
 import CreateFileUploadComponent from "../../components/shop/CreateFileUploadComponent";
 import FilesUploadComponent from "../../components/shop/FilesUploadComponent";
 
-// import styles from '../../styles/shop/ProductCreate.module.css';
 import CloseIcon from "@mui/icons-material/Close";
 import { Button } from "@mui/material";
 import { authApi } from "../../lib/api/authApi";
+
+import styles from '../../styles/shop/pages/ProductCreate.module.css';
+
 
 const ProductCreate = () => {
   const [ProductCategory, setProductCategory] = useState("");
@@ -104,18 +106,18 @@ const ProductCreate = () => {
 
   return (
 
-    <div style={{maxWidth: '720px', width: '100%', textAlign: 'center', margin: '0 auto 200px'}}>
-      <div style={{fontSize: '36px', fontWeight: 'bold', textAlign: 'center', marginBottom: '50px'}}>
+    <div className={styles.container}>
+      <div className={styles.heading}>
         상 품 등 록
       </div>
 
       <form onSubmit={handleSubmit}>
-        <div style={{borderTop: '1px white solid', borderBottom: '1px white solid', padding: '20px 10px'}}>
+        <div className={styles.container2}>
 
-          <div style={{display: 'flex', margin: '10px 0'}}>
-            <div style={{flex: '1', textAlign: 'left', height: '30px'}}>상품 카테고리:</div>
-            <div style={{flex: '1'}}>
-              <select value={ProductCategory} onChange={handleProductCategoryChange} style={{width: '100%', height: '35px', padding: '0 10px'}}>
+          <div className={styles.container3}>
+            <div className={styles.label}>상품 카테고리:</div>
+            <div className={styles['select-container']}>
+              <select value={ProductCategory} onChange={handleProductCategoryChange} className={styles.select}>
                 <option value="">카테고리를 선택하세요</option>
                 {productCategories.map((category) => (
                   <option key={category.id} value={category.id}>
@@ -126,70 +128,86 @@ const ProductCreate = () => {
             </div>
           </div>
 
-          <div style={{display: 'flex', marginBottom: '10px'}}>
-            <div style={{flex: '1', textAlign: 'left', height: '30px'}}>상품명: </div>
-            <div style={{flex: '1'}}>
-              <input type="text" value={productName} onChange={handleProductNameChange} style={{width: '100%', height: '35px', padding: '0 10px'}} />
+          <div className={styles.container3}>
+            <div className={styles.label}>상품명:</div>
+            <div className={styles['input-container']}>
+              <input
+                type="text"
+                value={productName}
+                onChange={handleProductNameChange}
+                className={styles.input}
+              />
             </div>
           </div>
 
-          <div style={{display: 'flex', marginBottom: '10px'}}>
-            <div style={{flex: '1', textAlign: 'left', height: '30px'}}>가격:</div>
-            <div style={{flex: '1'}}>
-              <input type="number" value={price} onChange={handlePriceChange} style={{width: '100%', height: '35px', padding: '0 10px'}} />
+          <div className={styles.container3}>
+            <div className={styles.label}>가격:</div>
+            <div className={styles['input-container']}>
+              <input
+                type="number"
+                value={price}
+                onChange={handlePriceChange}
+                className={styles.input}
+              />
             </div>
-
           </div>
 
-
-          <div style={{display: 'flex', marginBottom: '10px'}}>
-            <div style={{flex: '1', textAlign: 'left', height: '30px'}}>재고 수량:</div>
-            <div style={{flex: '1'}}>
-              <input type="number" value={stockQuantity} onChange={handleStockQuantityChange} style={{width: '100%', height: '35px', padding: '0 10px'}} />
+          <div className={styles.container3}>
+            <div className={styles.label}>재고 수량:</div>
+            <div className={styles['input-container']}>
+              <input
+                type="number"
+                value={stockQuantity}
+                onChange={handleStockQuantityChange}
+                className={styles.input}
+              />
             </div>
           </div>
         </div>
 
 
-        <div style={{margin: '30px 0', borderBottom: '1px solid white', padding: '0 10px'}}>
-          <div style={{textAlign: 'left', marginBottom: '10px'}}>썸네일:</div>
+        <div className={styles.container4}>
+          <div className={styles.label}>썸네일:</div>
           <div>
-
             <CreateFileUploadComponent onUploadSuccess={handleUploadSuccess} />
           </div>
         </div>
 
 
 
-        <div style={{margin: '30px 0', borderBottom: '1px solid white', padding: '0 10px 30px'}}>
-          <div style={{textAlign: 'left', marginBottom: '10px'}}>상세 이미지 :</div>
-
+        <div className={styles.container5}>
+          <div className={styles.label3}>상세 이미지:</div>
           <div>
-
             <FilesUploadComponent onUploadSuccess={handleAddImage} />
           </div>
 
           {productImageUrls.map((imageUrl, index) => (
-
-          <div key={index} style={{display: 'flex', margin: '20px 0'}}>
-            <div style={{flex: '4'}}>
-              <img src={imageUrl} alt={`Image ${index}`} style={{border: '1px solid white', borderRadius: '10px', width: '80%'}} />
+            <div key={index} className={styles['image-container']}>
+              <div className={styles.image}>
+                <img src={imageUrl} alt={`Image ${index}`} className={styles.detailImage} />
+              </div>
+              <div className={styles['close-button']}>
+                <CloseIcon
+                  onClick={() => handleRemoveImage(index)}
+                  style={{ width: '60px', height: '60px' }}
+                />
+              </div>
             </div>
-            <div style={{flex: '1', display: 'flex', alignItems: 'center'}}>
-              <CloseIcon onClick={() => handleRemoveImage(index)} style={{width: '60px', height: '60px', cursor:'pointer'}} />
-
-            </div>
-          </div>
           ))}
         </div>
 
 
-        <div style={{margin: '100px 0', textAlign: 'center'}}>
-          <Button type="submit" variant="outlined" style={{color: 'white', width: '180px', height: '60px', fontWeight: 'bold', fontSize: '24px'}} onClick={handleSubmit} >등 록</Button>
+        <div className={styles.container6}>
+          <Button
+            type="submit"
+            variant="outlined"
+            className={styles.button}
+            onClick={handleSubmit}
+          >
+            등 록
+          </Button>
         </div>
-
       </form>
-
     </div>
   );
 };

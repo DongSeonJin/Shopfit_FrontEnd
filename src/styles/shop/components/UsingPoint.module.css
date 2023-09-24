@@ -1,0 +1,18 @@
+.container {
+    margin-bottom: 10px;
+}
+
+.input {
+    width: calc(100% - 90px);
+    margin-right: 10px;
+    height: 30px;
+}
+
+.button {
+    height: 30px;
+}
+
+.userPoint {
+    display: block;
+}
+  

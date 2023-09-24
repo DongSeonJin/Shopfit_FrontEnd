@@ -8,7 +8,7 @@ import FilesUploadComponent from "../../components/shop/FilesUploadComponent";
 import { Button } from "@mui/material";
 import CloseIcon from '@mui/icons-material/Close';
 
-// import styles from "../../styles/shop/ProductUpdate.module.css";
+import styles from "../../styles/shop/pages/ProductUpdate.module.css";
 
 
 const ProductUpdate = () => {
@@ -160,20 +160,18 @@ const ProductUpdate = () => {
   };
 
   return (
-    <div style={{maxWidth: '720px', width: '100%', textAlign: 'center', margin: '0 auto 200px'}}>
-
-      <div style={{fontSize: '36px', fontWeight: 'bold', textAlign: 'center', marginBottom: '50px'}}>
+    <div className={styles.productUpdateContainer}>
+      <div className={styles.productUpdateHeader}>
         상 품 수 정
       </div>
 
-
       <form onSubmit={handleSubmit}>
-        <div style={{borderTop: '1px white solid', borderBottom: '1px white solid', padding: '20px 10px'}}>
+        <div className={styles.divWithBorder}>
 
-          <div style={{display: 'flex', margin: '10px 0'}}>
-            <div style={{flex: '1', textAlign: 'left', height: '30px'}}>상품 카테고리:</div>
-            <div style={{flex: '1'}}>
-              <select value={ProductCategory} onChange={handleProductCategoryChange} style={{width: '100%', height: '35px', padding: '0 10px'}}>
+          <div className={styles.selectContainer}>
+            <div className={styles.selectLabel}>상품 카테고리:</div>
+            <div className={styles.selectDropdown}>
+              <select value={ProductCategory} onChange={handleProductCategoryChange}>
                 <option value="">카테고리를 선택하세요</option>
                 {productCategories.map((category) => (
                   <option key={category.id} value={category.id}>
@@ -184,76 +182,75 @@ const ProductUpdate = () => {
             </div>
           </div>
 
-          <div style={{display: 'flex', marginBottom: '10px'}}>
-            <div style={{flex: '1', textAlign: 'left', height: '30px'}}>상품명: </div>
-            <div style={{flex: '1'}}>
-              <input type="text" value={productName} onChange={handleProductNameChange} style={{width: '100%', height: '35px', padding: '0 10px'}} />
+          <div>
+            <div className={styles.inputContainer}>
+              <div className={styles.inputLabel}>상품명:</div>
+              <div className={styles.inputField}>
+                <input type="text" value={productName} onChange={handleProductNameChange} />
+              </div>
+            </div>
+
+            <div className={styles.inputContainer}>
+              <div className={styles.inputLabel}>가격:</div>
+              <div className={styles.inputField}>
+                <input type="number" value={price} onChange={handlePriceChange} />
+              </div>
             </div>
           </div>
 
-          <div style={{display: 'flex', marginBottom: '10px'}}>
-            <div style={{flex: '1', textAlign: 'left', height: '30px'}}>가격:</div>
-            <div style={{flex: '1'}}>
-              <input type="number" value={price} onChange={handlePriceChange} style={{width: '100%', height: '35px', padding: '0 10px'}} />
-            </div>
-          </div>
-
-
-          <div style={{display: 'flex', marginBottom: '10px'}}>
-            <div style={{flex: '1', textAlign: 'left', height: '30px'}}>재고 수량:</div>
-            <div style={{flex: '1'}}>
-              <input type="number" value={stockQuantity} onChange={handleStockQuantityChange} style={{width: '100%', height: '35px', padding: '0 10px'}} />
-
+          <div className={styles.inputContainer}>
+            <div className={styles.inputLabel}>재고 수량:</div>
+            <div className={styles.inputField}>
+              <input type="number" value={stockQuantity} onChange={handleStockQuantityChange} />
             </div>
           </div>
         </div>
 
-        <div style={{margin: '30px 0', borderBottom: '1px solid white', padding: '0 10px'}}>
-          <div style={{textAlign: 'left', marginBottom: '10px'}}>썸네일: </div>
-
+        <div className={styles.thumbnailContainer}>
+          <div className={styles.thumbnailLabel}>썸네일:</div>
           <div>
             <CreateFileUploadComponent onUploadSuccess={handleUploadSuccess} />
           </div>
         </div>
 
-        <div style={{margin: '30px 0', borderBottom: '1px solid white', padding: '0 10px 30px'}}>
-          <div style={{textAlign: 'left', marginBottom: '10px'}}>상세 이미지 :</div>
+        <div className={styles.imageContainer}>
+          <div className={styles.imageLabel}>상세 이미지 :</div>
 
           <div>
             <FilesUploadComponent onUploadSuccess={handleAddImage} />
           </div>
 
           {productImageUrls.map((imageUrl, index) => (
-          <div key={index} style={{display: 'flex', margin: '20px 0'}}>
-            <div style={{flex: '4'}}>
-              <img src={imageUrl} alt="productImages" style={{border: '1px solid white', borderRadius: '10px', width: '80%'}} />
+            <div key={index} className={styles.imageWrapper}>
+              <div className={styles.image}>
+                <img className={styles.imageDetail} src={imageUrl} alt="productImages" />
+              </div>
+              <div className={styles.closeIconContainer}>
+                <CloseIcon
+                  variant="outlined"
+                  color="error"
+                  onClick={() => handleDeleteImages(imageUrl, productImageIds[index])}
+                  className={styles.closeIcon}
+                />
+              </div>
             </div>
-            <div style={{flex: '1', display: 'flex', alignItems: 'center'}}>
-              <CloseIcon
-                variant="outlined"
-                color="error"
-                onClick={() => handleDeleteImages(imageUrl, productImageIds[index])}
-                style={{width: '60px', height: '60px', cursor:'pointer', color: 'white'}}
-              />
-            </div>
-          </div>
           ))}
         </div>
-
-        <div style={{margin: '100px 0', textAlign: 'center'}}>
+        
+        <div className={styles.buttonContainer}>
           <Button
             variant="outlined"
             type="submit"
-            style={{color: 'white', width: '180px', height: '60px', fontWeight: 'bold', fontSize: '24px', marginRight: '10px'}}
+            className={styles.submitButton}
           >
             수정
           </Button>
 
-          <Link to={"/shopping/1"}>
+          <Link to="/shopping/1">
             <Button
               variant="outlined"
               color="error"
-              style={{color: 'white', width: '180px', height: '60px', fontWeight: 'bold', fontSize: '24px', marginLeft: '10px'}}
+              className={styles.cancelButton}
             >
               취소
             </Button>
