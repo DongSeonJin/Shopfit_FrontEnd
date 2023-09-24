@@ -114,7 +114,7 @@ const PostDetail = () => {
       <div className="post-view-wrapper" style={{ width: '80%', minWidth: '720px', margin: '0 auto'}}>
 
         <Box display='flex' justifyContent='flex-end' mt={10}>
-          {data.postId && (  // postId 가 존재할 때만 버튼 보이기
+          {data.postId && (userNickname === data.nickname || userAuthority === 'ADMIN') &&  (  // postId 가 존재할 때만 버튼 보이기
             <div>
               <Button
                   variant='outlined'
