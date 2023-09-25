@@ -34,7 +34,7 @@ const WishList = () => {
 
       for (const item of wishlistItems) {
         try {
-          const response = await axios.get(`/shopping/products/${item.productId}`);
+          const response = await axios.get(`/shopping/detail/${item.productId}`);
           details[item.productId] = response.data;
         } catch (error) {
           console.error(`Error fetching product detail for productId ${item.productId}:`, error);
@@ -58,13 +58,13 @@ const WishList = () => {
       console.error("삭제 요청 에러", error);
     }
   };
-
+  
   return (
     <div className={styles.wishlistContainer}>
       <HeaderSubMyPage />
       <div className={styles.headerText}>찜 목 록</div>
       <div className={styles.wishlistItemContainer}>
-        {wishlistItems.length === 0 ? (
+        {wishlistItems.length == 0 ? (
           <div className={styles.emptyWishlistContainer}>
             <div className={styles.emptyWishlistText}>찜 한 제품이 없습니다.</div>
           </div>
@@ -73,13 +73,13 @@ const WishList = () => {
             <div
               key={item.productId}
               className={styles.wishlistItem}
-            >
+            >              
               <div>
                 <Link to={`/shopping/products/${item.productId}`}>
                   <img
                     src={productDetails[item.productId]?.thumbnailUrl}
                     alt={`Thumbnail for ${productDetails[item.productId]?.productName}`}
-                    className={styles.wishlistItemImage}
+                    className={styles.wishlistItemImage}  
                   />
                 </Link>
               </div>
@@ -87,6 +87,7 @@ const WishList = () => {
                 <div className={styles.wishlistItemInfoText}>{productDetails[item.productId]?.productName}</div>
                 <div className={styles.wishlistItemPrice}>{productDetails[item.productId]?.price.toLocaleString()} 원</div>
               </div>
+
               <div className={styles.wishlistButtonContainer}>
                 <Button variant="outlined" color="error" onClick={() => handleDelete(item.wishlistId)}>
                   찜 해제

@@ -88,7 +88,8 @@ const Product = ({ data }) => {
         )}
 
         <button
-          onClick={toggleFavorite}
+          onClick={userId == 0 ? null : toggleFavorite}
+          disabled={userId == 0}
           style={{
             position: "absolute",
             bottom: "10px",

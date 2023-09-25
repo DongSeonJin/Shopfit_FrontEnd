@@ -88,8 +88,9 @@ const Top3Product = ({ data }) => {
           {data.stockQuantity === 0 && <div className={styles.soldOutLabel}>품절</div>}
           <BookmarkIcon 
             className={styles.favoriteIcon}
+            onClick={userId == 0 ? null : toggleFavorite}
+            disabled={userId == 0}
             style={{color: data.stockQuantity === 0 ? (isFavorite ? 'lightgray' : 'yellow') : (isFavorite ? 'yellow' : 'lightgray')}}
-            onClick={toggleFavorite}
           />
       </div>
       <div className={styles.productName}>{data.productName}</div>

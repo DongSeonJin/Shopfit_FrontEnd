@@ -43,6 +43,7 @@ useEffect (() => {
         }
     }
 },[userId, dispatch]);
+
 return (
     <div style={{display: 'flex', height: '90px', alignItems: 'center', marginTop: '30px', justifyContent: 'space-between', width: `calc(100% - 200px)`}}>
         <div style={{display: 'flex', fontWeight: 'bold', fontSize: '24px'}}>
