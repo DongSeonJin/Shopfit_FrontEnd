@@ -5,6 +5,8 @@ import { useSelector } from "react-redux";
 
 import BookmarkIcon from "@mui/icons-material/Bookmark";
 
+import styles from '../../styles/shop/components/Top3Product.module.css';
+
 
 const Top3Product = ({ data }) => {
   const navigate = useNavigate();
@@ -78,30 +80,20 @@ const Top3Product = ({ data }) => {
   };
 
   return (
-    <div style={{width: '100%'}}>
-      <div style={{ backgroundImage: `url(${data.thumbnailUrl})`, backgroundSize: 'cover', backgroundPosition: 'center', width: '100%', height: '', paddingBottom: '100%', cursor: 'pointer', position: 'relative', border: '1px solid white', borderRadius: '10px', marginBottom: '10px', filter: data.stockQuantity === 0 ? "grayscale(100%)" : "none"}} onClick={handleClick}>
-          {data.stockQuantity === 0 && <div style={{
-            position: 'absolute',
-            top: '50%',
-            left: '50%',
-            transform: 'translate(-50%, -50%)',
-            fontWeight: "bold",
-            fontSize: "40px",
-            color: "white",
-            zIndex: 1,}}>품절</div>}
-          <BookmarkIcon style={{
-            position: 'absolute', 
-            bottom: '10px', 
-            right: '10px',
-            width: '30px', 
-            height: '30px', 
-            cursor: 'pointer',
-            color: data.stockQuantity === 0 ? (isFavorite ? 'lightgray' : 'yellow') : (isFavorite ? 'yellow' : 'lightgray')}}
+    <div className={styles.container}>
+      <div 
+        className={styles.imageContainer}
+        style={{ backgroundImage: `url(${data.thumbnailUrl})`, filter: data.stockQuantity === 0 ? "grayscale(100%)" : "none"}} 
+        onClick={handleClick}>
+          {data.stockQuantity === 0 && <div className={styles.soldOutLabel}>품절</div>}
+          <BookmarkIcon 
+            className={styles.favoriteIcon}
+            style={{color: data.stockQuantity === 0 ? (isFavorite ? 'lightgray' : 'yellow') : (isFavorite ? 'yellow' : 'lightgray')}}
             onClick={toggleFavorite}
           />
       </div>
-      <div style={{padding: '0 5px'}}>{data.productName}</div>
-      <div style={{padding: '0 5px', textAlign: 'right'}}>{data.price.toLocaleString()} 원</div>
+      <div className={styles.productName}>{data.productName}</div>
+      <div className={styles.price}>{data.price.toLocaleString()} 원</div>
     </div>
   );
 };

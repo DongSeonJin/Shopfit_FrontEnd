@@ -1,0 +1,154 @@
+.container {
+    max-width: 1420px;
+    width: 100%;
+    margin: 0 auto 150px;
+}
+
+.title {
+    font-size: 28px;
+    font-weight: bold;
+    margin-bottom: 50px;
+}
+
+.container2 {
+    display: flex;
+}
+
+.deliveryContainer {
+    flex: 2;
+}
+
+.firstContainer{
+    margin-bottom: 100px;
+}
+
+.firstTitle{
+    font-size: 24px;
+    margin-bottom: 30px;
+    font-weight: bold;
+}
+
+.firstName {
+    margin: 10px 0;
+}
+
+.firstPhone{
+    margin: 10px 0;
+    display: flex;
+}
+
+.labelWidth80px{
+    width: 80px;
+}
+
+.inputWidth66{
+    width: 66%;
+    padding: 0 10px;
+    height: 30px;
+}
+
+.inputPhone{
+    width: 20%;
+    text-align: center;
+    height: 30px;
+}
+
+.inputPhone2{
+    width: 3%;
+    text-align: center;
+}
+
+.addressContainer {
+    display: flex;
+    align-items: center;
+}
+
+.addressInput{
+    width: calc(66% - 120px);
+    padding: 0 10px;
+    height: 30px;
+}
+
+.secondContainer {
+    font-size: 24px;
+    margin-bottom: 30px;
+    font-weight: bold;
+}
+
+.productListWidth {
+    width: calc(66% + 80px);
+}
+
+.deliveryContainer2 {
+    flex: 1;
+}
+
+.couponContainer {
+    margin-bottom: 50px;
+}
+
+.titleName {
+    font-size: 24px;
+    margin-bottom: 20px;
+    font-weight: bold;
+}
+
+.selectInput {
+    width: calc(100% - 90px);
+    margin-right: 10px;
+    height: 30px;
+}
+
+.couponButton {
+    height: 30px;
+}
+
+.paymentButtonList {
+    display: flex;
+    margin: 5px;
+}
+
+.paymentMethodButton {
+    width: 80px;
+    height: 80px;
+    margin: 5px;
+    border: 1px solid white;
+    color: white;
+    border-radius: 20px;
+}
+
+.totalPaymentList {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 5px;
+}
+
+.totalPaymentList2 {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 5px;
+    font-size: 20px;
+}
+
+.fontColorRed{
+    color: red;
+}
+
+.whiteLine {
+    border-bottom: 1px white solid;
+    margin: 15px 0;
+}
+
+.paymentButtonContainer {
+    display: flex;
+    justify-content: center;
+    margin-top: 50px;
+}
+
+.paymentButton {
+    width: 240px;
+    height: 60px;
+    margin: 5px;
+    color: white;
+    font-size: 24px;
+}

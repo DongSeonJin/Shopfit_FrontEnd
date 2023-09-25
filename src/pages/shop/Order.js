@@ -13,6 +13,8 @@ import { IAMPORT_API_KEY, KAKAOPAY_PG, TOSSPAY_PG } from "../../config";
 import { authApi } from "../../lib/api/authApi";
 import { Button } from "@material-ui/core";
 
+import styles from '../../styles/shop/pages/Order.module.css';
+
 
 const Order = () => {
   const userId = useSelector(state => state.authUser.userId);
@@ -349,63 +351,63 @@ const Order = () => {
   };
 
   return (
-    <div style={{ maxWidth: "1420px", width: "100%", margin: "0 auto 150px" }}>
-      <div style={{ fontSize: "28px", fontWeight: "bold", marginBottom: "50px" }}>주문/결제</div>
+    <div className={styles.container}>
+      <div className={styles.title}>주문/결제</div>
 
-      <div style={{ display: "flex" }}>
+      <div className={styles.container2}>
 
-        <div style={{ flex: "2" }}>
-          <div style={{ marginBottom: "100px" }}>
-            <div style={{ fontSize: "24px", marginBottom: "30px", fontWeight: 'bold' }}>배송정보</div>
+        <div className={styles.deliveryContainer}>
+          <div className={styles.firstContainer}>
+            <div className={styles.firstTitle}>배송정보</div>
 
-            <div style={{ margin: "10px 0" }}>
-              <label style={{ width: "80px" }}>이름</label>
-              <input style={{ width: '66%', padding: '0 10px', height: '30px' }} type="text" name="name" placeholder="이름을 입력하세요" />
+            <div className={styles.firstName}>
+              <label className={styles.labelWidth80px}>이름</label>
+              <input className={styles.inputWidth66} type="text" name="name" placeholder="이름을 입력하세요" />
             </div>
 
-            <div style={{ margin: "10px 0" }}>
-              <label style={{ width: "80px" }}>이메일</label>
-              <input style={{ width: '66%', padding: '0 10px', height: '30px' }} type="email" name="email" defaultValue={userEmail} placeholder="이메일 주소를 입력하세요" />
+            <div className={styles.firstName}>
+              <label className={styles.labelWidth80px}>이메일</label>
+              <input className={styles.inputWidth66} type="email" name="email" defaultValue={userEmail} placeholder="이메일 주소를 입력하세요" />
             </div>
 
-            <div style={{ margin: "10px 0", display: "flex" }}>
-              <label style={{ width: "80px" }}>연락처</label>
+            <div className={styles.firstPhone}>
+              <label className={styles.labelWidth80px}>연락처</label>
               <input
                 type="tel"
                 min="0"
                 maxLength="3"
-                style={{ width: '20%', textAlign: "center", height: '30px' }}
+                className={styles.inputPhone}
                 name="phoneNumber"
                 value={orderData.phoneNumber}
                 onChange={handleInputChange}
               />
-              <div style={{ width: "3%", textAlign: "center" }}>-</div>
+              <div className={styles.inputPhone2}>-</div>
               <input
                 type="tel"
                 min="0"
                 maxLength="4"
-                style={{ width: '20%', textAlign: "center", height: '30px' }}
+                className={styles.inputPhone}
                 name="phoneNumber2"
                 value={phoneNumber2}
                 onChange={handlePhoneNumber2}
               />
-              <div style={{ width: "3%", textAlign: "center" }}>-</div>
+              <div className={styles.inputPhone2}>-</div>
               <input
                 type="tel"
                 min="0"
                 maxLength="4"
-                style={{ width: '20%', textAlign: "center", height: '30px' }}
+                className={styles.inputPhone}
                 name="phoneNumber3"
                 value={phoneNumber3}
                 onChange={handlePhoneNumber3}
               />
             </div>
 
-            <div style={{ margin: "10px 0" }}>
-              <div style={{ display: "flex", alignItems: "center" }}>
-                <label style={{ width: "80px" }}>주소</label>
+            <div className={styles.firstName}>
+              <div className={styles.addressContainer}>
+                <label className={styles.labelWidth80px}>주소</label>
                 <input
-                  style={{ width: `calc(66% - 120px)`, padding: '0 10px', height: '30px' }}
+                  className={styles.addressInput}
                   type="text"
                   name="address"
                   value={orderData.address}
@@ -415,32 +417,24 @@ const Order = () => {
               </div>
 
             </div>
-            <div style={{ margin: "10px 0" }}>
-              <div style={{ display: "flex", alignItems: "center", height: '30px' }}>
-                <label style={{ width: "80px" }}>상세주소</label>
-                <input
-                  style={{ width: '66%', padding: '0 10px' }}
-                  type="text"
-                  name="detailedAddress"
-                  value={detailedAddress}
-                  onChange={handleDetailedAddressChange}
-                />
-              </div>
+            <div className={styles.firstName}>
+              <label className={styles.labelWidth80px}>상세주소</label>
+              <input className={styles.inputWidth66} type="text" name="detailedAddress" value={detailedAddress} onChange={handleDetailedAddressChange} />
             </div>
           </div>
 
           <div>
-            <div style={{ fontSize: "24px", marginBottom: "30px", fontWeight: 'bold' }}>주문상품</div>
-            <div style={{ width: `calc(66% + 80px)`}}>
+            <div className={styles.secondContainer}>주문상품</div>
+            <div className={styles.productListWidth}>
               <PurchasedProduct products={orderData.orderProducts} />
             </div>
           </div>
         </div>
 
 
-        <div style={{ flex: "1" }}>
-          <div style={{ marginBottom: "50px" }}>
-            <div style={{ fontSize: "24px", marginBottom: "30px", fontWeight: 'bold' }}>쿠폰</div>
+        <div className={styles.deliveryContainer2}>
+          <div className={styles.couponContainer}>
+            <div className={styles.titleName}>쿠폰</div>
             <div style={{ display: "flex" }}>
               {isModalOpen && (
                 <CouponSelectModal
@@ -450,13 +444,13 @@ const Order = () => {
                   onSelectCoupon={handleCouponSelection}
                 />
               )}
-              <input placeholder="쿠폰을 선택하세요" value={couponDescription} style={{ width: `calc(100% - 90px)`, marginRight: '10px', height: '30px' }} />
-              <button onClick={handleCouponApplyClick} style={{heigth: '30px'}}>쿠폰선택</button>
+              <input placeholder="쿠폰을 선택하세요" value={couponDescription} className={styles.selectInput} />
+              <button onClick={handleCouponApplyClick} className={styles.couponButton}>쿠폰선택</button>
             </div>
           </div>
 
-          <div style={{ marginBottom: "50px" }}>
-            <div style={{ fontSize: "24px", marginBottom: "30px", fontWeight: 'bold' }}>포인트</div>
+          <div className={styles.couponContainer}>
+            <div className={styles.titleName}>포인트</div>
             {userPoint !== null && (
               <UserPoint
                 userPoint={userPoint}
@@ -467,20 +461,12 @@ const Order = () => {
             )}
           </div>
 
-          <div style={{ marginBottom: "50px" }}>
-            <div style={{ fontSize: "24px", marginBottom: "30px", fontWeight: 'bold' }}>결제방식</div>
-            <div style={{ display: "flex", margin: "5px" }}>
+          <div className={styles.couponContainer}>
+            <div className={styles.titleName}>결제방식</div>
+            <div className={styles.paymentButtonList}>
               <button
-                style={{
-                  width: "80px",
-                  height: "80px",
-                  margin: "5px",
-                  border: "1px solid white",
-                  background: KAKAOPAY_PG === PGKey ? "#00BFFF" : "#000000",
-                  color: "white",
-                  borderRadius: "20px",
-                  transition: "background 1s",
-                }}
+                className={styles.paymentMethodButton}
+                style={{background: KAKAOPAY_PG === PGKey ? "#00BFFF" : "#000000",  transition: "background 1s",}}
                 onClick={() => handlePGSelection(PGKey === KAKAOPAY_PG ? null : "kakaopay")}
               >
                 카카오
@@ -488,16 +474,8 @@ const Order = () => {
                 페이
               </button>
               <button
-                style={{
-                  width: "80px",
-                  height: "80px",
-                  margin: "5px",
-                  border: "1px solid white",
-                  background: TOSSPAY_PG === PGKey ? "#00BFFF" : "#000000",
-                  color: "white",
-                  borderRadius: "20px",
-                  transition: "background 1s",
-                }}
+                className={styles.paymentMethodButton}
+                style={{background: TOSSPAY_PG === PGKey ? "#00BFFF" : "#000000", transition: "background 1s",}}
                 onClick={() => handlePGSelection(PGKey === TOSSPAY_PG ? null : "tosspay")}
               >
                 토스
@@ -509,30 +487,30 @@ const Order = () => {
 
           <div>
             <div>
-              <div style={{ display: "flex", justifyContent: "space-between", marginBottom: '5px' }}>
+              <div className={styles.totalPaymentList}>
                 <div>총 상품 금액:</div>
                 <div>{orderData.totalPrice.toLocaleString()}원</div>
               </div>
-              <div style={{ display: "flex", justifyContent: "space-between", marginBottom: '5px' }}>
+              <div className={styles.totalPaymentList}>
                 <div>배송비:</div>
                 <div>3,000원</div>
               </div>
-              <div style={{ display: "flex", justifyContent: "space-between", marginBottom: '5px' }}>
+              <div className={styles.totalPaymentList}>
                 <div>쿠폰 사용:</div>
-                <div style={{ color: "red" }}>{usingCoupon.toLocaleString()}원</div>
+                <div className={styles.fontColorRed}>{usingCoupon.toLocaleString()}원</div>
               </div>
-              <div style={{ display: "flex", justifyContent: "space-between", marginBottom: '5px' }}>
+              <div className={styles.totalPaymentList}>
                 <div>포인트 사용:</div>
-                <div style={{ color: "red" }}>{usingPoint.toLocaleString()}P</div>
+                <div className={styles.fontColorRed}>{usingPoint.toLocaleString()}P</div>
               </div>
-              <div style={{ borderBottom: "1px white solid", margin: "15px 0" }} />
-              <div style={{ display: "flex", justifyContent: "space-between", marginBottom: '5px', fontSize: '20px' }}>
+              <div className={styles.whiteLine} />
+              <div className={styles.totalPaymentList2}>
                 <div>최종 결제 금액:</div>
                 <div>{(orderData.totalPrice + 3000 - usingCoupon - usingPoint).toLocaleString()}원</div>
               </div>
             </div>
-            <div style={{ display: "flex", justifyContent: "center", marginTop: "50px" }}>
-              <Button variant='outlined' color='primary' style={{width: "240px", height: "60px", margin: "5px", color: "white", fontSize: '24px' }} onClick={handleCreateOrder}>결제하기</Button>
+            <div className={styles.paymentButtonContainer}>
+              <Button variant='outlined' color='primary' className={styles.paymentButton} onClick={handleCreateOrder}>결제하기</Button>
             </div>
           </div>
         </div>

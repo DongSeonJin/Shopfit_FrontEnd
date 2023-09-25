@@ -7,6 +7,8 @@ import HeaderSubMyPage from "../../components/common/HeaderSubMypage";
 import { Button } from "@mui/material";
 import { authApi } from "../../lib/api/authApi";
 
+import styles from "../../styles/shop/pages/WishList.module.css";
+
 
 const WishList = () => {
   const [wishlistItems, setWishlistItems] = useState([]);
@@ -58,34 +60,34 @@ const WishList = () => {
   };
 
   return (
-    <div style={{ maxWidth: '1080px', width: '100%', margin: '0 auto 150px'}}>
+    <div className={styles.wishlistContainer}>
       <HeaderSubMyPage />
-      <div style={{ fontSize: '36px', fontWeight: 'bold', textAlign: 'center', marginBottom: '50px', width: '100%' }}>찜 목 록</div>
-      <div style={{ borderTop: '1px solid lightgray', borderBottom: '1px solid lightgray', minHeight: '240px', padding: '20px'}}>
+      <div className={styles.headerText}>찜 목 록</div>
+      <div className={styles.wishlistItemContainer}>
         {wishlistItems.length === 0 ? (
-          <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '240px' }}>
-            <div style={{ textAlign: 'center', fontSize: '24px' }}>찜 한 제품이 없습니다.</div>
+          <div className={styles.emptyWishlistContainer}>
+            <div className={styles.emptyWishlistText}>찜 한 제품이 없습니다.</div>
           </div>
           ) : (
           wishlistItems.map((item) => (
             <div
               key={item.productId}
-              style={{ display: "flex", justifyContent: "space-between", margin: "20px 0", alignItems: "center" }}
+              className={styles.wishlistItem}
             >
               <div>
                 <Link to={`/shopping/products/${item.productId}`}>
                   <img
                     src={productDetails[item.productId]?.thumbnailUrl}
                     alt={`Thumbnail for ${productDetails[item.productId]?.productName}`}
-                    style={{ width: "180px", height: "180px", cursor: "pointer", borderRadius: '10px', border: '1px solid white' }}
+                    className={styles.wishlistItemImage}
                   />
                 </Link>
               </div>
-              <div style={{ width: '80%', paddingLeft: '20px' }}>
-                <div style={{ fontSize: '24px', display: 'block', flex: 1 }}>{productDetails[item.productId]?.productName}</div>
-                <div style={{ textAlign: 'right', color: '#888', flex: 1, fontSize: '20px' }}>{productDetails[item.productId]?.price.toLocaleString()} 원</div>
+              <div className={styles.wishlistItemInfo}>
+                <div className={styles.wishlistItemInfoText}>{productDetails[item.productId]?.productName}</div>
+                <div className={styles.wishlistItemPrice}>{productDetails[item.productId]?.price.toLocaleString()} 원</div>
               </div>
-              <div style={{ width: "20%", textAlign: "right" }}>
+              <div className={styles.wishlistButtonContainer}>
                 <Button variant="outlined" color="error" onClick={() => handleDelete(item.wishlistId)}>
                   찜 해제
                 </Button>

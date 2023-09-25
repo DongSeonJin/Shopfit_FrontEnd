@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 
+import styles from "../../styles/shop/components/UsingPoint.module.css";
+
 const UserPoint = ({ userPoint, totalPrice, onUpdateUserPoint, selectedCouponId }) => {
   const [inputValue, setInputValue] = useState("");
 
@@ -36,12 +38,13 @@ const UserPoint = ({ userPoint, totalPrice, onUpdateUserPoint, selectedCouponId 
 
   return (
     <div>
-      <div style={{marginBottom: '10px'}}>
-        <input type="number" placeholder="포인트를 입력하세요" value={inputValue} onChange={handleInputChange} style={{width: `calc(100% - 90px)`, marginRight: '10px', height: '30px'}} />
-        <button onClick={updatePoint} style={{height:'30px'}}>사용하기</button>
+      <div className={styles.container}>
+        <input type="number" placeholder="포인트를 입력하세요" value={inputValue} onChange={handleInputChange} 
+        className={styles.input} />
+        <button onClick={updatePoint} className={styles.button}>사용하기</button>
       </div>
       <div>
-        <span>현재 포인트: {userPoint.toLocaleString()} P</span>
+        <span className={styles.userPoint}>현재 포인트: {userPoint.toLocaleString()} P</span>
       </div>
     </div>
   );

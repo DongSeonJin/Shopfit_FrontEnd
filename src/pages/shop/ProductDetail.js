@@ -13,7 +13,7 @@ import { Button, Rating } from "@mui/material";
 import BookmarkIcon from "@mui/icons-material/Bookmark";
 import UTurnRightRoundedIcon from "@mui/icons-material/UTurnRightRounded";
 
-// import styles from "../../styles/shop/ProductDetail.module.css";
+import styles from "../../styles/shop/pages/ProductDetail.module.css";
 
 
 const ProductDetail = () => {
@@ -131,93 +131,48 @@ const ProductDetail = () => {
   };
 
   return (
-    <div style={{ maxWidth: "1080px", width: "100%", margin: "auto" }}>
+    <div className={styles.container}>
       <UTurnRightRoundedIcon
         onClick={scrollToTop}
-        style={{
-          position: "fixed",
-          bottom: "20px",
-          right: "20px",
-          zIndex: "9999",
-          transform: "rotate(180deg)",
-          cursor: "pointer",
-        }}
+        className={styles.scrollButton}
       />
 
-      {/* 관리자 권한 */}
-      <div style={{textAlign: 'right', height: '40px'}}>
+      <div className={styles.buttonContainer}>
         {userAuthority === 'ADMIN' ? 
-        <div>
-          <Button variant="outlined" color='info' onClick={() => handleProductUpdate(data.productId, navigate)} style={{margin: '0 10px'}}>상품 수정</Button>
-          <Button variant="outlined" color="error" onClick={() => handleDeleteProduct(data.productId, data.thumbnailUrl, data.productImageUrls, navigate)} style={{margin: '0 10px'}}>상품 삭제</Button>
+        <div className={styles.buttonContainer2}>
+          <div className={styles.buttonWrapper}>
+            <Button variant="outlined" color='info' onClick={() => handleProductUpdate(data.productId, navigate)}>상품 수정</Button>
+          </div>
+          <div className={styles.buttonWrapper}>
+            <Button variant="outlined" color="error" onClick={() => handleDeleteProduct(data.productId, data.thumbnailUrl, data.productImageUrls, navigate)} style={{margin: '0 10px'}}>상품 삭제</Button>
+          </div>
         </div> : ''}
       </div>
 
-      <div style={{ display: "flex" }}>
-        <div style={{ flex: "1" }}>
-          <div
-            style={{
-              filter: data.stockQuantity === 0 ? "grayscale(100%)" : "none",
-              width: "90%",
-              paddingTop: "90%",
-              position: "relative",
-              overflow: "hidden",
-            }}
-          >
-            <img
-              src={data.thumbnailUrl}
-              alt={data.productName}
-              style={{
-                position: "absolute",
-                top: "0",
-                left: "0",
-                width: "100%",
-                height: "auto",
-                borderRadius: "5%",
-                border: "1px white solid",
-              }}
-            />
+      <div className={styles.productContainer}>
+        <div className={styles.productImageWrapper}>
+          <div className={data.stockQuantity === 0 ? styles.productImage : styles.productImage2}>
+            <img src={data.thumbnailUrl} alt={data.productName} className={styles.thumbnailImage} />
           </div>
-          <div
-            onClick={toggleFavorite}
-            style={{
-              textAlign: "right",
-              cursor: "pointer",
-              color: isFavorite ? "yellow" : "lightgray",
-              paddingRight: "10%",
-              marginTop: "10px",
-            }}
-          >
+          <div className={styles.favoriteIcon} onClick={toggleFavorite} style={{ color: isFavorite ? "yellow" : "lightgray" }}>
             <BookmarkIcon style={{ width: "40px", height: "40px" }} />
           </div>
         </div>
 
-        <div style={{ flex: "1", marginTop: "1%" }}>
-          <a
-            href={`/shopping/category/${data.categoryId}`}
-            style={{ textDecoration: "none", color: "inherit", fontSize: "20px" }}
-          >
+        <div className={styles.productInfo}>
+          <a href={`/shopping/category/${data.categoryId}`} className={styles.categoryLink}>
             카테고리 : {data.categoryName}
           </a>
-          <div style={{ fontSize: "36px", margin: "5% 0", fontWeight: "bold", height: "25%" }}>{data.productName}</div>
-          <div style={{ fontSize: "24px" }}>{data.price.toLocaleString()}원</div>
+          <div className={styles.productName}>{data.productName}</div>
+          <div className={styles.price}>{data.price.toLocaleString()}원</div>
 
-          <div style={{ display: "flex", margin: "5% 0" }}>
-            <div style={{ display: "flex", flex: "1" }}>
+          <div className={styles.quantityContainer}>
+            <div className={styles.quantityButtons}>
               <div>
                 <button
                   onClick={countDown}
                   disabled={count < 2}
-                  style={{
-                    width: "60px",
-                    height: "60px",
-                    fontSize: "24px",
-                    fontWeight: "bold",
-                    border: "none",
-                    margin: "0 3px",
-                    backgroundColor: "lightgray",
-                    borderRadius: "5%",
-                  }}
+                  className={styles.quantityButton}
                 >
                   -
                 </button>
@@ -228,44 +183,25 @@ const ProductDetail = () => {
                   value={count}
                   min="1"
                   max={data.stockQuantity}
-                  style={{
-                    width: "60px",
-                    height: "60px",
-                    textAlign: "center",
-                    fontWeight: "bold",
-                    border: "none",
-                    margin: "0 3px",
-                    borderRadius: "5%",
-                  }}
+                  className={styles.quantityInput}
                 />
               </div>
               <div>
                 <button
                   onClick={countUp}
                   disabled={count >= data.stockQuantity}
-                  style={{
-                    width: "60px",
-                    height: "60px",
-                    fontSize: "24px",
-                    fontWeight: "bold",
-                    border: "none",
-                    margin: "0 3px",
-                    backgroundColor: "lightgray",
-                    borderRadius: "5%",
-                  }}
+                  className={styles.quantityButton}
                 >
                   +
                 </button>
               </div>
             </div>
-            <div
-              style={{ flex: "1", fontSize: "24px", display: "flex", justifyContent: "flex-end", alignItems: "center" }}
-            >
+            <div className={styles.totalPrice}>
               {(data.price * count).toLocaleString()}원
             </div>
           </div>
 
-          <div style={{ margin: "5% 0" }}>
+          <div className={styles.stockStatus}>
             {data.stockQuantity === 0 ? (
               <div>품절</div>
             ) : (
@@ -273,93 +209,62 @@ const ProductDetail = () => {
             )}
           </div>
 
-          <div style={{ display: "flex", height: "12%" }}>
-            <div style={{ flex: "1" }}>
-              <button
+          <div className={styles.addToCartButton}>
+            <div className={styles.buttonContainer}>
+              <div className={styles.cartButton}
                 onClick={() => (userId ? addCart(userId, productNum, count) : alert("로그인 후 이용해주세요"))}
                 disabled={data.stockQuantity === 0}
-                style={{
-                  width: "99%",
-                  marginRight: "1%",
-                  height: "100%",
-                  color: "white",
-                  fontSize: "24px",
-                  border: "1px white solid",
-                  backgroundColor: "black",
-                  fontWeight: "bold",
-                  borderRadius: "5px",
-                }}
               >
                 장바구니
-              </button>
+              </div>
             </div>
-            <div style={{ flex: "1" }}>
-              <button
-                size="large"
-                variant="contained"
-                onClick={handleBuyNow}
-                disabled={data.stockQuantity === 0}
-                style={{
-                  width: "99%",
-                  marginLeft: "1%",
-                  height: "100%",
-                  color: "black",
-                  fontSize: "24px",
-                  border: "1px black solid",
-                  backgroundColor: "white",
-                  fontWeight: "bold",
-                  borderRadius: "5px",
-                }}
-              >
+            <div className={styles.buttonContainer}>
+              <div onClick={handleBuyNow} disabled={data.stockQuantity === 0 || userId === 0} className={styles.buyButton}>
                 바로구매
-              </button>
+              </div>
             </div>
           </div>
         </div>
       </div>
 
-      <div style={{ margin: "0 50px", padding: "20px" }}>
+      <div className={styles.container2}>
         <div>
-          <div style={{ fontSize: "24px", fontWeight: "bold", marginBottom: "20px" }}>상세정보</div>
-          <div style={{ minHeight: "200px", padding: "20px" }}>
+          <div className={styles['detail-title']}>상세정보</div>
+          <div className={styles['detail-content']}>
             <div>
-              {data.productImageUrls.length === 0 ?
-              <div style={{width: '100%', height: '200px', display: 'flex', fontSize: '24px', alignItems: 'center', justifyContent: 'center'}}>작성 된 상세정보가 없습니다</div> :
-              data.productImageUrls.map((imageUrl, index) => (
-                <div>
-                  <img key={index} src={imageUrl} alt={`Product ${index}`} style={{ width: "100%" }} />
-                </div>
-              ))}
+              {data.productImageUrls.length === 0 ? (
+                <div className={styles['no-detail']}>작성된 상세정보가 없습니다</div>
+              ) : (
+                data.productImageUrls.map((imageUrl, index) => (
+                  <div key={index}>
+                    <img src={imageUrl} alt={`Product ${index}`} className={styles['product-image']} />
+                  </div>
+                ))
+              )}
             </div>
           </div>
 
-          <div style={{ margin: "100px 0" }}>
-            <div style={{ fontSize: "24px", fontWeight: "bold", marginBottom: "20px" }}>구매후기</div>
-            <div style={{ width: "100%", minHeight: "200px" }}>
+          <div className={styles['review-container']}>
+            <div className={styles['review-title']}>구매후기</div>
+            <div className={styles['review-list']}>
               <div>
-                {formattedReviews.length === 0 ? 
-                <div style={{width: '100%', height: '200px', display: 'flex', fontSize: '24px', alignItems: 'center', justifyContent: 'center'}}>작성 된 구매후기가 없습니다</div> :
-                formattedReviews.map((review) => (
-                  <div
-                    key={review.reviewId}
-                    style={{
-                      margin: "5px 0",
-                      display: "flex",
-                      border: "1px solid white",
-                      borderRadius: "5px",
-                      height: "60px",
-                      placeItems: "center",
-                      padding: "5px",
-                    }}
-                  >
-                    <div style={{ flex: "1" }}>
-                      <Rating name="read-only" value={review.rating} readOnly size="small" />{" "}
+                {formattedReviews.length === 0 ? (
+                  <div className={styles['no-reviews']}>작성된 구매후기가 없습니다</div>
+                ) : (
+                  formattedReviews.map((review) => (
+                    <div
+                      key={review.reviewId}
+                      className={styles['review-item']}
+                    >
+                      <div className={styles['rating']}>
+                        <Rating name="read-only" value={review.rating} readOnly size="small" />{" "}
+                      </div>
+                      <div className={styles['nickname']}>{review.nickname}</div>
+                      <div className={styles['comment']}>{review.comment}</div>
+                      <div className={styles['createdAt']}>{review.createdAt}</div>
                     </div>
-                    <div style={{ flex: "2" }}>{review.nickname}</div>
-                    <div style={{ flex: "4" }}>{review.comment}</div>
-                    <div style={{ flex: "1" }}>{review.createdAt}</div>
-                  </div>
-                ))}
+                  ))
+                )}
               </div>
             </div>
           </div>
