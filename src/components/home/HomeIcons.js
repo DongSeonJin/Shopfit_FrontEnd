@@ -14,8 +14,7 @@ const HomeIcons = () => {
   const userId = useSelector(state => state.authUser.userId);
   const navigate = useNavigate();
 
-  const buttonClick = (event, link) => {
-    event.preventDefault();
+  const buttonClick = (link) => {
     if (userId > 0) {
       navigate(link);
     }
@@ -28,46 +27,30 @@ const HomeIcons = () => {
   return (
     <div style={{ display: "flex", justifyContent: "center", alignItems: "center", margin: '60px 0', textAlign: 'center'}}>
 
-      <div style={{margin: '0 2vw'}} onClick={() => buttonClick("/orderhistory")}>
-          <StarIcon style={{ width: "60px", height: "60px", margin: "0 10px", color: 'white' }} />
+      <div style={{margin: '0 2vw'}} onClick={() => buttonClick("/orderhistory")} >
+          <StarIcon style={{ width: "60px", height: "60px", margin: "0 10px", color: 'white' }}/>
           <div>주문내역</div>
       </div>
 
 
-      <div style={{margin: '0 2vw'}}>
-        <Link to="/coupon" onClick={buttonClick}>
+      <div style={{margin: '0 2vw'}} onClick={() => buttonClick("/coupon")}>
           <RedeemIcon style={{ width: "60px", height: "60px", margin: "0 10px", color: 'white' }} />
-        </Link>
-        <div>
-          쿠폰
-        </div>
+        <div> 쿠폰 </div>
       </div>
 
-      <div style={{margin: '0 2vw'}}>
-        <Link to="/shopping/wishlist" onClick={buttonClick}>
+      <div style={{margin: '0 2vw'}} onClick={() => buttonClick("/shopping/wishlist")}>
           <BookmarkIcon style={{ width: "60px", height: "60px", margin: "0 10px", color: 'white' }} />
-        </Link>
-        <div>
-          찜목록
-        </div>
+        <div> 찜목록 </div>
       </div>
 
-      <div style={{margin: '0 2vw'}}>
-        <Link to="/shopping/cart" onClick={buttonClick}>
+      <div style={{margin: '0 2vw'}} onClick={() => buttonClick("/shopping/cart")}>
           <ShoppingCartIcon style={{ width: "60px", height: "60px", margin: "0 10px", color: 'white' }} />
-        </Link>
-        <div>
-          장바구니
-        </div>
+        <div> 장바구니 </div>
       </div>
 
-      <div style={{margin: '0 2vw'}}>
-        <Link to="/mypage/info" onClick={buttonClick}>
+      <div style={{margin: '0 2vw'}} onClick={() => buttonClick("/mypage/info")}>
           <AccountCircleIcon style={{ width: "60px", height: "60px", margin: "0 10px", color: 'white' }} />
-        </Link>
-        <div>
-          내정보
-        </div>
+        <div> 내정보 </div>
       </div>
     </div>
   );

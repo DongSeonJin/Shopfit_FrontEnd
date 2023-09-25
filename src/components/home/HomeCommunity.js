@@ -19,7 +19,7 @@ const HomeCommunity = () => {
         } catch (error) {
             console.error('Error fetching top 4 posts:', error);
         }
-        setLoading(false); // Also set loading to false if there's an error
+         setTimeout(() => setLoading(false), 2000); // Also set loading to false if there's an error
     };
 
     return (
