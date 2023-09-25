@@ -21,7 +21,7 @@ const handleSearchTextChange = (e) => {
 const handleLogoutClick = async () => {
     // 로그아웃을 수행하고 완료될 때까지 기다립니다.
     await dispatch(logout());
-    dispatch(LOGOUT_USER());
+
     // 로그아웃 완료 후 메인 페이지로 이동합니다.
     navigate('/');
   };
