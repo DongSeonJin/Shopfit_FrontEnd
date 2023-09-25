@@ -7,6 +7,7 @@ import UTurnRightRoundedIcon from '@mui/icons-material/UTurnRightRounded';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import CommentIcon from '@mui/icons-material/Comment';
 import { useSelector } from 'react-redux';
+import Loader from '../../components/community/Loader';
 // import styles from '../../styles/community/PostList.module.css'
 
 const PostList = () => {
@@ -123,7 +124,10 @@ const PostList = () => {
             </div>
           ))}
         </div>
-        <div ref={loader}>Loading...</div>
+        <div>
+        <div ref={loader}><Loader/></div>
+        </div>
+        
       </div>
     </div>
   );

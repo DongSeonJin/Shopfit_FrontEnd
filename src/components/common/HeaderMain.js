@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import logout from "../../lib/api/Logout";
 import { Avatar } from "@material-ui/core";
 import { authApi } from "../../lib/api/authApi";
-import { LOGOUT_USER, SET_USER } from "../../redux/UserReducer";
+import { LOGOUT_USER, SET_USER, UPDATE_IMAGE_URL } from "../../redux/UserReducer";
 const HeaderMain = ({ isCommunityHovered, isShoppingHovered }) => {
 const navigate = useNavigate();
 const [isHoveredCommunity, setIsHoveredCommunity] = useState(false);
@@ -37,6 +37,9 @@ useEffect (() => {
     if(userId && userId != 0) {
         try {
             authApi.get(`/mypage/${userId}`).then((response) => {
+
+                dispatch(UPDATE_IMAGE_URL(response.data.imageUrl))
+
             });
         } catch (error) {
             console.error('Failed to fetch profile image:', error);

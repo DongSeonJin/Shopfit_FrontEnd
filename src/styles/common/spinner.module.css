@@ -82,7 +82,7 @@
 
 .container {
     background-color: rgba(0, 0, 0, 0.5); 
-    position: fixed;
+    position: none;
     top: 0;
     left: 0;
     width: 100%;
@@ -90,11 +90,19 @@
     
      /* transition 속성으로 fade out 효과를 부드럽게 만듭니다 */
      transition-property : opacity; 
-     transition-duration : .4s; 
+     transition-duration : 1s; 
      z-index :9999; 
 
      display:flex; 
      justify-content:center; 
      align-items:center;
 
+     animation: fadeOut 1s forwards;
+
 }
+
+@keyframes fadeOut {
+    from { opacity: 1; }
+    to { opacity: 0; }
+}
+
