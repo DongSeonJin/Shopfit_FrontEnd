@@ -154,7 +154,9 @@ const ProductDetail = () => {
           <div className={data.stockQuantity === 0 ? styles.productImage : styles.productImage2}>
             <img src={data.thumbnailUrl} alt={data.productName} className={styles.thumbnailImage} />
           </div>
-          <div className={styles.favoriteIcon} onClick={toggleFavorite} style={{ color: isFavorite ? "yellow" : "lightgray" }}>
+          <div 
+            className={styles.favoriteIcon} onClick={userId == 0 ? null : toggleFavorite}
+            disabled={userId == 0} style={{ color: isFavorite ? "yellow" : "lightgray" }}>
             <BookmarkIcon style={{ width: "40px", height: "40px" }} />
           </div>
         </div>

@@ -21,7 +21,7 @@ const handleSearchTextChange = (e) => {
 const handleLogoutClick = async () => {
     // 로그아웃을 수행하고 완료될 때까지 기다립니다.
     await dispatch(logout());
-    dispatch(LOGOUT_USER());
+
     // 로그아웃 완료 후 메인 페이지로 이동합니다.
     navigate('/');
   };
@@ -37,13 +37,16 @@ useEffect (() => {
     if(userId && userId != 0) {
         try {
             authApi.get(`/mypage/${userId}`).then((response) => {
+
                 dispatch(UPDATE_IMAGE_URL(response.data.imageUrl))
+
             });
         } catch (error) {
             console.error('Failed to fetch profile image:', error);
         }
     }
 },[userId, dispatch]);
+
 return (
     <div style={{display: 'flex', height: '90px', alignItems: 'center', marginTop: '30px', justifyContent: 'space-between', width: `calc(100% - 200px)`}}>
         <div style={{display: 'flex', fontWeight: 'bold', fontSize: '24px'}}>

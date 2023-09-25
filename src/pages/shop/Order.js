@@ -235,12 +235,11 @@ const Order = () => {
           // rsp.paid_amount
 
           if (rsp.success) {
-
             // 결제 성공 시 필요한 데이터 생성
             const paymentData = {
               orderId: orderId,
               paidAmount: rsp.paid_amount,
-              couponId: selectedCouponId,
+              usingCoupon: usingCoupon,
               usingPoint: usingPoint,
             };
 
