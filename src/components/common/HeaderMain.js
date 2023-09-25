@@ -122,7 +122,7 @@ const HeaderMain = ({ isCommunityHovered, isShoppingHovered }) => {
                 </div>
 
 
-                <div style={{alignItems: 'center', display: 'flex', width: '150px', textAlign: 'center', justifyContent:'center'}}>
+                <div style={{alignItems: 'center', display: 'flex', width: '180px', textAlign: 'center', justifyContent:'center'}}>
                     {userId != 0 ?
                     <>
                         <Avatar src={profileImage} alt="프로필 이미지" style={{ width: '40px', height: '40px', borderRadius: '50%', marginRight: '15px'}} />

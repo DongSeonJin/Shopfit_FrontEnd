@@ -151,7 +151,7 @@ const ProductDetail = () => {
 
       <div className={styles.productContainer}>
         <div className={styles.productImageWrapper}>
-          <div className={data.stockQuantity == 0 ? styles.productImage : styles.productImage2}>
+          <div className={data.stockQuantity === 0 ? styles.productImage : styles.productImage2}>
             <img src={data.thumbnailUrl} alt={data.productName} className={styles.thumbnailImage} />
           </div>
           <div className={styles.favoriteIcon} onClick={toggleFavorite} style={{ color: isFavorite ? "yellow" : "lightgray" }}>
