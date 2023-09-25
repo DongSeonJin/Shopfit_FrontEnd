@@ -43,7 +43,7 @@ const HeaderMain = ({ isCommunityHovered, isShoppingHovered }) => {
     };
     
     useEffect (() => {
-        if(userId && userId !== 0) {
+        if(userId && userId != 0) {
             authApi.get(`/mypage/${userId}`).then((response) => {
                 dispatch(SET_USER(response.data))
             });

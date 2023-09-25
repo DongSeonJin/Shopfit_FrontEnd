@@ -20,7 +20,7 @@ export const authApi = axios.create({
     const state = store.getState();
     const userId = state.authUser.userId; // 리덕스 스토어에서 가져온 user정보
   
-    if(userId === '0'){
+    if(userId == '0'){
       return;
     }
 
