@@ -212,16 +212,21 @@ const ProductDetail = () => {
           <div className={styles.addToCartButton}>
             <div className={styles.buttonContainer}>
               <div className={styles.cartButton}
-                onClick={() => (userId ? addCart(userId, productNum, count) : alert("로그인 후 이용해주세요"))}
+                onClick={() => (userId > 0 ? addCart(userId, productNum, count) : alert("로그인 후 이용해주세요"))}
                 disabled={data.stockQuantity === 0}
               >
                 장바구니
               </div>
             </div>
             <div className={styles.buttonContainer}>
-              <div onClick={handleBuyNow} disabled={data.stockQuantity === 0 || userId === 0} className={styles.buyButton}>
-                바로구매
-              </div>
+              {data.stockQuantity === 0 ?
+                <div onClick={() => (alert("상품이 품절 되었습니다."))} disabled className={styles.buyButton}>
+                  바로구매
+                </div> :
+                <div onClick={() => (userId > 0 ? handleBuyNow() : alert("로그인 후 이용해주세요"))} disabled={data.stockQuantity === 0} className={styles.buyButton}>
+                  바로구매
+                </div>
+              }
             </div>
           </div>
         </div>
