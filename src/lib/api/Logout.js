@@ -33,6 +33,7 @@ const logout = () => async (dispatch, getState) => {
                 dispatch(LOGOUT_USER());
 
                 alert('로그아웃 되었습니다.');
+                
 
             }
         } catch (error) {

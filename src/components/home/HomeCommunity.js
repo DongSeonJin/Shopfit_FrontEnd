@@ -1,26 +1,30 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-
+import Spinner from '../../components/common/Spinner'
 import axios from 'axios';
 
 const HomeCommunity = () => {
     const [top4Posts, setTop4Posts] = useState([]);
+    const [loading, setLoading] = useState(false); // Add a loading state
  
     useEffect(() => {
         fetchTop4Posts();
     }, []);
 
     const fetchTop4Posts = async () => {
+        setLoading(true);
         try {
             const response = await axios.get('/post/recent-top4'); // 백엔드 엔드포인트
             setTop4Posts(response.data);
         } catch (error) {
             console.error('Error fetching top 4 posts:', error);
         }
+        setLoading(false); // Also set loading to false if there's an error
     };
 
     return (
         <div style={{maxWidth: '1080px', width: '90%', margin: '0 auto 100px'}}>
+             {loading && <Spinner />}
             <div style={{fontWeight: 'bold', margin: '25px 0', fontSize: '24px'}}>인기 게시글</div>
 
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '20px'}}>
