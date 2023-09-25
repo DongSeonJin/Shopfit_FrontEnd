@@ -117,12 +117,6 @@ return (
 
 
         <div style={{display: 'flex', alignItems:'center', fontWeight: 'bold', justifyContent: 'right', fontSize: '20px'}}>
-            <div style={{width: '80px', textAlign: 'center', margin: '0 30px'}}>
-                {userId != 0 ? 
-                    <Link onClick={handleLogoutClick} style={{ textDecoration: 'none', color: 'inherit'}}>로그아웃</Link> :
-                    <Link to="/login" style={{ textDecoration: 'none', color: 'inherit'}}>로그인</Link>
-                }
-            </div>
 
             <div style={{alignItems: 'center', display: 'flex', width: '180px', textAlign: 'center', justifyContent:'center'}}>
                 {userId != 0 ?
@@ -130,9 +124,17 @@ return (
                     <Avatar src={profileImage} alt="프로필 이미지" style={{ width: '40px', height: '40px', borderRadius: '50%', marginRight: '15px'}} />
                     <Link to="/mypage/info" style={{ textDecoration: 'none', color: 'inherit'}}>마이페이지</Link>
                 </> :
-                    <Link to="/signup" style={{ textDecoration: 'none', color: 'inherit'}}>회원가입</Link>
+                    <Link to="/login" style={{ textDecoration: 'none', color: 'inherit'}}>로그인</Link>
                 } 
             </div>
+
+            <div style={{width: '80px', textAlign: 'center', margin: '0 30px'}}>
+                {userId != 0 ? 
+                    <Link onClick={handleLogoutClick} style={{ textDecoration: 'none', color: 'inherit'}}>로그아웃</Link> :
+                    
+                    <Link to="/signup" style={{ textDecoration: 'none', color: 'inherit'}}>회원가입</Link>
+                }
+            </div>            
         </div>
     </div>
 );

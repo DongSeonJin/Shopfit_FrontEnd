@@ -1,9 +1,7 @@
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
-
 import { TextField, Button, makeStyles, } from '@material-ui/core';
 import { authApi } from './../../lib/api/authApi';
-
 
 const useStyles = makeStyles({
     input: {
@@ -26,42 +24,45 @@ const useStyles = makeStyles({
     },
 });
 
-
 const ReplyCreate = ({ postId, onReplySubmit }) => {
     const [content, setContent] = useState('');
+
     const userId = useSelector(state => state.authUser.userId);
     const nickname = useSelector(state => state.authUser.nickname);
+
     const classes = useStyles();
 
     const handleSubmit = async e => {
         e.preventDefault();
     
-        if (content.trim() === '')  {
+        if (userId > 0) {
+          if (content.trim() === '')  {
             alert("댓글 내용을 입력해주세요.");
             return;
         }
-    
         const replyData = {
-            user: {userId: userId},
-            post: {postId: postId},
-            content: content,
-            nickname: nickname
-        };
-    
-        try {
-            const response = await authApi.post('/reply', replyData, {
-                headers: {
-                    'Content-Type': 'application/json',
-                }
-            });
-            onReplySubmit(response.data);
-            setContent('');
+          user: {userId: userId},
+          post: {postId: postId},
+          content: content,
+          nickname: nickname
+      };
+      try {
+        const response = await authApi.post('/reply', replyData, {
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        });
+        onReplySubmit(response.data);
+        setContent('');
 
-            alert ("댓글이 등록되었습니다.")
-        } catch (error) {
-            console.error('댓글 등록 실패', error);
-            alert("댓글이 등록되지 않았습니다.");
-        }
+        alert ("댓글이 등록되었습니다.")
+    } catch (error) {
+        console.error('댓글 등록 실패', error);
+        alert("댓글이 등록되지 않았습니다.");
+      }
+    } else {
+      alert('로그인이 필요한 기능입니다.')
+    }
     }; 
     
 
