@@ -35,7 +35,6 @@ const Shopping = () => {
           <Route path="/shopping/order" element={<Order />} />
           <Route path="/shopping/order/detail" element={<OrderDetail />} />
 
-          {/* 추후 마이페이지로 옮기기! */}
           <Route path="/shopping/cart" element={<CartList />} />
           <Route path="/shopping/wishlist" element={<WishList />} />
 

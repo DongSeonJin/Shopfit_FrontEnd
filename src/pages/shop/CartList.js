@@ -9,7 +9,7 @@ import CartQuantity from '../../components/shop/CartQuantity';
 import HeaderSubMyPage from "../../components/common/HeaderSubMypage";
 import { authApi } from "../../lib/api/authApi";
 
-// import styles from '../../styles/shop/CartList.module.css';
+import styles from '../../styles/shop/pages/CartList.module.css';
 
 
 const CartList = () => {
@@ -103,56 +103,61 @@ const CartList = () => {
   };
 
   return (
-    <div style={{ maxWidth: '1420px', width: '100%', margin: '0 auto 150px'}}>
+    <div className={styles.container}>
       <HeaderSubMyPage />
 
-      <div style={{ fontSize: '36px', fontWeight: 'bold', textAlign: 'center', marginBottom: '20px', width: '100%' }}>장바구니</div>
-      <div style={{display: 'flex'}}>
-        <div style={{flex: 1}}>
-          <input type="checkbox" style={{ margin: '10px' }} id="checkAll" checked={isCheckedAll} onChange={handleCheckChange} />
+      <div className={styles.container2}>장바구니</div>
+
+      <div className={styles['flex-container']}>
+        <div className={styles.checkbox}>
+          <input
+            type="checkbox"
+            id="checkAll"
+            checked={isCheckedAll}
+            onChange={handleCheckChange}
+          />
           {isCheckedAll ? "전체해제" : "전체선택"}
         </div>
-        <div style={{flex: 1, textAlign: 'right'}}>
-          <Button variant="outlined" startIcon={<DeleteIcon />} onClick={() => handleBulkDelete()}>
+        <div className={styles['button-container']}>
+          <Button variant="outlined" startIcon={<DeleteIcon />} onClick={handleBulkDelete}>
             선택삭제
           </Button>
         </div>
       </div>
 
-
-      <div style={{ borderTop: '1px solid lightgray', borderBottom: '1px solid lightgray', minHeight: '240px', padding: '20px', margin: '50px 0'}}>
+      <div className={styles.container3}>
         {cartItems.length === 0 ? 
-        <div style={{height: '240px', display: 'flex', justifyContent: 'center', alignItems: 'center', fontSize: '24px'}}>장바구니에 담긴 상품이 없습니다</div> :
+        <div className={styles.container}>장바구니에 담긴 상품이 없습니다</div> :
         cartItems.map((item) => (
-          <div key={item.cartId} style={{ display: 'flex', alignItems: 'center', marginBottom: '10px', position: 'relative' }}>
-            <div>
+          <div key={item.cartId} className={styles.container5}>
+            <div className={styles['checkbox-container']}>
               <input
                 type="checkbox"
-                style={{ margin: '0 5px', width: '10px' }}
+                className={styles.checkbox2}
                 checked={item.isChecked}
                 onChange={() => handleItemCheckChange(item.cartId)}
               />
             </div>
-            <div style={{margin: '0 10px'}}>
-              <img style={{ height: '180px', width: '180px', borderRadius: '25px', border: '1px white solid' }} src={item.thumbnailUrl} alt={item.productName} />
+            <div className={styles['image-container']}>
+              <img src={item.thumbnailUrl} alt={item.productName} className={styles.cartImage} />
             </div>
 
-            <div style={{ width: '60%', padding: '0 20px' }}>
-              <div style={{ fontSize: '24px', display: 'block', flex: 1 }}>{item.productName}</div>
-              <div style={{ textAlign: 'right', color: '#888', flex: 1, fontSize: '20px' }}>{item.price.toLocaleString()}원</div>
+            <div key={item.cartId} className={styles.priceContainer}>
+              <div className={styles['product-name']}>{item.productName}</div>
+              <div className={styles['price']}>{item.price.toLocaleString()}원</div>
             </div>
-            <div style={{ display: 'flex', width: '40%', textAlign: 'center', alignItems: 'center'}}>
-              <div style={{flex: '4', paddingRight: '20px'}}>
-                <div style={{ display: 'flex', width: '100%', justifyContent: "right", paddingBottom: '20px'}}>
+            <div key={item.cartId} className={styles.container6}>
+              <div className={styles['left-column']}>
+                <div className={styles['quantity-container']}>
                   <CartQuantity
                     count={item.quantity}
                     stockQuantity={item.stockQuantity}
                     onCountChange={(newCount) => handleItemQuantityChange(item.cartId, newCount)}
                   />
                 </div>
-                <div style={{ color: '#888', fontSize: '24px', textAlign: "right", paddingTop: '20px' }}>{(item.quantity * item.price).toLocaleString()} 원</div>
+                <div className={styles['price2']}>{(item.quantity * item.price).toLocaleString()} 원</div>
               </div>
-              <div style={{flex: '1', textAlign: "right"}}>
+              <div className={styles['right-column']}>
                 <Button variant="outlined" color="error" onClick={() => handleDelete(item.cartId)}>
                   삭제
                 </Button>
@@ -162,10 +167,12 @@ const CartList = () => {
         ))}
       </div>
 
-      <div style={{ color: '#888', textAlign: "right", fontSize: '28px'}}>총 금액 : {calculateTotal().toLocaleString()} 원</div>
-      <div style={{ textAlign: 'right', margin: '3% 0'}}>
-        <Button variant="outlined" onClick={() => handleOrderClick()} style={{width: '240px', height: '60px', fontSize: '28px'}}>
-            주문하기
+      <div className={styles['total-amount']}>
+        총 금액 : {calculateTotal().toLocaleString()} 원
+      </div>
+      <div className={styles['order-button-container']}>
+        <Button variant="outlined" onClick={handleOrderClick} className={styles['order-button']}>
+          주문하기
         </Button>
       </div>
 
