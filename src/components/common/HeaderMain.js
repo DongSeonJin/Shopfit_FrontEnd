@@ -102,6 +102,7 @@ return (
             <button style={{width: '100px', backgroundColor: 'white', borderRadius: '10px', fontSize: '20px', fontWeight: 'bold', border: 'none'}} onClick={() => performSearch(searchText)}>검색</button>
         </div>
         <div style={{display: 'flex', alignItems:'center', fontWeight: 'bold', justifyContent: 'right', fontSize: '20px'}}>
+
             <div style={{alignItems: 'center', display: 'flex', width: '180px', textAlign: 'center', justifyContent:'center'}}>
                 {userId != 0 ?
                 <>
@@ -109,6 +110,7 @@ return (
                     <Link to="/mypage/info" style={{ textDecoration: 'none', color: 'inherit'}}>마이페이지</Link>
                 </> :
                     <Link to="/login" style={{ textDecoration: 'none', color: 'inherit'}}>로그인</Link>
+
                 }
             </div>
             <div style={{width: '80px', textAlign: 'center', margin: '0 30px'}}>
@@ -117,6 +119,14 @@ return (
                     <Link to="/signup" style={{ textDecoration: 'none', color: 'inherit'}}>회원가입</Link>
                 }
             </div>
+
+            <div style={{width: '80px', textAlign: 'center', margin: '0 30px'}}>
+                {userId != 0 ? 
+                    <Link onClick={handleLogoutClick} style={{ textDecoration: 'none', color: 'inherit'}}>로그아웃</Link> :
+                    
+                    <Link to="/signup" style={{ textDecoration: 'none', color: 'inherit'}}>회원가입</Link>
+                }
+            </div>            
         </div>
     </div>
 );

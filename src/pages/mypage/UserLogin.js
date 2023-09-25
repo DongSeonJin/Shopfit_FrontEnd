@@ -89,9 +89,9 @@ const UserLogin = () => {
 
                 <div style={{ display: 'flex', width: '240px', cursor: 'pointer', marginLeft: '20px' }} onClick={handleHome}>
                     <div style={{ flex: "1" }}>
-                        <img src="https://kr.object.ncloudstorage.com/post-bucket/imageslide/%23fit%20%281%29.gif" alt="slide_img" style={{ width: "120px", height: "120px" }} />
+                        <img src="https://kr.object.ncloudstorage.com/projectbucket/%23fit%20%EB%A1%9C%EA%B7%B8%EC%9D%B8%20%ED%8E%98%EC%9D%B4%EC%A7%80%20%EB%A1%9C%EA%B3%A0%20%281%29.gif" alt="slide_img" style={{ width: "120px", height: "120px" }} />
                     </div>
-                    <div style={{ flex: '2', fontSize: '36px', fontWeight: 'bold', textAlign: 'center', lineHeight: '120px' }}>샵피트</div>
+                    <div style={{ flex: '2', fontSize: '36px', fontWeight: 'bold', textAlign: 'center', lineHeight: '120px', marginLeft: '20px' }}># F I T</div>
                 </div>
 
 
