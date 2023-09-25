@@ -28,14 +28,11 @@ const HomeIcons = () => {
   return (
     <div style={{ display: "flex", justifyContent: "center", alignItems: "center", margin: '60px 0', textAlign: 'center'}}>
 
-      <div style={{margin: '0 2vw'}}>
-        <Link to="/orderhistory" onClick={buttonClick}>
+      <div style={{margin: '0 2vw'}} onClick={() => buttonClick("/orderhistory")}>
           <StarIcon style={{ width: "60px", height: "60px", margin: "0 10px", color: 'white' }} />
-        </Link>
-        <div>
-          주문내역
-        </div>
+          <div>주문내역</div>
       </div>
+
 
       <div style={{margin: '0 2vw'}}>
         <Link to="/coupon" onClick={buttonClick}>
