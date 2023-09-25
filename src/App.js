@@ -15,6 +15,8 @@ import ChatbotButton from './components/common/ChatbotButton';
 import { GoogleOAuthProvider } from '@react-oauth/google';
 import { useLocation } from 'react-router-dom';
 
+import styles from './App.module.css';
+
 
 const App = () => {
   const clientId = process.env.REACT_APP_GOOGLE_CLIENT_KEY;
@@ -26,7 +28,7 @@ const App = () => {
 
 
   return (
-    <div style={{ background: 'black', color: 'white' }}>
+    <div className={styles.background}> {/* 모듈 스타일 적용 */}
       <GoogleOAuthProvider clientId={clientId}>
           <Header />
           <Home />

@@ -3,6 +3,9 @@ import { useSelector } from "react-redux";
 import { useNavigate } from "react-router";
 import { Link } from "react-router-dom";
 
+import styles from '../../styles/shop/pages/Coupon.module.css';
+
+
 const Coupon = () => {
   const userId = useSelector(state => state.authUser.userId);
   const couponCode = "10000COUPON";
@@ -42,24 +45,20 @@ const Coupon = () => {
   };
 
   return (
-    <div style={{margin: '50px auto 150px', width: '720px'}}>
-      <div style={{textAlign: 'center', fontWeight: 'bold', fontSize: '36px', marginBottom: '50px'}}>쿠폰 발급</div>
-      <div style={{marginBottom: '10px'}}>
-        <img
-          src="https://kr.object.ncloudstorage.com/projectbucket/1.jpg"
-          alt="쿠폰발급포스터"
-          style={{ width: "720px", height: "auto", display: "block", margin: "0 auto", borderRadius: '15px' }}
-        />
+    <div className={styles.container}>
+      <div className={styles.title}>쿠폰 발급</div>
+      <div className={styles.subtitle}>
+        <img src="https://kr.object.ncloudstorage.com/projectbucket/1.jpg" alt="쿠폰발급포스터" className={styles.image} />
       </div>
-      <div style={{cursor: "pointer", marginBottom: '30px' }} onClick={handleCouponClick}>
+      <div className={styles.clickable} onClick={handleCouponClick}>
         <img
           src="https://kr.object.ncloudstorage.com/projectbucket/2.jpg"
           alt="쿠폰다운로드"
-          style={{ width: "720px", height: "auto", display: "block", margin: "0 auto", borderRadius: '15px' }}
+          className={styles.image2}
         />
       </div>
-      <div style={{ textAlign: 'right', width: '720px', fontSize: '24px'}}>
-        <Link to='/' style={{textDecoration: 'none'}}>홈으로</Link>
+      <div className={styles['link-container']}>
+        <Link to='/' className={styles.link}>홈으로</Link>
       </div>
     </div>
   );

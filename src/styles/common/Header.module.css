@@ -1,0 +1,34 @@
+.headerContainer {
+    display: flex;
+    margin: 0 auto 30px;
+    width: 100%;
+    max-width: 1920px;
+  }
+  
+  .logoContainer {
+    width: 200px;
+    height: 200px;
+  }
+  
+  .logoLink {
+    text-decoration: none;
+    color: inherit;
+  }
+  
+  .logoImage {
+    width: 200px;
+    height: 200px;
+  }
+  
+  .headerContent {
+    width: 100%;
+  }
+  
+  .headerMain {
+    height: 90px;
+  }
+  
+  .headerSub {
+    height: 80px;
+  }
+  

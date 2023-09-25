@@ -2,13 +2,13 @@
 
 const Footer = () => {
   return (
-    <div style={{display: 'flex', padding: '0 200px',paddingBottom: '60px', width: '100%', maxWidth: '1920px', marginLeft: '95px'}}>
+    <div style={{display: 'flex', width: '100%', maxWidth: '1420px', margin: 'auto', padding: '50px 200px', borderTop: '1px solid white'}}>
 
       <div style={{flex: "3", lineHeight: '2'}}>
         <div style={{ fontSize: '20px'}}>
           CONTACT US 
         </div> <br />
-        <div>
+        <div style={{minWidth: '300px'}}>
           권아영 : https://github.com/KwonAYeong
         </div>
         <div>
@@ -22,8 +22,8 @@ const Footer = () => {
         </div>
       </div>
 
-      <div style={{flex: "3", lineHeight: '2', marginTop: '80px'}}>
-        <div>
+      <div style={{flex: "3", lineHeight: '2', marginTop: '80px', paddingLeft: '200px'}}>
+        <div style={{minWidth: '396px'}}>
           (주) #FIT |  서울 강남구 강남대로94길 20, 삼오빌딩 5층
         </div>
 
