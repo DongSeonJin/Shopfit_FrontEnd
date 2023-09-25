@@ -125,7 +125,7 @@ const SearchResultProducts = ({ data }) => {
     <div className={`${styles.articleRow} ${styles.productWrapper} ${styles.gridContainer}`} style={{padding: '10px'}}>
       <div className={styles.img_item} style={imageStyle} onClick={handleClick}>
         {data.stockQuantity === 0 && <div style={soldOutTextStyle}>품절</div>}
-        <button className="favorite-button" onClick={toggleFavorite} style={favoriteButtonStyle}>
+        <button className="favorite-button" onClick={userId == 0 ? null : toggleFavorite} disabled={userId == 0} style={favoriteButtonStyle}>
           <BookmarkIcon />
         </button>
       </div>

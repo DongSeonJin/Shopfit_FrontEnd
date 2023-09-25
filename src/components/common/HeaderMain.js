@@ -37,13 +37,14 @@ useEffect (() => {
     if(userId && userId != 0) {
         try {
             authApi.get(`/mypage/${userId}`).then((response) => {
-                dispatch(SET_USER(response.data))
+                // dispatch(SET_USER(response.data))
             });
         } catch (error) {
             console.error('Failed to fetch profile image:', error);
         }
     }
 },[userId, dispatch]);
+
 return (
     <div style={{display: 'flex', height: '90px', alignItems: 'center', marginTop: '30px', justifyContent: 'space-between', width: `calc(100% - 200px)`}}>
         <div style={{display: 'flex', fontWeight: 'bold', fontSize: '24px'}}>
