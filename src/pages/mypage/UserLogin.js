@@ -30,8 +30,6 @@ const UserLogin = () => {
         })
     }
 
-
-
     const handleLogin = async (e) => {
         if (!values.email && !values.password) {
             setErrorMessage('이메일과 비밀번호를 입력해주세요.');
@@ -87,13 +85,12 @@ const UserLogin = () => {
 
             <div style={{ width: '360px', alignContent: 'center' }}>
 
-                <div style={{ display: 'flex', width: '240px', cursor: 'pointer', marginLeft: '20px' }} onClick={handleHome}>
+                <div style={{ display: 'flex', width: '360px', cursor: 'pointer', marginLeft: '20px' }} onClick={handleHome}>
                     <div style={{ flex: "1" }}>
                         <img src="https://kr.object.ncloudstorage.com/projectbucket/%23fit%20%EB%A1%9C%EA%B7%B8%EC%9D%B8%20%ED%8E%98%EC%9D%B4%EC%A7%80%20%EB%A1%9C%EA%B3%A0%20%281%29.gif" alt="slide_img" style={{ width: "120px", height: "120px" }} />
                     </div>
                     <div style={{ flex: '2', fontSize: '36px', fontWeight: 'bold', textAlign: 'center', lineHeight: '120px', marginLeft: '20px' }}># F I T</div>
                 </div>
-
 
                 <div>
                     <input
@@ -105,6 +102,7 @@ const UserLogin = () => {
                         style={{ paddingLeft: '10px', width: '360px', height: '60px', margin: '5px 0', borderRadius: '10px' }}
                     />
                 </div>
+
                 <div>
                     <input
                         type="password"
