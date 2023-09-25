@@ -98,7 +98,7 @@ const ProductListPage = () => {
         </div>
         <div className={styles.adminButton}>
           {/* 권한 수정 */}
-          {userAuthority !== 'ADMIN' ? (
+          {userAuthority === 'ADMIN' ? (
             <Link to="/shopping/create" className={styles.buttonLink}>
               <Button variant="outlined" color="primary">
                 상품 등록

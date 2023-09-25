@@ -1,0 +1,100 @@
+
+@media screen {
+    .spinner {
+        width: 44px;
+        height: 44px;
+        animation: spinner-y0fdc1 2s infinite ease;
+        /* 추가된 스타일 */
+        
+        /* 고정 위치 */
+        top: calc(50% - (22px));
+        /* 상단에서 중앙으로 이동 (스피너 높이의 절반만큼 올라감) */
+        left: calc(50% - (22px));
+        /* 좌측에서 중앙으로 이동 (스피너 넓이의 절반만큼 오른쪽으로 이동) */
+    
+        transform-style: preserve-3d;
+    
+        /* animation: spinner-y0fdc1 2s infinite ease, fadeOut 2s forwards; */
+    
+    }
+}
+
+.spinner {
+    position: absolute; /* Change from relative to absolute */
+}
+
+
+
+.spinner>div {
+    background-color: rgba(255, 66, 66,0.2);
+    height: 100%;
+    position: absolute;
+    width: 100%;
+    border: 2px solid red;
+}
+
+.spinner div:nth-of-type(1) {
+    transform: rotateY(-270deg) translateX(50%);
+    transform-origin: top right;
+}
+
+.spinner div:nth-of-type(2) {
+    transform: rotateY(-270deg) translateX(50%);
+    transform-origin: top right;
+}
+
+.spinner div:nth-of-type(3) {
+    transform: rotateY(270deg) translateX(-50%);
+    transform-origin: center left;
+}
+
+.spinner div:nth-of-type(4) {
+    transform: rotateX(90deg) translateY(-50%);
+    transform-origin: top center;
+}
+
+.spinner div:nth-of-type(5) {
+    transform: rotateX(-90deg) translateY(50%);
+    transform-origin: bottom center;
+}
+
+.spinner div:nth-of-type(6) {
+    transform: translateZ(22px);
+}
+
+@keyframes spinner-y0fdc1 {
+    0% {
+        transform: rotate(45deg) rotateX(-25deg) rotateY(25deg);
+    }
+
+    50% {
+        transform: rotate(45deg) rotateX(-385deg) rotateY(25deg);
+    }
+
+    100% {
+        transform: rotate(45deg) rotateX(-385deg) rotateY(385deg);
+    }
+}
+
+
+
+
+
+.container {
+    background-color: rgba(0, 0, 0, 0.5); 
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    
+     /* transition 속성으로 fade out 효과를 부드럽게 만듭니다 */
+     transition-property : opacity; 
+     transition-duration : .4s; 
+     z-index :9999; 
+
+     display:flex; 
+     justify-content:center; 
+     align-items:center;
+
+}
