@@ -37,7 +37,6 @@ useEffect (() => {
     if(userId && userId != 0) {
         try {
             authApi.get(`/mypage/${userId}`).then((response) => {
-                // dispatch(SET_USER(response.data))
             });
         } catch (error) {
             console.error('Failed to fetch profile image:', error);
@@ -114,17 +113,10 @@ return (
 
                 }
             </div>
-            <div style={{width: '80px', textAlign: 'center', margin: '0 30px'}}>
-                {userId != 0 ?
-                    <Link onClick={handleLogoutClick} style={{ textDecoration: 'none', color: 'inherit'}}>로그아웃</Link> :
-                    <Link to="/signup" style={{ textDecoration: 'none', color: 'inherit'}}>회원가입</Link>
-                }
-            </div>
 
             <div style={{width: '80px', textAlign: 'center', margin: '0 30px'}}>
                 {userId != 0 ? 
                     <Link onClick={handleLogoutClick} style={{ textDecoration: 'none', color: 'inherit'}}>로그아웃</Link> :
-                    
                     <Link to="/signup" style={{ textDecoration: 'none', color: 'inherit'}}>회원가입</Link>
                 }
             </div>            
