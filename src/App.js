@@ -1,55 +1,43 @@
-import {Routes, Route, useNavigationType, useLocation} from "react-router-dom";
-import { useEffect } from "react";
+import React, { useState, useEffect } from 'react';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
-import Home from "./pages/Home";
-import LoginPage from "./pages/LoginPage";
-import RegisterPage from "./pages/RegisterPage";
-import News from "./pages/News"
+import Header from './components/common/Header';
+import Home from './routes/Home';
+import Footer from './components/common/Footer';
 
-function App() {
-  const action = useNavigationType();
-  const location = useLocation();
-  const pathname = location.pathname;
+
+import { refreshTokenApi } from './lib/api/authApi';
+//eslint-disable-next-line
+import { getCookieToken } from './store/Cookie';
+
+import { useSelector } from 'react-redux';
+import ChatbotButton from './components/common/ChatbotButton';
+import { GoogleOAuthProvider } from '@react-oauth/google';
+import { useLocation } from 'react-router-dom';
+
+import styles from './App.module.css';
+
+
+const App = () => {
+  const clientId = process.env.REACT_APP_GOOGLE_CLIENT_KEY;
+
 
   useEffect(() => {
-    if (action !== "POP") {
-      window.scrollTo(0, 0);
-    }
-  }, [action, pathname]);
+    refreshTokenApi(); // 유저정보가 존재하는 경우에만 리프레시 토큰 검증 및 액세스 토큰 갱신 시도
+  }, [])
 
-  useEffect(() => {
-    let title = "";
-    let metaDescription = "";
-
-    // eslint-disable-next-line default-case
-    switch (pathname) {
-      case "/":
-        title = "";
-        metaDescription = "";
-        break;
-    }
-
-    if (title) {
-      document.title = title;
-    }
-
-    if (metaDescription) {
-      const metaDescriptionTag = document.querySelector(
-        'head > meta[name="description"]'
-      );
-      if (metaDescriptionTag) {
-        metaDescriptionTag.content = metaDescription;
-      }
-    }
-  }, [pathname]);
 
   return (
-    <Routes>
-      <Route path="/" element={<Home />} />
-      <Route path="/login" element={<><Home /><LoginPage /></>} />
-      <Route path="/register" element={<RegisterPage />} />
-      <Route path="/news/list" element={<News />} />
-    </Routes>
+    <div className={styles.background}> {/* 모듈 스타일 적용 */}
+      <GoogleOAuthProvider clientId={clientId}>
+          <Header />
+          <Home />
+          <ChatbotButton />
+          <Footer />
+      </GoogleOAuthProvider>
+    </div>
   );
-}
+};
+
+
 export default App;

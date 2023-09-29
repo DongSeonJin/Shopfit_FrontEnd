@@ -1,0 +1,43 @@
+.articleContainer {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.image {
+  border: white 1px solid;
+  width: 384px;
+  height: 216px;
+  background-size: cover;
+  cursor: pointer;
+  border-radius: 10px;
+}
+
+.textContainer {
+  width: 90%;
+  padding: 0 20px;
+}
+
+.title {
+  font-size: 24px;
+  font-weight: bold;
+  line-height: 27px;
+  height: 60px;
+  margin-bottom: 10px;
+}
+
+.content {
+  font-size: 20px;
+  line-height: 23px;
+  height: 46px;
+  margin-bottom: 10px;
+}
+
+.date {
+  text-align: right;
+  font-size: 16px;
+}
+
+.delButton{
+  width: 10%;
+}

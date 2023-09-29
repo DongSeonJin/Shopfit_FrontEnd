@@ -1,0 +1,29 @@
+.searchbox{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: nowrap;
+    margin-top: 25px;
+    margin-bottom: 150px;
+}
+.searchbox input{
+    box-sizing: border-box;
+    width: calc(50% - 120px);
+    max-width: 1080px;
+    height: 40px;
+    border-radius: 10px;
+    border: none;
+    padding: 0 10px;
+}
+.searchbox button{
+    box-sizing: border-box;
+    margin-left: 20px;
+    width: 100px;
+    text-align: center;
+    border: 1px solid #9e9e9e;
+    height: 40px;
+    line-height: 42px;
+    font-size: 16px;
+    cursor: pointer;
+}

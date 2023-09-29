@@ -1,0 +1,49 @@
+.container {
+    text-align: center;
+  }
+  
+  .newsList {
+    display: flex;
+    justify-content: center;
+    list-style: none;
+    padding: 0;
+  }
+  
+  .newsItem {
+    margin-right: 10px;
+    display: flex;
+    flex-direction: column;
+    max-width: 180px;
+  }
+  
+  .newsImage {
+    width: 180px;
+    height: 120px;
+  }
+  
+  .newsTitle {
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    display: -webkit-box;
+    -webkit-line-clamp: 2; /* 노출할 최대 줄 수 */
+    -webkit-box-orient: vertical;
+    height: 4em; /* 한 줄 높이 */
+    overflow: hidden;
+    font-size: 0.5em;
+    margin: 0;
+    text-align: left;
+    line-height: 2em; /* 줄 간격 조절 */
+  }
+  
+  .newsContent {
+    font-size: 0.5em;
+    margin-top: 0;
+    text-align: left;
+    -webkit-line-clamp: 2; /* Display up to 2 lines */
+    height: 3em; /* Two lines of height */
+    line-height: 1.5em; /* Line height adjusted to 1em */
+    white-space: normal; /* Allow text to wrap to new lines */
+    overflow: hidden; /* Hide overflowed content */
+    text-overflow: ellipsis;
+  }
+  
