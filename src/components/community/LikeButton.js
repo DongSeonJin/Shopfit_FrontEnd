@@ -39,11 +39,11 @@ const LikeButton = ({ postId }) => {
 
             if (!isLiked) {
                 // 서버로 좋아요 요청 보내기
-                await authApi.post('/post/like/add', { postId: postId, userId });
+                await authApi.post('/post/like', { postId: postId, userId });
 
             } else {
                 // 이미 누른거면 좋아요 취소 요청
-                await authApi.post('/post/like/delete', { postId: postId, userId });
+                await authApi.delete(`/post/like/${postId}/${userId}`);
 
             }
 
