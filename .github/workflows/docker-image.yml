@@ -1,0 +1,47 @@
+name: Docker Image CI
+
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+
+jobs:
+  
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout Repository
+    - uses: actions/checkout@v3
+    
+    - name: Set up Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: '18.17.0' # React 앱에 필요한 Node.js 버전을 설정합니다.
+
+    - name: Install Dependencies
+      run: yarn install
+
+    - name: Build React App
+      run: yarn build # React 앱을 빌드합니다.
+
+    - name: Deploy to S3
+      uses: jakejarvis/s3-sync-action@v0.5.1
+      with:
+        args: --acl public-read --follow-symlinks --delete
+      env:
+        AWS_S3_BUCKET: ${{ secrets.S3_BUCKET }} # S3 버킷 이름을 설정합니다.
+        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }} # AWS 자격증명을 설정합니다.
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }} # AWS 자격증명을 설정합니다.
+        AWS_REGION: 'ap-northeast-2' # 리전을 설정합니다.
+        SOURCE_DIR: 'build' # 빌드된 파일이 있는 디렉토리를 지정합니다.
+
+    
+    - name: Invalidate CloudFront Distribution
+      uses: chetan/invalidate-cloudfront-action@v1
+      env:
+        DISTRIBUTION: ${{ secrets.CLOUDFRONT_DISTRIBUTION_ID }} # CloudFront 배포 ID를 설정합니다.
+        PATHS: '/*' # 모든 파일에 대한 캐시 무효화를 설정합니다.
+        AWS_REGION: 'ap-northeast-2' # 리전을 설정합니다.
+        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }} # AWS 자격증명을 설정합니다.
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }} # AWS 자격증명을 설정합니다.
