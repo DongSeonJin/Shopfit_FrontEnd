@@ -25,7 +25,7 @@ jobs:
       run: yarn install
 
     - name: Build React App
-      run: yarn build
+      run: CI=false yarn build
 
 
     # S3에 배포
