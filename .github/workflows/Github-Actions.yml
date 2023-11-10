@@ -52,6 +52,7 @@ jobs:
         AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }} # AWS 자격증명을 설정합니다.
         AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }} # AWS 자격증명을 설정합니다.
         AWS_REGION: 'ap-northeast-2' # 리전을 설정합니다.
+        SOURCE_DIR: 'build' # 빌드된 파일들이 있는 경로를 설정합니다.
 
     
     # CloudFront 설정
