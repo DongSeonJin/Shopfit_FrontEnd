@@ -6,7 +6,6 @@ import { persistStore } from "redux-persist";
 
 import store from './store/ReduxStore';
 import App from './App';
-import './axiosConfig';
 
 // import './index.css';
 import "./global.css";
