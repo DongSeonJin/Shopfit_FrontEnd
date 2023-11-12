@@ -9,12 +9,8 @@ import './axiosConfig';
 
 import { refreshTokenApi } from './lib/api/authApi';
 //eslint-disable-next-line
-import { getCookieToken } from './store/Cookie';
-
-import { useSelector } from 'react-redux';
 import ChatbotButton from './components/common/ChatbotButton';
 import { GoogleOAuthProvider } from '@react-oauth/google';
-import { useLocation } from 'react-router-dom';
 
 import styles from './App.module.css';
 

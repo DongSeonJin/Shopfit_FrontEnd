@@ -3,7 +3,6 @@ import store from '../../store/ReduxStore'
 import { SET_TOKEN } from '../../redux/AuthReducer';
 import { getCookieToken, setRefreshToken } from "../../store/Cookie";
 import logout from './Logout';
-import { useSelector } from "react-redux";
 
 const dispatch = store.dispatch;
 

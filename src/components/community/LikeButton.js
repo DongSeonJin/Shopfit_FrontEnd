@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import { HeartOutlined, HeartFilled } from '@ant-design/icons';
 import styles from '../../styles/community/LikeButton.module.css'
 import { useSelector } from 'react-redux';
