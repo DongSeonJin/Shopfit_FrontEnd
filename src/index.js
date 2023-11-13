@@ -14,7 +14,14 @@ export let persistor = persistStore(store);
 
 // axios.defaults.baseURL = process.env.REACT_APP_API_BASE_URL;
 axios.defaults.baseURL = 'http://shopfit-env-1.eba-byhfkrys.ap-northeast-2.elasticbeanstalk.com';
-fetch.defaults.baseURL = 'http://shopfit-env-1.eba-byhfkrys.ap-northeast-2.elasticbeanstalk.com';
+
+// 기존의 fetch 함수를 백업
+const originalFetch = fetch;
+
+// fetch 함수를 래핑하여 기본 URL을 추가
+window.fetch = (url, options) => {
+  return originalFetch(`http://shopfit-env-1.eba-byhfkrys.ap-northeast-2.elasticbeanstalk.com${url}`, options);
+};
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
