@@ -14,6 +14,7 @@ export let persistor = persistStore(store);
 
 // axios.defaults.baseURL = process.env.REACT_APP_API_BASE_URL;
 axios.defaults.baseURL = 'http://shopfit-env-1.eba-byhfkrys.ap-northeast-2.elasticbeanstalk.com';
+fetch.defaults.baseURL = 'http://shopfit-env-1.eba-byhfkrys.ap-northeast-2.elasticbeanstalk.com';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
