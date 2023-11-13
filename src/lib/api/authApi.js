@@ -93,6 +93,7 @@ authApi.interceptors.response.use(
         config.headers.Authorization = `Bearer ${newAccessToken}`;
         // 응답interceptor 로직이 끝나면 이어받은 config 헤더에 토큰을 담아 원래의 요청을 이어간다.
         // authApi.defaults.headers.common['Authorization'] = `Bearer ${newAccessToken}`;
+        logout();
       return axios(config);
       
     }
