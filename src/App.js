@@ -4,9 +4,6 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import Header from './components/common/Header';
 import Home from './routes/Home';
 import Footer from './components/common/Footer';
-import './axiosConfig';
-
-
 import { refreshTokenApi } from './lib/api/authApi';
 //eslint-disable-next-line
 import ChatbotButton from './components/common/ChatbotButton';
