@@ -2,7 +2,6 @@
   "name": "frontend",
   "version": "0.1.0",
   "private": true,
-  "homepage": "http://d33178k8dxtdif.cloudfront.net/",
   "dependencies": {
     "@ant-design/icons": "^5.2.6",
     "@emotion/react": "^11.11.1",
@@ -91,5 +90,5 @@
       "last 1 safari version"
     ]
   },
-  "proxy": "http://localhost:8080/"
+  "proxy": "http://shopfit-env-1.eba-byhfkrys.ap-northeast-2.elasticbeanstalk.com"
 }
