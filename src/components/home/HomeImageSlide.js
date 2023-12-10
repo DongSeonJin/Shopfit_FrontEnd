@@ -8,7 +8,7 @@ const HomeImageSlide = () => {
 
 
     const imageUrls = [
-        "https://kr.object.ncloudstorage.com/post-bucket/imageslide/KakaoTalk_Photo_2023-09-12-15-03-43.png", // 샵피트 쿠폰
+        "https://file.rankingdak.com/image/RANK/BANNER/AR_IMG_1/20231201/IMG1701zpL411717300.jpg", // 샵피트 쿠폰
         "https://file.rankingdak.com/image/RANK/BANNER/AR_IMG_1/20230830/IMG1693stS355076138.jpg", // 닭가슴살 사진
         "https://file.rankingdak.com/image/RANK/BANNER/AR_IMG_1/20230831/IMG1693WJJ464777439.jpg" // 추석 이벤트
     ];

@@ -18,7 +18,7 @@ const Header = () => {
         <Link to="/" className={styles.logoLink}>
           <div>
             <img
-              src="https://kr.object.ncloudstorage.com/post-bucket/imageslide/%23fit%20%281%29.gif"
+              src="https://res.cloudinary.com/da6oenkl9/image/upload/v1702204507/shopfit/shopfit-logo_u266tu.gif"
               alt="slide_img"
               className={styles.logoImage}
             />
